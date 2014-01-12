@@ -1,0 +1,1 @@
+rvm use ruby-`cat ~/dev/trello_report/.ruby-version`@trello-report --create
