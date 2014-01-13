@@ -1,6 +1,6 @@
 require 'json'
 
-module TrelloReport
+module Trello
   class TrelloObject
 
     attr_reader :json

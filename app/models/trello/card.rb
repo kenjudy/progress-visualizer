@@ -1,9 +1,7 @@
 require 'json'
 
-require_relative 'trello_object'
-
-module TrelloReport
-  class Card < TrelloReport::TrelloObject
+module Trello
+  class Card < TrelloObject
     
     attr_reader :id, :last_known_state, :date_last_activity, :description, :id_board, :id_list, :name, :short_link, :badges, :due, :labels, :short_url, :url
     

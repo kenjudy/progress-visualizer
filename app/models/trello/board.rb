@@ -1,11 +1,8 @@
 require 'json'
 require 'csv'
 
-require_relative 'trello_object'
-require_relative 'card'
-
-module TrelloReport
-  class Board < TrelloReport::TrelloObject
+module Trello
+  class Board < TrelloObject
   
     attr_reader :cards
     
@@ -21,7 +18,7 @@ module TrelloReport
 
     def to_csv
       CSV.generate do |csv|
-        csv << TrelloReport::Card.array_attributes
+        csv << Card.array_attributes
         self.to_array.each { |card| csv << card }
       end
     end
