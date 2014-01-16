@@ -10,7 +10,8 @@ describe TrelloReport::Constants do
   
   context "public trello api constants" do
     it { expect(TrelloReport::Constants::TRELLO_API_ROOT_URL).to eql("https://api.trello.com/1")}
-    it { expect(TrelloReport::Constants::TRELLO_EXPORT_CARDS_PATH).to eql("/boards/<BOARD_ID>/cards/closed?key=<KEY>&token=<TOKEN>") }
+    it { expect(TrelloReport::Constants::TRELLO_EXPORT_CARDS_PATH).to eql("/boards/<BOARD_ID>/cards?key=<KEY>&token=<TOKEN>") }
+    it { expect(TrelloReport::Constants::TRELLO_EXPORT_ARCHIVED_CARDS_PATH).to eql("/boards/<BOARD_ID>/cards/closed?key=<KEY>&token=<TOKEN>") }
   end
 
 end

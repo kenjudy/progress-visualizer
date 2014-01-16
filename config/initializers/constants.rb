@@ -8,7 +8,8 @@ module TrelloReport
 
     #public
     TRELLO_API_ROOT_URL = "https://api.trello.com/1"
-    TRELLO_EXPORT_CARDS_PATH = "/boards/<BOARD_ID>/cards/closed?key=<KEY>&token=<TOKEN>"
+    TRELLO_EXPORT_ARCHIVED_CARDS_PATH = "/boards/<BOARD_ID>/cards/closed?key=<KEY>&token=<TOKEN>"
+    TRELLO_EXPORT_CARDS_PATH = "/boards/<BOARD_ID>/cards?key=<KEY>&token=<TOKEN>"
   end
   
 end

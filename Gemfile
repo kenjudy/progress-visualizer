@@ -39,6 +39,7 @@ group :development, :test do
   gem 'pry-remote'
   gem 'pry-rails'
   gem 'pry-rescue'
+  gem 'guard-rspec'
 end
 
 # Use ActiveModel has_secure_password
