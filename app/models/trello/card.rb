@@ -43,7 +43,7 @@ module Trello
     end
   
     def to_array
-      self.class.array_attributes.map{ |attr| attr == "labels" ? labels.map{|lbl| lbl["name"] }.join(", ") : self.send(attr.to_sym)}
+      self.class.array_attributes.map{ |attr| attr == "labels" ? labels.map{|lbl| lbl["name"] }.join(",") : self.send(attr.to_sym)}
     end
 
     def self.array_attributes

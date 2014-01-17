@@ -3,4 +3,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-TrelloReports::Application.load_tasks
+ProgressVisualizer::Application.load_tasks

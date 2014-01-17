@@ -40,7 +40,11 @@ group :development, :test do
   gem 'pry-rails'
   gem 'pry-rescue'
   gem 'guard-rspec'
+  gem 'guard-bundler'
+  gem 'terminal-notifier-guard'
 end
+
+gem 'ruby-trello'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.1.2'

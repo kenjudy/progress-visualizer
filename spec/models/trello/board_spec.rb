@@ -1,3 +1,4 @@
+require 'csv'
 require 'spec_helper'
 require_relative 'json_data'
 
@@ -26,9 +27,12 @@ module Trello
     
       it { should have(3).items }
     
-      context "header" do
+      context "with header" do
         its(:first) { should == Card.array_attributes.join(',')  }
-        its(:last) { should == card.to_array.join(',')}
+      end
+      
+      context "of cards" do
+        its(:last) { should == CSV.generate {|csv| csv << card.to_array }.chop }
       end
     end
   end

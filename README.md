@@ -1,2 +1,2 @@
-trello-reports
+progress-visualizer
 ==============

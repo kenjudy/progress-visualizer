@@ -9,4 +9,4 @@
 
 # Make sure your secret_key_base is kept private
 # if you're sharing your code publicly.
-TrelloReports::Application.config.secret_key_base = '81634a0d7e16224fafd3c6627e182b27869948cedd4af10170730c47c682ee408666e34533a4e2dc5f171615873bd0d7a1df9ccd608539a3b8e01d734efe5c31'
+ProgressVisualizer::Application.config.secret_key_base = '81634a0d7e16224fafd3c6627e182b27869948cedd4af10170730c47c682ee408666e34533a4e2dc5f171615873bd0d7a1df9ccd608539a3b8e01d734efe5c31'

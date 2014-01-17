@@ -62,7 +62,7 @@ module Trello
       Card.array_attributes.each_with_index do |attribute, index|
         context attribute do
           let(:attr) { attribute }
-          it { expect(card_arr[index]).to eql(attribute == "labels" ? "Tech Stories, Pimsleur" : card.send(attribute.to_sym)) }
+          it { expect(card_arr[index]).to eql(attribute == "labels" ? "Tech Stories,Pimsleur" : card.send(attribute.to_sym)) }
         end
         
       end

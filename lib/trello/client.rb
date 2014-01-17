@@ -7,18 +7,25 @@ module Trello
     
     @credentials = {key: TrelloReport::Constants::USER_KEY, token: TrelloReport::Constants::READONLY_TOKEN}
     
+    def self.daily_burnup
+      card_json = request_cards(TrelloReport::Constants::CURRENT_SPRINT_BOARD_ID)
+      card_json.map { |json| Card.new(json)}
+    end
+    
     def self.request_archived_cards(board_id)
-      JSON.parse(URI.parse(archived_cards_url(board_id)).read)
+      request_json(TrelloReport::Constants::TRELLO_EXPORT_ARCHIVED_CARDS_PATH, {board_id: board_id})
     end
     
-    def self.archived_cards_url(board_id)
-      generate_url(TrelloReport::Constants::TRELLO_EXPORT_ARCHIVED_CARDS_PATH, {board_id: board_id}.merge(@credentials))
+    def self.request_cards(board_id)
+      request_json(TrelloReport::Constants::TRELLO_EXPORT_CARDS_PATH, {board_id: board_id})
     end
     
-    def self.generate_url(url_template, options)
+    private
+    
+    def self.request_json(url_template, options)
       url = "#{TrelloReport::Constants::TRELLO_API_ROOT_URL}#{url_template}"
-      options.each { |key,value| url.gsub!("<#{key.to_s.upcase}>", value) }
-      return url
+      options.merge(@credentials).each { |key,value| url.gsub!("<#{key.to_s.upcase}>", value) }
+      return JSON.parse(URI.parse(url).read)
     end
   end
 end
