@@ -20,7 +20,7 @@ module Exporters
     context "run" do
 
       before do
-        Trello::Client.stub(request_archived_cards: [card_json])
+        Adapters::TrelloAdapter.stub(request_archived_cards: [card_json])
         CSV.stub(:open).and_yield(csv)
       end
 

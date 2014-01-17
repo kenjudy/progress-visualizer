@@ -1,33 +1,36 @@
 require 'spec_helper'
 require_relative '../../models/trello/json_data'
 
-module Trello
-  describe Client do
+module Adapters
+  describe TrelloAdapter do
     include JsonData
     
     let(:uri) { double(URI, read: "[{}]" ) }
-    before { URI.stub(parse: uri) }
+    before do
+      URI.stub(parse: uri)
+      CSV.stub(open: [])
+    end
     
     context "daily burnup" do
       let(:json) { JSON.parse(card_json_string) }
-      let(:card) { Card.new(json) }
+      let(:card) { Trello::Card.new(json) }
       subject do
-        cards = Client.daily_burnup
-        cards.first
+        board = TrelloAdapter.daily_burnup
+        board.cards.first
       end
       
-      before { Client.stub(request_cards: [json])}
+      before { TrelloAdapter.stub(request_cards: [json])}
       
       its(:id) { should == card.id }
       
       context "requests cards" do
-        after { Client.daily_burnup }
-        it { expect(Client).to receive(:request_cards).with(TrelloReport::Constants::CURRENT_SPRINT_BOARD_ID)}
+        after { TrelloAdapter.daily_burnup }
+        it { expect(TrelloAdapter).to receive(:request_cards).with(TrelloReport::Constants::CURRENT_SPRINT_BOARD_ID)}
       end
     end
 
     context "request_archived_cards" do
-      subject { Client.request_archived_cards(TrelloReport::Constants::CURRENT_SPRINT_BOARD_ID) }
+      subject { TrelloAdapter.request_archived_cards(TrelloReport::Constants::CURRENT_SPRINT_BOARD_ID) }
     
       it { should == [{}] }
 
@@ -38,7 +41,7 @@ module Trello
       end
     end
     context "request_cards" do
-      subject { Client.request_cards(TrelloReport::Constants::CURRENT_SPRINT_BOARD_ID) }
+      subject { TrelloAdapter.request_cards(TrelloReport::Constants::CURRENT_SPRINT_BOARD_ID) }
     
       it { should == [{}] }
 

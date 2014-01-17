@@ -2,14 +2,14 @@ require 'net/http'
 require 'open-uri'
 require 'json'
 
-module Trello
-  class Client
+module Adapters
+  class TrelloAdapter
     
     @credentials = {key: TrelloReport::Constants::USER_KEY, token: TrelloReport::Constants::READONLY_TOKEN}
     
     def self.daily_burnup
       card_json = request_cards(TrelloReport::Constants::CURRENT_SPRINT_BOARD_ID)
-      card_json.map { |json| Card.new(json)}
+      Trello::Board.new(card_json)
     end
     
     def self.request_archived_cards(board_id)
