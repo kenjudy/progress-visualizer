@@ -1,4 +1,6 @@
 require 'spec_helper'
+
+require 'csv'
 require_relative '../../models/trello/json_data'
 
 module Adapters
@@ -12,43 +14,55 @@ module Adapters
     end
     
     context "daily burnup" do
-      let(:json) { JSON.parse(card_json_string) }
-      let(:card) { Trello::Card.new(json) }
+      let(:card_data) { JSON.parse(card_json_string) }
+      let(:card) { Trello::Card.new(card_data) }
       subject do
         board = TrelloAdapter.daily_burnup
         board.cards.first
       end
       
-      before { TrelloAdapter.stub(request_cards: [json])}
+      before { TrelloAdapter.stub(request_cards: [card_data])}
       
       its(:id) { should == card.id }
       
       context "requests cards" do
         after { TrelloAdapter.daily_burnup }
-        it { expect(TrelloAdapter).to receive(:request_cards).with(TrelloReport::Constants::CURRENT_SPRINT_BOARD_ID)}
+        it { expect(TrelloAdapter).to receive(:request_cards).with(Trello::Constants::CURRENT_SPRINT_BOARD_ID)}
       end
     end
 
     context "request_archived_cards" do
-      subject { TrelloAdapter.request_archived_cards(TrelloReport::Constants::CURRENT_SPRINT_BOARD_ID) }
+      subject { TrelloAdapter.request_archived_cards(Trello::Constants::CURRENT_SPRINT_BOARD_ID) }
     
       it { should == [{}] }
 
       context "url" do
         after { subject }
      
-        it { expect(URI).to receive(:parse).with("https://api.trello.com/1/boards/#{TrelloReport::Constants::CURRENT_SPRINT_BOARD_ID}/cards/closed?key=#{TrelloReport::Constants::USER_KEY}&token=#{TrelloReport::Constants::READONLY_TOKEN}").and_return(uri) }
+        it { expect(URI).to receive(:parse).with("https://api.trello.com/1/boards/#{Trello::Constants::CURRENT_SPRINT_BOARD_ID}/cards/closed?key=#{Trello::Constants::USER_KEY}&token=#{Trello::Constants::READONLY_TOKEN}").and_return(uri) }
       end
     end
+    
     context "request_cards" do
-      subject { TrelloAdapter.request_cards(TrelloReport::Constants::CURRENT_SPRINT_BOARD_ID) }
+      subject { TrelloAdapter.request_cards(Trello::Constants::CURRENT_SPRINT_BOARD_ID) }
     
       it { should == [{}] }
 
       context "url" do
         after { subject }
      
-        it { expect(URI).to receive(:parse).with("https://api.trello.com/1/boards/#{TrelloReport::Constants::CURRENT_SPRINT_BOARD_ID}/cards?key=#{TrelloReport::Constants::USER_KEY}&token=#{TrelloReport::Constants::READONLY_TOKEN}").and_return(uri) }
+        it { expect(URI).to receive(:parse).with("https://api.trello.com/1/boards/#{Trello::Constants::CURRENT_SPRINT_BOARD_ID}/cards?key=#{Trello::Constants::USER_KEY}&token=#{Trello::Constants::READONLY_TOKEN}").and_return(uri) }
+      end
+    end
+    
+    context "request_lists" do
+      subject { TrelloAdapter.request_lists(Trello::Constants::CURRENT_SPRINT_BOARD_ID) }
+      it { should == [{}] }
+
+      context "url" do
+        after{ subject }
+
+        it { expect(URI).to receive(:parse).with("https://api.trello.com/1/boards/#{Trello::Constants::CURRENT_SPRINT_BOARD_ID}/lists?key=#{Trello::Constants::USER_KEY}&token=#{Trello::Constants::READONLY_TOKEN}").and_return(uri) }
       end
     end
   end
