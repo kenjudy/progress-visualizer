@@ -9,15 +9,15 @@ module Trello
     include JsonData
   
   
-    let(:card_json) { JSON.parse(card_json_string) }
-    let(:card) { Card.new(card_json) }
+    let(:card_data) { JSON.parse(card_json_string) }
+    let(:card) { Card.new(card_data) }
     let(:card_arr) { card.to_array }
     let(:card_array_attributes) { %w(number estimate name last_known_state closed? date_last_activity due labels id id_board id_list short_link short_url url) }
 
     subject { card }
   
     context "accepts json" do
-      its(:json) { should eql(card_json) }
+      its(:data) { should eql(card_data) }
     end
   
     context "parses json" do
@@ -42,16 +42,16 @@ module Trello
       context "accepts null values" do
 
         context "due" do
-          before { card_json["due"] = nil }
+          before { card_data["due"] = nil }
           it { expect{subject}.to_not raise_error }
         end
 
         context "checkItemStates" do
-          before { card_json["checkItemStates"] = nil }
+          before { card_data["checkItemStates"] = nil }
           it { expect{subject}.to_not raise_error }
         end
         context "checkItemStates last" do
-          before { card_json["checkItemStates"] = [] }
+          before { card_data["checkItemStates"] = [] }
           it { expect{subject}.to_not raise_error }
         end
       end

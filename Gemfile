@@ -42,7 +42,10 @@ group :development, :test do
   gem 'guard-rspec'
   gem 'guard-bundler'
   gem 'terminal-notifier-guard'
+  gem 'factory_girl_rails'
 end
+
+gem "google_visualr", ">= 2.1"
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.1.2'

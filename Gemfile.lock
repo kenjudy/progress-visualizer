@@ -47,8 +47,14 @@ GEM
     diff-lcs (1.2.5)
     erubis (2.7.0)
     execjs (2.0.2)
+    factory_girl (4.3.0)
+      activesupport (>= 3.0.0)
+    factory_girl_rails (4.3.0)
+      factory_girl (~> 4.3.0)
+      railties (>= 3.0.0)
     ffi (1.9.3)
     formatador (0.2.4)
+    google_visualr (2.2.0)
     guard (2.2.5)
       formatador (>= 0.2.4)
       listen (~> 2.1)
@@ -176,6 +182,8 @@ DEPENDENCIES
   better_errors
   binding_of_caller
   coffee-rails (~> 4.0.0)
+  factory_girl_rails
+  google_visualr (>= 2.1)
   guard-bundler
   guard-rspec
   jbuilder (~> 1.2)

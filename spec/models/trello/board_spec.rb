@@ -6,13 +6,18 @@ include JsonData
 
 module Trello
   describe Trello::Board do
-    let(:card_json) { JSON.parse(card_json_string) }
-    let(:card) { Card.new(card_json) }
-    let(:board) { Board.new([card_json, card_json]) }
+    let(:card_data) { JSON.parse(card_json_string) }
+    let(:card) { Card.new(card_data) }
+    let(:board) { Board.new([card_data, card_data]) }
+    
     subject { board }
-  
-    context "accepts json" do
-      its(:json) { should eql([card_json, card_json]) }
+    
+    context "attributes" do
+      its(:title) { should == "Current Sprint" }
+    end
+      
+    context "accepts parsed json" do
+      its(:data) { should eql([card_data, card_data]) }
       its(:cards) { should have(2).items }
     end
   

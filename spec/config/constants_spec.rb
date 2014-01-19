@@ -1,17 +1,18 @@
 require 'spec_helper'
 
-describe TrelloReport::Constants do
+describe Trello::Constants do
   
   context "private trello api constants" do
-    it { expect(TrelloReport::Constants::USER_KEY).to_not be_nil }
-    it { expect(TrelloReport::Constants::READONLY_TOKEN).to_not be_nil }
-    it { expect(TrelloReport::Constants::CURRENT_SPRINT_BOARD_ID).to_not be_nil }
+    it { expect(Trello::Constants::USER_KEY).to_not be_nil }
+    it { expect(Trello::Constants::READONLY_TOKEN).to_not be_nil }
+    it { expect(Trello::Constants::CURRENT_SPRINT_BOARD_ID).to_not be_nil }
   end
   
   context "public trello api constants" do
-    it { expect(TrelloReport::Constants::TRELLO_API_ROOT_URL).to eql("https://api.trello.com/1")}
-    it { expect(TrelloReport::Constants::TRELLO_EXPORT_CARDS_PATH).to eql("/boards/<BOARD_ID>/cards?key=<KEY>&token=<TOKEN>") }
-    it { expect(TrelloReport::Constants::TRELLO_EXPORT_ARCHIVED_CARDS_PATH).to eql("/boards/<BOARD_ID>/cards/closed?key=<KEY>&token=<TOKEN>") }
+    it { expect(Trello::Constants::TRELLO_API_ROOT_URL).to eql("https://api.trello.com/1")}
+    it { expect(Trello::Constants::TRELLO_EXPORT_CARDS_PATH).to eql("/boards/<BOARD_ID>/cards?key=<KEY>&token=<TOKEN>") }
+    it { expect(Trello::Constants::TRELLO_EXPORT_ARCHIVED_CARDS_PATH).to eql("/boards/<BOARD_ID>/cards/closed?key=<KEY>&token=<TOKEN>") }
+    it { expect(Trello::Constants::TRELLO_BOARD_LISTS_PATH).to eql("/boards/<BOARD_ID>/lists?key=<KEY>&token=<TOKEN>") }
   end
 
 end
