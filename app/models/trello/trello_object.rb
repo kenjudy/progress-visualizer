@@ -3,10 +3,11 @@ require 'json'
 module Trello
   class TrelloObject
 
-    attr_reader :json
+    attr_reader :data
     
-    def initialize(json)
-      @json = json
+    def initialize(data)
+      @data = data
+      assign_attributes(data)
     end
     
     

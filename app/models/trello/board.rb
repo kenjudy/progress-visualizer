@@ -4,12 +4,13 @@ require 'csv'
 module Trello
   class Board < TrelloObject
   
-    attr_reader :cards
+    attr_reader :cards, :title
     
-    def initialize(json)
-      super
+    def assign_attributes(data)
       @cards = []
-      @json.each { |card| @cards << Card.new(card) }
+      @data.each { |card| @cards << Card.new(card) }
+      
+      @title = "Current Sprint" #TODO: board attributes
     end
     
     def to_array
