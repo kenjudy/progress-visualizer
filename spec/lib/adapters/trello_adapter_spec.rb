@@ -1,11 +1,10 @@
 require 'spec_helper'
 
 require 'csv'
-require_relative '../../models/trello/json_data'
 
 module Adapters
   describe TrelloAdapter do
-    include JsonData
+    include Trello::JsonData
     
     let(:uri) { double(URI, read: "[{}]" ) }
     before do
@@ -14,7 +13,7 @@ module Adapters
     end
     
     context "daily burnup" do
-      let(:card_data) { JSON.parse(card_json_string) }
+      let(:card_data) { example_card_data }
       let(:card) { Trello::Card.new(card_data) }
       subject do
         board = TrelloAdapter.daily_burnup

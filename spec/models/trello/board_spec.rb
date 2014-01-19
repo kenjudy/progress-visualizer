@@ -1,12 +1,11 @@
 require 'csv'
 require 'spec_helper'
-require_relative 'json_data'
-
-include JsonData
 
 module Trello
   describe Trello::Board do
-    let(:card_data) { JSON.parse(card_json_string) }
+    include JsonData
+
+    let(:card_data) { example_card_data }
     let(:card) { Card.new(card_data) }
     let(:board) { Board.new([card_data, card_data]) }
     

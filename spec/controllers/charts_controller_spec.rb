@@ -1,8 +1,14 @@
 require 'spec_helper'
+require 'json'
 
 describe ChartsController do
+  include Trello::JsonData
+  
   context "daily_burnup" do
-    before { Adapters::TrelloAdapter.stub(daily_burnup: Trello::Board.new)}
+    let(:card_data) { example_card_data }
+    let(:board) { Trello::Board.new([card_data]) }
+    before { Adapters::TrelloAdapter.stub(daily_burnup: board) }
+    
     subject do
       get :daily_burnup
       response

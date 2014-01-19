@@ -1,16 +1,15 @@
 require 'spec_helper'
 
-require_relative '../../models/trello/json_data'
-
-include JsonData
 
 module Charts
   describe DailyBurnup do
+    include Trello::JsonData
+
     let(:current_time) { Time.now }
-    let(:card_data) { JSON.parse(card_json_string) }
+    let(:card_data) { example_card_data }
     let(:card) { ::Trello::Card.new(card_data) }
     let(:board) { ::Trello::Board.new([card_data,card_data.merge({"idList" => "done1"})])}
-    let(:ready_for_development) { ::Trello::List.new(JSON.parse(list_json_string))}
+    let(:ready_for_development) { ::Trello::List.new(example_list_data)}
     let(:ready_for_signoff) { ::Trello::List.new({"id" => "signoff1", "name" => "Ready for Signoff"})}
     let(:done) { ::Trello::List.new({"id" => "done1", "name" => "Done"})}
     let(:options) { {done_lists: [done, ready_for_signoff], backlog_lists: [ready_for_development,done, ready_for_signoff], timestamp: current_time} }
