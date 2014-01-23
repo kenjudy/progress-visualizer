@@ -7,9 +7,16 @@ module Adapters
     
     @credentials = {key: Trello::Constants::USER_KEY, token: Trello::Constants::READONLY_TOKEN}
     
-    def self.daily_burnup
-      card_json = request_cards(Trello::Constants::CURRENT_SPRINT_BOARD_ID)
-      Trello::Board.new(card_json)
+    # def self.daily_burnup
+    #   card_json = request_cards(Trello::Constants::CURRENT_SPRINT_BOARD_ID)
+    #   Trello::Board.new(card_json)
+    # end
+    
+    def self.request_board(board_id, include_archived = false)
+      lists_data = request_lists(board_id)
+      cards_data = request_cards(board_id)
+      cards_data += request_archived_cards(board_id) if include_archived
+      Trello::Board.new({cards: cards_data, lists: lists_data})
     end
     
     def self.request_archived_cards(board_id)

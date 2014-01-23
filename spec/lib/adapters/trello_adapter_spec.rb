@@ -12,21 +12,44 @@ module Adapters
       CSV.stub(open: [])
     end
     
-    context "daily burnup" do
+    # context "daily burnup" do
+    #   let(:card_data) { example_card_data }
+    #   let(:card) { Trello::Card.new(card_data) }
+    #   subject do
+    #     board = TrelloAdapter.daily_burnup
+    #     board.cards.first
+    #   end
+    #   
+    #   before { TrelloAdapter.stub(request_cards: [card_data])}
+    #   
+    #   its(:id) { should == card.id }
+    #   
+    #   context "requests cards" do
+    #     after { TrelloAdapter.daily_burnup }
+    #     it { expect(TrelloAdapter).to receive(:request_cards).with(Trello::Constants::CURRENT_SPRINT_BOARD_ID)}
+    #   end
+    # end
+    
+    context "request_board" do
       let(:card_data) { example_card_data }
       let(:card) { Trello::Card.new(card_data) }
-      subject do
-        board = TrelloAdapter.daily_burnup
-        board.cards.first
+      let(:list_data) { example_list_data }
+      let(:list) { Trell::List.new(list_data) }
+      
+      before do
+        TrelloAdapter.stub(request_cards: [card_data])
+        TrelloAdapter.stub(request_archived_cards: [card_data])
+        TrelloAdapter.stub(request_lists: [list_data])
       end
       
-      before { TrelloAdapter.stub(request_cards: [card_data])}
+      subject { TrelloAdapter.request_board(Trello::Constants::CURRENT_SPRINT_BOARD_ID) }
+    
+      its(:lists) { should have(1).item}
+      its(:cards) { should have(1).item}
       
-      its(:id) { should == card.id }
-      
-      context "requests cards" do
-        after { TrelloAdapter.daily_burnup }
-        it { expect(TrelloAdapter).to receive(:request_cards).with(Trello::Constants::CURRENT_SPRINT_BOARD_ID)}
+      context "request_board with archived cards" do
+        subject { TrelloAdapter.request_board(Trello::Constants::CURRENT_SPRINT_BOARD_ID, true) }
+        its(:cards) { should have(2).items}
       end
     end
 
