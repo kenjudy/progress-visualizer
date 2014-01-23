@@ -7,7 +7,9 @@ module Trello
 
     let(:card_data) { example_card_data }
     let(:card) { Card.new(card_data) }
-    let(:board) { Board.new([card_data, card_data]) }
+    let(:list_data) { example_list_data }
+    let(:list) { Trell::List.new(list_data) }
+    let(:board) { Board.new({cards: [card_data, card_data], lists: [list_data]}) }
     
     subject { board }
     
@@ -16,8 +18,9 @@ module Trello
     end
       
     context "accepts parsed json" do
-      its(:data) { should eql([card_data, card_data]) }
+      its(:data) { should eql({cards: [card_data, card_data], lists: [list_data]}) }
       its(:cards) { should have(2).items }
+      its(:lists) { should have(1).items }
     end
   
     context "outputs to array" do
