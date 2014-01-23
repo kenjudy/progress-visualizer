@@ -19,6 +19,7 @@ module Exporters
 
       before do
         Adapters::TrelloAdapter.stub(request_archived_cards: [card_data])
+        Adapters::TrelloAdapter.stub(request_cards: [card_data])
         CSV.stub(:open).and_yield(csv)
       end
 
@@ -28,6 +29,7 @@ module Exporters
 
       it("writes csv") do
         expect(csv).to receive("<<").once.ordered.with(Trello::Card.array_attributes)
+        expect(csv).to receive("<<").once.ordered.with(card.to_array)
         expect(csv).to receive("<<").once.ordered.with(card.to_array)
       end
     end
