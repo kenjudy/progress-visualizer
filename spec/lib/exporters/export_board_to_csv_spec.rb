@@ -5,7 +5,8 @@ require 'json'
 module Exporters
   describe ExportBoardToCsv do
     include Trello::JsonData
-    
+
+    let(:list_data) { example_list_data }
     let(:card_data) { example_card_data }
     let(:card) { Trello::Card.new(card_data) }
     let(:csv) { [] }
@@ -18,14 +19,11 @@ module Exporters
     context "run" do
 
       before do
-        Adapters::TrelloAdapter.stub(request_archived_cards: [card_data])
-        Adapters::TrelloAdapter.stub(request_cards: [card_data])
+        Adapters::TrelloAdapter.stub(request_board: Trello::Board.new(cards: [card_data, card_data], lists: [list_data]))
         CSV.stub(:open).and_yield(csv)
       end
 
-      after { ExportBoardToCsv.run(Trello::Constants::CURRENT_SPRINT_BOARD_ID, "eraseme.txt") }
-
-      it("creates board") { expect(Trello::Board).to receive(:new).with([card_data]).and_return(Trello::Board.new([card_data])) }
+      after { ExportBoardToCsv.run(Trello::Constants::CURRENT_SPRINT_BOARD_ID, "tmp/eraseme.txt") }
 
       it("writes csv") do
         expect(csv).to receive("<<").once.ordered.with(Trello::Card.array_attributes)

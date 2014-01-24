@@ -5,10 +5,9 @@ module Trello
   describe Trello::Board do
     include JsonData
 
-    let(:card_data) { example_card_data }
-    let(:card) { Card.new(card_data) }
     let(:list_data) { example_list_data }
-    let(:list) { Trell::List.new(list_data) }
+    let(:card_data) { example_card_data({ "idList" => list_data["id"] }) }
+    let(:card) { Card.new(card_data) }
     let(:board) { Board.new({cards: [card_data, card_data], lists: [list_data]}) }
     
     subject { board }
@@ -21,6 +20,11 @@ module Trello
       its(:data) { should eql({cards: [card_data, card_data], lists: [list_data]}) }
       its(:cards) { should have(2).items }
       its(:lists) { should have(1).items }
+    end
+    
+    context "assigns list to cards" do
+      subject { board.cards.first.list }
+      its(:id) { should == list_data["id"] }
     end
   
     context "outputs to array" do

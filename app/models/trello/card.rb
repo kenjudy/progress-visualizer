@@ -3,6 +3,8 @@ module Trello
     
     attr_reader :id, :last_known_state, :date_last_activity, :description, :id_board, :id_list, :name, :short_link, :badges, :due, :labels, :short_url, :url
     
+    attr_accessor :list
+    
     def assign_attributes(data)
       @id = @data["id"]
       @closed = @data["closed"]

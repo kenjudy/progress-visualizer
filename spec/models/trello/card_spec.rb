@@ -17,6 +17,11 @@ module Trello
       its(:data) { should eql(card_data) }
     end
   
+    context "has list" do
+      subject { card.list = List.new({}) }
+      it { should be_instance_of(List)}
+    end
+    
     context "parses json" do
       its(:id) { should == "524478cbd6c2a2ec3a0001d0" }
       its(:last_known_state) { should == "complete" }

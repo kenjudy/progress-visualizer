@@ -7,9 +7,7 @@ module Exporters
     end
   
     def self.run(board_id, target_file)
-      json = Adapters::TrelloAdapter.request_archived_cards(board_id)
-      json += Adapters::TrelloAdapter.request_cards(board_id)
-      board = Trello::Board.new(json)
+      board = Adapters::TrelloAdapter.request_board(board_id)
       CSV.open(target_file, "ab") do |csv|
         csv << Trello::Card.array_attributes
         board.to_array.each { |arr| csv << arr }

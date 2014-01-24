@@ -8,7 +8,7 @@ module Charts
     let(:current_time) { Time.now }
     let(:card_data) { example_card_data }
     let(:card) { ::Trello::Card.new(card_data) }
-    let(:board) { ::Trello::Board.new([card_data,card_data.merge({"idList" => "done1"})])}
+    let(:board) { ::Trello::Board.new({cards: [card_data,card_data.merge({"idList" => "done1"})], lists: []})}
     let(:ready_for_development) { ::Trello::List.new(example_list_data)}
     let(:ready_for_signoff) { ::Trello::List.new({"id" => "signoff1", "name" => "Ready for Signoff"})}
     let(:done) { ::Trello::List.new({"id" => "done1", "name" => "Done"})}

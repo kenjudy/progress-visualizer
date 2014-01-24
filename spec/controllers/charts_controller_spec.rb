@@ -6,7 +6,7 @@ describe ChartsController do
   
   context "daily_burnup" do
     let(:card_data) { example_card_data }
-    let(:board) { Trello::Board.new([card_data]) }
+    let(:board) { Trello::Board.new(cards: [card_data], lists: []) }
     before { Adapters::TrelloAdapter.stub(daily_burnup: board) }
     
     subject do
