@@ -24,19 +24,9 @@ module Adapters
     end
     
     context "daily burnup" do
-      subject do
-        board = TrelloAdapter.daily_burnup
-        board.cards.first
-      end
+      subject { TrelloAdapter.daily_burnup }
       
-      before { TrelloAdapter.stub(request_board: board)}
-      
-      its(:id) { should == card.id }
-      
-      context "requests cards" do
-        after { TrelloAdapter.daily_burnup }
-        it { expect(TrelloAdapter).to receive(:request_board).with(Trello::Constants::CURRENT_SPRINT_BOARD_ID)}
-      end
+      it { should be_instance_of(Charts::DailyBurnup) }
     end
     
     context "request_board" do

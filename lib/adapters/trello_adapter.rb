@@ -8,7 +8,10 @@ module Adapters
     @credentials = {key: Trello::Constants::USER_KEY, token: Trello::Constants::READONLY_TOKEN}
     
     def self.daily_burnup
-      request_board(Trello::Constants::CURRENT_SPRINT_BOARD_ID)
+      board = request_board(Trello::Constants::CURRENT_SPRINT_BOARD_ID)
+      Charts::DailyBurnup.new(board, { done_list_ids: Trello::Constants::CURRENT_SPRINT_BOARD_DONE_LIST_IDS,
+                                       backlog_list_ids: Trello::Constants::CURRENT_SPRINT_BOARD_BACKLOG_LIST_IDS,
+                                       timestamp: Time.now})
     end
     
     def self.request_board(board_id, include_archived = false)

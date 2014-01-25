@@ -1,26 +1,43 @@
 module Charts
   class DailyBurnup
-    attr_accessor :done_lists, :backlog_lists, :timestamp
+    attr_accessor :done_list_ids, :backlog_list_ids, :timestamp
 
     def initialize(board, options = {})
       @board = board
       @timestamp = options[:timestamp] || Time.now
-      @done_lists = options[:done_lists]
-      @backlog_lists = options[:backlog_lists]
+      @done_list_ids = options[:done_list_ids]
+      @backlog_list_ids = options[:backlog_list_ids]
     end
     
     def current_progress
-      { timestamp: timestamp, done: sum_estimates(@done_lists), backlog: sum_estimates(@backlog_lists) }
+      done_stats = stats(@done_list_ids)
+      backlog_stats = stats(@backlog_list_ids)
+      BurnUp.create(timestamp: timestamp, done: done_stats[:count], done_estimates: done_stats[:sum], backlog: backlog_stats[:count], backlog_estimates: backlog_stats[:sum] )
+    end
+    
+    def self.current_burnup
+      end_of_week = Date.today.end_of_week
+      burnup_data(end_of_week - 7.days, end_of_week)
+    end
+    
+    def self.burnup_data(start_datetime, end_datetime)
+      BurnUp.where("timestamp > ? and timestamp <= ?", start_datetime, end_datetime)
     end
     
     private
     
-    def sum_estimates(lists)
+    def stats(list_ids)
       sum = 0
-      lists.each do |list|
-        @board.cards.each { |card| sum += card.estimate if list.id == card.id_list}
+      count = 0
+      list_ids.each do |list_id|
+        @board.cards.each do |card|
+          if list_id == card.id_list
+            sum += card.estimate
+            count += 1
+          end
+        end
       end
-      sum
+      {sum: sum, count: count}
     end
     
   end

@@ -2,6 +2,8 @@ ProgressVisualizer::Application.routes.draw do
   
   root 'charts#daily_burnup'
   
+  get 'charts/daily-burnup' => "charts#daily_burnup", as: 'charts_daily_burnup'
+  
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

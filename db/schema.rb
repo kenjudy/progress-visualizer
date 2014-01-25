@@ -11,6 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 20140125001059) do
+
+  create_table "burn_ups", force: true do |t|
+    t.datetime "timestamp"
+    t.integer  "backlog"
+    t.integer  "done"
+    t.float    "backlog_estimates"
+    t.float    "done_estimates"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
 end

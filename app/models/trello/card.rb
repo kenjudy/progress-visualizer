@@ -41,12 +41,16 @@ module Trello
       @id_short.to_i
     end
   
+    def list_name
+      list.name if list
+    end
+
     def to_array
-      self.class.array_attributes.map{ |attr| attr == "labels" ? labels.map{|lbl| lbl["name"] }.join(",") : self.send(attr.to_sym)}
+      arr = self.class.array_attributes.map{ |attr| attr == "labels" ? labels.map{|lbl| lbl["name"] }.join(",") : self.send(attr.to_sym)}
     end
 
     def self.array_attributes
-      %w(number estimate name last_known_state closed? date_last_activity due labels id id_board id_list short_link short_url url)
+      %w(number estimate name last_known_state closed? date_last_activity due labels id id_board short_link short_url url id_list list_name)
     end
     
     private

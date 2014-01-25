@@ -9,7 +9,7 @@ module Trello
     let(:card_data) { example_card_data }
     let(:card) { Card.new(card_data) }
     let(:card_arr) { card.to_array }
-    let(:card_array_attributes) { %w(number estimate name last_known_state closed? date_last_activity due labels id id_board id_list short_link short_url url) }
+    let(:card_array_attributes) { %w(number estimate name last_known_state closed? date_last_activity due labels id id_board short_link short_url url id_list list_name) }
 
     subject { card }
   
@@ -18,8 +18,9 @@ module Trello
     end
   
     context "has list" do
-      subject { card.list = List.new({}) }
-      it { should be_instance_of(List)}
+      before { card.list = List.new({"name" => "ListName"}) }
+      its(:list) { should be_instance_of(List) }
+      its(:list_name) { should == "ListName" }
     end
     
     context "parses json" do
