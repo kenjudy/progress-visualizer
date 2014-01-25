@@ -1,6 +1,6 @@
 namespace :charts do
   desc "Update burnup"
   task :burnup => :environment do
-    Adapters::TrelloAdapter.daily_burnup.current_progress
+    Charts::DailyBurnup.current_burnup(Adapters::TrelloAdapter).update_progress
   end
 end

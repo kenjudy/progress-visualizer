@@ -3,7 +3,7 @@ require 'csv'
 module Exporters
   class ExportBoardToCsv
     def self.export_current_sprint_board(target_file)
-      run(Trello::Constants::CURRENT_SPRINT_BOARD_ID, target_file)
+      run(Adapters::TrelloAdapter.current_sprint_board_properties[:id], target_file)
     end
   
     def self.run(board_id, target_file)

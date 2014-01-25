@@ -5,9 +5,9 @@ module Trello
     USER_KEY = TRELLO_CONFIG['user_key']
     READONLY_TOKEN = TRELLO_CONFIG['readonly_token']
     
-    CURRENT_SPRINT_BOARD_ID = TRELLO_CONFIG['current_sprint_board_id']
-    CURRENT_SPRINT_BOARD_BACKLOG_LIST_IDS = TRELLO_CONFIG['backlog_lists'] + TRELLO_CONFIG['done_lists']
-    CURRENT_SPRINT_BOARD_DONE_LIST_IDS = TRELLO_CONFIG['done_lists']
+    CURRENT_SPRINT_BOARD = { id: TRELLO_CONFIG['current_sprint_board']['id'],
+                             backlog_list_ids: TRELLO_CONFIG['current_sprint_board']['backlog_lists'] + TRELLO_CONFIG['current_sprint_board']['done_lists'],
+                             done_list_ids: TRELLO_CONFIG['current_sprint_board']['done_lists'] }
 
     #public
     TRELLO_API_ROOT_URL = "https://api.trello.com/1"

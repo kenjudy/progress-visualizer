@@ -27,7 +27,7 @@ module Charts
         subject.timestamp = Date.new(2014,1,1)
       end
     
-      its(:done_list_ids) { should == [done.id] }
+      its(:done_list_ids) { should == [done.id, ready_for_signoff.id] }
       its(:backlog_list_ids) { should == [ready_for_development.id,done.id] }
       its(:timestamp) { should == Date.new(2014,1,1) }
     end
@@ -37,16 +37,26 @@ module Charts
       its(:timestamp) { should_not be_nil }
     end
         
-    context "current_progress" do
-      after { subject.current_progress }
+    context "update_progress" do
+      after { subject.update_progress }
 
       it { expect(BurnUp).to receive(:create).with({:timestamp=>current_time, :done=>1, :done_estimates=>2.5, :backlog=>2, :backlog_estimates=>5.0})}
     end
     
-    context "current_burnup" do
-      after { DailyBurnup.current_burnup }
+    context "current_burnup_data" do
+      after { DailyBurnup.current_burnup_data }
       it { expect(DailyBurnup).to receive(:burnup_data).with(Date.today.end_of_week - 7.days, Date.today.end_of_week)}
     end
+    
+    context "cuurent burnup" do
+      before { Adapters::TrelloAdapter.stub(request_board: board) }
+      
+      subject { DailyBurnup.current_burnup(Adapters::TrelloAdapter) }
+      
+      it { should be_instance_of(Charts::DailyBurnup) }
+    end
+    
+  
     
   end
 end

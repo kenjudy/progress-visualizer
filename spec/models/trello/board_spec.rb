@@ -6,6 +6,7 @@ module Trello
     include JsonData
 
     let(:list_data) { example_list_data }
+    let(:list) { List.new(list_data) }
     let(:card_data) { example_card_data({ "idList" => list_data["id"] }) }
     let(:card) { Card.new(card_data) }
     let(:board) { Board.new({cards: [card_data, card_data], lists: [list_data]}) }
@@ -28,6 +29,7 @@ module Trello
     end
   
     context "outputs to array" do
+      before { card.list = list}
       subject { board.to_array }
     
       it { should == [card.to_array, card.to_array]}
@@ -43,6 +45,7 @@ module Trello
       end
       
       context "of cards" do
+        before { card.list = list}
         its(:last) { should == CSV.generate {|csv| csv << card.to_array }.chop }
       end
     end
