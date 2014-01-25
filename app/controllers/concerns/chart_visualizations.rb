@@ -12,8 +12,8 @@ module ChartVisualizations
     # Add Rows and Values
     data_table.add_rows(options[:data].map{ |burnup| [burnup[:timestamp], burnup[:backlog], burnup[:done]] })
   
-    GoogleVisualr::Interactive::AreaChart.new(data_table, { height: 600, 
-                                                            title: "Daily Burnup #{options[:label]}",
+    GoogleVisualr::Interactive::AreaChart.new(data_table, { title: "Daily Burnup #{options[:label]}",
+                                                            colors: ['#0000CC','#339933'],
                                                             areaOpacity: 0.05, 
                                                             titleTextStyle: {color: '#333333', fontSize: 24 },
                                                             hAxis: { textStyle: { color: '#999999'}, gridLines: { color: "#eee"} },

@@ -16,3 +16,8 @@
 #= require_tree .
 
 #= require bootstrap
+
+$ ->
+  $(window).resize ->
+    draw_stories_chart() if $("#stories_chart").length == 1
+    draw_estimates_chart() if $("#estimates_chart").length == 1
