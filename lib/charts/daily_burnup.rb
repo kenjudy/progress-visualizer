@@ -1,5 +1,6 @@
 module Charts
   class DailyBurnup
+    extend ::Visualizations
     
     attr_accessor :done_list_ids, :backlog_list_ids, :timestamp
 
@@ -16,7 +17,7 @@ module Charts
       BurnUp.create(timestamp: timestamp, done: done_stats[:count], done_estimates: done_stats[:sum], backlog: backlog_stats[:count], backlog_estimates: backlog_stats[:sum] )
     end
     
-    def self.current_burnup(adapter)
+    def self.current_burnup(adapter = default_adapter)
       board = adapter.request_board(adapter.current_sprint_board_properties[:id])
       Charts::DailyBurnup.new(board, { done_list_ids: adapter.current_sprint_board_properties[:done_list_ids],
                                        backlog_list_ids: adapter.current_sprint_board_properties[:backlog_list_ids],
@@ -25,8 +26,7 @@ module Charts
     
     
     def self.current_burnup_data
-      end_of_week = Date.today.end_of_week
-      burnup_data(end_of_week - 7.days, end_of_week)
+      burnup_data(beginning_of_current_iteration, end_of_current_iteration)
     end
     
     def self.burnup_data(start_datetime, end_datetime)

@@ -1,7 +1,7 @@
 module Trello
   class Card < TrelloObject
     
-    attr_reader :id, :last_known_state, :date_last_activity, :description, :id_board, :id_list, :name, :short_link, :badges, :due, :labels, :short_url, :url
+    attr_reader :id, :last_known_state, :date_last_activity, :description, :id_board, :id_list, :id_short, :name, :short_link, :badges, :due, :labels, :short_url, :url
     
     attr_accessor :list
     
@@ -50,7 +50,7 @@ module Trello
     end
 
     def self.array_attributes
-      %w(number estimate name last_known_state closed? date_last_activity due labels id id_board short_link short_url url id_list list_name)
+      %w(number estimate name last_known_state closed? date_last_activity due labels id id_short id_board short_link short_url url id_list list_name)
     end
     
     private

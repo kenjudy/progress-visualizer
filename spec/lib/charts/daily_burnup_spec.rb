@@ -45,7 +45,7 @@ module Charts
     
     context "current_burnup_data" do
       after { DailyBurnup.current_burnup_data }
-      it { expect(DailyBurnup).to receive(:burnup_data).with(Date.today.end_of_week - 7.days, Date.today.end_of_week)}
+      it { expect(DailyBurnup).to receive(:burnup_data).with(Date.today.end_of_week - 6.days, Date.today.end_of_week)}
     end
     
     context "cuurent burnup" do

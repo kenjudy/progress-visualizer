@@ -12,6 +12,7 @@ describe Trello::Constants do
       its([:id]) { should_not be_nil }
       its([:backlog_list_ids]) { should have_at_least(1).item }
       its([:done_list_ids]) { should have_at_least(Trello::Constants::CURRENT_SPRINT_BOARD[:done_list_ids].length).items }
+      its([:labels_types_of_work]) { should have_at_least(Trello::Constants::CURRENT_SPRINT_BOARD[:labels_types_of_work].length).items }
     end
   end
   

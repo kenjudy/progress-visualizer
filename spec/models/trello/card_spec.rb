@@ -9,7 +9,7 @@ module Trello
     let(:card_data) { example_card_data }
     let(:card) { Card.new(card_data) }
     let(:card_arr) { card.to_array }
-    let(:card_array_attributes) { %w(number estimate name last_known_state closed? date_last_activity due labels id id_board short_link short_url url id_list list_name) }
+    let(:card_array_attributes) { %w(number estimate name last_known_state closed? date_last_activity due labels id id_short id_board short_link short_url url id_list list_name) }
 
     subject { card }
   

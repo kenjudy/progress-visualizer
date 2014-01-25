@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140125001059) do
+ActiveRecord::Schema.define(version: 20140125214256) do
 
   create_table "burn_ups", force: true do |t|
     t.datetime "timestamp"
@@ -19,6 +19,18 @@ ActiveRecord::Schema.define(version: 20140125001059) do
     t.integer  "done"
     t.float    "backlog_estimates"
     t.float    "done_estimates"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "done_stories", force: true do |t|
+    t.date     "timestamp"
+    t.string   "iteration"
+    t.string   "type_of_work"
+    t.string   "status"
+    t.string   "story_id"
+    t.string   "story"
+    t.float    "estimate"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

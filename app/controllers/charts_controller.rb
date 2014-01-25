@@ -1,4 +1,3 @@
-
 class ChartsController < ApplicationController
   include ChartVisualizations
   
