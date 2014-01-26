@@ -27,14 +27,16 @@ module ChartVisualizations
                                                             trendlines: { 1 => {} }})
   end
   
-  def yesterdays_weather_visualization(label = :estimate)
+  def yesterdays_weather_visualization(options)
+    label = options[:label] || :estimate
+    weeks = options[:weeks] || 3
     data_table = GoogleVisualr::DataTable.new
     data_table.new_column('string', 'timestamp' )
     data_table.new_column('number', 'committed' )
     data_table.new_column('number', 'contingent' )
     data_table.new_column('number', 'inserted' )
     
-    data_table.add_rows(yesterdays_weather_data_rows(label))
+    data_table.add_rows(yesterdays_weather_data_rows(label, weeks))
     GoogleVisualr::Interactive::ColumnChart.new(data_table, { title: "Yesterday's Weather for #{label.to_s.titleize.pluralize}",
                                                               colors: [@@blue, @@green, @@red],
                                                               titleTextStyle: {color: '#333333', fontSize: 24 },
@@ -45,14 +47,14 @@ module ChartVisualizations
   
   end
   
-  def long_term_trend_visualization
+  def long_term_trend_visualization(weeks = 10)
     data_table = GoogleVisualr::DataTable.new
     data_table.new_column('date', 'timestamp' )
     data_table.new_column('number', "estimates")
     data_table.new_column('number', "stories")
     
     # Add Rows and Values
-    data_table.add_rows(long_term_trend_visualization_rows)
+    data_table.add_rows(long_term_trend_visualization_rows(weeks))
   
     GoogleVisualr::Interactive::AreaChart.new(data_table, { title: "Long Term Trend",
                                                             colors: [@@blue,@@green],
@@ -66,8 +68,8 @@ module ChartVisualizations
                                                           })
   end
 
-  def long_term_trend_visualization_rows
-    DoneStory.select_yesterdays_weather(10).values.map do |stat|
+  def long_term_trend_visualization_rows(weeks = 10)
+    DoneStory.select_yesterdays_weather(weeks).values.map do |stat|
       [stat[:timestamp], 
         stat[:effort]["Committed"] ? stat[:effort]["Committed"][:estimate] : 0 +
         stat[:effort]["Contingent"] ? stat[:effort]["Contingent"][:estimate] : 0 +
@@ -79,8 +81,8 @@ module ChartVisualizations
     end
   end
   
-  def yesterdays_weather_data_rows(label)
-    DoneStory.select_yesterdays_weather.values.map do |stat|
+  def yesterdays_weather_data_rows(label, weeks)
+    DoneStory.select_yesterdays_weather(weeks).values.map do |stat|
       [stat[:timestamp].to_s, 
         stat[:effort]["Committed"] ? stat[:effort]["Committed"][label] : 0, 
         stat[:effort]["Contingent"] ? stat[:effort]["Contingent"][label] : 0, 

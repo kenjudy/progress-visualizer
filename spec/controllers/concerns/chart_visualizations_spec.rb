@@ -28,7 +28,7 @@ describe ChartVisualizations do
 
   context "yesterdays_weather_data_rows" do
     
-    subject { yesterdays_weather_data_rows(:estimate) }
+    subject { yesterdays_weather_data_rows(:estimate, 3) }
 
     it { should == [[(date - 2.weeks).strftime("%F"), 4.0, 4.0, 4.0], [(date - 1.week).strftime("%F"), 4.0, 4.0, 4.0], [(date).strftime("%F"), 4.0, 4.0, 4.0]] }
   end

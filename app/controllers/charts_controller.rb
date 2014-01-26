@@ -10,12 +10,14 @@ class ChartsController < ApplicationController
   end
   
   def yesterdays_weather
-    @yesterdays_weather_chart_estimate_chart = yesterdays_weather_visualization(:estimate)
-    @yesterdays_weather_chart_stories_chart = yesterdays_weather_visualization(:stories)
+    weeks = params[:weeks] ? params[:weeks].to_i : 3
+    @yesterdays_weather_chart_estimate_chart = yesterdays_weather_visualization({label: :estimate, weeks: weeks})
+    @yesterdays_weather_chart_stories_chart = yesterdays_weather_visualization({label: :stories, weeks: weeks})
   end
   
   def long_term_trend
-    @long_term_trend_chart = long_term_trend_visualization
+    weeks = params[:weeks] ? params[:weeks].to_i : 10
+    @long_term_trend_chart = long_term_trend_visualization(weeks)
   end
   
 end
