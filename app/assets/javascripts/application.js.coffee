@@ -21,3 +21,6 @@ $ ->
   $(window).resize ->
     draw_stories_chart() if $("#stories_chart").length == 1
     draw_estimates_chart() if $("#estimates_chart").length == 1
+    draw_yesterdays_weather_chart_estimate_chart() if $("#yesterdays_weather_chart_estimate_chart").length == 1
+    draw_yesterdays_weather_chart_stories_chart() if $("#yesterdays_weather_chart_stories_chart").length == 1
+    draw_long_term_trend_chart() if $("#long_term_trend_chart").length == 1

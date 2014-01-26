@@ -5,6 +5,14 @@ require 'jquery-rails'
 require 'turbolinks'
 require 'google_visualr'
 
+if Rails.env == "development"
+  require 'better_errors'
+  require 'binding_of_caller'
+  require 'pry-remote'
+  require 'pry-rails'
+  require 'pry-rescue'
+end
+
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 #Bundler.require(:default, Rails.env)

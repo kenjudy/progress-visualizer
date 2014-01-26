@@ -1,4 +1,4 @@
-#*/60 06-18 * * * cd /Users/kenhjudy/dev/progress-visulizer;rake charts:burnup
+#* 6 * * 1 * * * cd /Users/kenhjudy/dev/progress-visulizer;rake tables:overview
 
 namespace :tables do
   desc "Update overview"
