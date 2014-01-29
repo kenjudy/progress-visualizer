@@ -1,6 +1,6 @@
 module Charts
   class DailyBurnup
-    extend ::Visualizations
+    extend BaseVisualization
     
     attr_accessor :done_list_ids, :backlog_list_ids, :timestamp
 

@@ -5,10 +5,10 @@ require 'json'
 module Adapters
   class TrelloAdapter
     
-    @credentials = {key: Trello::Constants::USER_KEY, token: Trello::Constants::READONLY_TOKEN}
+    @credentials = {key: Constants::TRELLO[:user_key], token: Constants::TRELLO[:readonly_token]}
     
     def self.current_sprint_board_properties
-      Trello::Constants::CURRENT_SPRINT_BOARD
+      Constants::CURRENT_SPRINT_BOARD
     end
         
     def self.request_board(board_id, include_archived = false)
@@ -35,21 +35,21 @@ module Adapters
     end
     
     def self.request_archived_cards_data(board_id)
-      request_json(Trello::Constants::TRELLO_EXPORT_ARCHIVED_CARDS_PATH, {board_id: board_id})
+      request_json(Constants::TRELLO[:export_archived_cards_path], {board_id: board_id})
     end
     
     def self.request_cards_data(board_id)
-      request_json(Trello::Constants::TRELLO_EXPORT_CARDS_PATH, {board_id: board_id})
+      request_json(Constants::TRELLO[:export_cards_path], {board_id: board_id})
     end
     
     def self.request_lists_data(board_id)
-      request_json(Trello::Constants::TRELLO_BOARD_LISTS_PATH, {board_id: board_id})
+      request_json(Constants::TRELLO[:board_lists_path], {board_id: board_id})
     end
     
     private
     
     def self.request_json(url_template, options)
-      url = "#{Trello::Constants::TRELLO_API_ROOT_URL}#{url_template}"
+      url = "#{Constants::TRELLO[:api_root_url]}#{url_template}"
       options.merge(@credentials).each { |key,value| url.gsub!("<#{key.to_s.upcase}>", value) }
       return JSON.parse(URI.parse(url).read)
     end

@@ -1,4 +1,4 @@
-module ChartVisualizations
+module Charts::ChartsPresenter
   extend ActiveSupport::Concern
   
   @@green = "#3D7477"
@@ -11,10 +11,8 @@ module ChartVisualizations
     data_table.new_column('number', "Backlog by #{options[:label]}")
     data_table.new_column('number', "Complete by #{options[:label]}")
   
-    #GoogleVisualr::DateFormat.new( { :formatType => 'short'  } )
-  
     # Add Rows and Values
-    data_table.add_rows(options[:data].map{ |burnup| [burnup[:timestamp], burnup[:backlog], burnup[:done]] })
+    data_table.add_rows(burnup_rows(options[:data]))
   
     GoogleVisualr::Interactive::AreaChart.new(data_table, { title: "Daily Burnup #{options[:label]}",
                                                             colors: [@@blue,@@green],
@@ -66,6 +64,10 @@ module ChartVisualizations
                                                             lineWidth: 2, 
                                                             trendlines: { 1 => {}, 0 => {} }
                                                           })
+  end
+  
+  def burnup_rows(data)
+    data.map{ |burnup| [burnup[:timestamp], burnup[:backlog], burnup[:done]] }
   end
 
   def long_term_trend_visualization_rows(weeks = 10)

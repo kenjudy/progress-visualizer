@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe ChartVisualizations do
-  include ChartVisualizations
+describe Charts::ChartsPresenter do
+  include Charts::ChartsPresenter
   
   let(:date) { Date.today.end_of_week }
   before do
@@ -19,6 +19,15 @@ describe ChartVisualizations do
                                              "Inserted"=>{:type=>"Inserted", :estimate=>4.0, :stories=>4}}}} )
   end 
 
+  context "burnup_rows" do
+    let(:timestamp) { Time.now }
+    let(:data) {  (0..3).map { |i| FactoryGirl.build(:burn_up, timestamp: timestamp - i.days) } }
+    before { Charts::DailyBurnup.stub(current_burnup_data: data) }
+    subject { burnup_rows(data) }
+    
+    it { should == [[timestamp, 16, 4], [timestamp - 1.day, 16, 4], [timestamp - 2.days, 16, 4], [timestamp - 3 .days, 16, 4]] }
+    
+  end
   context "long_term_trend_visualization_rows" do
     
     subject { long_term_trend_visualization_rows }

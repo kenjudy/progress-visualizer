@@ -1,5 +1,5 @@
 class ChartsController < ApplicationController
-  include ChartVisualizations
+  include Charts::ChartsPresenter
   
   def daily_burnup
     data = Charts::DailyBurnup.current_burnup_data

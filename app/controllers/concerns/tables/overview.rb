@@ -1,6 +1,7 @@
 module Tables
   class Overview
-    extend Visualizations
+    extend ActiveSupport::Concern
+    extend BaseVisualization
 
     def self.current_overview(adapter = default_adapter)
       board = adapter.request_board(adapter.current_sprint_board_properties[:id])

@@ -1,14 +1,14 @@
-module Visualizations
+module BaseVisualization
   
   def default_adapter
     Adapters::TrelloAdapter
   end
   
   def end_of_current_iteration
-    Date.today.end_of_week
+    Constants::ITERATION[:iteration_end]
   end
   
   def beginning_of_current_iteration
-    Date.today.end_of_week - 6.days
+    Constants::ITERATION[:iteration_start]
   end
 end
