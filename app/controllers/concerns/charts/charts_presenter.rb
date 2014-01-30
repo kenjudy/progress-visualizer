@@ -67,6 +67,7 @@ module Charts::ChartsPresenter
   end
   
   def burnup_rows(data)
+    #end_of_current_iteration
     data.map{ |burnup| [burnup[:timestamp], burnup[:backlog], burnup[:done]] }
   end
 
