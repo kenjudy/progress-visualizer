@@ -4,6 +4,13 @@ module Charts::ChartsPresenter
   @@green = "#3D7477"
   @@blue = "#091D58"
   @@red = "#991238"
+  
+  @@default_properties = { colors: [@@blue,@@green, @@red],
+                                    areaOpacity: 0.05, 
+                                    titleTextStyle: {color: @@green, fontSize: 24 },
+                                    hAxis: { textStyle: { color: '#999999'}, gridLines: { color: "#eee"}, format:'MMM d, y hh:mma' },
+                                    vAxis: { textStyle: { color: '#999999'}, gridLines: { color: "#eee"} },
+                                    legend: {position: 'bottom', alignment: 'center'}}
 
   def burn_up_chart_visualization(options)
     data_table = GoogleVisualr::DataTable.new
@@ -14,15 +21,9 @@ module Charts::ChartsPresenter
     # Add Rows and Values
     data_table.add_rows(burn_up_rows(options[:data]))
   
-    GoogleVisualr::Interactive::AreaChart.new(data_table, { title: "Daily BurnUpChart #{options[:label]}",
-                                                            colors: [@@blue,@@green],
-                                                            areaOpacity: 0.05, 
-                                                            titleTextStyle: {color: @@green, fontSize: 24 },
-                                                            hAxis: { textStyle: { color: '#999999'}, gridLines: { color: "#eee"} },
-                                                            vAxis: { textStyle: { color: '#999999'}, gridLines: { color: "#eee"} },
-                                                            legend: {position: 'bottom', alignment: 'center'},  
-                                                            lineWidth: 6, 
-                                                            trendlines: { 1 => {} }})
+    GoogleVisualr::Interactive::AreaChart.new(data_table, @@default_properties.merge({ title: "Burn Up Chart #{options[:label]}",
+                                                                                        lineWidth: 6, 
+                                                                                        trendlines: { 1 => {} }}))
   end
   
   def yesterdays_weather_visualization(options)
@@ -35,13 +36,8 @@ module Charts::ChartsPresenter
     data_table.new_column('number', 'inserted' )
     
     data_table.add_rows(yesterdays_weather_data_rows(label, weeks))
-    GoogleVisualr::Interactive::ColumnChart.new(data_table, { title: "Yesterday's Weather for #{label.to_s.titleize.pluralize}",
-                                                              colors: [@@blue, @@green, @@red],
-                                                              titleTextStyle: {color: '#333333', fontSize: 24 },
-                                                              areaOpacity: 0.05, 
-                                                              legend: {position: 'bottom', alignment: 'center'},  
-                                                             isStacked: true
-                                                            })
+    GoogleVisualr::Interactive::ColumnChart.new(data_table, @@default_properties.merge({ title: "Yesterday's Weather for #{label.to_s.titleize.pluralize}",
+                                                                                         isStacked: true }))
   
   end
   
@@ -54,25 +50,18 @@ module Charts::ChartsPresenter
     # Add Rows and Values
     data_table.add_rows(long_term_trend_visualization_rows(weeks))
   
-    GoogleVisualr::Interactive::AreaChart.new(data_table, { title: "Long Term Trend",
-                                                            colors: [@@blue,@@green],
-                                                            areaOpacity: 0.05, 
-                                                            titleTextStyle: {color: @@green, fontSize: 24 },
-                                                            hAxis: { textStyle: { color: '#999999'}, gridLines: { color: "#eee"} },
-                                                            vAxis: { textStyle: { color: '#999999'}, gridLines: { color: "#eee"} },
-                                                            legend: {position: 'bottom', alignment: 'center'},  
-                                                            lineWidth: 2, 
-                                                            trendlines: { 1 => {}, 0 => {} }
-                                                          })
+    GoogleVisualr::Interactive::AreaChart.new(data_table, @@default_properties.merge({ title: "Long Term Trend",
+                                                                                       hAxis: { textStyle: { color: '#999999'}, gridLines: { color: "#eee"}, format:'M/d' },
+                                                                                       lineWidth: 2, 
+                                                                                       trendlines: { 1 => {}, 0 => {} }}))
   end
   
   def burn_up_rows(data)
-    #end_of_current_iteration
     data.map{ |burn_up| [burn_up[:timestamp], burn_up[:backlog], burn_up[:done]] }
   end
 
   def long_term_trend_visualization_rows(weeks = 10)
-    DoneStory.select_yesterdays_weather(weeks).values.map do |stat|
+    DoneStory.select_done_stories(weeks).values.map do |stat|
       [stat[:timestamp], 
         stat[:effort]["Committed"] ? stat[:effort]["Committed"][:estimate] : 0 +
         stat[:effort]["Contingent"] ? stat[:effort]["Contingent"][:estimate] : 0 +
@@ -85,7 +74,7 @@ module Charts::ChartsPresenter
   end
   
   def yesterdays_weather_data_rows(label, weeks)
-    DoneStory.select_yesterdays_weather(weeks).values.map do |stat|
+    DoneStory.select_done_stories(weeks).values.map do |stat|
       [stat[:timestamp].to_s, 
         stat[:effort]["Committed"] ? stat[:effort]["Committed"][label] : 0, 
         stat[:effort]["Contingent"] ? stat[:effort]["Contingent"][label] : 0, 
