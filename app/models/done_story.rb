@@ -1,8 +1,8 @@
 class DoneStory < ActiveRecord::Base
   
-  def self.select_yesterdays_weather(range = 3)
+  def self.select_done_stories(range = 3)
     data = {}
-    records = DoneStory.select("timestamp, type_of_work, count(*) as stories, sum(estimate) as estimate").group("timestamp, type_of_work").order("timestamp").where('timestamp > ?', Date.today - range.weeks)
+    records = DoneStory.select("timestamp, type_of_work, count(*) as stories, sum(estimate) as estimate").group("timestamp, type_of_work").order("timestamp").where('timestamp > ?', Date.today - range.weeks - 1.week)
     records.each do |record|
       timestamp = record["timestamp"]
       row = data[timestamp] || {timestamp: timestamp}
