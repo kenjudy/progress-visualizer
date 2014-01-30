@@ -61,24 +61,27 @@ module Charts::ChartsPresenter
   end
 
   def long_term_trend_visualization_rows(weeks = 10)
-    DoneStory.done_stories_data(weeks).values.map do |stat|
-      [stat[:timestamp], 
-        stat[:effort]["Committed"] ? stat[:effort]["Committed"][:estimate] : 0 +
-        stat[:effort]["Contingent"] ? stat[:effort]["Contingent"][:estimate] : 0 +
-        stat[:effort]["Inserted"] ? stat[:effort]["Inserted"][:estimate] : 0,
-        stat[:effort]["Committed"] ? stat[:effort]["Committed"][:stories] : 0 +
-        stat[:effort]["Contingent"] ? stat[:effort]["Contingent"][:stories] : 0 +
-        stat[:effort]["Inserted"] ? stat[:effort]["Inserted"][:stories] : 0,
-      ]
+    data = {}
+    DoneStory.done_stories_data(weeks).each do |done_story|
+      timestamp = done_story.timestamp
+      data[timestamp] ||= [timestamp, 0, 0]
+      data[timestamp][1] += done_story.estimate
+      data[timestamp][2] += 1
     end
+    data.values.sort { |a,b| a[0] <=> b[0] }
   end
   
   def yesterdays_weather_data_rows(label, weeks)
-    DoneStory.done_stories_data(weeks).values.map do |stat|
-      [stat[:timestamp].to_s, 
-        stat[:effort]["Committed"] ? stat[:effort]["Committed"][label] : 0, 
-        stat[:effort]["Contingent"] ? stat[:effort]["Contingent"][label] : 0, 
-        stat[:effort]["Inserted"] ? stat[:effort]["Inserted"][label] : 0 ]
+    data = {}
+    DoneStory.done_stories_data(weeks).each do |done_story|
+      timestamp = done_story.timestamp.to_s
+      data[timestamp] = data[timestamp] ||= [timestamp, 0, 0, 0]
+
+      value = label == :estimate ? done_story.estimate : 1
+      data[timestamp][1] += done_story.type_of_work.downcase == "committed" ? value : 0
+      data[timestamp][3] += done_story.type_of_work.downcase == "inserted" ? value : 0
+      data[timestamp][2] += done_story.type_of_work.downcase !~ /(committed)|(inserted)/ ? value : 0
     end
+    data.values.sort { |a,b| a[0] <=> b[0] }
   end
 end

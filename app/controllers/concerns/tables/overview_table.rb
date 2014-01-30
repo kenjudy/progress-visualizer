@@ -29,7 +29,7 @@ module Tables
       results = current(adapter)
       results[:lists].keys.each do |type_of_work|
         results[:lists][type_of_work][:cards].each do |card|
-          story = DoneStory.find_or_initialize_by(story_id: card.id_short)
+          story = DoneStory.find_or_initialize_by(story_id: card.id_short.to_s)
           attribs = { type_of_work: type_of_work,
                      status: card.list_name,
                      story: card.name,

@@ -6,19 +6,17 @@ module Charts
     include ChartsPresenter
   
     let(:date) { Date.today.end_of_week }
+    let(:done_stories) do
+      done_stories = [0,1.week,2.weeks].map do |weeks|
+        [(0..3).map { FactoryGirl.build(:done_story, type_of_work: "Committed", timestamp: date - weeks, estimate: 2) } ,
+        (0..3).map { FactoryGirl.build(:done_story, type_of_work: "Contingent", timestamp: date - weeks, estimate: 3) } ,
+        (0..3).map { FactoryGirl.build(:done_story, type_of_work: "Inserted", timestamp: date - weeks, estimate: 4) } ]
+      end.flatten
+    end
+
+
     before do
-      DoneStory.stub(done_stories_data: {date - 2.weeks => {:timestamp=>date - 2.weeks, 
-                                            :effort=>{"Committed"=>{:type=>"Committed", :estimate=>4.0, :stories=>4}, 
-                                              "Contingent"=>{:type=>"Contingent", :estimate=>4.0, :stories=>4}, 
-                                              "Inserted"=>{:type=>"Inserted", :estimate=>4.0, :stories=>4}}}, 
-                    date - 1.week =>  {:timestamp=>date - 1.week, 
-                                            :effort=>{"Committed"=>{:type=>"Committed", :estimate=>4.0, :stories=>4}, 
-                                              "Contingent"=>{:type=>"Contingent", :estimate=>4.0, :stories=>4}, 
-                                              "Inserted"=>{:type=>"Inserted", :estimate=>4.0, :stories=>4}}}, 
-                    date =>           {:timestamp=>date, 
-                                             :effort=>{"Committed"=>{:type=>"Committed", :estimate=>4.0, :stories=>4}, 
-                                               "Contingent"=>{:type=>"Contingent", :estimate=>4.0, :stories=>4}, 
-                                               "Inserted"=>{:type=>"Inserted", :estimate=>4.0, :stories=>4}}}} )
+      DoneStory.stub(done_stories_data:  done_stories)
     end 
 
     context "burn_up_rows" do
@@ -34,14 +32,14 @@ module Charts
     
       subject { long_term_trend_visualization_rows }
 
-      it { should == [[date - 2.weeks, 4.0, 4.0], [date - 1.week, 4.0, 4.0], [date, 4.0, 4.0]] }
+      it { should == [[date - 2.weeks, 36.0, 12], [date - 1.week, 36.0, 12], [date, 36.0, 12]] }
     end
 
     context "yesterdays_weather_data_rows" do
     
       subject { yesterdays_weather_data_rows(:estimate, 3) }
 
-      it { should == [[(date - 2.weeks).strftime("%F"), 4.0, 4.0, 4.0], [(date - 1.week).strftime("%F"), 4.0, 4.0, 4.0], [(date).strftime("%F"), 4.0, 4.0, 4.0]] }
+      it { should == [[(date - 2.weeks).strftime("%F"), 8.0, 12.0, 16.0], [(date - 1.week).strftime("%F"), 8.0, 12.0, 16.0], [(date).strftime("%F"), 8.0, 12.0, 16.0]] }
     end
   end
 end
