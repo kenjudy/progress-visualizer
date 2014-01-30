@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe DoneStory do
-  context "select_done_stories" do
+  context "done_stories_data" do
     before do
       [0,6,12].each do |days|
         (0..3).each { FactoryGirl.create(:done_story, type_of_work: "Committed", timestamp: Date.today - days) } 
@@ -10,7 +10,7 @@ describe DoneStory do
       end
     end 
     
-    subject { DoneStory.select_done_stories }
+    subject { DoneStory.done_stories_data }
     
     it { should == {Date.today - 12.days => {:timestamp=>Date.today - 12.days, 
                                             :effort=>{"Committed"=>{:type=>"Committed", :estimate=>4.0, :stories=>4}, 

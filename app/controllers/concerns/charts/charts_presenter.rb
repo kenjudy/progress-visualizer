@@ -61,7 +61,7 @@ module Charts::ChartsPresenter
   end
 
   def long_term_trend_visualization_rows(weeks = 10)
-    DoneStory.select_done_stories(weeks).values.map do |stat|
+    DoneStory.done_stories_data(weeks).values.map do |stat|
       [stat[:timestamp], 
         stat[:effort]["Committed"] ? stat[:effort]["Committed"][:estimate] : 0 +
         stat[:effort]["Contingent"] ? stat[:effort]["Contingent"][:estimate] : 0 +
@@ -74,7 +74,7 @@ module Charts::ChartsPresenter
   end
   
   def yesterdays_weather_data_rows(label, weeks)
-    DoneStory.select_done_stories(weeks).values.map do |stat|
+    DoneStory.done_stories_data(weeks).values.map do |stat|
       [stat[:timestamp].to_s, 
         stat[:effort]["Committed"] ? stat[:effort]["Committed"][label] : 0, 
         stat[:effort]["Contingent"] ? stat[:effort]["Contingent"][label] : 0, 
