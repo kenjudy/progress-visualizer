@@ -11,7 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140125214256) do
+ActiveRecord::Schema.define(version: 20140130033715) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "burn_ups", force: true do |t|
     t.datetime "timestamp"
@@ -34,5 +37,7 @@ ActiveRecord::Schema.define(version: 20140125214256) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "done_stories", ["story_id"], name: "index_done_stories_on_story_id", unique: true, using: :btree
 
 end
