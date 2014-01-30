@@ -1,12 +1,12 @@
 class ChartsController < ApplicationController
   include Charts::ChartsPresenter
   
-  def daily_burnup
-    data = Charts::DailyBurnup.current_burnup_data
+  def burn_up
+    data = Charts::BurnUpChart.current_burn_up_data
         
-    @estimates_chart = burnup_chart_visualization({label: "Estimates", data:  data.map{ |burnup| { timestamp: burnup.timestamp, backlog: burnup.backlog_estimates, done: burnup.done_estimates} }})
+    @estimates_chart = burn_up_chart_visualization({label: "Estimates", data:  data.map{ |burn_up| { timestamp: burn_up.timestamp, backlog: burn_up.backlog_estimates, done: burn_up.done_estimates} }})
 
-    @stories_chart = burnup_chart_visualization({label: "Story Counts", data:  data.map{ |burnup| { timestamp: burnup.timestamp, backlog: burnup.backlog, done: burnup.done} }})
+    @stories_chart = burn_up_chart_visualization({label: "Story Counts", data:  data.map{ |burn_up| { timestamp: burn_up.timestamp, backlog: burn_up.backlog, done: burn_up.done} }})
   end
   
   def yesterdays_weather

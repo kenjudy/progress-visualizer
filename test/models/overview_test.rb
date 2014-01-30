@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class OverviewTest < ActiveSupport::TestCase
+class OverviewTableTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

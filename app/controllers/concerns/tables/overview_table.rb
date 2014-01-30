@@ -1,9 +1,9 @@
 module Tables
-  class Overview
+  class OverviewTable
     extend ActiveSupport::Concern
     extend BaseVisualization
 
-    def self.current_overview(adapter = default_adapter)
+    def self.current(adapter = default_adapter)
       board = adapter.request_board(adapter.current_sprint_board_properties[:id])
       types_of_work = adapter.current_sprint_board_properties[:labels_types_of_work]
       done_list_ids = adapter.current_sprint_board_properties[:done_list_ids]
@@ -26,7 +26,7 @@ module Tables
     end
     
     def self.update(adapter = default_adapter)
-      results = current_overview(adapter)
+      results = current(adapter)
       results[:lists].keys.each do |type_of_work|
         results[:lists][type_of_work][:cards].each do |card|
           DoneStory.create(timestamp: beginning_of_current_iteration, 

@@ -1,5 +1,5 @@
 module Charts
-  class DailyBurnup
+  class BurnUpChart
     extend ActiveSupport::Concern
     extend ::BaseVisualization
     
@@ -12,26 +12,22 @@ module Charts
       @backlog_list_ids = options[:backlog_list_ids]
     end
     
-    def update_progress
+    def update
       done_stats = stats(@done_list_ids)
       backlog_stats = stats(@backlog_list_ids)
       BurnUp.create(timestamp: timestamp, done: done_stats[:count], done_estimates: done_stats[:sum], backlog: backlog_stats[:count], backlog_estimates: backlog_stats[:sum] )
     end
     
-    def self.current_burnup(adapter = default_adapter)
+    def self.current(adapter = default_adapter)
       board = adapter.request_board(adapter.current_sprint_board_properties[:id])
-      Charts::DailyBurnup.new(board, { done_list_ids: adapter.current_sprint_board_properties[:done_list_ids],
+      Charts::BurnUpChart.new(board, { done_list_ids: adapter.current_sprint_board_properties[:done_list_ids],
                                        backlog_list_ids: adapter.current_sprint_board_properties[:backlog_list_ids],
                                        timestamp: Time.now})
     end
     
     
-    def self.current_burnup_data
-      burnup_data(beginning_of_current_iteration, end_of_current_iteration)
-    end
-    
-    def self.burnup_data(start_datetime, end_datetime)
-      BurnUp.where("timestamp > ? and timestamp <= ?", start_datetime, end_datetime)
+    def self.current_burn_up_data
+      BurnUp.burn_up_data(beginning_of_current_iteration, end_of_current_iteration)
     end
     
     private

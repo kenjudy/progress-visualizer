@@ -5,16 +5,16 @@ module Charts::ChartsPresenter
   @@blue = "#091D58"
   @@red = "#991238"
 
-  def burnup_chart_visualization(options)
+  def burn_up_chart_visualization(options)
     data_table = GoogleVisualr::DataTable.new
     data_table.new_column('datetime', 'Timestamp' )
     data_table.new_column('number', "Backlog by #{options[:label]}")
     data_table.new_column('number', "Complete by #{options[:label]}")
   
     # Add Rows and Values
-    data_table.add_rows(burnup_rows(options[:data]))
+    data_table.add_rows(burn_up_rows(options[:data]))
   
-    GoogleVisualr::Interactive::AreaChart.new(data_table, { title: "Daily Burnup #{options[:label]}",
+    GoogleVisualr::Interactive::AreaChart.new(data_table, { title: "Daily BurnUpChart #{options[:label]}",
                                                             colors: [@@blue,@@green],
                                                             areaOpacity: 0.05, 
                                                             titleTextStyle: {color: @@green, fontSize: 24 },
@@ -66,9 +66,9 @@ module Charts::ChartsPresenter
                                                           })
   end
   
-  def burnup_rows(data)
+  def burn_up_rows(data)
     #end_of_current_iteration
-    data.map{ |burnup| [burnup[:timestamp], burnup[:backlog], burnup[:done]] }
+    data.map{ |burn_up| [burn_up[:timestamp], burn_up[:backlog], burn_up[:done]] }
   end
 
   def long_term_trend_visualization_rows(weeks = 10)

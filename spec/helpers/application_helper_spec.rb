@@ -4,8 +4,8 @@ describe ApplicationHelper do
   
   context "active" do
     let(:request) { double("Request").as_null_object }
-    before { request.stub(fullpath: charts_daily_burnup_path)}
-    subject { active(charts_daily_burnup_path) }
+    before { request.stub(fullpath: charts_burn_up_path)}
+    subject { active(charts_burn_up_path) }
     it { should == "active" }
     context "no match" do
       before { request.stub(fullpath: tables_overview_path)}

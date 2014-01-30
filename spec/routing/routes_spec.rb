@@ -4,13 +4,13 @@ describe "routes" do
   
   context "homepage" do
     subject { { get: "/" } }
-    it { should route_to(controller: "charts", action: "daily_burnup")}
+    it { should route_to(controller: "charts", action: "burn_up")}
   end
  
   context "charts" do
-    context "daily-burnup" do
-      subject { { get: "charts/daily-burnup" } }
-      it { should route_to(controller: "charts", action: "daily_burnup")}
+    context "burn_up" do
+      subject { { get: "charts/burn_up" } }
+      it { should route_to(controller: "charts", action: "burn_up")}
     end
     context "yesterdays_weather" do
       subject { { get: "charts/yesterdays-weather" } }

@@ -21,11 +21,11 @@ module Charts
                                                "Inserted"=>{:type=>"Inserted", :estimate=>4.0, :stories=>4}}}} )
     end 
 
-    context "burnup_rows" do
+    context "burn_up_rows" do
       let(:timestamp) { Time.now }
       let(:data) {  (0..3).map { |i| FactoryGirl.build(:burn_up, timestamp: timestamp - i.days) } }
-      before { Charts::DailyBurnup.stub(current_burnup_data: data) }
-      subject { burnup_rows(data) }
+      before { Charts::BurnUpChart.stub(current_burn_up_data: data) }
+      subject { burn_up_rows(data) }
     
       it { should == [[timestamp, 16, 4], [timestamp - 1.day, 16, 4], [timestamp - 2.days, 16, 4], [timestamp - 3 .days, 16, 4]] }
     

@@ -82,5 +82,6 @@ module Adapters
         it { expect(URI).to receive(:parse).with("https://api.trello.com/1/boards/#{Constants::CURRENT_SPRINT_BOARD[:id]}/lists?key=#{Constants::TRELLO[:user_key]}&token=#{Constants::TRELLO[:readonly_token]}").and_return(uri) }
       end
     end
+        
   end
 end

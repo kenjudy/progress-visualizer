@@ -1,8 +1,8 @@
-#*/60 06-18 * * * cd /Users/kenhjudy/dev/progress-visulizer;rake charts:burnup
+#*/60 06-18 * * * cd /Users/kenhjudy/dev/progress-visulizer;rake charts:burn_up
 
 namespace :charts do
-  desc "Update burnup"
-  task :burnup => :environment do
-    Charts::DailyBurnup.current_burnup(Adapters::TrelloAdapter).update_progress
+  desc "Update burn_up"
+  task :burn_up => :environment do
+    Charts::BurnUpChart.current.update
   end
 end

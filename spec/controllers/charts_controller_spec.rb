@@ -4,10 +4,10 @@ require 'json'
 describe ChartsController do
   include Trello::JsonData
   
-  context "daily_burnup" do
-    before { Adapters::TrelloAdapter.stub(daily_burnup: double("DailyBurnup").as_null_object) }
+  context "burn_up" do
+    before { Adapters::TrelloAdapter.stub(burn_up: double("BurnUpChart").as_null_object) }
     
-    subject { get :daily_burnup }
+    subject { get :burn_up }
     
     its(:code) { "200" }
     

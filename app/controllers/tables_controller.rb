@@ -1,7 +1,7 @@
 class TablesController < ApplicationController
   
   def overview
-    @results = Tables::Overview.current_overview
+    @results = Tables::OverviewTable.current
   end
   
   def overview_by_status

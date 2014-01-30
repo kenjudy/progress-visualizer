@@ -2,7 +2,7 @@ require 'spec_helper'
 
 
 module Charts
-  describe DailyBurnup do
+  describe BurnUpChart do
     include Trello::JsonData
 
     let(:current_time) { Time.now }
@@ -14,7 +14,7 @@ module Charts
     let(:done) { ::Trello::List.new({"id" => "done1", "name" => "Done"})}
     let(:options) { {done_list_ids: [done.id, ready_for_signoff.id], backlog_list_ids: [ready_for_development.id,done.id, ready_for_signoff.id], timestamp: current_time} }
 
-    subject { DailyBurnup.new(board, options) }
+    subject { BurnUpChart.new(board, options) }
     
     its(:done_list_ids) { should == [done.id, ready_for_signoff.id] }
     its(:backlog_list_ids) { should == [ready_for_development.id,done.id, ready_for_signoff.id] }
@@ -37,26 +37,25 @@ module Charts
       its(:timestamp) { should_not be_nil }
     end
         
-    context "update_progress" do
-      after { subject.update_progress }
+    context "update" do
+      after { subject.update }
 
       it { expect(BurnUp).to receive(:create).with({:timestamp=>current_time, :done=>1, :done_estimates=>2.5, :backlog=>2, :backlog_estimates=>5.0})}
     end
     
-    context "current_burnup_data" do
-      after { DailyBurnup.current_burnup_data }
-      it { expect(DailyBurnup).to receive(:burnup_data).with(Date.today.end_of_week - 6.days, Date.today.end_of_week)}
-
-    end
-    
-    context "cuurent burnup" do
+    context "current burn_up chart" do
       before { Adapters::TrelloAdapter.stub(request_board: board) }
       
-      subject { DailyBurnup.current_burnup(Adapters::TrelloAdapter) }
+      subject { BurnUpChart.current(Adapters::TrelloAdapter) }
       
-      it { should be_instance_of(Charts::DailyBurnup) }
+      it { should be_instance_of(Charts::BurnUpChart) }
     end
     
+    context "current_burn_up_data" do
+      after { BurnUpChart.current_burn_up_data }
+      it { expect(BurnUp).to receive(:burn_up_data).with(Date.today.end_of_week - 6.days, Date.today.end_of_week)}
+
+    end
   
     
   end
