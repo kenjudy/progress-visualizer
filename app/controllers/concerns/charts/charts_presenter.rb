@@ -8,6 +8,7 @@ module Charts::ChartsPresenter
   @@default_properties = { colors: [@@blue,@@green, @@red],
                                     areaOpacity: 0.05, 
                                     titleTextStyle: {color: @@green, fontSize: 24 },
+                                    chartArea: {width: '90%', height: '80%'},
                                     hAxis: { textStyle: { color: '#999999'}, gridLines: { color: "#eee"}, format:'MMM d, y hh:mma' },
                                     vAxis: { textStyle: { color: '#999999'}, gridLines: { color: "#eee"} },
                                     legend: {position: 'bottom', alignment: 'center'}}
