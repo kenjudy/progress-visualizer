@@ -5,7 +5,7 @@ describe Charts::ChartsPresenter do
   
   let(:date) { Date.today.end_of_week }
   before do
-    DoneStory.stub(select_yesterdays_weather: {date - 2.weeks => {:timestamp=>date - 2.weeks, 
+    DoneStory.stub(select_done_stories: {date - 2.weeks => {:timestamp=>date - 2.weeks, 
                                           :effort=>{"Committed"=>{:type=>"Committed", :estimate=>4.0, :stories=>4}, 
                                             "Contingent"=>{:type=>"Contingent", :estimate=>4.0, :stories=>4}, 
                                             "Inserted"=>{:type=>"Inserted", :estimate=>4.0, :stories=>4}}}, 

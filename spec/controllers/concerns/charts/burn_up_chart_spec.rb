@@ -53,7 +53,7 @@ module Charts
     
     context "current_burn_up_data" do
       after { BurnUpChart.current_burn_up_data }
-      it { expect(BurnUp).to receive(:burn_up_data).with(Date.today.end_of_week - 6.days, Date.today.end_of_week)}
+      it { expect(BurnUp).to receive(:burn_up_data).with(BurnUpChart.beginning_of_current_iteration, BurnUpChart.end_of_current_iteration)}
 
     end
   

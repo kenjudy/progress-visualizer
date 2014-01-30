@@ -29,8 +29,8 @@ module Tables
       results = current(adapter)
       results[:lists].keys.each do |type_of_work|
         results[:lists][type_of_work][:cards].each do |card|
-          DoneStory.create(timestamp: beginning_of_current_iteration, 
-                           iteration: beginning_of_current_iteration.strftime("%F"),
+          DoneStory.create(timestamp: beginning_of_prior_iteration, 
+                           iteration: beginning_of_prior_iteration.strftime("%F"),
                            type_of_work: type_of_work,
                            status: card.list_name,
                            story_id: card.id_short,
