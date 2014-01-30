@@ -9,7 +9,7 @@ describe "routes" do
  
   context "charts" do
     context "burn_up" do
-      subject { { get: "charts/burn_up" } }
+      subject { { get: "charts/burn-up" } }
       it { should route_to(controller: "charts", action: "burn_up")}
     end
     context "yesterdays_weather" do
