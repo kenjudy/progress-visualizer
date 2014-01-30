@@ -34,7 +34,7 @@ module Tables
                      status: card.list_name,
                      story: card.name,
                      estimate: card.estimate }
-          attribs.merge({timestamp: beginning_of_prior_iteration, iteration: beginning_of_prior_iteration.strftime("%F")}) unless story.timestamp
+          attribs.merge({timestamp: beginning_of_current_iteration, iteration: beginning_of_current_iteration.strftime("%F")}) unless story.timestamp
           story.update_attributes(attribs)
         end
       end
