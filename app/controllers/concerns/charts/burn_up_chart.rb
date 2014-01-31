@@ -15,7 +15,10 @@ module Charts
     def update
       done_stats = stats(@done_list_ids)
       backlog_stats = stats(@backlog_list_ids)
-      BurnUp.create(timestamp: timestamp, done: done_stats[:count], done_estimates: done_stats[:sum], backlog: backlog_stats[:count], backlog_estimates: backlog_stats[:sum] )
+      last_burnup = BurnUp.last
+      unless (last_burnup && last_burnup.done == done_stats[:count] && last_burnup.done_estimates == done_stats[:sum] && last_burnup.backlog == backlog_stats[:count] && last_burnup.backlog_estimates == backlog_stats[:sum])
+        BurnUp.create(timestamp: timestamp, done: done_stats[:count], done_estimates: done_stats[:sum], backlog: backlog_stats[:count], backlog_estimates: backlog_stats[:sum] )
+      end
     end
     
     def self.current(adapter = default_adapter)

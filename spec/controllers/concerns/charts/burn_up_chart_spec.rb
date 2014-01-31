@@ -41,6 +41,13 @@ module Charts
       after { subject.update }
 
       it { expect(BurnUp).to receive(:create).with({:timestamp=>current_time, :done=>1, :done_estimates=>2.5, :backlog=>2, :backlog_estimates=>5.0})}
+
+      context "redundant burnup rows" do
+        before { BurnUp.stub(last: FactoryGirl.build(:burn_up, {backlog: 2, done: 1, backlog_estimates: 5.0, done_estimates: 2.5})) }
+        
+        it { expect(BurnUp).to_not receive(:create) }
+      end
+
     end
     
     context "current burn_up chart" do
@@ -54,7 +61,6 @@ module Charts
     context "current_burn_up_data" do
       after { BurnUpChart.current_burn_up_data }
       it { expect(BurnUp).to receive(:burn_up_data).with(BurnUpChart.beginning_of_current_iteration, BurnUpChart.end_of_current_iteration)}
-
     end
   
     
