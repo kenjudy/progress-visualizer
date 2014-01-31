@@ -17,7 +17,7 @@ describe TablesController do
     
     subject { get :overview }
     
-    its(:code) { "200" }
+    its(:code) { should == "200" }
     
     context "assigns" do
       before { subject }

@@ -23,6 +23,15 @@ module Adapters
       CSV.stub(open: [])
     end
     
+    context "webhooks" do
+      context "add" do
+        
+      end
+      context "delete" do
+        
+      end
+    end
+    
     context "request_board" do
       
       before do

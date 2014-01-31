@@ -27,17 +27,13 @@ module Charts::ChartsPresenter
                                                                                         trendlines: { 1 => {} }}))
   end
   
-  def yesterdays_weather_visualization(options)
-    label = options[:label] || :estimate
-    weeks = options[:weeks] || 3
+  def yesterdays_weather_visualization(chart)
     data_table = GoogleVisualr::DataTable.new
     data_table.new_column('string', 'timestamp' )
-    data_table.new_column('number', 'committed' )
-    data_table.new_column('number', 'contingent' )
-    data_table.new_column('number', 'inserted' )
+    chart.types_of_work.each { |type_of_work| data_table.new_column('number', type_of_work.downcase ) }
     
-    data_table.add_rows(yesterdays_weather_data_rows(label, weeks))
-    GoogleVisualr::Interactive::ColumnChart.new(data_table, @@default_properties.merge({ title: "Yesterday's Weather for #{label.to_s.titleize.pluralize}",
+    data_table.add_rows(yesterdays_weather_data_rows(chart.label, chart.weeks, chart.types_of_work))
+    GoogleVisualr::Interactive::ColumnChart.new(data_table, @@default_properties.merge({ title: "Yesterday's Weather for #{chart.label.to_s.titleize.pluralize}",
                                                                                          isStacked: true }))
   
   end
@@ -72,16 +68,14 @@ module Charts::ChartsPresenter
     data.values.sort { |a,b| a[0] <=> b[0] }
   end
   
-  def yesterdays_weather_data_rows(label, weeks)
+  def yesterdays_weather_data_rows(label, weeks, types_of_work)
     data = {}
     DoneStory.done_stories_data(weeks).each do |done_story|
       timestamp = done_story.timestamp.to_s
       data[timestamp] = data[timestamp] ||= [timestamp, 0, 0, 0]
 
       value = label == :estimate ? done_story.estimate : 1
-      data[timestamp][1] += done_story.type_of_work.downcase == "committed" ? value : 0
-      data[timestamp][3] += done_story.type_of_work.downcase == "inserted" ? value : 0
-      data[timestamp][2] += done_story.type_of_work.downcase !~ /(committed)|(inserted)/ ? value : 0
+      types_of_work.each_with_index { |type_of_work, index| data[timestamp][index+1] += done_story.type_of_work.downcase == type_of_work.downcase ? value : 0 }
     end
     data.values.sort { |a,b| a[0] <=> b[0] }
   end

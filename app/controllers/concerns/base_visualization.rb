@@ -1,7 +1,12 @@
 module BaseVisualization
+  attr_accessor :adapter
   
   def default_adapter
     Adapters::TrelloAdapter
+  end
+  
+  def adapter
+    @adapter || default_adapter
   end
   
   def end_of_current_iteration

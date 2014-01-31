@@ -9,7 +9,7 @@ describe ChartsController do
     
     subject { get :burn_up }
     
-    its(:code) { "200" }
+    its(:code) { should == "200" }
     
     context "assigns" do
       before { subject }
@@ -32,17 +32,14 @@ describe ChartsController do
     context "optional week param" do
       subject { get :yesterdays_weather, weeks: "3" }
       after { subject }
-      it "should pass param to concern" do
-        expect(controller).to receive(:yesterdays_weather_visualization).with({label: :estimate, weeks: 3}).ordered
-        expect(controller).to receive(:yesterdays_weather_visualization).with({label: :stories, weeks: 3}).ordered
-      end
+      it("should present charts") { expect(controller).to receive(:yesterdays_weather_visualization).twice }
     end
   end
   
   context "long_term_trend" do
     subject { get :long_term_trend }
     
-    its(:code) { "200" }
+    its(:code) { should == "200" }
 
     context "assigns" do
       before { subject }
