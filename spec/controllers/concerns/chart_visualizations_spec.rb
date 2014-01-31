@@ -35,7 +35,7 @@ describe Charts::ChartsPresenter do
 
   context "yesterdays_weather_data_rows" do
     
-    subject { yesterdays_weather_data_rows(:estimate, 3) }
+    subject { yesterdays_weather_data_rows(:estimate, 3, ["Committed", "Contingent", "Inserted"]) }
 
     it { should == [[(date - 2.weeks).strftime("%F"), 8.0, 12.0, 16.0], [(date - 1.week).strftime("%F"), 8.0, 12.0, 16.0], [(date).strftime("%F"), 8.0, 12.0, 16.0]] }
   end
