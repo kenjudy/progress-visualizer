@@ -15,10 +15,19 @@ module Charts
     def update
       done_stats = stats(@done_list_ids)
       backlog_stats = stats(@backlog_list_ids)
-      last_burnup = BurnUp.last
-      unless (last_burnup && last_burnup.done == done_stats[:count] && last_burnup.done_estimates == done_stats[:sum] && last_burnup.backlog == backlog_stats[:count] && last_burnup.backlog_estimates == backlog_stats[:sum])
+      unless redundant?(done_stats, backlog_stats)
         BurnUp.create(timestamp: timestamp, done: done_stats[:count], done_estimates: done_stats[:sum], backlog: backlog_stats[:count], backlog_estimates: backlog_stats[:sum] )
       end
+    end
+    
+    def redundant?(done_stats, backlog_stats)
+      last_burnup = BurnUp.last
+      last_burnup && 
+      last_burnup.timestamp > Time.now - 6.hours && 
+      last_burnup.done == done_stats[:count] && 
+      last_burnup.done_estimates == done_stats[:sum] && 
+      last_burnup.backlog == backlog_stats[:count] && 
+      last_burnup.backlog_estimates == backlog_stats[:sum]
     end
     
     def self.current(adapter = default_adapter)
@@ -27,7 +36,6 @@ module Charts
                                        backlog_list_ids: adapter.current_sprint_board_properties[:backlog_list_ids],
                                        timestamp: Time.now})
     end
-    
     
     def self.current_burn_up_data
       BurnUp.burn_up_data(beginning_of_current_iteration, end_of_current_iteration)

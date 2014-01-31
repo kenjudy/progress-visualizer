@@ -41,13 +41,28 @@ module Charts
       after { subject.update }
 
       it { expect(BurnUp).to receive(:create).with({:timestamp=>current_time, :done=>1, :done_estimates=>2.5, :backlog=>2, :backlog_estimates=>5.0})}
+    end
+    
+    context "redundant?" do
+      let(:timestamp) { Time.now - 3.hours }
+      let(:backlog) { 2 }
+      let(:done_stats) {{ count: 1, sum: 2.5 }}
+      let(:backlog_stats) {{ count: 2, sum: 5.0 }}
 
-      context "redundant burnup rows" do
-        before { BurnUp.stub(last: FactoryGirl.build(:burn_up, {backlog: 2, done: 1, backlog_estimates: 5.0, done_estimates: 2.5})) }
-        
-        it { expect(BurnUp).to_not receive(:create) }
+      before { BurnUp.stub(last: FactoryGirl.build(:burn_up, {timestamp: timestamp, backlog: backlog, done: 1, backlog_estimates: 5.0, done_estimates: 2.5})) }
+ 
+      subject { BurnUpChart.new(board, options).redundant?(done_stats, backlog_stats) }
+      
+      it { should be_true }
+      
+      context "different stats" do
+        let(:backlog) { 3 }
+        it { should be_false }
       end
-
+      context "old timestamp" do
+        let(:timestamp) { Time.now - 7.hours }
+        it { should be_false }
+      end
     end
     
     context "current burn_up chart" do
