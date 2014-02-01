@@ -53,8 +53,12 @@ describe "routes" do
       it { should route_to(controller: "users", action: "forgot_password", name: "name")}
     end
     context "create" do
-      subject { { post: "user/Bk2meuxQzLYkdkmLsoTkVZMgfAbb9h" } }
+      subject { { get: "user/Bk2meuxQzLYkdkmLsoTkVZMgfAbb9h" } }
       it { should route_to(controller: "users", action: "create")}
+    end
+    context "create_submit" do
+      subject { { post: "user/Bk2meuxQzLYkdkmLsoTkVZMgfAbb9h" } }
+      it { should route_to(controller: "users", action: "create_submit")}
     end
     context "delete" do
       subject { { get: "user/rplku4rpppypeu6npzwcxwxqagisaj" } }

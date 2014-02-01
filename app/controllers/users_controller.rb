@@ -1,4 +1,7 @@
 class UsersController < ApplicationController
+  include Authentication
+  
+  before_filter :user_authenticate, only: [:create, :create_submit]
   
   def logout
     session.delete(:user)
@@ -25,10 +28,18 @@ class UsersController < ApplicationController
   end
   
   def create
-    user = User.find_or_initialize_by(name: params[:name])
-    user.password = params[:password]
-    user.update_attributes(email: params[:email])
-    render "application/alert", locals: { type: "info", message: "User <em>#{user.name}</em> has been created."}
+    @user = User.new
+  end
+  
+  def create_submit
+    @user = User.find_or_initialize_by(name: params["user"]["name"], email: params["user"]["email"])
+    @user.password = params["user"]["password"] 
+    @user.save
+    if @user.valid?
+      render "application/alert", locals: { type: "info", message: "User <em>#{@user.name}</em> has been created."}
+    else
+      render "users/create"
+    end
   end
   
   def get_user

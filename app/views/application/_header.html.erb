@@ -10,15 +10,16 @@
     <a class="navbar-brand" href="/">Progress Visualizer</a>
   </div>
 
-  <ul class="nav navbar-nav navbar-right">
+  <ul class="nav navbar-nav navbar-right hidden-sm hidden-xs visible-lg">
     <li><% user_panel %></li>
   </ul>
   <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
     <ul class="nav navbar-nav">
       <li class="<%= active(charts_burn_up_path) %>"><%= link_to "Burn Up", charts_burn_up_path %></li>
       <li class="<%= active(tables_overview_path) %>"><%= link_to raw("<span class=\"glyphicon glyphicon-lock\"></span> Overview"), tables_overview_path %></li>
-      <li class="<%= active(charts_yesterdays_weather_path) %>"><%= link_to "Yesterday's Weather", charts_yesterdays_weather_path %></li>
-      <li class="<%= active(charts_long_term_trend_path) %>"><%= link_to "Long Term Trend", charts_long_term_trend_path %></li>
+      <li class="<%= active(charts_yesterdays_weather_path) %>"><%= link_to raw("Yesterday<span class=\"fit\">'s Weather</span>"), charts_yesterdays_weather_path %></li>
+      <li class="<%= active(charts_long_term_trend_path) %>"><%= link_to raw("<span class=\"fit\">Long Term </span>Trend"), charts_long_term_trend_path %></li>
+      <li class="hidden-lg"><% user_panel %></li>
     </ul>
   </div><!-- /.navbar-collapse -->
 </nav>
