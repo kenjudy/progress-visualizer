@@ -20,7 +20,10 @@ describe TablesController do
     its(:code) { should == "200" }
     
     context "assigns" do
-      before { subject }
+      before do
+        Rails.cache.delete("Tables::OverviewTable.current")
+        subject
+      end
       it { assigns(:results).should == { lists: {label => {cards: board.cards, estimates: 2.5, stories: 1}}, totals: {total_stories: 1, total_estimates: 2.5}} }
     end
   end

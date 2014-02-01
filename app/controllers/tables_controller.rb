@@ -1,7 +1,9 @@
 class TablesController < ApplicationController
   
   def overview
-    @results = Tables::OverviewTable.current
+    @results = Rails.cache.fetch("Tables::OverviewTable.current", :expires_in => 5.minutes) do
+      Tables::OverviewTable.current
+    end
   end
   
   def overview_by_status

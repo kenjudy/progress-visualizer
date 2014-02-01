@@ -49,7 +49,11 @@ end
 
 gem "google_visualr", ">= 2.1"
 
-gem 'rails_12factor', group: :production
+group :production do
+  gem 'rails_12factor'
+  gem 'dalli'
+  gem 'memcachier'
+end
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.1.2'
