@@ -3,6 +3,7 @@ require File.expand_path('../boot', __FILE__)
 require 'rails/all'
 require 'jquery-rails'
 require 'turbolinks'
+require 'bootstrap-sass'
 require 'google_visualr'
 
 if Rails.env == "development"

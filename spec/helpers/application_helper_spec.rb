@@ -13,4 +13,13 @@ describe ApplicationHelper do
     end
   end
   
+  context "user panel" do
+    before do
+      helper.request = double("request").as_null_object
+      session[:user] = "Joe"
+    end
+    subject { helper.user_panel }
+    it { should include("logout Joe") }
+  end
+  
 end
