@@ -12,23 +12,28 @@ module Charts
     let(:ready_for_development) { ::Trello::List.new(example_list_data)}
     let(:ready_for_signoff) { ::Trello::List.new({"id" => "signoff1", "name" => "Ready for Signoff"})}
     let(:done) { ::Trello::List.new({"id" => "done1", "name" => "Done"})}
-    let(:options) { {done_list_ids: [done.id, ready_for_signoff.id], backlog_list_ids: [ready_for_development.id,done.id, ready_for_signoff.id], timestamp: current_time} }
+    let(:options) { {done_lists: {done.id => done.name, 
+                                  ready_for_signoff.id => ready_for_signoff.name}, 
+                     backlog_lists: {ready_for_development.id => ready_for_development.name, 
+                                        done.id => done.name, 
+                                        ready_for_signoff.id => ready_for_signoff.name}, 
+                     timestamp: current_time} }
 
     subject { BurnUpChart.new(board, options) }
     
-    its(:done_list_ids) { should == [done.id, ready_for_signoff.id] }
-    its(:backlog_list_ids) { should == [ready_for_development.id,done.id, ready_for_signoff.id] }
+    its(:done_lists) { should == options[:done_lists] }
+    its(:backlog_lists) { should == options[:backlog_lists] }
     its(:timestamp) { should eql(current_time) }
      
     context "assigned" do
       before do
-        subject.done_list_ids = [done.id,ready_for_signoff.id]
-        subject.backlog_list_ids = [ready_for_development.id,done.id]
+        subject.done_lists = options[:done_lists]
+        subject.backlog_lists= options[:backlog_lists]
         subject.timestamp = Date.new(2014,1,1)
       end
     
-      its(:done_list_ids) { should == [done.id, ready_for_signoff.id] }
-      its(:backlog_list_ids) { should == [ready_for_development.id,done.id] }
+      its(:done_lists) { should == options[:done_lists] }
+      its(:backlog_lists) { should == options[:backlog_lists] }
       its(:timestamp) { should == Date.new(2014,1,1) }
     end
     

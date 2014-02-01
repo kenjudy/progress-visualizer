@@ -24,6 +24,6 @@ describe "Tables::OverviewTable" do
     before { DoneStory.stub(find_or_initialize_by: story)}
     after { Tables::OverviewTable.update(adapter) }
     
-    it("should create done story") { expect(story).to receive(:update_attributes).at_least(:once).with({:type_of_work=>"Committed", :status=>nil, :story=>"Foo", :estimate=>3.0}) }
+    it("should create done story") { expect(story).to receive(:update_attributes).at_least(:once).with({:type_of_work=>"Committed", :status=>"5170058469d58225070003ce", :story=>"Foo", :estimate=>3.0}) }
   end
 end

@@ -3,18 +3,18 @@ module Charts
     extend ActiveSupport::Concern
     extend ::BaseVisualization
     
-    attr_accessor :done_list_ids, :backlog_list_ids, :timestamp
+    attr_accessor :done_lists, :backlog_lists, :timestamp
 
     def initialize(board, options = {})
       @board = board
       @timestamp = options[:timestamp] || Time.now
-      @done_list_ids = options[:done_list_ids]
-      @backlog_list_ids = options[:backlog_list_ids]
+      @done_lists = options[:done_lists]
+      @backlog_lists = options[:backlog_lists]
     end
     
     def update
-      done_stats = stats(@done_list_ids)
-      backlog_stats = stats(@backlog_list_ids)
+      done_stats = stats(@done_lists.keys)
+      backlog_stats = stats(@backlog_lists.keys)
       unless redundant?(done_stats, backlog_stats)
         BurnUp.create(timestamp: timestamp, done: done_stats[:count], done_estimates: done_stats[:sum], backlog: backlog_stats[:count], backlog_estimates: backlog_stats[:sum] )
       end
@@ -32,8 +32,8 @@ module Charts
     
     def self.current(adapter = default_adapter)
       board = adapter.request_board(adapter.current_sprint_board_properties[:id])
-      Charts::BurnUpChart.new(board, { done_list_ids: adapter.current_sprint_board_properties[:done_list_ids],
-                                       backlog_list_ids: adapter.current_sprint_board_properties[:backlog_list_ids],
+      Charts::BurnUpChart.new(board, { done_lists: adapter.current_sprint_board_properties[:done_lists],
+                                       backlog_lists: adapter.current_sprint_board_properties[:backlog_lists],
                                        timestamp: Time.now})
     end
     

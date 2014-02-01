@@ -6,7 +6,7 @@ module Tables
     def self.current(adapter = default_adapter)
       board = adapter.request_board(adapter.current_sprint_board_properties[:id])
       types_of_work = adapter.current_sprint_board_properties[:labels_types_of_work]
-      done_list_ids = adapter.current_sprint_board_properties[:done_list_ids]
+      done_list_ids = adapter.current_sprint_board_properties[:done_lists].keys
       results = { lists: {}}
       total_stories = 0
       total_estimates = 0
@@ -31,7 +31,7 @@ module Tables
         results[:lists][type_of_work][:cards].each do |card|
           story = DoneStory.find_or_initialize_by(story_id: card.id_short.to_s)
           attribs = { type_of_work: type_of_work,
-                     status: card.list_name,
+                     status: card.id_list,
                      story: card.name,
                      estimate: card.estimate }
           attribs.merge({timestamp: beginning_of_current_iteration, iteration: beginning_of_current_iteration.strftime("%F")}) unless story.timestamp

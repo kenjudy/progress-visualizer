@@ -13,8 +13,8 @@ module Constants
            }
   
   CURRENT_SPRINT_BOARD = { id: TRELLO_CONFIG['current_sprint_board']['id'],
-                           backlog_list_ids: TRELLO_CONFIG['current_sprint_board']['backlog_lists'] + TRELLO_CONFIG['current_sprint_board']['done_lists'],
-                           done_list_ids: TRELLO_CONFIG['current_sprint_board']['done_lists'],
+                           backlog_lists: TRELLO_CONFIG['current_sprint_board']['backlog_lists'].merge(TRELLO_CONFIG['current_sprint_board']['done_lists']),
+                           done_lists: TRELLO_CONFIG['current_sprint_board']['done_lists'],
                            labels_types_of_work: TRELLO_CONFIG['current_sprint_board']['labels_types_of_work']}
 
 

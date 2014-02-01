@@ -7,7 +7,7 @@ describe TablesController do
 
   context "overview" do
     let(:adapter) { Adapters::TrelloAdapter }
-    let(:list_id) { adapter.current_sprint_board_properties[:done_list_ids].first }
+    let(:list_id) { adapter.current_sprint_board_properties[:done_lists].keys.first }
     let(:label) { adapter.current_sprint_board_properties[:labels_types_of_work].first }
     let(:board) { Trello::Board.new(
       cards: [example_card_data("idList" => list_id, "labels" => [{name: label}])], 

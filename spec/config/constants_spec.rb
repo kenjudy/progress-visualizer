@@ -10,8 +10,8 @@ describe Constants do
       subject { Constants::CURRENT_SPRINT_BOARD }
       
       its([:id]) { should_not be_nil }
-      its([:backlog_list_ids]) { should have_at_least(1).item }
-      its([:done_list_ids]) { should have_at_least(Constants::CURRENT_SPRINT_BOARD[:done_list_ids].length).items }
+      its([:backlog_lists]) { should have_at_least(1).item }
+      its([:done_lists]) { should have_at_least(Constants::CURRENT_SPRINT_BOARD[:done_lists].keys.length).items }
       its([:labels_types_of_work]) { should have_at_least(Constants::CURRENT_SPRINT_BOARD[:labels_types_of_work].length).items }
     end
   end

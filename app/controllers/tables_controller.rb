@@ -5,7 +5,7 @@ class TablesController < ApplicationController
   end
   
   def overview_by_status
-    done_list_ids = @@adapter.current_sprint_board_properties[:done_list_ids]
+    done_list_ids = @@adapter.current_sprint_board_properties[:done_list_ids].keys
     @results = { lists: {}}
     total_stories = 0
     total_estimates = 0
