@@ -4,7 +4,7 @@ describe "routes" do
   
   context "homepage" do
     subject { { get: "/" } }
-    it { should route_to(controller: "charts", action: "burn_up")}
+    it { should route_to(controller: "homepage", action: "index")}
   end
  
   context "charts" do

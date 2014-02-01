@@ -1,6 +1,6 @@
 ProgressVisualizer::Application.routes.draw do
   
-  root 'charts#burn_up'
+  root 'homepage#index', as: 'homepage'
   
   get 'chart/burn-up' => "charts#burn_up", as: 'charts_burn_up'
   get 'chart/yesterdays-weather/(:weeks)' => "charts#yesterdays_weather", as: 'charts_yesterdays_weather', constraints: {weeks: /[0-9]*/}
