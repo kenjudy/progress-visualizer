@@ -14,6 +14,12 @@ if Rails.env == "development"
   require 'pry-rescue'
 end
 
+if Rails.env == "production"
+  require 'memcachier'
+  require 'dalli'
+end
+
+
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 #Bundler.require(:default, Rails.env)

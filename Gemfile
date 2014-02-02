@@ -53,8 +53,8 @@ gem "google_visualr", ">= 2.1"
 
 group :production do
   gem 'rails_12factor'
-  gem 'dalli'
   gem 'memcachier'
+  gem 'dalli'
 end
 
 # Use ActiveModel has_secure_password
