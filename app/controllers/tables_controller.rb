@@ -1,19 +1,19 @@
 class TablesController < ApplicationController
   include Authentication
   
-  before_filter :user_authenticate, only: :overview
+  before_filter :user_authenticate, only: :done_stories
   
-  def overview
+  def done_stories
     fetch_current_results
   end
   
   def fetch_current_results
-    @results = Rails.cache.fetch("Tables::OverviewTable.current", :expires_in => 5.minutes) do
-      Tables::OverviewTable.current
+    @results = Rails.cache.fetch("Tables::DoneStoriesTable.current", :expires_in => 5.minutes) do
+      Tables::DoneStoriesTable.current
     end
   end
   
-  # def overview_by_status
+  # def done_stories_by_status
   #   done_list_ids = @@adapter.current_sprint_board_properties[:done_list_ids].keys
   #   @results = { lists: {}}
   #   total_stories = 0

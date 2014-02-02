@@ -39,8 +39,17 @@ describe "routes" do
   end
 
   context "tables" do
-    subject { { get: "table/overview" } }
-    it { should route_to(controller: "tables", action: "overview")}
+    context "done stories" do
+      subject { { get: "table/done-stories" } }
+      it { should route_to(controller: "tables", action: "done_stories")}
+    end
+  end
+  
+  context "reports" do
+    context "performance summary" do
+      subject { { get: "report/performance-summary" } }
+      it { should route_to(controller: "reports", action: "performance_summary")}
+    end
   end
   
   context "users" do

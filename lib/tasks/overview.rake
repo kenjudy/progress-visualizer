@@ -3,6 +3,6 @@
 namespace :tables do
   desc "Update overview"
   task :overview => :environment do
-    Tables::OverviewTable.update(Adapters::TrelloAdapter)
+    Tables::DoneStoriesTable.update(Adapters::TrelloAdapter)
   end
 end

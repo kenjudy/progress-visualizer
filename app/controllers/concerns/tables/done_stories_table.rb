@@ -1,5 +1,5 @@
 module Tables
-  class OverviewTable
+  class DoneStoriesTable
     extend ActiveSupport::Concern
     extend BaseVisualization
 

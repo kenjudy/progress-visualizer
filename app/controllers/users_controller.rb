@@ -10,7 +10,6 @@ class UsersController < ApplicationController
   
   def forgot_password
     user = User.find_by(name: params[:name])
-    binding.pry
     if user
       random_password = user.reset_password
       user.save!

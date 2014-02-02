@@ -6,7 +6,9 @@ ProgressVisualizer::Application.routes.draw do
   get 'chart/yesterdays-weather/(:weeks)' => "charts#yesterdays_weather", as: 'charts_yesterdays_weather', constraints: {weeks: /[0-9]*/}
   get 'chart/long-term-trend/(:weeks)' => "charts#long_term_trend", as: 'charts_long_term_trend', constraints: {weeks: /[0-9]*/}
 
-  get 'table/overview' => "tables#overview", as: 'tables_overview'
+  get 'table/done-stories' => "tables#done_stories", as: 'tables_done_stories'
+
+  get 'report/performance-summary' => "reports#performance_summary", as: 'reports_performance_summary'
 
   get 'user/logout' => "users#logout", as: "users_logout"
   get 'user/forgot/:name' => "users#forgot_password", as: "users_forgot_password"

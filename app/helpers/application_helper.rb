@@ -1,7 +1,12 @@
 module ApplicationHelper
   
-  def active(path)
-    path == request.fullpath ? "active" : ""
+  def menu_list_item(label, path)
+    concat(content_tag(:li, link_to(raw(label), path), class: active_class_if(path)))
+  end
+  
+  def active_class_if(paths)
+    arr = [paths] if paths.instance_of?(String)
+    "active" if paths.include?(request.fullpath)
   end
   
   def user_panel
