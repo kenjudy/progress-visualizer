@@ -8,7 +8,7 @@ module Adapters
     @credentials = {key: Constants::TRELLO[:user_key], token: Constants::TRELLO[:readonly_token]}
     
     def self.current_sprint_board_properties
-      Constants::CURRENT_SPRINT_BOARD
+      Constants::CONFIG[:current_sprint_board]
     end
         
     def self.request_board(board_id, include_archived = false)
@@ -46,12 +46,16 @@ module Adapters
       request_json(Constants::TRELLO[:board_lists_path], {board_id: board_id})
     end
     
+    
+    def self.generate_uri(url_template, options = {})
+      options.merge(@credentials).each { |key,value| url_template.gsub!("<#{key.to_s.upcase}>", value) }
+      URI.parse(url_template)
+    end
+
     private
     
     def self.request_json(url_template, options)
-      url = "#{Constants::TRELLO[:api_root_url]}#{url_template}"
-      options.merge(@credentials).each { |key,value| url.gsub!("<#{key.to_s.upcase}>", value) }
-      return JSON.parse(URI.parse(url).read)
+      return JSON.parse(generate_uri("#{Constants::TRELLO[:api_root_url]}#{url_template}", options).read)
     end
   end
 end

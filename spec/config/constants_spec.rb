@@ -7,12 +7,12 @@ describe Constants do
     it { expect(Constants::TRELLO[:readonly_token]).to_not be_nil }
     
     context "current sprint board" do
-      subject { Constants::CURRENT_SPRINT_BOARD }
+      subject { Constants::CONFIG[:current_sprint_board] }
       
       its([:id]) { should_not be_nil }
       its([:backlog_lists]) { should have_at_least(1).item }
-      its([:done_lists]) { should have_at_least(Constants::CURRENT_SPRINT_BOARD[:done_lists].keys.length).items }
-      its([:labels_types_of_work]) { should have_at_least(Constants::CURRENT_SPRINT_BOARD[:labels_types_of_work].length).items }
+      its([:done_lists]) { should have_at_least(Constants::CONFIG[:current_sprint_board][:done_lists].keys.length).items }
+      its([:labels_types_of_work]) { should have_at_least(Constants::CONFIG[:current_sprint_board][:labels_types_of_work].length).items }
     end
   end
   
@@ -28,12 +28,12 @@ describe Constants do
       Constants::ITERATION_CONFIG['duration'] = "WEESLY"
       Constants::ITERATION_CONFIG['start_day_of_week'] = 1
     end
-    it { expect(Constants::ITERATION[:iteration_start]).to eql (Date.today.end_of_week - 6.days)}
-    it { expect(Constants::ITERATION[:iteration_end]).to eql (Date.today.end_of_week) }
+    it { expect(Constants::CONFIG[:iteration_start]).to eql (Date.today.end_of_week - 6.days)}
+    it { expect(Constants::CONFIG[:iteration_end]).to eql (Date.today.end_of_week) }
   end
   
   context "email" do
-    it { expect(Constants::EMAIL[:default_from]).to_not be_nil }
+    it { expect(Constants::CONFIG[:email_default_from]).to_not be_nil }
   end
   
 end

@@ -14,7 +14,7 @@ module Exporters
 
     context "export_current_sprint_board" do
       after { ExportBoardToCsv.export_current_sprint_board("eraseme.txt") }
-      it("calls run") { expect(ExportBoardToCsv).to receive(:run).with(Constants::CURRENT_SPRINT_BOARD[:id], "eraseme.txt") }
+      it("calls run") { expect(ExportBoardToCsv).to receive(:run).with(Constants::CONFIG[:current_sprint_board][:id], "eraseme.txt") }
     end
 
     context "run" do
@@ -25,7 +25,7 @@ module Exporters
         card.list = list
       end
 
-      after { ExportBoardToCsv.run(Constants::CURRENT_SPRINT_BOARD[:id], "tmp/eraseme.txt") }
+      after { ExportBoardToCsv.run(Constants::CONFIG[:current_sprint_board][:id], "tmp/eraseme.txt") }
 
       it("writes csv") do
         expect(csv).to receive("<<").once.ordered.with(Trello::Card.array_attributes)
