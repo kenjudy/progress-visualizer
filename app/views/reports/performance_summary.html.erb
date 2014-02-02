@@ -1,0 +1,29 @@
+<section>
+  <div class="container">
+    <div class="row">
+      <%= render "application/done_stories_table", results: @results %>
+    </div>
+  </div>
+</section>
+<hr />
+<section>
+  <div class="container">
+    <div class="row">
+      <div id='yesterdays_weather_chart_estimate_chart' class='chart'></div>
+      <%= render_chart(@yesterdays_weather_chart_estimate_chart, 'yesterdays_weather_chart_estimate_chart') %>
+    </div>
+    <div class="row">
+      <div id='yesterdays_weather_chart_stories_chart' class='chart'></div>
+      <%= render_chart(@yesterdays_weather_chart_stories_chart, 'yesterdays_weather_chart_stories_chart') %>
+    </div>
+  </div>
+</section>
+<hr />
+<section>
+  <div class="container">
+    <div class="row">
+      <div id='long_term_trend_chart' class='chart'></div>
+      <%= render_chart(@long_term_trend_chart, 'long_term_trend_chart') %>
+    </div>
+  </div>
+</section>

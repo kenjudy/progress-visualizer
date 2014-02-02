@@ -2,12 +2,19 @@ module Tables
   class DoneStoriesTable
     extend ActiveSupport::Concern
     extend BaseVisualization
-
+    
     def self.current(adapter = default_adapter)
+      @results = Rails.cache.fetch("#{Rails.env}::Tables::DoneStoriesTable.current", :expires_in => 5.minutes) do
+        Tables::DoneStoriesTable.current_without_cache(adapter)
+      end
+    end
+    
+
+    def self.current_without_cache(adapter = default_adapter)
       board = adapter.request_board(adapter.current_sprint_board_properties[:id])
       types_of_work = adapter.current_sprint_board_properties[:labels_types_of_work]
       done_list_ids = adapter.current_sprint_board_properties[:done_lists].keys
-      results = { lists: {}}
+      results = { week_of: beginning_of_current_iteration, lists: {}}
       total_stories = 0
       total_estimates = 0
       types_of_work.each do |type_of_work|

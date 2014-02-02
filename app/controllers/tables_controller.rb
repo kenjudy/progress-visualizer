@@ -4,13 +4,7 @@ class TablesController < ApplicationController
   before_filter :user_authenticate, only: :done_stories
   
   def done_stories
-    fetch_current_results
-  end
-  
-  def fetch_current_results
-    @results = Rails.cache.fetch("Tables::DoneStoriesTable.current", :expires_in => 5.minutes) do
-      Tables::DoneStoriesTable.current
-    end
+    @results = Tables::DoneStoriesTable.current
   end
   
   # def done_stories_by_status

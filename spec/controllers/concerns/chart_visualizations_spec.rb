@@ -28,7 +28,7 @@ describe Charts::ChartsPresenter do
   end
   context "long_term_trend_visualization_rows" do
     
-    subject { long_term_trend_visualization_rows }
+    subject { long_term_trend_visualization_rows(10) }
 
     it { should == [[date - 2.weeks, 36.0, 12], [date - 1.week, 36.0, 12], [date, 36.0, 12]] }
   end

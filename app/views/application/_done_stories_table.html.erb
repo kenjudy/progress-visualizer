@@ -1,0 +1,22 @@
+<table class="table table-bordered table-responsive">
+  <tr><td colspan=3><h3>Done stories week of <%= results[:week_of] %></h3></td></tr>
+  <% results[:lists].each do |list, data| %>
+    <tr>
+      <th><%= list %></th>
+      <th class="count"><%= data[:stories] %></th>
+      <th class="estimate"><%= data[:estimates] %></th>
+    </tr>
+    <% data[:cards].each do |card| %>
+      <tr>
+        <td><%= card.name %></td>
+        <td></td>
+        <td class="estimate"><%= card.estimate %></td>
+      </tr>
+    <% end %>
+  <% end %>
+  <tr>
+    <th>Totals</th>
+    <th class="count"><%= results[:totals][:total_stories] %></th>
+    <th class="estimate"><%= results[:totals][:total_estimates] %></th>
+  </tr>
+</table>
