@@ -10,12 +10,13 @@ class UsersController < ApplicationController
   
   def forgot_password
     user = User.find_by(name: params[:name])
+    binding.pry
     if user
       random_password = user.reset_password
       user.save!
+      UserMailer.forgot_password(user, random_password).deliver
     end
     render_user_action(user, "A new password for <em>{user.name}</em> e-mailed to address on file.")
-    UserMailer.forgot_password(@user, random_password).deliver
   end
       
   def delete
