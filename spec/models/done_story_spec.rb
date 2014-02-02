@@ -10,12 +10,17 @@ describe DoneStory do
       end
     end 
     
-    subject { DoneStory.done_stories_data(1)}
+    let(:include_current) { false }
+    subject { DoneStory.done_stories_data(1, include_current) }
     
-    its(:length) { should == 24 }
-    its(:first) { should be_instance_of(DoneStory)}
+    its(:length) { should == 12 }
+    its(:first) { should be_instance_of(DoneStory) }
+    it("doesn't contain this week") { expect(subject.last.timestamp == Date.today - 1.week) }
+
+    context "include current" do
+      let(:include_current) { true }
+      it("contains this week") { expect(subject.last.timestamp == Date.today) }
+    end
 
   end
-  
-  
 end
