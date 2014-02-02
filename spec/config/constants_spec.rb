@@ -32,4 +32,8 @@ describe Constants do
     it { expect(Constants::ITERATION[:iteration_end]).to eql (Date.today.end_of_week) }
   end
   
+  context "email" do
+    it { expect(Constants::EMAIL[:default_from]).to_not be_nil }
+  end
+  
 end

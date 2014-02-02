@@ -9,22 +9,19 @@ class UsersController < ApplicationController
   end
   
   def forgot_password
-    user = get_user
+    user = User.find_by(name: params[:name])
     if user
-      random_password = Array.new(10).map { (65 + rand(58)).chr }.join
-      user.password = random_password
+      random_password = user.reset_password
       user.save!
-      #TODO: Mailer.create_and_deliver_password_change(@user, random_password)
-      render "application/alert", locals: { type: "info", message: "A new password for <em>#{user.name}</em> e-mailed to address on file."}
     end
+    render_user_action(user, "A new password for <em>{user.name}</em> e-mailed to address on file.")
+    UserMailer.forgot_password(@user, random_password).deliver
   end
       
   def delete
-    user = get_user
-    if user
-      user.destroy
-      render "application/alert", locals: { type: "info", message: "User <em>#{user.name}</em> has been deleted."}
-    end
+    user = User.find_by(name: params[:name])
+    user.destroy if user
+    render_user_action(user, "User <em>{user.name}</em> has been deleted.")
   end
   
   def create
@@ -42,9 +39,13 @@ class UsersController < ApplicationController
     end
   end
   
-  def get_user
-    user = User.find_by(name: params[:name])
-    render "application/alert", locals: { type: "danger", message: "<strong>Failure</strong>, the requested user cannot be found."} unless user
-    return user
+  private 
+  
+  def render_user_action(user, message)
+    if user
+      render "application/alert", locals: { type: "info", message: message.gsub("{user.name}", user.name) }
+    else
+      render "application/alert", status: "500", locals: { type: "danger", message: "<strong>Failure</strong>, the requested user cannot be found."} 
+    end
   end
 end

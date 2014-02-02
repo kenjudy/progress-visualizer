@@ -5,7 +5,7 @@ module Authentication
     authenticate_or_request_with_http_basic do |username, password|
       valid = check_credentials(username, password)
       session[:user] = username if valid
-      valid
+      return valid
     end
   end
 

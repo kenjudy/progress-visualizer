@@ -13,9 +13,14 @@ class User < ActiveRecord::Base
   end
 
   def password=(new_password)
-    return unless new_password
     @password = Password.create(new_password)
     self.password_hash = @password
+  end
+  
+  def reset_password
+    random_password =  Array.new(10).map { (65 + rand(58)).chr }.join
+    password = random_password
+    return random_password
   end
 
 end

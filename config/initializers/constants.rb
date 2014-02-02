@@ -26,4 +26,6 @@ module Constants
     ITERATION[:iteration_start] = Date.today.end_of_week - 6.days
     ITERATION[:iteration_end] = Date.today.end_of_week
   end
+  
+  EMAIL = { default_from: "progress-visualizer@judykat.com" }
 end

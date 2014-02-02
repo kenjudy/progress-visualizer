@@ -61,8 +61,8 @@ describe "routes" do
       it { should route_to(controller: "users", action: "create_submit")}
     end
     context "delete" do
-      subject { { get: "user/rplku4rpppypeu6npzwcxwxqagisaj" } }
-      it { should route_to(controller: "users", action: "delete")}
+      subject { { get: "user/rplku4rpppypeu6npzwcxwxqagisaj/username" } }
+      it { should route_to(controller: "users", action: "delete", name: "username")}
     end
   end
 end
