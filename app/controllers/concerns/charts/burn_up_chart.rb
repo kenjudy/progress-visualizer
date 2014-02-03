@@ -30,7 +30,7 @@ module Charts
       last_burnup.backlog_estimates == backlog_stats[:sum]
     end
     
-    def self.current(adapter = default_adapter)
+    def self.current
       board = adapter.request_board(adapter.current_sprint_board_properties[:id])
       Charts::BurnUpChart.new(board, { done_lists: adapter.current_sprint_board_properties[:done_lists],
                                        backlog_lists: adapter.current_sprint_board_properties[:backlog_lists],

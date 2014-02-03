@@ -5,8 +5,8 @@ module ApplicationHelper
   end
   
   def active_class_if(paths)
-    arr = [paths] if paths.instance_of?(String)
-    "active" if paths.include?(request.fullpath)
+    arr = paths.instance_of?(String) ? [paths] : paths
+    "active" if arr.include?(request.fullpath)
   end
   
   def user_panel

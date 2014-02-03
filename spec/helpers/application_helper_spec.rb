@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe ApplicationHelper do
-  let(:request) { double("Request", fullpath: tables_done_stories_path).as_null_object }
+  let(:request) { double("Request", fullpath: homepage_path).as_null_object }
   
   context "menu_list_item" do
     subject { menu_list_item("Burn Up<span></span>", charts_burn_up_path) }
