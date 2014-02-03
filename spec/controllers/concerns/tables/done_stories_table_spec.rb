@@ -15,14 +15,14 @@ describe "Tables::DoneStoriesTable" do
   before { adapter.stub(request_board: board) }
 
   context "current" do
-    subject { Tables::DoneStoriesTable.current_without_cache(adapter) }
+    subject { Tables::DoneStoriesTable.current_without_cache }
     its([:totals]) { should == {:total_stories=>2, :total_estimates=>6} }
   end
 
   context "update" do
     let(:story) { FactoryGirl.build(:done_story) }
     before { DoneStory.stub(find_or_initialize_by: story)}
-    after { Tables::DoneStoriesTable.update(adapter) }
+    after { Tables::DoneStoriesTable.update }
     
     it("should create done story") { expect(story).to receive(:update_attributes).at_least(:once).with({:type_of_work=>"Committed", :status=>"5170058469d58225070003ce", :story=>"Foo", :estimate=>3.0}) }
   end
