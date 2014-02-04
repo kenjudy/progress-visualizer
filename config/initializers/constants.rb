@@ -28,8 +28,12 @@ module Constants
 
   ITERATION_CONFIG = YAML::load(File.open("#{Rails.root}/config/iteration.yml"))
   
-  if ITERATION_CONFIG['duration'] == "WEEKLY" && ITERATION_CONFIG['start_day_of_week'] == 1
-    CONFIG[:iteration_start] = Date.today.end_of_week - 6.days
-    CONFIG[:iteration_end] = Date.today.end_of_week
+  if ITERATION_CONFIG['duration'] == "WEEKLY"
+    start_day_of_week = ITERATION_CONFIG['start_day_of_week'] ||= 1
+    start_hour = ITERATION_CONFIG['start_hour'] ||= 0
+    end_day_of_week = ITERATION_CONFIG['end_day_of_week'] ||= 6
+    end_hour = ITERATION_CONFIG['end_hour'] ||= 0
+    CONFIG[:iteration_start] = Date.today.end_of_week.to_datetime - (7 - start_day_of_week).days +  start_hour.hours
+    CONFIG[:iteration_end] = Date.today.end_of_week.to_datetime - (7 - end_day_of_week).days +  end_hour.hours
   end
 end
