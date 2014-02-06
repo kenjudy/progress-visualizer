@@ -3,6 +3,6 @@
 namespace :charts do
   desc "Update burn_up"
   task :burn_up => :environment do
-    Charts::BurnUpChart.current.update
+    Charts::BurnUpChart.current(Adapters::TrelloAdapter).update
   end
 end

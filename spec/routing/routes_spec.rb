@@ -11,14 +11,21 @@ describe "routes" do
     context "burn_up" do
       subject { { post: "ian4atzhmmh9ul/burn-up.json" } }
       it { should route_to(controller: "webhooks", action: "burn_up", format: "json")}
+
+      context "head test" do
+        subject {{ head: "ian4atzhmmh9ul/burn-up.json"}}
+        it { should route_to(controller: "webhooks", action: "burn_up", format: "json")}
+      end
       context "format constraint" do
         subject { { post: "ian4atzhmmh9ul/burn-up" } }
         it { should_not route_to(controller: "webhooks", action: "burn_up")}
       end
+
       context "add" do
         subject { { get: "ian4atzhmmh9ul/burn-up/add" } }
         it { should route_to(controller: "webhooks", action: "burn_up_add")}
       end
+
       context "delete" do
         subject { { get: "ian4atzhmmh9ul/burn-up/delete" } }
         it { should route_to(controller: "webhooks", action: "burn_up_delete")}

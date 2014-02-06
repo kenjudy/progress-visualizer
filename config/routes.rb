@@ -2,6 +2,7 @@ ProgressVisualizer::Application.routes.draw do
   
   root 'homepage#index', as: 'homepage'
   
+  get 'ian4atzhmmh9ul/burn-up' => "webhooks#burn_up", format: true, constraints: { format: /json/ }
   post 'ian4atzhmmh9ul/burn-up' => "webhooks#burn_up", as: 'webhooks_burn_up', format: true, constraints: { format: /json/ }
   get 'ian4atzhmmh9ul/burn-up/add' => "webhooks#burn_up_add", as: 'webhooks_burn_up_add'
   get 'ian4atzhmmh9ul/burn-up/delete' => "webhooks#burn_up_delete", as: 'webhooks_burn_up_delete'
