@@ -2,14 +2,14 @@ require 'spec_helper'
 require 'json'
 
 describe TablesController do
-  include Trello::JsonData
+  include ProgressVisualizerTrello::JsonData
 
 
   context "done_stories" do
     let(:adapter) { Adapters::TrelloAdapter }
     let(:list_id) { adapter.current_sprint_board_properties[:done_lists].keys.first }
     let(:label) { adapter.current_sprint_board_properties[:labels_types_of_work].first }
-    let(:board) { Trello::Board.new(
+    let(:board) { ProgressVisualizerTrello::Board.new(
                                     cards: [example_card_data("idList" => list_id, "labels" => [{name: label}])], 
                                     lists: [example_list_data("id" => list_id)]) 
                 }

@@ -4,19 +4,19 @@ require 'csv'
 
 module Adapters
   describe TrelloAdapter do
-    include Trello::JsonData
+    include ProgressVisualizerTrello::JsonData
     
     let(:uri) { double(URI, read: "[{}]" ) }
 
     let(:card_json) { example_card_json_string }
     let(:card_data) { JSON.parse(card_json) }
-    let(:card) { Trello::Card.new(card_data) }
+    let(:card) { ProgressVisualizerTrello::Card.new(card_data) }
 
     let(:list_json) { example_list_json_string }
     let(:list_data) { JSON.parse(list_json) }
-    let(:list) { Trello::List.new(list_data) }
+    let(:list) { ProgressVisualizerTrello::List.new(list_data) }
     
-    let(:board) { Trello::Board.new(lists: [list_data], cards: [card_data]) }
+    let(:board) { ProgressVisualizerTrello::Board.new(lists: [list_data], cards: [card_data]) }
  
     before do
       URI.stub(parse: uri)
@@ -62,7 +62,7 @@ module Adapters
         context "url" do
           after { subject }
      
-          it { expect(URI).to receive(:parse).with("https://api.trello.com/1/boards/#{Constants::CONFIG[:current_sprint_board][:id]}/cards/closed?key=#{Constants::TRELLO[:user_key]}&token=#{Constants::TRELLO[:readonly_token]}").and_return(uri) }
+          it { expect(URI).to receive(:parse).with("https://api.trello.com/1/boards/#{Constants::CONFIG[:current_sprint_board][:id]}/cards/closed?key=#{Constants::TRELLO[:app_key]}&token=#{Constants::TRELLO[:readonly_token]}").and_return(uri) }
         end
       end
     
@@ -74,7 +74,7 @@ module Adapters
         context "url" do
           after { subject }
      
-          it { expect(URI).to receive(:parse).with("https://api.trello.com/1/boards/#{Constants::CONFIG[:current_sprint_board][:id]}/cards?key=#{Constants::TRELLO[:user_key]}&token=#{Constants::TRELLO[:readonly_token]}").and_return(uri) }
+          it { expect(URI).to receive(:parse).with("https://api.trello.com/1/boards/#{Constants::CONFIG[:current_sprint_board][:id]}/cards?key=#{Constants::TRELLO[:app_key]}&token=#{Constants::TRELLO[:readonly_token]}").and_return(uri) }
         end
       end
     end
@@ -88,7 +88,7 @@ module Adapters
       context "url" do
         after{ subject }
 
-        it { expect(URI).to receive(:parse).with("https://api.trello.com/1/boards/#{Constants::CONFIG[:current_sprint_board][:id]}/lists?key=#{Constants::TRELLO[:user_key]}&token=#{Constants::TRELLO[:readonly_token]}").and_return(uri) }
+        it { expect(URI).to receive(:parse).with("https://api.trello.com/1/boards/#{Constants::CONFIG[:current_sprint_board][:id]}/lists?key=#{Constants::TRELLO[:app_key]}&token=#{Constants::TRELLO[:readonly_token]}").and_return(uri) }
       end
     end
         

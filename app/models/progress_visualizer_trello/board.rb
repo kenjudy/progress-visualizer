@@ -1,7 +1,7 @@
 require 'json'
 require 'csv'
 
-module Trello
+module ProgressVisualizerTrello
   class Board < TrelloObject
   
     attr_reader :cards, :title, :lists

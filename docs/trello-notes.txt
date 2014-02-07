@@ -1,0 +1,23 @@
+https://trello.com/docs/gettingstarted/
+Request a token granting read-write access forever:
+
+https://trello.com/1/authorize?key=substitutewithyourapplicationkey&name=ProgressVisualizer&expiration=never&response_type=token&scope=read,write
+
+
+
+
+Webhook
+
+$.post("https://trello.com/1/tokens/<TOKEN>/webhooks/?key=<APP_KEY>", {
+  description: "ken.judy progress visualizer burnup",
+  callbackURL: "http://www.progress-visualizer.com/ian4atzhmmh9ul/burn-up.json",
+  idModel: "<CURRENT BOARD>",
+});
+
+
+
+active: true
+callbackURL: "http://www.progress-visualizer.com/ian4atzhmmh9ul/burn-up.json"
+description: "ken.judy progress visualizer burnup"
+id: "52f4df359053cccf6ac4d516"
+idModel: "<CURRENT BOARD>"

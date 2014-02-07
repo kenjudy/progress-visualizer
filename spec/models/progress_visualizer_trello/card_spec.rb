@@ -1,8 +1,8 @@
 require 'spec_helper'
 require 'json'
 
-module Trello
-  describe Trello::Card do
+module ProgressVisualizerTrello
+  describe ProgressVisualizerTrello::Card do
     include JsonData
   
   

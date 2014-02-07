@@ -9,7 +9,7 @@ module Exporters
     def self.run(board_id, target_file)
       board = Adapters::TrelloAdapter.request_board(board_id)
       CSV.open(target_file, "ab") do |csv|
-        csv << Trello::Card.array_attributes
+        csv << ProgressVisualizerTrello::Card.array_attributes
         board.to_array.each { |arr| csv << arr }
       end
     end

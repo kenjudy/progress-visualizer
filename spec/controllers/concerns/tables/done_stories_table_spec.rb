@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe "Tables::DoneStoriesTable" do
-  include Trello::JsonData
+  include ProgressVisualizerTrello::JsonData
 
   let(:cards) do 
     (0..1).map do
@@ -9,7 +9,7 @@ describe "Tables::DoneStoriesTable" do
     end
   end
   
-  let(:board) { Trello::Board.new(lists: [example_list_data], cards: cards) }
+  let(:board) { ProgressVisualizerTrello::Board.new(lists: [example_list_data], cards: cards) }
   let(:adapter) { Adapters::TrelloAdapter }
 
   before { adapter.stub(request_board: board) }

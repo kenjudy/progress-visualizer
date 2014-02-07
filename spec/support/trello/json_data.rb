@@ -1,6 +1,6 @@
 require 'json'
 
-module Trello
+module ProgressVisualizerTrello
   module JsonData
     def example_card_data(attributes = {})
       JSON.parse(example_card_json_string).merge(attributes)

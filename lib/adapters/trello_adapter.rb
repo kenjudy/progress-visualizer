@@ -5,26 +5,26 @@ require 'json'
 module Adapters
   class TrelloAdapter
     
-    @credentials = {key: Constants::TRELLO[:user_key], token: Constants::TRELLO[:readonly_token]}
+    @credentials = {key: Constants::TRELLO[:app_key], token: Constants::TRELLO[:readonly_token]}
     
     def self.current_sprint_board_properties
       Constants::CONFIG[:current_sprint_board]
     end
         
     def self.request_board(board_id, include_archived = false)
-      Trello::Board.new(request_board_data(board_id, include_archived))
+      ProgressVisualizerTrello::Board.new(request_board_data(board_id, include_archived))
     end
     
     def self.request_archived_cards(board_id)
-      request_archived_cards_data(board_id).map{ |d| Trello::Card.new(d) }
+      request_archived_cards_data(board_id).map{ |d| ProgressVisualizerTrello::Card.new(d) }
     end
     
     def self.request_cards(board_id)
-      request_cards_data(board_id).map{ |d| Trello::Card.new(d) }
+      request_cards_data(board_id).map{ |d| ProgressVisualizerTrello::Card.new(d) }
     end
     
     def self.request_lists(board_id)
-      request_lists_data(board_id).map{ |d| Trello::List.new(d) }
+      request_lists_data(board_id).map{ |d| ProgressVisualizerTrello::List.new(d) }
     end
 
     def self.request_board_data(board_id, include_archived = false)

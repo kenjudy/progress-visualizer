@@ -1,6 +1,6 @@
 require 'json'
 
-module Trello
+module ProgressVisualizerTrello
   class TrelloObject
 
     attr_reader :data

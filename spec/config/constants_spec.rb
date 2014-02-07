@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Constants do
   
   context "private trello api constants" do
-    it { expect(Constants::TRELLO[:user_key]).to_not be_nil }
+    it { expect(Constants::TRELLO[:app_key]).to_not be_nil }
     it { expect(Constants::TRELLO[:readonly_token]).to_not be_nil }
     
     context "current sprint board" do

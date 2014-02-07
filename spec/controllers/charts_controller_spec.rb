@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'json'
 
 describe ChartsController do
-  include Trello::JsonData
+  include ProgressVisualizerTrello::JsonData
   
   context "burn_up" do
     before { Adapters::TrelloAdapter.stub(burn_up: double("BurnUpChart").as_null_object) }

@@ -1,8 +1,8 @@
 require 'spec_helper'
 require 'json'
 
-module Trello
-  describe Trello::List do
+module ProgressVisualizerTrello
+  describe ProgressVisualizerTrello::List do
     include JsonData
 
     subject { List.new(example_list_data)}

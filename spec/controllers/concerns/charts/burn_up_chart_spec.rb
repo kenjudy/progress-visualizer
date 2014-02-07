@@ -3,15 +3,15 @@ require 'spec_helper'
 
 module Charts
   describe BurnUpChart do
-    include Trello::JsonData
+    include ProgressVisualizerTrello::JsonData
 
     let(:current_time) { Time.now }
     let(:card_data) { example_card_data }
-    let(:card) { ::Trello::Card.new(card_data) }
-    let(:board) { ::Trello::Board.new({cards: [card_data,card_data.merge({"idList" => "done1"})], lists: []})}
-    let(:ready_for_development) { ::Trello::List.new(example_list_data)}
-    let(:ready_for_signoff) { ::Trello::List.new({"id" => "signoff1", "name" => "Ready for Signoff"})}
-    let(:done) { ::Trello::List.new({"id" => "done1", "name" => "Done"})}
+    let(:card) { ::ProgressVisualizerTrello::Card.new(card_data) }
+    let(:board) { ::ProgressVisualizerTrello::Board.new({cards: [card_data,card_data.merge({"idList" => "done1"})], lists: []})}
+    let(:ready_for_development) { ::ProgressVisualizerTrello::List.new(example_list_data)}
+    let(:ready_for_signoff) { ::ProgressVisualizerTrello::List.new({"id" => "signoff1", "name" => "Ready for Signoff"})}
+    let(:done) { ::ProgressVisualizerTrello::List.new({"id" => "done1", "name" => "Done"})}
     let(:options) { {done_lists: {done.id => done.name, 
                                   ready_for_signoff.id => ready_for_signoff.name}, 
                      backlog_lists: {ready_for_development.id => ready_for_development.name, 

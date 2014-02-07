@@ -1,8 +1,8 @@
 require 'csv'
 require 'spec_helper'
 
-module Trello
-  describe Trello::Board do
+module ProgressVisualizerTrello
+  describe ProgressVisualizerTrello::Board do
     include JsonData
 
     let(:list_data) { example_list_data }

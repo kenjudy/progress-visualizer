@@ -1,4 +1,4 @@
-module Trello
+module ProgressVisualizerTrello
   class Card < TrelloObject
     
     attr_reader :id, :last_known_state, :date_last_activity, :description, :id_board, :id_list, :id_short, :name, :short_link, :badges, :due, :labels, :short_url, :url
