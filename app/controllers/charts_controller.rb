@@ -1,6 +1,10 @@
 class ChartsController < ApplicationController
   include Charts::ChartsPresenter
   
+  def burn_up_reload
+    render json: { last_update: Rails.cache.fetch(BurnUp.last_update_key) }.to_json
+  end
+  
   def burn_up
     data = Charts::BurnUpChart.current_burn_up_data
         

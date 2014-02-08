@@ -18,6 +18,16 @@ describe ChartsController do
     end
   end
   
+  context "burn_up_reload" do
+    let(:burn_up) { FactoryGirl.create(:burn_up)}
+    before { burn_up }
+    subject { get :burn_up_reload }
+    
+    its(:code) { should == "200" }
+    its(:body) { should == { last_update: burn_up.timestamp }.to_json }
+    
+  end
+  
   context "yesterdays_weather" do
     before { controller.stub(yesterdays_weather_visualization: []) }
     subject { get :yesterdays_weather }

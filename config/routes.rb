@@ -8,6 +8,7 @@ ProgressVisualizer::Application.routes.draw do
   get 'ian4atzhmmh9ul/burn-up/delete' => "webhooks#burn_up_delete", as: 'webhooks_burn_up_delete'
   
   get 'chart/burn-up' => "charts#burn_up", as: 'charts_burn_up'
+  get 'chart/burn-up-reload' => "charts#burn_up_reload", as: 'charts_burn_up_reload'
   get 'chart/yesterdays-weather/(:weeks)' => "charts#yesterdays_weather", as: 'charts_yesterdays_weather', constraints: {weeks: /[0-9]*/}
   get 'chart/long-term-trend/(:weeks)' => "charts#long_term_trend", as: 'charts_long_term_trend', constraints: {weeks: /[0-9]*/}
 

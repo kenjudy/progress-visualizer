@@ -19,8 +19,17 @@
 
 $ ->
   $(window).resize ->
-    draw_stories_chart() if $("#stories_chart").length == 1
-    draw_estimates_chart() if $("#estimates_chart").length == 1
-    draw_yesterdays_weather_chart_estimate_chart() if $("#yesterdays_weather_chart_estimate_chart").length == 1
-    draw_yesterdays_weather_chart_stories_chart() if $("#yesterdays_weather_chart_stories_chart").length == 1
-    draw_long_term_trend_chart() if $("#long_term_trend_chart").length == 1
+    $(".chart").each (index) ->
+      eval_ "draw_" + @id
+      return
+
+window.tickUpdate = ->
+  $.get "/chart/burn-up-reload", (data) ->
+    timestamp =  Date.parse(data["last_update"])
+    if (timestamp > window.last_timestamp)
+      window.location.reload()
+    else
+      window.last_timestamp = timestamp
+  setTimeout (->
+    window.tickUpdate();
+    ), 30000
