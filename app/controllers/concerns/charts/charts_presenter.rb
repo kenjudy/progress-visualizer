@@ -54,7 +54,7 @@ module Charts::ChartsPresenter
   end
   
   def burn_up_rows(data)
-    data.map{ |burn_up| [burn_up[:timestamp], burn_up[:backlog], burn_up[:done]] }
+    data.map{ |burn_up| [burn_up[:timestamp].getlocal, burn_up[:backlog], burn_up[:done]] }
   end
 
   def long_term_trend_visualization_rows(weeks, include_current = false)
