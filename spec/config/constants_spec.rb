@@ -24,16 +24,8 @@ describe Constants do
   end
   
   context "iteration constants" do
-    before do
-      Constants::ITERATION_CONFIG['duration'] = "WEEKLY"
-      Constants::ITERATION_CONFIG['start_day_of_week'] = 1
-      Constants::ITERATION_CONFIG['end_day_of_week'] = 6
-      Constants::ITERATION_CONFIG['start_hour'] = 12
-      Constants::ITERATION_CONFIG['end_hour'] = 0
-    end
     it { expect(Constants::CONFIG[:iteration_start]).to eql (Date.today.end_of_week.to_datetime - 6.days + 12.hours)}
-    it { expect(Constants::CONFIG[:iteration_end]).to eql (Date.today.end_of_week.to_datetime -
-      1.days) }
+    it { expect(Constants::CONFIG[:iteration_end]).to eql (Date.today.end_of_week.to_datetime + 1) }
   end
   
   context "email" do
