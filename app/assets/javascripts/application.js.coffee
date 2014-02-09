@@ -20,7 +20,7 @@
 $ ->
   $(window).resize ->
     $(".chart").each (index) ->
-      eval_ "draw_" + @id
+      eval("draw_" + @id)
       return
 
 window.tickUpdate = ->

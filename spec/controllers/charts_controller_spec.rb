@@ -36,8 +36,8 @@ describe ChartsController do
 
     context "assigns" do
       before { subject }
-      it { assigns(:yesterdays_weather_chart_estimate_chart).should_not be_nil }
-      it { assigns(:yesterdays_weather_chart_stories_chart).should_not be_nil }
+      it { assigns(:yesterdays_weather_estimate_chart).should_not be_nil }
+      it { assigns(:yesterdays_weather_stories_chart).should_not be_nil }
     end
     context "optional week param" do
       subject { get :yesterdays_weather, weeks: "3" }
