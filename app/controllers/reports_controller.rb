@@ -1,8 +1,5 @@
 class ReportsController < ApplicationController
-  include Authentication
   include Charts::ChartsPresenter
-  
-  before_filter :user_authenticate
   
   def performance_summary
     @results = Tables::DoneStoriesTable.current

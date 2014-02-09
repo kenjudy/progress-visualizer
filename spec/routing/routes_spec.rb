@@ -82,26 +82,4 @@ describe "routes" do
     end
   end
   
-  context "users" do
-    context "logout" do
-      subject { { get: "user/logout" } }
-      it { should route_to(controller: "users", action: "logout")}
-    end
-    context "forgot" do
-      subject { { get: "user/forgot/name" } }
-      it { should route_to(controller: "users", action: "forgot_password", name: "name")}
-    end
-    context "create" do
-      subject { { get: "user/Bk2meuxQzLYkdkmLsoTkVZMgfAbb9h" } }
-      it { should route_to(controller: "users", action: "create")}
-    end
-    context "create_submit" do
-      subject { { post: "user/Bk2meuxQzLYkdkmLsoTkVZMgfAbb9h" } }
-      it { should route_to(controller: "users", action: "create_submit")}
-    end
-    context "delete" do
-      subject { { get: "user/rplku4rpppypeu6npzwcxwxqagisaj/username" } }
-      it { should route_to(controller: "users", action: "delete", name: "username")}
-    end
-  end
 end

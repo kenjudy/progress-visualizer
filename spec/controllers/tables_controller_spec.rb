@@ -17,10 +17,6 @@ describe TablesController do
     before { adapter.stub(request_board: board) }
     
     subject { get :done_stories }
-
-    context "requries authentication" do
-      its(:code) { should == "401" }
-    end
     
   end
 end

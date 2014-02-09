@@ -5,6 +5,7 @@ require 'jquery-rails'
 require 'turbolinks'
 require 'bootstrap-sass'
 require 'google_visualr'
+require 'devise'
 
 if Rails.env == "development"
   require 'better_errors'

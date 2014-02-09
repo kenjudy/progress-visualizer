@@ -30,13 +30,7 @@ describe ApplicationHelper do
   end
   
   context "user panel" do
-    before do
-      helper.request = double("request").as_null_object
-      session[:user] = "Joe"
-    end
-    subject { helper.user_panel.downcase }
-    it { should include("logout") }
-    it { should include("joe") }
+
   end
   
 end

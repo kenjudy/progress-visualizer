@@ -50,6 +50,12 @@ GEM
     daemons (1.1.9)
     dalli (2.7.0)
     debug_inspector (0.0.2)
+    devise (3.2.2)
+      bcrypt-ruby (~> 3.0)
+      orm_adapter (~> 0.1)
+      railties (>= 3.2.6, < 5)
+      thread_safe (~> 0.1)
+      warden (~> 1.2.3)
     diff-lcs (1.2.5)
     erubis (2.7.0)
     eventmachine (1.0.3)
@@ -74,6 +80,7 @@ GEM
     guard-rspec (4.2.5)
       guard (~> 2.1)
       rspec (>= 2.14, < 4.0)
+    hashie (2.0.5)
     hike (1.2.3)
     i18n (0.6.9)
     interception (0.4)
@@ -99,6 +106,18 @@ GEM
     minitest (4.7.5)
     multi_json (1.8.4)
     oauth (0.4.7)
+    omniauth (1.2.1)
+      hashie (>= 1.2, < 3)
+      rack (~> 1.0)
+    omniauth-oauth (1.0.1)
+      oauth
+      omniauth (~> 1.0)
+    omniauth-trello (0.0.4)
+      multi_json (~> 1.5)
+      oauth (~> 0.4)
+      omniauth (~> 1.0)
+      omniauth-oauth (~> 1.0)
+    orm_adapter (0.5.0)
     pg (0.17.1)
     polyglot (0.3.3)
     pry (0.9.12.6)
@@ -201,6 +220,8 @@ GEM
     uglifier (2.4.0)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
+    warden (1.2.3)
+      rack (>= 1.0)
 
 PLATFORMS
   ruby
@@ -212,6 +233,7 @@ DEPENDENCIES
   bootstrap-sass (~> 3.1.0)
   coffee-rails (~> 4.0.0)
   dalli
+  devise
   factory_girl_rails
   google_visualr (>= 2.1)
   guard-bundler
@@ -220,6 +242,7 @@ DEPENDENCIES
   jquery-rails
   lunchy
   memcachier
+  omniauth-trello
   pg
   pry-rails
   pry-remote
