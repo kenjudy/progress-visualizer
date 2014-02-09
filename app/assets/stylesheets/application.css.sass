@@ -18,11 +18,19 @@
 $pvGreen: #3D7477
 $pvBlue: #091D58
 $pvRed: #991238
+$pvGray: #5e5e5e
 
+$bootstrapRed: #d9534f
+
+.navbar-default
+  a.navbar-brand
+    color: $pvGreen
+  
 .nav
   .fit
     @media (min-width: 767px) and (max-width: 1200px)
       display: none
+      
 .chart
   width: 100%
   height: 600px
@@ -34,18 +42,37 @@ g text
 .count, .estimate
   text-align: right
 
-h3
+label
+  color: $pvGray
+h2, h3
+  font-family: 'Questrial','Helvetica','Arial',sans-serif
   color: $pvGreen
   
 th
   font-family: 'Questrial','Helvetica','Arial',sans-serif
   text-transform: uppercase
   color: white
-  background-color: #666
+  background-color: $pvGray
+
+form
+  .well
+    padding-bottom: 0
+  h2
+    margin-bottom: .5em
+    padding-left: 6px
 
 footer
+  margin-top: 1em
   text-align: center
   padding: 1em 0
   border-top: thin solid #e7e7e7
   background-color: #f8f8f8
-  color: #777
+  color: $pvGray
+
+//devise
+#error_explanation
+  margin-top: -19px
+  h2,ul
+    color: $pvRed
+  h2
+    font-size: 1.4em

@@ -11,16 +11,17 @@
   <%= yield :head %>
 </head>
 <body>
-<%= render 'application/header' %>
-<div class="alert alert-info"><%= notice %></div>
-<div class="alert alert-error"><%= alert %></div>
-<%= yield %>
-
-<footer class="muted">
-  a trello dashboard in ruby on rails by
-  <a href="http://judykat.com/ken-judy">Ken Judy</a>
-  |
-  github: <a href="https://github.com/kenjudy">kenjudy</a>
-</footer>
+  <%= render 'application/header' %>
+  <%= render 'application/alert', message: notice, dismissable: true %>
+  <%= render 'application/alert', message: alert, type: "danger" %>
+  <article>
+    <%= yield %>
+  </article>
+  <footer class="muted">
+    a trello dashboard in ruby on rails by
+    <a href="http://judykat.com/ken-judy">Ken Judy</a>
+    |
+    github: <a href="https://github.com/kenjudy">kenjudy</a>
+  </footer>
 </body>
 </html>

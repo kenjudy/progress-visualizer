@@ -1,0 +1,15 @@
+<% message ||= nil %>
+<% dismissable ||= false  %>
+<% type ||= "info" %>
+<section class="<%= "hidden" unless message %>">
+  <div class="container">
+    <div class="row">
+      <div class="alert alert-<%= type %> <%= "alert-dismissable" if dismissable %>">
+        <% if dismissable %>
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <% end %>
+        <%= raw(message) %>
+      </div>
+    </div>
+  </div>
+</section>
