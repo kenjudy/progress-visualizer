@@ -10,6 +10,10 @@ module ApplicationHelper
   end
   
   def user_panel
-    concat raw(link_to raw("Logout<span class=\"fit\"> #{session[:user]}</span>"), "http://logout:logout@#{request.host}:#{request.port ? request.port : "80"}#{users_logout_path}") if session[:user]
+    if current_user
+      concat link_to("Logout #{content_tag(:span, current_user.name, class: "fit")}".html_safe, destroy_user_session_path, method: :delete)
+    else
+      concat link_to("Login", new_user_session_path)
+    end
   end
 end

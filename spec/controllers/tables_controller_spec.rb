@@ -16,11 +16,21 @@ describe TablesController do
 
     before { adapter.stub(request_board: board) }
     
-    subject { get :done_stories }
+    context "not authenticated" do
+      subject { get :done_stories }
+  
+      its(:code) { should == "302" }
 
-    context "requries authentication" do
-      its(:code) { should == "401" }
     end
+  
+    context "authenticated" do
+      let(:user) { FactoryGirl.create(:user) }
+      before { sign_in user }
+
+      subject { get :done_stories }
     
+      its(:code) { should == "200" }
+
+    end
   end
 end

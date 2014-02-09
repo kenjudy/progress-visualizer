@@ -1,7 +1,5 @@
 class TablesController < ApplicationController
-  include Authentication
-  
-  before_filter :user_authenticate, only: :done_stories
+  before_filter :authenticate_user!
   
   def done_stories
     @results = Tables::DoneStoriesTable.current

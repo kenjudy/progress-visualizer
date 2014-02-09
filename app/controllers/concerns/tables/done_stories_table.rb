@@ -5,16 +5,16 @@ module Tables
     
     def self.current
       @results = Rails.cache.fetch("#{Rails.env}::Tables::DoneStoriesTable.current", :expires_in => 5.minutes) do
-        Tables::DoneStoriesTable.current_without_cache
+        Tables::DoneStoriesTable.current_without_cache(adapter)
       end
     end
     
 
-    def self.current_without_cache
+    def self.current_without_cache(adapter)
       board = adapter.request_board(adapter.current_sprint_board_properties[:id])
       types_of_work = adapter.current_sprint_board_properties[:labels_types_of_work]
       done_list_ids = adapter.current_sprint_board_properties[:done_lists].keys
-      results = { week_of: beginning_of_current_iteration, lists: {}}
+      results = { week_of: beginning_of_current_iteration.strftime("%B %l, %Y"), lists: {}}
       total_stories = 0
       total_estimates = 0
       types_of_work.each do |type_of_work|

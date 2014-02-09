@@ -16,7 +16,7 @@ module Constants
   
 
   CONFIG = { 
-    default_adapter: Adapters::TrelloAdapter,
+    default_adapter: ::Adapters::TrelloAdapter,
     
     email_default_from: "progress-visualizer@judykat.com",
     

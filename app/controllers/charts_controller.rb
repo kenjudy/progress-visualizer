@@ -1,5 +1,6 @@
 class ChartsController < ApplicationController
   include Charts::ChartsPresenter
+  before_filter :authenticate_user!
   
   def burn_up_reload
     render json: { last_update: Rails.cache.fetch(BurnUp.last_update_key) }.to_json

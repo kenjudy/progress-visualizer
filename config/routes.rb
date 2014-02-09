@@ -1,5 +1,6 @@
 ProgressVisualizer::Application.routes.draw do
   
+  devise_for :users
   root 'homepage#index', as: 'homepage'
   
   get 'ian4atzhmmh9ul/burn-up' => "webhooks#burn_up", format: true, constraints: { format: /json/ }
@@ -16,9 +17,4 @@ ProgressVisualizer::Application.routes.draw do
 
   get 'report/performance-summary' => "reports#performance_summary", as: 'reports_performance_summary'
 
-  get 'user/logout' => "users#logout", as: "users_logout"
-  get 'user/forgot/:name' => "users#forgot_password", as: "users_forgot_password"
-  get 'user/rplku4rpppypeu6npzwcxwxqagisaj/:name' => "users#delete", as: "users_delete"
-  get 'user/Bk2meuxQzLYkdkmLsoTkVZMgfAbb9h' => "users#create", as: "users_create"
-  post 'user/Bk2meuxQzLYkdkmLsoTkVZMgfAbb9h' => "users#create_submit", as: "users_create_submit"
 end

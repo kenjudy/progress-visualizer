@@ -1,8 +1,6 @@
 class ReportsController < ApplicationController
-  include Authentication
   include Charts::ChartsPresenter
-  
-  before_filter :user_authenticate
+  before_filter :authenticate_user!
   
   def performance_summary
     @results = Tables::DoneStoriesTable.current
@@ -15,6 +13,5 @@ class ReportsController < ApplicationController
 
     @long_term_trend_chart = long_term_trend_visualization(10, true)
   end
-  
 end
   

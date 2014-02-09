@@ -15,7 +15,7 @@ describe "Tables::DoneStoriesTable" do
   before { adapter.stub(request_board: board) }
 
   context "current" do
-    subject { Tables::DoneStoriesTable.current_without_cache }
+    subject { Tables::DoneStoriesTable.current_without_cache(adapter) }
     its([:totals]) { should == {:total_stories=>2, :total_estimates=>6} }
   end
 

@@ -30,13 +30,16 @@ describe ApplicationHelper do
   end
   
   context "user panel" do
-    before do
-      helper.request = double("request").as_null_object
-      session[:user] = "Joe"
+    let(:current_user) { FactoryGirl.build(:user) }
+    before { current_user }
+    subject { user_panel }
+    
+    it { should =~ /#{current_user.name}/ }
+    
+    context "no user" do
+      let(:current_user) { nil }
+      it { should == "<a href=\"/users/sign_in\">Login</a>" }
     end
-    subject { helper.user_panel.downcase }
-    it { should include("logout") }
-    it { should include("joe") }
   end
   
 end
