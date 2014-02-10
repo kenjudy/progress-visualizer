@@ -4,6 +4,9 @@ class CreateUserProfile < ActiveRecord::Migration
       
       t.references :user, :foreign_key => true, :null => false
 
+      t.string  :name
+      t.binary  :default
+
       t.string :encrypted_readonly_token
       t.string :encrypted_current_sprint_board_id
       t.string :encrypted_current_sprint_board_id_short

@@ -42,6 +42,8 @@ ActiveRecord::Schema.define(version: 20140209235445) do
 
   create_table "user_profiles", force: true do |t|
     t.integer  "user_id",                                      null: false
+    t.string   "name"
+    t.binary   "default"
     t.string   "encrypted_readonly_token"
     t.string   "encrypted_current_sprint_board_id"
     t.string   "encrypted_current_sprint_board_id_short"
