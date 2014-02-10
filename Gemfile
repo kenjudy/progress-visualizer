@@ -38,8 +38,7 @@ gem 'devise'
 
 gem 'omniauth-trello'
 
-# Use ActiveModel has_secure_password
-gem 'bcrypt-ruby', '~> 3.1.2'
+gem 'attr_encryptor'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.

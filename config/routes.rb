@@ -3,6 +3,8 @@ ProgressVisualizer::Application.routes.draw do
   devise_for :users
   root 'homepage#index', as: 'homepage'
   
+  resources :user_profiles
+  
   get 'ian4atzhmmh9ul/burn-up' => "webhooks#burn_up", format: true, constraints: { format: /json/ }
   post 'ian4atzhmmh9ul/burn-up' => "webhooks#burn_up", as: 'webhooks_burn_up', format: true, constraints: { format: /json/ }
   get 'ian4atzhmmh9ul/burn-up/add' => "webhooks#burn_up_add", as: 'webhooks_burn_up_add'

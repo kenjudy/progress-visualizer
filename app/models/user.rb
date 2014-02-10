@@ -1,8 +1,4 @@
-require 'bcrypt'
-
 class User < ActiveRecord::Base
-  # users.password_hash in the database is a :string
-  include BCrypt
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable

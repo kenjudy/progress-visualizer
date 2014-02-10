@@ -6,6 +6,7 @@ require 'turbolinks'
 require 'bootstrap-sass'
 require 'google_visualr'
 require 'devise'
+require 'attr_encryptor'
 
 if Rails.env == "development"
   require 'better_errors'

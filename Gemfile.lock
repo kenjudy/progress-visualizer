@@ -28,6 +28,8 @@ GEM
     addressable (2.3.5)
     arel (4.0.1)
     atomic (1.1.14)
+    attr_encryptor (2.0.0)
+      encryptor2 (>= 1.0.0)
     bcrypt-ruby (3.1.2)
     better_errors (1.1.0)
       coderay (>= 1.0.0)
@@ -57,6 +59,7 @@ GEM
       thread_safe (~> 0.1)
       warden (~> 1.2.3)
     diff-lcs (1.2.5)
+    encryptor2 (1.0.0)
     erubis (2.7.0)
     eventmachine (1.0.3)
     execjs (2.0.2)
@@ -227,7 +230,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bcrypt-ruby (~> 3.1.2)
+  attr_encryptor
   better_errors
   binding_of_caller
   bootstrap-sass (~> 3.1.0)

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140209140050) do
+ActiveRecord::Schema.define(version: 20140209235445) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,6 +39,33 @@ ActiveRecord::Schema.define(version: 20140209140050) do
   end
 
   add_index "done_stories", ["story_id"], name: "index_done_stories_on_story_id", unique: true, using: :btree
+
+  create_table "user_profiles", force: true do |t|
+    t.integer  "user_id",                                      null: false
+    t.string   "encrypted_readonly_token"
+    t.string   "encrypted_current_sprint_board_id"
+    t.string   "encrypted_current_sprint_board_id_short"
+    t.string   "encrypted_backlog_lists"
+    t.string   "encrypted_done_lists"
+    t.string   "encrypted_readonly_token_iv"
+    t.string   "encrypted_current_sprint_board_id_iv"
+    t.string   "encrypted_current_sprint_board_id_short_iv"
+    t.string   "encrypted_backlog_lists_iv"
+    t.string   "encrypted_done_lists_iv"
+    t.string   "encrypted_readonly_token_salt"
+    t.string   "encrypted_current_sprint_board_id_salt"
+    t.string   "encrypted_current_sprint_board_id_short_salt"
+    t.string   "encrypted_backlog_lists_salt"
+    t.string   "encrypted_done_lists_salt"
+    t.string   "labels_types_of_work"
+    t.string   "duration"
+    t.integer  "start_day_of_week"
+    t.integer  "end_day_of_week"
+    t.integer  "start_hour"
+    t.integer  "end_hour"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "users", force: true do |t|
     t.string   "name"

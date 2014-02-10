@@ -7,6 +7,23 @@ describe "routes" do
     it { should route_to(controller: "homepage", action: "index")}
   end
  
+  context "user_profiles" do
+    { index: [:get, "/", nil], show: [:get, "/1", "1"], 
+      new: [:get, "/new", nil], edit: [:get, "/1/edit", "1"],
+      create: [:post, "/", nil], update: [:put, "/1", "1"],
+      destroy: [:delete, "/1", "1"]
+    }.each do |action, props|
+
+      context action do
+        subject { { props[0] => "user_profiles#{props[1]}" } }
+        let(:params) {{controller: "user_profiles", action: action.to_s, id: props[2]}.keep_if { |key, val| val }}
+        
+        it { should route_to(params) }
+      end
+
+    end
+  end
+   
   context "webhooks" do
     context "burn_up" do
       subject { { post: "ian4atzhmmh9ul/burn-up.json" } }
