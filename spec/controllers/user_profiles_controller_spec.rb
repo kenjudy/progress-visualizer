@@ -2,6 +2,22 @@ require 'spec_helper'
 
 describe UserProfilesController do
   let(:profile) { FactoryGirl.create(:user_profile) }
+  let(:params) { {
+    name: profile.name,
+    default: profile.default,
+    readonly_token: profile.readonly_token,
+    current_sprint_board_id: profile.current_sprint_board_id,
+    current_sprint_board_id_short: profile.current_sprint_board_id_short,
+    backlog_lists: profile.backlog_lists,
+    done_lists: profile.done_lists,
+    labels_types_of_work: profile.labels_types_of_work,
+    duration: profile.duration,
+    start_day_of_week: profile.start_day_of_week,
+    end_day_of_week: profile.end_day_of_week,
+    start_hour: profile.start_hour,
+    end_hour: profile.end_hour,
+    user_id: profile.user.id 
+    }   }
   
   { index: :get, show: :get, 
     new: :get, edit: :get,
@@ -9,8 +25,8 @@ describe UserProfilesController do
     destroy: :delete }.each do |action, method|
       
     context action do
-      before { profile }
       subject { send(method, action, id: profile.id) }
+      
       its(:code) { should == "302" }
 
       context "authenticated" do

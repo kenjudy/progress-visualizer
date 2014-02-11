@@ -19,10 +19,11 @@ class UserProfilesController < ApplicationController
   end
   
   def create
+    @profile = UserProfile.new(params[:user_profile])
   end
   
   def update
-    @profile = UserProfile.new(params[:user_profile])
+    @profile = current_user.user_profiles.find(params[:id])
     @profile.save
     if (@profile.valid?)
       render 'thank_you'

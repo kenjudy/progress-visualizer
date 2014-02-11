@@ -46,13 +46,20 @@ module Adapters
       request_json(Constants::TRELLO[:board_lists_path], {board_id: board_id})
     end
     
+    def self.request_user_token_url
+      generate_url_string(Constants::TRELLO[:trello_root_url] << Constants::TRELLO[:request_token_path])
+    end
     
     def self.generate_uri(url_template, options = {})
-      options.merge(@credentials).each { |key,value| url_template.gsub!("<#{key.to_s.upcase}>", value) }
-      URI.parse(url_template)
+      URI.parse(generate_url_string(url_template, options))
     end
 
     private
+    
+    def self.generate_url_string(url_template, options = {})
+      options.merge(@credentials).each { |key,value| url_template.gsub!("<#{key.to_s.upcase}>", value) }
+      url_template
+    end
     
     def self.request_json(url_template, options)
       return JSON.parse(generate_uri("#{Constants::TRELLO[:api_root_url]}#{url_template}", options).read)

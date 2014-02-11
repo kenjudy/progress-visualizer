@@ -2,13 +2,15 @@
   <div class="container">
     <div class="row">
       <div class="col-md-8 col-md-offset-2">
-        <%= form_for(@profile, url: user_profiles_path, role: "form", html: {class: "form-horizontal", :method => :post }) do |f| %>
+        <%= form_for(@profile, url: user_profiles_path, role: "form", html: {class: "form-horizontal panel panel-default", :method => :post }) do |f| %>
+        <div class="panel-heading">
           <h2>User Profile (Trello Properties)</h2>
-          <div class="well">
+        </div>
+        <div class="panel-body">
  
             <div class="form-group">
               <%= f.label :name, "Nickname", class: "col-sm-3 control-label" %>
-              <div class="col-sm-9">
+              <div class="col-sm-3">
                 <%= f.text_field :name, class: "form-control", value: "Current Sprint" %>
               </div>
             </div>
@@ -19,9 +21,34 @@
                 <%= f.check_box :default, {style: "margin-top: 11px"}, "1", "0" %>
               </div>
             </div>
+ 
+            <div class="form-group">
+              <%= f.label :readonly_token, class: "col-sm-3 control-label" do %>
+                User Token
+                <% tooltip("Allow READ ONLY access to your trello data")%>
+              <% end %>
+              <div class="col-sm-6">
+                <%= f.text_field :readonly_token, class: "form-control" %>
+              </div>
+              <label class="col-sm-3 control-label">
+                <%= link_to raw("Request new token <span class=\"glyphicon glyphicon-new-window\"></span>"), ::Adapters::TrelloAdapter.request_user_token_url, target: "_blank" %>
+              </label>
+            </div>
 
-            <% {readonly_token: ["Readonly Token", "Allows read only access to your trello data", nil],    
-                current_sprint_board_id_short: ["Board Short ID", "From the URL to your trello board", nil], 
+            <div class="form-group">
+              <%= f.label :current_sprint_board_id_short, class: "col-sm-3 control-label" do %>
+                Board ID (short)
+                <% tooltip("The id string in the URL to your trello board. https://trello.com/b/[Board ID]/name")%>
+              <% end %>
+              <div class="col-sm-6">
+                <%= f.text_field :current_sprint_board_id_short, class: "form-control" %>
+              </div>
+              <label class="col-sm-3 control-label">
+                <%= link_to raw("Trello.com <span class=\"glyphicon glyphicon-new-window\"></span>"), "http://trello.com", target: "_blank" %>
+              </label>
+            </div>
+            <hr />
+            <% {
                 current_sprint_board_id: ["Board Unique ID", "Required for automated updates", nil], 
                 backlog_lists: ["Todo lists", "Id's of lists in your board containing TODO's", "TODO"], 
                 done_lists: ["Done Lists", "Id's of lists in your board containing complete work", "Done"],
@@ -43,12 +70,16 @@
                 </div>
       
             <% end %>
-
+          </div>
+          <div class="panel-footer">
             <div class="form-group">
               <div class="col-sm-9 col-sm-offset-3">
                 <%= f.submit "Submit", {class: "btn btn-default"} %>
               </div>
             </div>
+
+            <%= f.hidden_field :user_id, class: "form-control", value: @profile.user_id %>
+            <%= f.hidden_field :id, class: "form-control", value: @profile.id %>
             
           </div> <%# well %>
         <% end %>

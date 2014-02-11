@@ -92,5 +92,10 @@ module Adapters
       end
     end
         
+    context "request_user_token_url" do
+      subject { TrelloAdapter.request_user_token_url }
+      
+      it { should == "https://trello.com/1/authorize?key=#{Constants::TRELLO[:app_key]}&name=ProgressVisualizer&expiration=never&response_type=token&scope=read"}
+    end
   end
 end
