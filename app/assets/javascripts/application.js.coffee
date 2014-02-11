@@ -22,7 +22,9 @@ $ ->
     $(".chart").each (index) ->
       eval("draw_" + @id)
       return
-
+      
+  $("a.tip").tooltip()
+  
 window.tickUpdate = ->
   $.get "/chart/burn-up-reload", (data) ->
     timestamp =  Date.parse(data["last_update"])

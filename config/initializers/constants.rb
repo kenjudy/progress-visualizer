@@ -32,6 +32,7 @@ module Constants
     start_day_of_week = ITERATION_CONFIG['user']['start_day_of_week'] ||= 1
     start_hour = ITERATION_CONFIG['user']['start_hour'] ||= 0
     end_day_of_week = ITERATION_CONFIG['user']['end_day_of_week'] ||= 6
+    end_day_of_week = end_day_of_week + 8 if end_day_of_week <= start_day_of_week 
     end_hour = ITERATION_CONFIG['user']['end_hour'] ||= 0
     CONFIG[:iteration_start] = Time.zone.local_to_utc(Date.today.end_of_week.to_datetime - (7 - start_day_of_week).days +  start_hour.hours)
     CONFIG[:iteration_end] = Time.zone.local_to_utc(Date.today.end_of_week.to_datetime - (7 - end_day_of_week).days +  end_hour.hours)

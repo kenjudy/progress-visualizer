@@ -1,0 +1,58 @@
+<section>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        <%= form_for(@profile, url: user_profiles_path, role: "form", html: {class: "form-horizontal", :method => :post }) do |f| %>
+          <h2>User Profile (Trello Properties)</h2>
+          <div class="well">
+ 
+            <div class="form-group">
+              <%= f.label :name, "Nickname", class: "col-sm-3 control-label" %>
+              <div class="col-sm-9">
+                <%= f.text_field :name, class: "form-control", value: "Current Sprint" %>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :default, "Default?", class: "col-sm-3 control-label" %>
+              <div class="col-sm-9">
+                <%= f.check_box :default, {style: "margin-top: 11px"}, "1", "0" %>
+              </div>
+            </div>
+
+            <% {readonly_token: ["Readonly Token", "Allows read only access to your trello data", nil],    
+                current_sprint_board_id_short: ["Board Short ID", "From the URL to your trello board", nil], 
+                current_sprint_board_id: ["Board Unique ID", "Required for automated updates", nil], 
+                backlog_lists: ["Todo lists", "Id's of lists in your board containing TODO's", "TODO"], 
+                done_lists: ["Done Lists", "Id's of lists in your board containing complete work", "Done"],
+                labels_types_of_work: ["Labels", "Used in yesterday's weather stack chart.", nil],
+                duration: ["Iteration Length", "Only WEEKLY supported for now", "WEEKLY"], 
+                start_day_of_week: ["Start day", "0-7, 0 = Sunday", "1"],
+                end_day_of_week: ["End day", "0-7, 0 = Sunday", "0"],
+                start_hour: ["Start hour", "0-24", "11"],
+                end_hour: ["End hour", "0-24", "0"]         
+              }.each do |field, props| %>
+      
+                <div class="form-group">
+                  <%= f.label field, class: "col-sm-3 control-label" do %>
+                     <%= props[0] %> <% tooltip(props[1])%>
+                  <% end %>
+                  <div class="col-sm-9">
+                    <%= f.text_field field, class: "form-control", value: @profile.send(field) || props[2] %>
+                  </div>
+                </div>
+      
+            <% end %>
+
+            <div class="form-group">
+              <div class="col-sm-9 col-sm-offset-3">
+                <%= f.submit "Submit", {class: "btn btn-default"} %>
+              </div>
+            </div>
+            
+          </div> <%# well %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</section>

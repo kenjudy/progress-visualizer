@@ -11,6 +11,7 @@ class UserProfilesController < ApplicationController
   
   def new
     @profile = UserProfile.new(user: current_user)
+    @profile.default = "1" if current_user.user_profiles.length == 0
   end
   
   def edit
@@ -21,6 +22,13 @@ class UserProfilesController < ApplicationController
   end
   
   def update
+    @profile = UserProfile.new(params[:user_profile])
+    @profile.save
+    if (@profile.valid?)
+      render 'thank_you'
+    else
+      render 'edit'
+    end
   end
   
   def destroy
