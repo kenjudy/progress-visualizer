@@ -2,7 +2,8 @@ require 'spec_helper'
 
 describe "Tables::DoneStoriesTable" do
   include ProgressVisualizerTrello::JsonData
-
+  after { Rails.cache.delete("#{Rails.env}::Tables::DoneStoriesTable.current") }
+  
   let(:cards) do 
     (0..1).map do
       example_card_data({ "idList" => "5170058469d58225070003ce", "labels" => [{color: "blue", name: "Committed"}], "name" => "(3) Foo" })

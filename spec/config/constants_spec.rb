@@ -24,8 +24,8 @@ describe Constants do
   end
   
   context "iteration constants" do
-    it { expect(Constants::CONFIG[:iteration_start]).to eql (Date.today.end_of_week.to_datetime - 6.days + 12.hours)}
-    it { expect(Constants::CONFIG[:iteration_end]).to eql (Date.today.end_of_week.to_datetime + 1) }
+    it { expect(Constants::CONFIG[:iteration_start]).to eql (Time.zone.local_to_utc(Date.today.end_of_week.to_datetime - 6.days + 11.hours))}
+    it { expect(Constants::CONFIG[:iteration_end]).to eql (Time.zone.local_to_utc(Date.today.end_of_week.to_datetime + 1)) }
   end
   
   context "email" do

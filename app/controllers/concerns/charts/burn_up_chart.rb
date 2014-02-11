@@ -23,7 +23,7 @@ module Charts
     def redundant?(done_stats, backlog_stats)
       last_burnup = BurnUp.last
       last_burnup && 
-      last_burnup.timestamp > Time.now - 6.hours && 
+      last_burnup.timestamp > Time.now - 2.hours && 
       last_burnup.done == done_stats[:count] && 
       last_burnup.done_estimates == done_stats[:sum] && 
       last_burnup.backlog == backlog_stats[:count] && 

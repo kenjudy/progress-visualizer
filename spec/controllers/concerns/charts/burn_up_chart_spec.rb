@@ -49,7 +49,7 @@ module Charts
     end
     
     context "redundant?" do
-      let(:timestamp) { Time.now - 3.hours }
+      let(:timestamp) { Time.now - 1.hours + 58.minutes }
       let(:backlog) { 2 }
       let(:done_stats) {{ count: 1, sum: 2.5 }}
       let(:backlog_stats) {{ count: 2, sum: 5.0 }}

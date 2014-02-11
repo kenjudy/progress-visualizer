@@ -41,5 +41,6 @@ module ProgressVisualizer
     # config.i18n.default_locale = :de
     
     config.autoload_paths += Dir["#{config.root}/lib/**/"]
+    config.time_zone = 'Eastern Time (US & Canada)'
   end
 end
