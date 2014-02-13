@@ -1,7 +1,7 @@
 module Charts
   class BurnUpChart
     extend ActiveSupport::Concern
-    extend ::BaseVisualization
+    extend ::IterationConcern
     
     attr_accessor :done_lists, :backlog_lists, :timestamp
 

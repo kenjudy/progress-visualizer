@@ -3,7 +3,7 @@ require 'spec_helper'
 describe ReportsController do
   include ProgressVisualizerTrello::JsonData
 
-  let(:adapter) { Adapters::TrelloAdapter }
+  let(:adapter) { Adapters::TrelloAdapter.new }
   let(:list_id) { adapter.current_sprint_board_properties[:done_lists].keys.first }
   let(:label) { adapter.current_sprint_board_properties[:labels_types_of_work].first }
   let(:board) { ProgressVisualizerTrello::Board.new(

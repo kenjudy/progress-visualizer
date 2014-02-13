@@ -1,19 +1,31 @@
 module Tables
   class DoneStoriesTable
     extend ActiveSupport::Concern
-    extend BaseVisualization
+    extend IterationConcern
     
     def self.current
       @results = Rails.cache.fetch("#{Rails.env}::Tables::DoneStoriesTable.current", :expires_in => 5.minutes) do
-        Tables::DoneStoriesTable.current_without_cache(adapter)
+        Tables::DoneStoriesTable.refresh
       end
     end
     
-
-    def self.current_without_cache(adapter)
-      board = adapter.request_board(adapter.current_sprint_board_properties[:id])
-      types_of_work = adapter.current_sprint_board_properties[:labels_types_of_work]
-      done_list_ids = adapter.current_sprint_board_properties[:done_lists].keys
+    def self.refresh
+      collated_data = collate(adapter.request_board(adapter.current_sprint_board_properties[:id]),
+                              adapter.current_sprint_board_properties[:labels_types_of_work], 
+                              adapter.current_sprint_board_properties[:done_lists].keys)
+      update_done_stories_for(collated_data)
+    end
+    
+    def self.update_done_stories_for(collated_data)
+      collated_data[:lists].keys.each do |type_of_work|
+        collated_data[:lists][type_of_work][:cards].each do |card|
+          DoneStory.create_or_update_from(card, type_of_work, beginning_of_current_iteration)
+        end
+      end
+      return collated_data
+    end
+    
+    def self.collate(board, types_of_work, done_list_ids)
       results = { week_of: beginning_of_current_iteration.strftime("%B %l, %Y"), lists: {}}
       total_stories = 0
       total_estimates = 0
@@ -31,21 +43,7 @@ module Tables
       results[:totals] = {total_stories: total_stories, total_estimates: total_estimates}
       return results
     end
-    
-    def self.update
-      results = current
-      results[:lists].keys.each do |type_of_work|
-        results[:lists][type_of_work][:cards].each do |card|
-          story = DoneStory.find_or_initialize_by(story_id: card.id_short.to_s)
-          attribs = { type_of_work: type_of_work,
-                     status: card.id_list,
-                     story: card.name,
-                     estimate: card.estimate }
-          attribs.merge!({timestamp: beginning_of_current_iteration, iteration: beginning_of_current_iteration.strftime("%F")}) if story.timestamp.nil?
-          story.update_attributes(attribs)
-        end
-      end
-    end
+
   end
   
 end

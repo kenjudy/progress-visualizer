@@ -1,0 +1,25 @@
+<%# form, field, label_text, default_val, tooltip, aside %>
+<% label_text ||= field.to_s.titleize %>
+<% field_width ||= 9 %>
+<% aside_width = 9 - field_width %>
+<% default_val ||= nil %>
+<% tooltip ||= nil %>
+<% aside ||= nil %>
+<div class="form-group">
+  <%= form.label field, class: "col-sm-3 control-label" do %>
+    <%= label_text %>
+    <% tooltip(tooltip)%>
+  <% end %>
+  <div class="col-sm-<%= field_width %>">
+    <% if default_val %>
+      <%= form.text_field field, class: "form-control", value: default_val %>
+    <% else %>
+    <%= form.text_field field, class: "form-control" %>
+    <% end %>
+  </div>
+  <% if aside %>
+    <label class="col-sm-<%= aside_width %> control-label">
+      <%= aside %>
+    </label>
+  <% end %>
+</div>

@@ -1,20 +1,16 @@
+<% method ||= :post %>
 <section>
   <div class="container">
     <div class="row">
       <div class="col-md-8 col-md-offset-2">
-        <%= form_for(@profile, url: user_profiles_path, role: "form", html: {class: "form-horizontal panel panel-default", :method => :post }) do |f| %>
+        <%= form_for(@profile, url: user_profiles_path, role: "form", html: {class: "form-horizontal panel panel-default", :method => method }) do |f| %>
         <div class="panel-heading">
           <h2>User Profile (Trello Properties)</h2>
         </div>
         <div class="panel-body">
  
-            <div class="form-group">
-              <%= f.label :name, "Nickname", class: "col-sm-3 control-label" %>
-              <div class="col-sm-3">
-                <%= f.text_field :name, class: "form-control", value: "Current Sprint" %>
-              </div>
-            </div>
-
+          <%= render('form_group_text_field', form: f, field: :name, label_text: "Nickname", field_width: 3 ) %>
+          
             <div class="form-group">
               <%= f.label :default, "Default?", class: "col-sm-3 control-label" %>
               <div class="col-sm-9">
@@ -22,64 +18,73 @@
               </div>
             </div>
  
-            <div class="form-group">
-              <%= f.label :readonly_token, class: "col-sm-3 control-label" do %>
-                User Token
-                <% tooltip("Allow READ ONLY access to your trello data")%>
-              <% end %>
-              <div class="col-sm-6">
-                <%= f.text_field :readonly_token, class: "form-control" %>
-              </div>
-              <label class="col-sm-3 control-label">
-                <%= link_to raw("Request new token <span class=\"glyphicon glyphicon-new-window\"></span>"), ::Adapters::TrelloAdapter.request_user_token_url, target: "_blank" %>
-              </label>
-            </div>
+            <%= render('form_group_text_field', form: f, field: :readonly_token, label_text: "User Token", field_width: 6, tooltip: "Allow READ ONLY access to your trello data", aside: link_to(raw("Request new token <span class=\"glyphicon glyphicon-new-window\"></span>"), ::Rails.application.config.adapter.request_user_token_url, target: "_blank")) %>
+ 
+            <%= render('form_group_text_field', form: f, field: :current_sprint_board_id_short, label_text: "Board ID (short)", field_width: 3, tooltip: "The id string in the URL to your trello board. https://trello.com/b/[Board ID]/name", aside: link_to(raw("Trello.com <span class=\"glyphicon glyphicon-new-window\"></span>"), "http://trello.com", target: "_blank")) %>
 
-            <div class="form-group">
-              <%= f.label :current_sprint_board_id_short, class: "col-sm-3 control-label" do %>
-                Board ID (short)
-                <% tooltip("The id string in the URL to your trello board. https://trello.com/b/[Board ID]/name")%>
-              <% end %>
-              <div class="col-sm-6">
-                <%= f.text_field :current_sprint_board_id_short, class: "form-control" %>
-              </div>
-              <label class="col-sm-3 control-label">
-                <%= link_to raw("Trello.com <span class=\"glyphicon glyphicon-new-window\"></span>"), "http://trello.com", target: "_blank" %>
-              </label>
-            </div>
-            <hr />
-            <% {
-                current_sprint_board_id: ["Board Unique ID", "Required for automated updates", nil], 
-                backlog_lists: ["Todo lists", "Id's of lists in your board containing TODO's", "TODO"], 
-                done_lists: ["Done Lists", "Id's of lists in your board containing complete work", "Done"],
-                labels_types_of_work: ["Labels", "Used in yesterday's weather stack chart.", nil],
-                duration: ["Iteration Length", "Only WEEKLY supported for now", "WEEKLY"], 
-                start_day_of_week: ["Start day", "0-7, 0 = Sunday", "1"],
-                end_day_of_week: ["End day", "0-7, 0 = Sunday", "0"],
-                start_hour: ["Start hour", "0-24", "11"],
-                end_hour: ["End hour", "0-24", "0"]         
-              }.each do |field, props| %>
+            <% if @lists %> 
+               <hr />
+               
+               <%= render('form_group_text_field', form: f, field: :current_sprint_board_id, label_text: "Board Unique ID", default_val: @lists.first.id_board, tooltip: "Required for automated updates") %>
+               
+               <div class="form-group">
+                 <%= f.label :backlog_lists, class: "col-sm-3 control-label" do %>
+                   Todo lists
+                   <% tooltip("Id's of lists in your board containing TODO's")%>
+                 <% end %>
+                 <div class="col-sm-9">
+                   <% @lists.each do |list| %>
+                     <%= list.name %>
+                   <% end %>
+                 </div>
+               </div>
+               
+               <div class="form-group">
+                 <%= f.label :done_lists, class: "col-sm-3 control-label" do %>
+                   Done Lists
+                   <% tooltip("Id's of lists in your board containing complete work")%>
+                 <% end %>
+                 <div class="col-sm-9">
+                   <% @lists.each do |list| %>
+                     <%= list.name %>
+                   <% end %>
+                 </div>
+               </div>
       
+               <%= render('form_group_text_field', form: f, field: :labels_types_of_work, label_text: "Labels", tooltip: "Used in yesterday's weather stack chart.") %>
+
+            
+              <hr />
+              <!-- duration: ["Iteration Length", "Only WEEKLY supported for now", "WEEKLY"], 
+                  start_day_of_week: ["Start day", "0-7, 0 = Sunday", "1"],
+                  end_day_of_week: ["End day", "0-7, 0 = Sunday", "0"],
+                  start_hour: ["Start hour", "0-24", "11"],
+                  end_hour: ["End hour", "0-24", "0"]         
+              -->
+              
                 <div class="form-group">
-                  <%= f.label field, class: "col-sm-3 control-label" do %>
-                     <%= props[0] %> <% tooltip(props[1])%>
-                  <% end %>
-                  <div class="col-sm-9">
-                    <%= f.text_field field, class: "form-control", value: @profile.send(field) || props[2] %>
+                  <%= f.label :duration, "Duration", class: "col-sm-3 control-label"%>
+                  <div class="col-sm-3">
+                    <%= f.text_field :duration, class: "form-control disabled", value: "WEEKLY", disabled: true %>
                   </div>
                 </div>
-      
-            <% end %>
+              <% end %>
           </div>
           <div class="panel-footer">
             <div class="form-group">
-              <div class="col-sm-9 col-sm-offset-3">
+              <div class="col-sm-6">
                 <%= f.submit "Submit", {class: "btn btn-default"} %>
+              </div>
+              <div class="col-sm-6">
+                <div class="pull-right">
+                  <label class="control-label text-muted">(<%= @list ? 2 : 1 %> of 2)</label>
+                </div>
               </div>
             </div>
 
-            <%= f.hidden_field :user_id, class: "form-control", value: @profile.user_id %>
-            <%= f.hidden_field :id, class: "form-control", value: @profile.id %>
+            <% if @profile.id %>
+              <%= f.hidden_field :id, class: "form-control", value: @profile.id %>
+            <% end %>
             
           </div> <%# well %>
         <% end %>

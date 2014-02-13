@@ -1,5 +1,5 @@
 class UserMailer < ActionMailer::Base
-  default from: Constants::CONFIG[:email_default_from]
+  default from: Rails.application.config.email_default_from
   
   def forgot_password(user, random_password)
     @user = user

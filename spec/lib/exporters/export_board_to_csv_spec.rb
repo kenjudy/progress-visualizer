@@ -14,18 +14,18 @@ module Exporters
 
     context "export_current_sprint_board" do
       after { ExportBoardToCsv.export_current_sprint_board("eraseme.txt") }
-      it("calls run") { expect(ExportBoardToCsv).to receive(:run).with(Constants::CONFIG[:current_sprint_board][:id], "eraseme.txt") }
+      it("calls run") { expect(ExportBoardToCsv).to receive(:run).with(Rails.application.config.current_sprint_board[:id], "eraseme.txt") }
     end
 
     context "run" do
 
       before do
-        Adapters::TrelloAdapter.stub(request_board: ProgressVisualizerTrello::Board.new(cards: [card_data, card_data], lists: [list_data]))
+        allow_any_instance_of(Adapters::TrelloAdapter).to receive(:request_board).and_return(ProgressVisualizerTrello::Board.new(cards: [card_data, card_data], lists: [list_data]))
         CSV.stub(:open).and_yield(csv)
         card.list = list
       end
 
-      after { ExportBoardToCsv.run(Constants::CONFIG[:current_sprint_board][:id], "tmp/eraseme.txt") }
+      after { ExportBoardToCsv.run(Rails.application.config.current_sprint_board[:id], "tmp/eraseme.txt") }
 
       it("writes csv") do
         expect(csv).to receive("<<").once.ordered.with(ProgressVisualizerTrello::Card.array_attributes)

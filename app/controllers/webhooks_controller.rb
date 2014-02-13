@@ -12,7 +12,7 @@ class WebhooksController < ApplicationController
   
   def burn_up
     logger.info("-- WEBHOOK #{request.body}")
-    Charts::BurnUpChart.current(Adapters::TrelloAdapter).update
+    Charts::BurnUpChart.current(Rails.application.config.adapter).update
     render text: "OK"
   end
   

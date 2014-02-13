@@ -2,9 +2,11 @@
   <div class="container">
     <div class="row">
       <div class="col-md-8 col-md-offset-2">
-        <%= form_for(resource, :as => resource_name, :url => password_path(resource_name), role: "form", html: {class: "form-horizontal", :method => :put }) do |f| %>
-          <h2>Change your password</h2>
-          <div class="well">
+        <%= form_for(resource, :as => resource_name, :url => password_path(resource_name), role: "form", html: {class: "form-horizontal panel panel-default", :method => :put }) do |f| %>
+          <div class="panel-heading">
+            <h2>Change your password</h2>
+          </div>
+          <div class="panel-body">
 
             <%= devise_error_messages! %>
             <%= f.hidden_field :reset_password_token %>
@@ -23,8 +25,10 @@
               </div>
             </div>
 
+          </div>
+          <div class="panel-footer">
             <div class="form-group">
-              <div class="col-sm-offset-3 col-sm-9">
+              <div class="col-sm-12">
                 <%= f.submit "Change my password", class: "btn btn-default" %>
               </div>
             </div>

@@ -1,8 +1,7 @@
 module Charts
   class YesterdaysWeatherChart
     extend ActiveSupport::Concern
-    extend ::BaseVisualization
-    include ::BaseVisualization
+    include ::IterationConcern
     attr_accessor :label, :weeks
     
     def initialize(options)

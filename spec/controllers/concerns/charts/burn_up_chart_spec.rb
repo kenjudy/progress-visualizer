@@ -71,9 +71,10 @@ module Charts
     end
     
     context "current burn_up chart" do
-      before { Adapters::TrelloAdapter.stub(request_board: board) }
+      let(:adapter) { Adapters::TrelloAdapter.new }
+      before { adapter.stub(request_board: board) }
       
-      subject { BurnUpChart.current(Adapters::TrelloAdapter) }
+      subject { BurnUpChart.current(adapter) }
       
       it { should be_instance_of(Charts::BurnUpChart) }
     end
