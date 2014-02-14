@@ -20,6 +20,7 @@ class UserProfilesController < ApplicationController
     @profile ||= current_user.user_profiles.find(params[:id])
     alert = "User profile doesn't exist!" unless @profile
     lists
+    labels
     render 'edit', alert: alert
   end
   
@@ -32,6 +33,7 @@ class UserProfilesController < ApplicationController
   end
   
   def update
+    #lists
     @profile = current_user.user_profiles.find(params[:id])
     @profile.save
     if (@profile.valid?)
@@ -63,6 +65,14 @@ class UserProfilesController < ApplicationController
   
   # 
   def lists
-    @lists ||= adapter.request_lists(@profile.current_sprint_board_id_short)
+    @lists = Rails.cache.fetch("#{Rails.env}::UserProfilesController.lists.#{@profile.current_sprint_board_id_short}", :expires_in => 10.minutes) do
+       adapter.request_lists(@profile.current_sprint_board_id_short)
+    end
+  end
+  def labels
+    @labels = Rails.cache.fetch("#{Rails.env}::UserProfilesController.labels.#{@profile.current_sprint_board_id_short}", :expires_in => 10.minutes) do
+       meta = adapter.request_board_metadata(@profile.current_sprint_board_id_short)
+       meta["labelNames"].values
+    end
   end
 end

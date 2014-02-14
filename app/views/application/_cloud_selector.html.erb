@@ -1,0 +1,23 @@
+<%# heading, lists, form, field %>
+<% label_text ||= field.to_s.titleize %>
+<% tooltip ||= nil %>
+
+<div class="form-group">
+  <%= form.label field, class: "col-sm-3 control-label" do %>
+    <%= label_text %>
+    <% tooltip(tooltip)%>
+  <% end %>
+  <div class="col-sm-9 centered">
+    <div class="panel panel-info">
+      <div class="panel-heading"><%= heading %></div>
+      <div class="panel-body">
+        <% lists.each do |list| %>
+          <button type="button" class="btn btn-default btn-xs done cloud-selector" data-id="<%= list.respond_to?("id") ? list.id : list %>"><%= list.respond_to?("name") ? list.name : list %></button>
+        <% end %>
+      </div>
+      <div class="panel-footer">
+        <%= form.text_area field, class: "form-control input-sm", disabled: true %>
+      </div>
+    </div>
+  </div>
+</div>

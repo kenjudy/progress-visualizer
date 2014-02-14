@@ -21,6 +21,7 @@ describe Constants do
     it { expect(Rails.application.config.trello[:export_cards_path]).to eql("/boards/<BOARD_ID>/cards?key=<KEY>&token=<TOKEN>") }
     it { expect(Rails.application.config.trello[:export_archived_cards_path]).to eql("/boards/<BOARD_ID>/cards/closed?key=<KEY>&token=<TOKEN>") }
     it { expect(Rails.application.config.trello[:board_lists_path]).to eql("/boards/<BOARD_ID>/lists?key=<KEY>&token=<TOKEN>") }
+    it { expect(Rails.application.config.trello[:board_meta_path]).to eql("/boards/<BOARD_ID>?key=<KEY>&token=<TOKEN>") }
   end
   
   context "iteration constants" do

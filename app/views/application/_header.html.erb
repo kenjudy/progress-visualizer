@@ -11,7 +11,7 @@
   </div>
 
   <ul class="nav navbar-nav navbar-right hidden-sm hidden-xs visible-lg">
-    <li><% user_panel %></li>
+    <%= render('user_menu') %>
   </ul>
   <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
     <ul class="nav navbar-nav">
@@ -28,7 +28,7 @@
         </ul>
       </li>
 
-      <li class="hidden-lg"><% user_panel %></li>
+      <%= render('user_menu', classname: "hidden-lg") %>
     </ul>
   </div><!-- /.navbar-collapse -->
 </nav>

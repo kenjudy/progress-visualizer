@@ -12,15 +12,20 @@
  *= require_tree .
  */
 
-@import "bootstrap"
-@import "bootstrap/theme"
-
 $pvGreen: #3D7477
 $pvBlue: #091D58
 $pvRed: #991238
 $pvGray: #5e5e5e
 
 $bootstrapRed: #d9534f
+
+
+$link-color: $pvGreen
+$link-hover-color: darken($pvGreen, 10%)
+$font-family-sans-serif: 'Questrial', 'Helvetica Neue', Helvetica, Arial, sans-serif
+
+@import "bootstrap"
+@import "bootstrap/theme"
 
 .navbar-default
   a.navbar-brand
@@ -36,20 +41,15 @@ $bootstrapRed: #d9534f
   height: 600px
   margin-bottom: 5em
   
-g text
-  font-family: 'Questrial','Helvetica','Arial',sans-serif
-  
 .count, .estimate
   text-align: right
 
 label
   color: $pvGray
 h2, h3
-  font-family: 'Questrial','Helvetica','Arial',sans-serif
   color: $pvGreen
   
 th
-  font-family: 'Questrial','Helvetica','Arial',sans-serif
   text-transform: uppercase
   color: white
   background-color: $pvGray
@@ -68,6 +68,9 @@ footer
   border-top: thin solid #e7e7e7
   background-color: #f8f8f8
   color: $pvGray
+
+.cloud-selector
+  margin: 2px 0
 
 //devise
 #error_explanation

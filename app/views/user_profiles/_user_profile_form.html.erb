@@ -20,55 +20,51 @@
  
             <%= render('form_group_text_field', form: f, field: :readonly_token, label_text: "User Token", field_width: 6, tooltip: "Allow READ ONLY access to your trello data", aside: link_to(raw("Request new token <span class=\"glyphicon glyphicon-new-window\"></span>"), ::Rails.application.config.adapter.request_user_token_url, target: "_blank")) %>
  
-            <%= render('form_group_text_field', form: f, field: :current_sprint_board_id_short, label_text: "Board ID (short)", field_width: 3, tooltip: "The id string in the URL to your trello board. https://trello.com/b/[Board ID]/name", aside: link_to(raw("Trello.com <span class=\"glyphicon glyphicon-new-window\"></span>"), "http://trello.com", target: "_blank")) %>
+            <%= render('form_group_text_field', form: f, field: :current_sprint_board_id_short, label_text: "Board ID (short)", field_width: 3, tooltip: "The id string in the URL to your trello board. https://trello.com/b/[Board ID]/name", aside: link_to(raw("Trello.com <span class=\"glyphicon glyphicon-new-window\"></span>"), @profile.current_sprint_board_id_short ? "http://trello.com/b/#{@profile.current_sprint_board_id_short}" : "http://trello.com", target: "_blank")) %>
 
             <% if @lists %> 
                <hr />
+                              
+               <%= render('form_group_text_field', form: f, field: :current_sprint_board_id, label_text: "Board Unique ID", default_val: @lists.first.id_board, css_class: "disabled", disabled: true) %>
                
-               <%= render('form_group_text_field', form: f, field: :current_sprint_board_id, label_text: "Board Unique ID", default_val: @lists.first.id_board, tooltip: "Required for automated updates") %>
-               
-               <div class="form-group">
-                 <%= f.label :backlog_lists, class: "col-sm-3 control-label" do %>
-                   Todo lists
-                   <% tooltip("Id's of lists in your board containing TODO's")%>
-                 <% end %>
-                 <div class="col-sm-9">
-                   <% @lists.each do |list| %>
-                     <%= list.name %>
-                   <% end %>
-                 </div>
-               </div>
-               
-               <div class="form-group">
-                 <%= f.label :done_lists, class: "col-sm-3 control-label" do %>
-                   Done Lists
-                   <% tooltip("Id's of lists in your board containing complete work")%>
-                 <% end %>
-                 <div class="col-sm-9">
-                   <% @lists.each do |list| %>
-                     <%= list.name %>
-                   <% end %>
-                 </div>
-               </div>
-      
-               <%= render('form_group_text_field', form: f, field: :labels_types_of_work, label_text: "Labels", tooltip: "Used in yesterday's weather stack chart.") %>
+               <%= render('cloud_selector', form: f, field: :backlog_lists, lists: @lists, label_text: "Todo Lists", heading: "Which lists on your board represent todo items (the backlog)?")%>
 
+               <%= render('cloud_selector', form: f, field: :done_lists, lists: @lists, label_text: "Done Lists", heading: "Which lists on your board represent complete items?")%>
+                             
+              <%= render('cloud_selector', form: f, field: :labels_types_of_work, lists: @labels, label_text: "Labels", heading: "Which (if any) labels do you use to group work?")%>
             
               <hr />
-              <!-- duration: ["Iteration Length", "Only WEEKLY supported for now", "WEEKLY"], 
-                  start_day_of_week: ["Start day", "0-7, 0 = Sunday", "1"],
-                  end_day_of_week: ["End day", "0-7, 0 = Sunday", "0"],
-                  start_hour: ["Start hour", "0-24", "11"],
-                  end_hour: ["End hour", "0-24", "0"]         
-              -->
-              
-                <div class="form-group">
-                  <%= f.label :duration, "Duration", class: "col-sm-3 control-label"%>
-                  <div class="col-sm-3">
-                    <%= f.text_field :duration, class: "form-control disabled", value: "WEEKLY", disabled: true %>
-                  </div>
+              <div class="form-group">
+
+                <%= f.label :start_day_of_week, "Iteration Start", class: "col-sm-3 control-label" %>
+
+                <div class="col-sm-3">
+                  <%= f.select(:start_day_of_week, options_for_select([['Sunday', '0'],['Monday', '1'],['Tuesday', '2'],['Wednesday', '3'],['Thursday', '4'],['Friday', '5'], ['Saturday', '6']], @profile.start_day_of_week || 1 ), {}, class: "form-control") %>
                 </div>
-              <% end %>
+
+                <div class="col-sm-3">
+                  <%= time_field(:user_profile, :start_hour, ampm: true, class: "form-control col-sm-3") %>
+                </div>
+
+              </div>
+              
+              <div class="form-group">
+
+                <%= f.label :end_day_of_week, "End", class: "col-sm-3 control-label" %>
+
+                <div class="col-sm-3">
+                  <%= f.select(:end_day_of_week, options_for_select([['Sunday', '0'],['Monday', '1'],['Tuesday', '2'],['Wednesday', '3'],['Thursday', '4'],['Friday', '5'], ['Saturday', '6']], @profile.start_day_of_week || 6 ), {}, class: "form-control") %>
+                </div>
+
+                <div class="col-sm-3">
+                  <%= time_field(:user_profile, :end_hour, ampm: true, class: "form-control col-sm-3") %>
+                </div>
+
+              </div>
+              
+              <%= render('form_group_text_field', form: f, field: :duration, label_text: "Duration", field_width: 3, default_val: @profile.duration || "WEEKLY", tooltip: "(only weekly for now...)", disabled: true) %>
+
+            <% end %>
           </div>
           <div class="panel-footer">
             <div class="form-group">
@@ -77,7 +73,7 @@
               </div>
               <div class="col-sm-6">
                 <div class="pull-right">
-                  <label class="control-label text-muted">(<%= @list ? 2 : 1 %> of 2)</label>
+                  <label class="control-label text-muted">(<%= @lists && @lists.any? ? 2 : 1 %> of 2)</label>
                 </div>
               </div>
             </div>

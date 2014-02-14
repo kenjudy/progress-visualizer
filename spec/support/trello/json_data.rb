@@ -18,6 +18,10 @@ module ProgressVisualizerTrello
       "{\"id\":\"52653272e6fa31217b001705\",\"name\":\"Ready for Development\"}"
     end
     
+    def example_board_metatada_json_string
+      "{\"id\":\"5170058469d58225070003cb\",\"name\":\"Current Sprint\",\"desc\":\"\",\"descData\":null,\"closed\":false,\"idOrganization\":\"5164403d8131293355002b97\",\"pinned\":true,\"url\":\"https://trello.com/b/ZoCdRXWT/current-sprint\",\"shortUrl\":\"https://trello.com/b/ZoCdRXWT\",\"prefs\":{\"permissionLevel\":\"org\",\"voting\":\"disabled\",\"comments\":\"members\",\"invitations\":\"members\",\"selfJoin\":false,\"cardCovers\":true,\"background\":\"blue\",\"backgroundColor\":\"#23719F\",\"backgroundImage\":null,\"backgroundImageScaled\":null,\"backgroundTile\":false,\"backgroundBrightness\":\"unknown\",\"canBePublic\":true,\"canBeOrg\":true,\"canBePrivate\":true,\"canInvite\":true},\"labelNames\":{\"yellow\":\"Tech Stories\",\"red\":\"Bug Stories\",\"purple\":\"Contingent\",\"orange\":\"Inserted\",\"green\":\"Committed\",\"blue\":\"Pimsleur Stories\"}}"
+    end
+    
     def example_webhook_response_json_string
       <<-JSON
       {

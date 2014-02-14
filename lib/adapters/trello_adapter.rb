@@ -36,6 +36,10 @@ module Adapters
       {cards: cards_data, lists: lists_data}
     end
     
+    def request_board_metadata(board_id)
+      request_json(Rails.application.config.trello[:board_meta_path], {board_id: board_id})
+    end
+    
     def request_archived_cards_data(board_id)
       request_json(Rails.application.config.trello[:export_archived_cards_path], {board_id: board_id})
     end

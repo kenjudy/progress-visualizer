@@ -15,7 +15,7 @@ module ApplicationHelper
   
   def user_panel
     if current_user
-      concat link_to("Logout #{content_tag(:span, current_user.name, class: "fit")}".html_safe, destroy_user_session_path, method: :delete)
+      concat link_to("Hello #{content_tag(:span, current_user.name, class: "fit")}".html_safe, destroy_user_session_path, method: :delete)
     else
       concat link_to("Login", new_user_session_path)
     end

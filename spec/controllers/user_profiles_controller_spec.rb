@@ -9,6 +9,7 @@ describe UserProfilesController do
   let(:profile_partial) { { "name" => "Current Sprint", "default" => "1", "readonly_token" => "test0token", "current_sprint_board_id_short" => "ZoCdRXWT", "user_id" => user_id } }
   let(:list) { { list: "foo" } }
   before { adapter.stub(request_lists: [list]) }
+  before { adapter.stub(request_board_metadata: {"labelNames" => { "blue" => "Work"}}) }
   
   { index: :get, show: :get, 
     new: :get, edit: :get,
