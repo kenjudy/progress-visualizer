@@ -7,7 +7,7 @@
     <ul class="dropdown-menu">
       <% menu_list_item("Logout", destroy_user_session_path) %>
       <li class="divider"></li>
-      <% menu_list_item("Edit Profile", user_profiles_path(current_user.id)) %>
+      <% menu_list_item("Your Profile", user_profiles_path) %>
     </ul>
   </li>
 <% else %>

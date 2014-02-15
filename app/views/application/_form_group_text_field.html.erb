@@ -5,7 +5,7 @@
 <% tooltip ||= nil %>
 <% aside ||= nil %>
 <% css_class ||= nil %>
-<% disabled ||= false %>
+<% readonly ||= false %>
 
 <div class="form-group">
   <%= form.label field, class: "col-sm-3 control-label" do %>
@@ -14,9 +14,9 @@
   <% end %>
   <div class="col-sm-<%= field_width %>">
     <% if default_val %>
-      <%= form.text_field field, class: "form-control #{css_class}", value: default_val, disabled: disabled %>
+      <%= form.text_field field, class: "form-control #{css_class}", value: default_val, readonly: readonly %>
     <% else %>
-    <%= form.text_field field, class: "form-control #{css_class}", disabled: disabled %>
+    <%= form.text_field field, class: "form-control #{css_class}", readonly: readonly %>
     <% end %>
   </div>
   <% if aside %>

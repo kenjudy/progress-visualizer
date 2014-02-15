@@ -27,19 +27,10 @@ describe ApplicationHelper do
       it { should_not == "active" }
     end
 
-  end
+  end  
   
-  context "user panel" do
-    let(:current_user) { FactoryGirl.build(:user) }
-    before { current_user }
-    subject { user_panel }
-    
-    it { should =~ /#{current_user.name}/ }
-    
-    context "no user" do
-      let(:current_user) { nil }
-      it { should == "<a href=\"/users/sign_in\">Login</a>" }
-    end
+  context "time_options" do
+    subject { time_options(10) }
+    it { should =~ /<option selected="selected" value="10">10 AM<\/option>/}
   end
-  
 end

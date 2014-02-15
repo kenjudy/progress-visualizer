@@ -10,7 +10,7 @@
   <%= csrf_meta_tags %>
   <%= yield :head %>
 </head>
-<body>
+<body class="<%= params["controller"] %> <%= params["action"] %>">
   <%= render 'application/header' %>
   <%= render 'application/alert', message: notice, dismissable: true %>
   <%= render 'application/alert', message: alert, type: "danger" %>

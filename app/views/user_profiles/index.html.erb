@@ -1,1 +1,47 @@
-<%= @profiles.inspect %>
+<section>
+  <div class="container">
+    <div class="row">
+      <h2><%= current_user.name %></h2>
+      <p><%= current_user.email %></p>
+      <p><%= link_to "Edit user", edit_user_registration_path, class: "btn btn-default" %></p>
+    </div>
+  </div>
+</section><section>
+  <div class="container">
+    <div class="row">
+      <h3>
+        You've created <%= pluralize(@profiles.count,"profile") %>
+        <%= link_to "add", new_user_profile_path, class: "btn btn-default" %>
+      </h3>
+      <% if @profiles.any? %>
+        <table class="table">
+          <tr>
+            <th></th>
+            <th>board id</th>
+            <th>backlog lists</th>
+            <th>done lists</th>
+            <th>types of work</th>
+            <th>duration</th>
+            <th>start</th>
+            <th>end</th>
+          </tr>
+          <% @profiles.each do |profile| %>
+            <tr>
+              <td>
+                <%= link_to "edit", edit_user_profile_path(profile), class: "btn btn-xs btn-default" %>
+                <%= link_to "delete", user_profile_path(profile), class: "btn btn-xs btn-danger", method: :delete %>
+              </td>
+              <td><%= profile.current_sprint_board_id_short %></td>
+              <td><%= display_keys(profile.backlog_lists) %></td>
+              <td><%= display_keys(profile.done_lists) %></td>
+              <td><%= profile.labels_types_of_work %></td>
+              <td><%= profile.duration %></td>
+              <td><%= day_of_week(profile.start_day_of_week) %> <%= hour_format(profile.start_hour) %></td>
+              <td><%= day_of_week(profile.end_day_of_week) %> <%= hour_format(profile.end_hour) %></td>
+            </tr>
+          <% end %>
+        </table>
+      <% end %>
+    </div>
+  </div>
+</section>

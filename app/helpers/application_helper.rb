@@ -13,11 +13,27 @@ module ApplicationHelper
     "active" if arr.include?(request.fullpath)
   end
   
-  def user_panel
-    if current_user
-      concat link_to("Hello #{content_tag(:span, current_user.name, class: "fit")}".html_safe, destroy_user_session_path, method: :delete)
-    else
-      concat link_to("Login", new_user_session_path)
+  def time_options(hour)
+    return options_for_select(time_array, hour)
+  end
+  
+  def day_of_week(index)
+    ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"][index]
+  end
+  
+  def hour_format(index)
+    time_array[index][0]
+  end
+  
+  def time_array
+    options = [["midnight", 0]]
+    (1..11).each do |hour|
+      options << ["#{hour} AM", hour]
     end
+    options << ["noon", 12]
+    (1..11).each do |hour|
+      options << ["#{hour} PM", hour + 12]
+    end
+    return options
   end
 end

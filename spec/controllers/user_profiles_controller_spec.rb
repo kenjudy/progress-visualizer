@@ -2,18 +2,21 @@ require 'spec_helper'
 
 describe UserProfilesController do
   include IterationConcern
+  include ::ProgressVisualizerTrello::JsonData
   
   let(:profile) { FactoryGirl.create(:user_profile) }
   let(:user) { profile.user }
   let(:user_id) { user.id }
   let(:profile_partial) { { "name" => "Current Sprint", "default" => "1", "readonly_token" => "test0token", "current_sprint_board_id_short" => "ZoCdRXWT", "user_id" => user_id } }
-  let(:list) { { list: "foo" } }
-  before { adapter.stub(request_lists: [list]) }
-  before { adapter.stub(request_board_metadata: {"labelNames" => { "blue" => "Work"}}) }
+  let(:lists) { [::ProgressVisualizerTrello::List.new({"id" => "ADSFSDF", "name" => "Done"}), ::ProgressVisualizerTrello::List.new({"id" => "FHGSDFG", "name" => "ToDo"})] }
+  before do
+    adapter.stub(request_lists: lists)
+    adapter.stub(request_board_metadata: {"labelNames" => { "blue" => "Work"}})
+  end
   
   { index: :get, show: :get, 
     new: :get, edit: :get,
-    update: :put, destroy: :delete }.each do |action, method|
+    destroy: :delete }.each do |action, method|
       
     context "#{action} " do
       subject { send(method, action, id: profile.id, user_profile: profile_partial) }
@@ -28,8 +31,17 @@ describe UserProfilesController do
       end
     end       
   end
+  
+  context 'update' do
+    before do
+      sign_in user
+      full_profile.delete("user_id")
+    end
+    let(:full_profile) { profile_partial.merge("done_lists" => "Done", "backlog_lists" => "ToDo", "labels_types_of_work" => "Committed,Contingent", "duration" => "WEEKLY", "start_day_of_week" => "0", "end_day_of_week" => "6", "start_hour" => "6", "end_hour" => "23") }
+    after { put :update, id: profile.id, user_profile: full_profile }
+    it("updates model") { expect_any_instance_of(UserProfile).to receive(:update_attributes).with(full_profile.merge("done_lists" => {"ADSFSDF" => "Done"}.to_json, "backlog_lists" => {"FHGSDFG" => "ToDo"}.to_json))}
+  end
 
-   
   context "create" do
     let(:user) { FactoryGirl.create(:user) }
     before { sign_in user }
@@ -82,7 +94,7 @@ describe UserProfilesController do
 
     context "edit" do
       before { get :edit, id: profile.id }
-      it("assings lists") { expect(assigns(:lists)).to eq [list] }
+      it("assings lists") { expect(assigns(:lists)).to eq lists }
     end
     
     
@@ -94,4 +106,9 @@ describe UserProfilesController do
     end
   end
   
+  context "keys_from_values" do
+    subject { controller.keys_from_values(lists, "Done,ToDo") }
+    
+    it { should == {"ADSFSDF" => "Done","FHGSDFG" => "ToDo"}.to_json }
+  end
  end

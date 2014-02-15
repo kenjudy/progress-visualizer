@@ -1,15 +1,16 @@
 <% method ||= :post %>
+<% url = method == :post ? user_profiles_path : user_profile_path(profile.id) %>
 <section>
   <div class="container">
     <div class="row">
-      <div class="col-md-8 col-md-offset-2">
-        <%= form_for(@profile, url: user_profiles_path, role: "form", html: {class: "form-horizontal panel panel-default", :method => method }) do |f| %>
+      <div class="col-md-10 col-md-offset-1">
+        <%= form_for(profile, url: url, role: "form", html: {class: "form-horizontal panel panel-default", :method => method }) do |f| %>
         <div class="panel-heading">
           <h2>User Profile (Trello Properties)</h2>
         </div>
         <div class="panel-body">
  
-          <%= render('form_group_text_field', form: f, field: :name, label_text: "Nickname", field_width: 3 ) %>
+          <%= render('form_group_text_field', form: f, field: :name, label_text: "Nickname", field_width: 3, tooltip: "e.g. 'Current Sprint'" ) %>
           
             <div class="form-group">
               <%= f.label :default, "Default?", class: "col-sm-3 control-label" %>
@@ -20,7 +21,7 @@
  
             <%= render('form_group_text_field', form: f, field: :readonly_token, label_text: "User Token", field_width: 6, tooltip: "Allow READ ONLY access to your trello data", aside: link_to(raw("Request new token <span class=\"glyphicon glyphicon-new-window\"></span>"), ::Rails.application.config.adapter.request_user_token_url, target: "_blank")) %>
  
-            <%= render('form_group_text_field', form: f, field: :current_sprint_board_id_short, label_text: "Board ID (short)", field_width: 3, tooltip: "The id string in the URL to your trello board. https://trello.com/b/[Board ID]/name", aside: link_to(raw("Trello.com <span class=\"glyphicon glyphicon-new-window\"></span>"), @profile.current_sprint_board_id_short ? "http://trello.com/b/#{@profile.current_sprint_board_id_short}" : "http://trello.com", target: "_blank")) %>
+            <%= render('form_group_text_field', form: f, field: :current_sprint_board_id_short, label_text: "Board ID", field_width: 3, tooltip: "In the URL of your trello board. https://trello.com/b/[Board ID]/name", aside: link_to(raw("Trello.com <span class=\"glyphicon glyphicon-new-window\"></span>"), profile.current_sprint_board_id_short ? "http://trello.com/b/#{profile.current_sprint_board_id_short}" : "http://trello.com", target: "_blank")) %>
 
             <% if @lists %> 
                <hr />
@@ -39,12 +40,12 @@
                 <%= f.label :start_day_of_week, "Iteration Start", class: "col-sm-3 control-label" %>
 
                 <div class="col-sm-3">
-                  <%= f.select(:start_day_of_week, options_for_select([['Sunday', '0'],['Monday', '1'],['Tuesday', '2'],['Wednesday', '3'],['Thursday', '4'],['Friday', '5'], ['Saturday', '6']], @profile.start_day_of_week || 1 ), {}, class: "form-control") %>
+                  <%= f.select(:start_day_of_week, options_for_select([['Sunday', 0],['Monday', 1],['Tuesday', 2],['Wednesday', 3],['Thursday', 4],['Friday', 5], ['Saturday', 6]], profile.start_day_of_week ), {}, class: "form-control") %>
                 </div>
 
                 <div class="col-sm-3">
-                  <%= time_field(:user_profile, :start_hour, ampm: true, class: "form-control col-sm-3") %>
-                </div>
+                  <%= f.select(:start_hour, time_options(profile.start_hour), {}, class: "form-control") %> 
+                 </div>
 
               </div>
               
@@ -53,16 +54,16 @@
                 <%= f.label :end_day_of_week, "End", class: "col-sm-3 control-label" %>
 
                 <div class="col-sm-3">
-                  <%= f.select(:end_day_of_week, options_for_select([['Sunday', '0'],['Monday', '1'],['Tuesday', '2'],['Wednesday', '3'],['Thursday', '4'],['Friday', '5'], ['Saturday', '6']], @profile.start_day_of_week || 6 ), {}, class: "form-control") %>
+                  <%= f.select(:end_day_of_week, options_for_select([['Sunday', 0],['Monday', 1],['Tuesday', 2],['Wednesday', 3],['Thursday', 4],['Friday', 5], ['Saturday', 6]], profile.end_day_of_week ), {}, class: "form-control") %>
                 </div>
 
                 <div class="col-sm-3">
-                  <%= time_field(:user_profile, :end_hour, ampm: true, class: "form-control col-sm-3") %>
+                  <%= f.select(:end_hour, time_options(profile.end_hour), {}, class: "form-control") %> 
                 </div>
 
               </div>
               
-              <%= render('form_group_text_field', form: f, field: :duration, label_text: "Duration", field_width: 3, default_val: @profile.duration || "WEEKLY", tooltip: "(only weekly for now...)", disabled: true) %>
+              <%= render('form_group_text_field', form: f, field: :duration, label_text: "Duration", field_width: 3, default_val: profile.duration || "WEEKLY", tooltip: "(only weekly for now...)", readonly: true) %>
 
             <% end %>
           </div>
@@ -78,8 +79,8 @@
               </div>
             </div>
 
-            <% if @profile.id %>
-              <%= f.hidden_field :id, class: "form-control", value: @profile.id %>
+            <% if profile.id %>
+              <%= f.hidden_field :id, class: "form-control", value: profile.id %>
             <% end %>
             
           </div> <%# well %>

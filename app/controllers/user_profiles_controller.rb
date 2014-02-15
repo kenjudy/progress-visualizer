@@ -33,11 +33,14 @@ class UserProfilesController < ApplicationController
   end
   
   def update
-    #lists
     @profile = current_user.user_profiles.find(params[:id])
+    lists
+    params["user_profile"]["backlog_lists"] = keys_from_values(@lists, params["user_profile"]["backlog_lists"])
+    params["user_profile"]["done_lists"] = keys_from_values(@lists, params["user_profile"]["done_lists"])
+    @profile.update_attributes(profile_params)
     @profile.save
     if (@profile.valid?)
-      render 'thank_you'
+      redirect_to user_profiles_path
     else
       render 'edit'
     end
@@ -45,6 +48,13 @@ class UserProfilesController < ApplicationController
   
   def destroy
     current_user.user_profiles.find(params[:id]).destroy
+  end
+  
+  def keys_from_values(lists, values = "")
+    result = {}
+    list_matches = values.split(",").map{ |value| lists.select{|list| value == list.name } }.flatten.compact
+    list_matches.map{ |list| result[list.id] = list.name } if list_matches.any?
+    result.to_json
   end
   
   private
@@ -60,7 +70,8 @@ class UserProfilesController < ApplicationController
   end
   
   def profile_params
-    params.require(:user_profile).permit(:user, :name, :default, :readonly_token, :current_sprint_board_id_short)
+    allowed_attribs = [:name, :default, :readonly_token, :current_sprint_board_id_short, :backlog_lists, :done_lists, :labels_types_of_work, :duration, :start_day_of_week, :start_hour, :end_day_of_week, :end_hour]
+    params.require(:user_profile).permit(allowed_attribs)
   end
   
   # 
