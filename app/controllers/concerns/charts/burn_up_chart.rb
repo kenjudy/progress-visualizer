@@ -1,7 +1,6 @@
 module Charts
   class BurnUpChart
     extend ActiveSupport::Concern
-    extend IterationConcern
     include IterationConcern
     include UserProfileConcern
     

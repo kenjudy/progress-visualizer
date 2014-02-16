@@ -46,7 +46,6 @@ describe ChartsController do
     end
   
     context "yesterdays_weather" do
-      before { controller.stub(yesterdays_weather_visualization: []) }
       subject { get :yesterdays_weather }
     
       its(:code) { "200" }

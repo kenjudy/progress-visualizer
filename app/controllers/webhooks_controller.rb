@@ -2,6 +2,37 @@ class WebhooksController < ApplicationController
   include UserProfileConcern
   include IterationConcern
     
+
+  def index
+    render text: "TODO"
+  end
+  
+  def show
+    render text: "TODO"
+  end
+  
+  def new
+    render text: "TODO"
+  end 
+  
+  def edit
+    render text: "TODO"
+  end
+  
+  def create
+    render text: "TODO"
+  end
+  
+  def update
+    render text: "TODO"
+  end
+  
+  def destroy
+    render text: "TODO"
+  end
+  
+
+
   def burn_up
     Charts::BurnUpChart.new(UserProfile.find(params["profile_id"])).update
     render text: "OK"
