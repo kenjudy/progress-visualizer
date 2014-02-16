@@ -2,12 +2,8 @@ require 'csv'
 
 module Exporters
   class ExportBoardToCsv
-    def self.export_current_sprint_board(target_file)
-      run(Adapters::TrelloAdapter.new.current_sprint_board_properties[:id], target_file)
-    end
-  
-    def self.run(board_id, target_file)
-      board = Adapters::TrelloAdapter.new.request_board(board_id)
+    def self.export_current_sprint_board(user_profile, target_file)
+      board = Adapters::TrelloAdapter.new(user_profile).request_board(user_profile.current_sprint_board_id)
       CSV.open(target_file, "ab") do |csv|
         csv << ProgressVisualizerTrello::Card.array_attributes
         board.to_array.each { |arr| csv << arr }

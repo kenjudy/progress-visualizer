@@ -59,7 +59,7 @@ module Charts::ChartsPresenter
 
   def long_term_trend_visualization_rows(weeks, include_current = false)
     data = {}
-    DoneStory.done_stories_data(weeks, include_current).each do |done_story|
+    done_stories_data(weeks, include_current).each do |done_story|
       timestamp = done_story.timestamp
       data[timestamp] ||= [timestamp, 0, 0]
       data[timestamp][1] += done_story.estimate
@@ -70,7 +70,7 @@ module Charts::ChartsPresenter
   
   def yesterdays_weather_data_rows(label, weeks, types_of_work, include_current = false)
     data = {}
-    DoneStory.done_stories_data(weeks, include_current).each do |done_story|
+    done_stories_data(weeks, include_current).each do |done_story|
       timestamp = done_story.timestamp.to_s
       data[timestamp] = data[timestamp] ||= [timestamp, 0, 0, 0]
 
@@ -78,5 +78,10 @@ module Charts::ChartsPresenter
       types_of_work.each_with_index { |type_of_work, index| data[timestamp][index+1] += done_story.type_of_work.downcase == type_of_work.downcase ? value : 0 }
     end
     data.values.sort { |a,b| a[0] <=> b[0] }
+  end
+  
+  def done_stories_data(range, include_current = false)
+    offset = include_current ? 0 : 1.week
+    user_profile.done_stories.order("timestamp").where('timestamp > ? and timestamp <= ?', Rails.application.config.iteration_start - range.weeks - offset, Rails.application.config.iteration_end - offset).to_a
   end
 end

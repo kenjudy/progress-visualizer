@@ -22,31 +22,26 @@ describe "routes" do
       end
 
     end
+    context "set" do
+      subject { { get: "user_profiles/set/1"}}
+      it { should route_to(controller: "user_profiles", action: "set", profile_id: "1")}
+    end
   end
    
   context "webhooks" do
     context "burn_up" do
-      subject { { post: "ian4atzhmmh9ul/burn-up.json" } }
-      it { should route_to(controller: "webhooks", action: "burn_up", format: "json")}
+      subject { { post: "ian4atzhmmh9ul/burn-up/1.json" } }
+      it { should route_to(controller: "webhooks", action: "burn_up", profile_id: "1", format: "json")}
 
       context "head test" do
-        subject {{ head: "ian4atzhmmh9ul/burn-up.json"}}
-        it { should route_to(controller: "webhooks", action: "burn_up", format: "json")}
+        subject {{ head: "ian4atzhmmh9ul/burn-up/1.json"}}
+        it { should route_to(controller: "webhooks", action: "burn_up", profile_id: "1", format: "json")}
       end
       context "format constraint" do
-        subject { { post: "ian4atzhmmh9ul/burn-up" } }
+        subject { { post: "ian4atzhmmh9ul/burn-up/1" } }
         it { should_not route_to(controller: "webhooks", action: "burn_up")}
       end
 
-      context "add" do
-        subject { { get: "ian4atzhmmh9ul/burn-up/add" } }
-        it { should route_to(controller: "webhooks", action: "burn_up_add")}
-      end
-
-      context "delete" do
-        subject { { get: "ian4atzhmmh9ul/burn-up/delete" } }
-        it { should route_to(controller: "webhooks", action: "burn_up_delete")}
-      end
     end
   end
   

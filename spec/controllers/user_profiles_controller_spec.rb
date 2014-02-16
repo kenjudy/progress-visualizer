@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe UserProfilesController do
-  include IterationConcern
   include ::ProgressVisualizerTrello::JsonData
   
   let(:profile) { FactoryGirl.create(:user_profile) }
@@ -9,9 +8,10 @@ describe UserProfilesController do
   let(:user_id) { user.id }
   let(:profile_partial) { { "name" => "Current Sprint", "default" => "1", "readonly_token" => "test0token", "current_sprint_board_id_short" => "ZoCdRXWT", "user_id" => user_id } }
   let(:lists) { [::ProgressVisualizerTrello::List.new({"id" => "ADSFSDF", "name" => "Done"}), ::ProgressVisualizerTrello::List.new({"id" => "FHGSDFG", "name" => "ToDo"})] }
+  
   before do
-    adapter.stub(request_lists: lists)
-    adapter.stub(request_board_metadata: {"labelNames" => { "blue" => "Work"}})
+    allow_any_instance_of(::Adapters::TrelloAdapter).to receive(:request_lists).and_return(lists)
+    allow_any_instance_of(::Adapters::TrelloAdapter).to receive(:request_board_metadata).and_return({"labelNames" => { "blue" => "Work"}})
   end
   
   { index: :get, show: :get, 

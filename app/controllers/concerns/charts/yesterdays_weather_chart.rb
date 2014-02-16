@@ -2,9 +2,11 @@ module Charts
   class YesterdaysWeatherChart
     extend ActiveSupport::Concern
     include ::IterationConcern
+    
     attr_accessor :label, :weeks
     
-    def initialize(options)
+    def initialize(user_profile, options)
+      @user_profile = user_profile
       @weeks = options[:weeks] || 3
       @label = options[:label] || :estimate
     end

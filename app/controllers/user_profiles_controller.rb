@@ -2,6 +2,7 @@ class UserProfilesController < ApplicationController
   include IterationConcern
 
   before_filter :authenticate_user!
+  before_filter :assign_user_profile, only: [:index, :show, :edit, :update]
 
   def index
     @profiles = current_user.user_profiles
@@ -50,6 +51,12 @@ class UserProfilesController < ApplicationController
     current_user.user_profiles.find(params[:id]).destroy
   end
   
+  def set
+    session[:user_profile] = params[:profile_id]
+    assign_user_profile
+    redirect_to request.referer
+  end
+  
   def keys_from_values(lists, values = "")
     result = {}
     list_matches = values.split(",").map{ |value| lists.select{|list| value == list.name } }.flatten.compact
@@ -70,7 +77,7 @@ class UserProfilesController < ApplicationController
   end
   
   def profile_params
-    allowed_attribs = [:name, :default, :readonly_token, :current_sprint_board_id_short, :backlog_lists, :done_lists, :labels_types_of_work, :duration, :start_day_of_week, :start_hour, :end_day_of_week, :end_hour]
+    allowed_attribs = [:name, :default, :readonly_token, :current_sprint_board_id_short, :current_sprint_board_id, :backlog_lists, :done_lists, :labels_types_of_work, :duration, :start_day_of_week, :start_hour, :end_day_of_week, :end_hour]
     params.require(:user_profile).permit(allowed_attribs)
   end
   
@@ -83,7 +90,7 @@ class UserProfilesController < ApplicationController
   def labels
     @labels = Rails.cache.fetch("#{Rails.env}::UserProfilesController.labels.#{@profile.current_sprint_board_id_short}", :expires_in => 10.minutes) do
        meta = adapter.request_board_metadata(@profile.current_sprint_board_id_short)
-       meta["labelNames"].values
+       meta["labelNames"].map { |k,v| v.empty? ? [k,k] : [k,v] }
     end
   end
 end

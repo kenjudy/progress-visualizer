@@ -18,15 +18,15 @@
                 <%= f.check_box :default, {style: "margin-top: 11px"}, "1", "0" %>
               </div>
             </div>
- 
-            <%= render('form_group_text_field', form: f, field: :readonly_token, label_text: "User Token", field_width: 6, tooltip: "Allow READ ONLY access to your trello data", aside: link_to(raw("Request new token <span class=\"glyphicon glyphicon-new-window\"></span>"), ::Rails.application.config.adapter.request_user_token_url, target: "_blank")) %>
+
+            <%= render('form_group_text_field', form: f, field: :readonly_token, label_text: "User Token", field_width: 6, tooltip: "Allow READ ONLY access to your trello data", aside: link_to(raw("Request new token <span class=\"glyphicon glyphicon-new-window\"></span>"), request_token_url, target: "_blank")) %>
  
             <%= render('form_group_text_field', form: f, field: :current_sprint_board_id_short, label_text: "Board ID", field_width: 3, tooltip: "In the URL of your trello board. https://trello.com/b/[Board ID]/name", aside: link_to(raw("Trello.com <span class=\"glyphicon glyphicon-new-window\"></span>"), profile.current_sprint_board_id_short ? "http://trello.com/b/#{profile.current_sprint_board_id_short}" : "http://trello.com", target: "_blank")) %>
 
             <% if @lists %> 
                <hr />
                               
-               <%= render('form_group_text_field', form: f, field: :current_sprint_board_id, label_text: "Board Unique ID", default_val: @lists.first.id_board, css_class: "disabled", disabled: true) %>
+               <%= render('form_group_text_field', form: f, field: :current_sprint_board_id, label_text: "Board Unique ID", default_val: @lists.first.id_board, readonly: true) %>
                
                <%= render('cloud_selector', form: f, field: :backlog_lists, lists: @lists, label_text: "Todo Lists", heading: "Which lists on your board represent todo items (the backlog)?")%>
 

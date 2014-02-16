@@ -12,11 +12,13 @@ describe ChartsController do
   end
   
   context "authenticated" do
-    let(:user) { FactoryGirl.create(:user) }
+    let(:user_profile) { FactoryGirl.create(:user_profile) }
+    let(:user) { user_profile.user }
     before { sign_in user }
     
     context "burn_up" do
-      before { Adapters::TrelloAdapter.stub(burn_up: double("BurnUpChart").as_null_object) }
+
+      before { allow_any_instance_of(Adapters::TrelloAdapter).to receive(:burn_up).and_return(double("BurnUpChart").as_null_object) }
     
       subject { get :burn_up }
     
@@ -30,7 +32,9 @@ describe ChartsController do
     end
   
     context "burn_up_reload" do
-      let(:burn_up) { FactoryGirl.create(:burn_up)}
+      let(:burn_up) { FactoryGirl.create(:burn_up, user_profile: user_profile)}
+      before { sign_in burn_up.user_profile.user }
+
       before { burn_up }
       subject { get :burn_up_reload }
     

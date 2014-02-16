@@ -8,12 +8,14 @@ require 'google_visualr'
 require 'devise'
 require 'attr_encryptor'
 
-if Rails.env == "development"
+if ["development", "test"].include?(Rails.env)
   require 'better_errors'
   require 'binding_of_caller'
   require 'pry-remote'
   require 'pry-rails'
   require 'pry-rescue'
+  require 'vcr'
+  require 'webmock'
 end
 
 if Rails.env == "production"

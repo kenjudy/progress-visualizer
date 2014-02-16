@@ -1,31 +1,36 @@
 module Tables
   class DoneStoriesTable
     extend ActiveSupport::Concern
-    extend IterationConcern
+    include IterationConcern
     
-    def self.current
-      @results = Rails.cache.fetch("#{Rails.env}::Tables::DoneStoriesTable.current", :expires_in => 5.minutes) do
-        Tables::DoneStoriesTable.refresh
+    def initialize(user_profile)
+      @user_profile = user_profile
+    end
+    
+    def current
+      
+      @results = Rails.cache.fetch("#{Rails.env}::Tables::DoneStoriesTable.current:user#{@user_profile.user.id}:profile#{@user_profile.id})", :expires_in => 5.minutes) do
+        refresh
       end
     end
     
-    def self.refresh
+    def refresh
       collated_data = collate(adapter.request_board(adapter.current_sprint_board_properties[:id]),
                               adapter.current_sprint_board_properties[:labels_types_of_work], 
                               adapter.current_sprint_board_properties[:done_lists].keys)
       update_done_stories_for(collated_data)
     end
     
-    def self.update_done_stories_for(collated_data)
+    def update_done_stories_for(collated_data)
       collated_data[:lists].keys.each do |type_of_work|
         collated_data[:lists][type_of_work][:cards].each do |card|
-          DoneStory.create_or_update_from(card, type_of_work, beginning_of_current_iteration)
+          DoneStory.create_or_update_from(@user_profile, card, type_of_work, beginning_of_current_iteration)
         end
       end
       return collated_data
     end
     
-    def self.collate(board, types_of_work, done_list_ids)
+    def collate(board, types_of_work, done_list_ids)
       results = { week_of: beginning_of_current_iteration.strftime("%B %l, %Y"), lists: {}}
       total_stories = 0
       total_estimates = 0

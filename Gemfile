@@ -57,6 +57,8 @@ group :development, :test do
   gem 'terminal-notifier-guard'
   gem 'factory_girl_rails'
   gem 'lunchy'
+  gem 'vcr'
+  gem 'webmock'
 end
 
 gem "google_visualr", ">= 2.1"

@@ -4,7 +4,6 @@ describe Constants do
   
   context "private trello api constants" do
     it { expect(Rails.application.config.trello[:app_key]).to_not be_nil }
-    it { expect(Rails.application.config.trello[:readonly_token]).to_not be_nil }
     
     context "current sprint board" do
       subject { Rails.application.config.current_sprint_board }

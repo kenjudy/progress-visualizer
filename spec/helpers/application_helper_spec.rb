@@ -6,7 +6,7 @@ describe ApplicationHelper do
   context "menu_list_item" do
     subject { menu_list_item("Burn Up<span></span>", charts_burn_up_path) }
     
-    it { should == '<li><a href="/chart/burn-up">Burn Up<span></span></a></li>'}
+    it { should == "<li class=\" \"><a href=\"/chart/burn-up\">Burn Up<span></span></a></li>" }
   end
   
   context "active class if" do

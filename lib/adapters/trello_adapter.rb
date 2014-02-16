@@ -4,9 +4,11 @@ require 'json'
 
 module Adapters
   class TrelloAdapter
+    attr_accessor :user_profile
     
-    def initialize()
-      @credentials = {key: Rails.application.config.trello[:app_key], token: Rails.application.config.trello[:readonly_token]}
+    def initialize(user_profile)
+      @user_profile = user_profile
+      @credentials = {key: Rails.application.config.trello[:app_key], token: user_profile.readonly_token }
     end
     
     def current_sprint_board_properties
@@ -53,7 +55,7 @@ module Adapters
     end
     
     def request_user_token_url
-      generate_url_string(Rails.application.config.trello[:trello_root_url] << Rails.application.config.trello[:request_token_path])
+      generate_url_string(Rails.application.config.trello[:trello_root_url] + Rails.application.config.trello[:request_token_path])
     end
     
     def generate_uri(url_template, options = {})
@@ -63,7 +65,7 @@ module Adapters
     private
     
     def generate_url_string(url_template, options = {})
-      options.merge(@credentials).each { |key,value| url_template.gsub!("<#{key.to_s.upcase}>", value) }
+      options.merge(@credentials).each { |key,value| url_template.gsub!("<#{key.to_s.upcase}>", value || "") }
       url_template
     end
     

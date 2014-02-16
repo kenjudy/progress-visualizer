@@ -1,13 +1,15 @@
 class ChartsController < ApplicationController
   include Charts::ChartsPresenter
-  before_filter :authenticate_user!
+  include IterationConcern
+  
+  before_filter :authenticate_user!, :assign_user_profile
   
   def burn_up_reload
     render json: { last_update: Rails.cache.fetch(BurnUp.last_update_key) }.to_json
   end
   
   def burn_up
-    data = Charts::BurnUpChart.current_burn_up_data
+    data = Charts::BurnUpChart.current_burn_up_data(user_profile)
         
     @estimates_chart = burn_up_chart_visualization({label: "Estimates", data:  data.map{ |burn_up| { timestamp: burn_up.timestamp, backlog: burn_up.backlog_estimates, done: burn_up.done_estimates} }})
 
@@ -15,9 +17,9 @@ class ChartsController < ApplicationController
   end
   
   def yesterdays_weather
-    estimate_chart = Charts::YesterdaysWeatherChart.new({weeks: params[:weeks] ? params[:weeks].to_i : 3, label: :estimate})
+    estimate_chart = Charts::YesterdaysWeatherChart.new(user_profile, {weeks: params[:weeks] ? params[:weeks].to_i : 3, label: :estimate})
     @yesterdays_weather_estimate_chart = yesterdays_weather_visualization(estimate_chart)
-    stories_chart = Charts::YesterdaysWeatherChart.new({weeks: params[:weeks] ? params[:weeks].to_i : 3, label: :stories})
+    stories_chart = Charts::YesterdaysWeatherChart.new(user_profile, {weeks: params[:weeks] ? params[:weeks].to_i : 3, label: :stories})
     @yesterdays_weather_stories_chart = yesterdays_weather_visualization(stories_chart)
   end
   

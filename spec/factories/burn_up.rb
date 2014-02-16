@@ -5,5 +5,7 @@ FactoryGirl.define do
     done 4
     backlog_estimates 35
     done_estimates 11.5
+    
+    association :user_profile
   end
 end

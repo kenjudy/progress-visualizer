@@ -4,8 +4,8 @@ module ApplicationHelper
     concat "<a class=\"tip\" href=\"#\" data-toggle=\"tooltip\" data-placement=\"#{placement}\" title=\"#{tip}\" data-original-title=\"#{tip}\" data-container=\"body\"><span class=\"glyphicon glyphicon-question-sign\"></span></a>".html_safe if tip
   end
   
-  def menu_list_item(label, path)
-    concat(content_tag(:li, link_to(raw(label), path), class: active_class_if(path)))
+  def menu_list_item(label, path, classes = "")
+    concat(content_tag(:li, link_to(raw(label), path), class: "#{active_class_if(path)} #{classes}"))
   end
   
   def active_class_if(paths)
@@ -35,5 +35,9 @@ module ApplicationHelper
       options << ["#{hour} PM", hour + 12]
     end
     return options
+  end
+  
+  def user_profile
+    @user_profile || UserProfile.new
   end
 end

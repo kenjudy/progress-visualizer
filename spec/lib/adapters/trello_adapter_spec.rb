@@ -16,8 +16,10 @@ module Adapters
     let(:list_data) { JSON.parse(list_json) }
     let(:list) { ProgressVisualizerTrello::List.new(list_data) }
     
+    let(:user_profile) { FactoryGirl.create(:user_profile) }
+    
     let(:board) { ProgressVisualizerTrello::Board.new(lists: [list_data], cards: [card_data]) }
-    let(:adapter) { TrelloAdapter.new }
+    let(:adapter) { TrelloAdapter.new(user_profile) }
  
     before do
       URI.stub(parse: uri)
@@ -63,7 +65,7 @@ module Adapters
         context "url" do
           after { subject }
      
-          it { expect(URI).to receive(:parse).with("https://api.trello.com/1/boards/#{Rails.application.config.current_sprint_board[:id]}/cards/closed?key=#{Rails.application.config.trello[:app_key]}&token=#{Rails.application.config.trello[:readonly_token]}").and_return(uri) }
+          it { expect(URI).to receive(:parse).with("https://api.trello.com/1/boards/#{Rails.application.config.current_sprint_board[:id]}/cards/closed?key=#{Rails.application.config.trello[:app_key]}&token=#{user_profile.readonly_token}").and_return(uri) }
         end
       end
     
@@ -75,7 +77,7 @@ module Adapters
         context "url" do
           after { subject }
      
-          it { expect(URI).to receive(:parse).with("https://api.trello.com/1/boards/#{Rails.application.config.current_sprint_board[:id]}/cards?key=#{Rails.application.config.trello[:app_key]}&token=#{Rails.application.config.trello[:readonly_token]}").and_return(uri) }
+          it { expect(URI).to receive(:parse).with("https://api.trello.com/1/boards/#{Rails.application.config.current_sprint_board[:id]}/cards?key=#{Rails.application.config.trello[:app_key]}&token=#{user_profile.readonly_token}").and_return(uri) }
         end
       end
     end
@@ -89,14 +91,14 @@ module Adapters
       context "url" do
         after{ subject }
 
-        it { expect(URI).to receive(:parse).with("https://api.trello.com/1/boards/#{Rails.application.config.current_sprint_board[:id]}/lists?key=#{Rails.application.config.trello[:app_key]}&token=#{Rails.application.config.trello[:readonly_token]}").and_return(uri) }
+        it { expect(URI).to receive(:parse).with("https://api.trello.com/1/boards/#{Rails.application.config.current_sprint_board[:id]}/lists?key=#{Rails.application.config.trello[:app_key]}&token=#{user_profile.readonly_token}").and_return(uri) }
       end
     end
         
     context "request_user_token_url" do
       subject { adapter.request_user_token_url }
       
-      it { should == "https://trello.com/1/authorize?key=#{Rails.application.config.trello[:app_key]}&name=ProgressVisualizer&expiration=never&response_type=token&scope=read"}
+      it { should == "https://trello.com/1/authorize?key=#{Rails.application.config.trello[:app_key]}&name=ProgressVisualizer&expiration=never&response_type=token"}
     end
   end
 end

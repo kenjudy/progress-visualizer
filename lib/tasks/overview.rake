@@ -3,6 +3,8 @@
 namespace :tables do
   desc "Update overview"
   task :overview => :environment do
-    Tables::DoneStoriesTable.update(Adapters::TrelloAdapter)
+    UserProfiles.all.each do |profile|
+      Tables::DoneStoriesTable.new(profile).refresh
+    end
   end
 end

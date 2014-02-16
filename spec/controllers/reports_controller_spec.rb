@@ -3,15 +3,7 @@ require 'spec_helper'
 describe ReportsController do
   include ProgressVisualizerTrello::JsonData
 
-  let(:adapter) { Adapters::TrelloAdapter.new }
-  let(:list_id) { adapter.current_sprint_board_properties[:done_lists].keys.first }
-  let(:label) { adapter.current_sprint_board_properties[:labels_types_of_work].first }
-  let(:board) { ProgressVisualizerTrello::Board.new(
-                                  cards: [example_card_data("idList" => list_id, "labels" => [{name: label}])], 
-                                  lists: [example_list_data("id" => list_id)]) 
-              }
-
-  before { adapter.stub(request_board: board) }
+  let(:user_profile) { FactoryGirl.create(:user_profile)}
 
   context "not authenticated" do
     subject { get :performance_summary }
@@ -21,10 +13,13 @@ describe ReportsController do
   end
 
   context "authenticated" do
-    let(:user) { FactoryGirl.create(:user) }
-    before { sign_in user }
+    before { sign_in user_profile.user }
 
-    subject { get :performance_summary }
+    subject do
+      VCR.use_cassette('controllers/controllers/reports_controller') do
+        get :performance_summary
+      end
+    end
   
     its(:code) { should == "200" }
 

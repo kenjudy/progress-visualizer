@@ -1,18 +1,8 @@
 class WebhooksController < ApplicationController
-  
-  def burn_up_add
-    response = add_webhook
-    render json: response.body
-  end
-  
-  def burn_up_delete
-    delete_webhook
-    render text: "OK"
-  end
-  
+  include IterationConcern
+    
   def burn_up
-    logger.info("-- WEBHOOK #{request.body}")
-    Charts::BurnUpChart.current(Rails.application.config.adapter).update
+    Charts::BurnUpChart.current(UserProfile.find(params["profile_id"])).update
     render text: "OK"
   end
   

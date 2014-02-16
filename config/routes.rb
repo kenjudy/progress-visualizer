@@ -4,11 +4,11 @@ ProgressVisualizer::Application.routes.draw do
   root 'homepage#index', as: 'homepage'
   
   resources :user_profiles
+
+  get "user_profiles/set/:profile_id" => "user_profiles#set", as: 'set_user_profile'
   
-  get 'ian4atzhmmh9ul/burn-up' => "webhooks#burn_up", format: true, constraints: { format: /json/ }
-  post 'ian4atzhmmh9ul/burn-up' => "webhooks#burn_up", as: 'webhooks_burn_up', format: true, constraints: { format: /json/ }
-  get 'ian4atzhmmh9ul/burn-up/add' => "webhooks#burn_up_add", as: 'webhooks_burn_up_add'
-  get 'ian4atzhmmh9ul/burn-up/delete' => "webhooks#burn_up_delete", as: 'webhooks_burn_up_delete'
+  get  'ian4atzhmmh9ul/burn-up/:profile_id(.:format)' => "webhooks#burn_up", format: true, constraints: { format: /json/ }
+  post 'ian4atzhmmh9ul/burn-up/:profile_id(.:format)' => "webhooks#burn_up", as: 'webhooks_burn_up', format: true, constraints: { format: /json/ }
   
   get 'chart/burn-up' => "charts#burn_up", as: 'charts_burn_up'
   get 'chart/burn-up-reload' => "charts#burn_up_reload", as: 'charts_burn_up_reload'

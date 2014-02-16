@@ -4,7 +4,6 @@ module Constants
   
   Rails.application.config.trello = { 
             app_key: TRELLO_CONFIG['application']['key'],
-            readonly_token: TRELLO_CONFIG['user']['readonly_token'],
             #public
             api_root_url: "https://api.trello.com/1",
             trello_root_url: "https://trello.com/1",
@@ -13,11 +12,11 @@ module Constants
             board_lists_path: "/boards/<BOARD_ID>/lists?key=<KEY>&token=<TOKEN>",
             board_meta_path: "/boards/<BOARD_ID>?key=<KEY>&token=<TOKEN>",
             add_webhooks_path: "/tokens/<TOKEN>/webhooks/?key=<KEY>",
-            request_token_path: "/authorize?key=<KEY>&name=ProgressVisualizer&expiration=never&response_type=token&scope=read"
+            request_token_path: "/authorize?key=<KEY>&name=ProgressVisualizer&expiration=never&response_type=token"
            }
   
 
-  Rails.application.config.adapter = ::Adapters::TrelloAdapter.new
+  Rails.application.config.adapter_class = "::Adapters::TrelloAdapter"
     
   Rails.application.config.email_default_from = "progress-visualizer@judykat.com"
     

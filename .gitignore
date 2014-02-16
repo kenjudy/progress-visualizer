@@ -20,4 +20,4 @@
 *.keep
 *.DS_Store
 vendor/ruby
-vendor/ruby
+spec/cassettes

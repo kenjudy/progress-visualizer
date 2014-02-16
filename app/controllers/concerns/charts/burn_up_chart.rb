@@ -2,21 +2,20 @@ module Charts
   class BurnUpChart
     extend ActiveSupport::Concern
     extend ::IterationConcern
+    include ::IterationConcern
     
     attr_accessor :done_lists, :backlog_lists, :timestamp
 
-    def initialize(board, options = {})
-      @board = board
-      @timestamp = options[:timestamp] || Time.now
-      @done_lists = options[:done_lists]
-      @backlog_lists = options[:backlog_lists]
+    def initialize(user_profile)
+      @user_profile = user_profile
+      request_data
     end
-    
+        
     def update
       done_stats = stats(@done_lists.keys)
       backlog_stats = stats(@backlog_lists.keys)
       unless redundant?(done_stats, backlog_stats)
-        BurnUp.create(timestamp: timestamp, done: done_stats[:count], done_estimates: done_stats[:sum], backlog: backlog_stats[:count], backlog_estimates: backlog_stats[:sum] )
+        BurnUp.create(user_profile: @user_profile,timestamp: timestamp, done: done_stats[:count], done_estimates: done_stats[:sum], backlog: backlog_stats[:count], backlog_estimates: backlog_stats[:sum] )
       end
     end
     
@@ -30,18 +29,22 @@ module Charts
       last_burnup.backlog_estimates == backlog_stats[:sum]
     end
     
-    def self.current(adapter)
-      board = adapter.request_board(adapter.current_sprint_board_properties[:id])
-      Charts::BurnUpChart.new(board, { done_lists: adapter.current_sprint_board_properties[:done_lists],
-                                       backlog_lists: adapter.current_sprint_board_properties[:backlog_lists],
-                                       timestamp: Time.now})
+    def self.current(user_profile)
+      Charts::BurnUpChart.new(user_profile)
     end
     
-    def self.current_burn_up_data
-      BurnUp.burn_up_data(beginning_of_current_iteration, end_of_current_iteration)
+    def self.current_burn_up_data(user_profile)
+      user_profile.burn_ups.where("timestamp > ? and timestamp <= ?", beginning_of_current_iteration, end_of_current_iteration)
     end
     
     private
+    
+    def request_data
+       @board = adapter.request_board(adapter.current_sprint_board_properties[:id])
+       @timestamp = Time.now
+       @done_lists = adapter.current_sprint_board_properties[:done_lists]
+       @backlog_lists =  adapter.current_sprint_board_properties[:backlog_lists]
+     end
     
     def stats(list_ids)
       sum = 0
