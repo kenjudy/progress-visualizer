@@ -14,6 +14,9 @@ if ["development", "test"].include?(Rails.env)
   require 'pry-remote'
   require 'pry-rails'
   require 'pry-rescue'
+end
+
+if Rails.env == "test"
   require 'vcr'
   require 'webmock'
 end
