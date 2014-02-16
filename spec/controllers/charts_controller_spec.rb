@@ -14,13 +14,15 @@ describe ChartsController do
   context "authenticated" do
     let(:user_profile) { FactoryGirl.create(:user_profile) }
     let(:user) { user_profile.user }
+
     before { sign_in user }
     
     context "burn_up" do
-
-      before { allow_any_instance_of(Adapters::TrelloAdapter).to receive(:burn_up).and_return(double("BurnUpChart").as_null_object) }
-    
-      subject { get :burn_up }
+      subject do
+        VCR.use_cassette('controllers/controllers/charts_controller') do
+          get :burn_up
+        end
+      end
     
       its(:code) { should == "200" }
     

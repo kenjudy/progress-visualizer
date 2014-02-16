@@ -22,7 +22,7 @@ describe "Tables::DoneStoriesTable" do
     
     its([:lists]) { should == {"Committed" => {cards: board.cards, :stories=>2, :estimates=>6.0} } }
     its([:totals]) { should == {:total_stories=>2, :total_estimates=>6.0}}
-    its([:week_of]) { should == "February  4, 2014" }
+    its([:week_of]) { should == "February  2, 2014" }
   end
   
   context "update_done_stories_for" do

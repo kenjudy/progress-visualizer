@@ -4,11 +4,12 @@ describe WebhooksController do
   
   context "burn_up" do
     let(:user_profile) { FactoryGirl.create(:user_profile) }
-    let(:burnup_chart) { double(Charts::BurnUpChart).as_null_object }
   
-    before { Charts::BurnUpChart.stub(current: burnup_chart) }
-  
-    subject { post :burn_up, profile_id: user_profile.id, format: "json" }
+    subject do
+      VCR.use_cassette('controllers/controllers/webhooks_controller') do
+        post :burn_up, profile_id: user_profile.id, format: "json"
+      end
+    end
   
     its(:code) { should == "200" }
     its(:body) { should == "OK" }
@@ -16,7 +17,7 @@ describe WebhooksController do
     context "burnup data" do
       after { subject }
   
-      it("updates") { expect(burnup_chart).to receive(:update).once }
+      it("updates") { expect_any_instance_of(Charts::BurnUpChart).to receive(:update).once }
       
     end
     

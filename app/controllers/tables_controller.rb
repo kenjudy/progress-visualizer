@@ -1,4 +1,5 @@
 class TablesController < ApplicationController
+  include UserProfileConcern
   include IterationConcern
 
   before_filter :authenticate_user!, :assign_user_profile

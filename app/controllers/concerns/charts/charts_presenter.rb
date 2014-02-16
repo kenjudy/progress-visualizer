@@ -1,5 +1,6 @@
 module Charts::ChartsPresenter
   extend ActiveSupport::Concern
+  include IterationConcern
   
   @@green = "#3D7477"
   @@blue = "#091D58"
@@ -82,6 +83,6 @@ module Charts::ChartsPresenter
   
   def done_stories_data(range, include_current = false)
     offset = include_current ? 0 : 1.week
-    user_profile.done_stories.order("timestamp").where('timestamp > ? and timestamp <= ?', Rails.application.config.iteration_start - range.weeks - offset, Rails.application.config.iteration_end - offset).to_a
+    user_profile.done_stories.order("timestamp").where('timestamp > ? and timestamp <= ?', beginning_of_current_iteration - range.weeks - offset, end_of_current_iteration - offset).to_a
   end
 end

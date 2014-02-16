@@ -4,15 +4,16 @@ require 'spec_helper'
 module Charts
   describe ChartsPresenter do
     include ChartsPresenter
+    include IterationConcern
   
     let(:user_profile) { FactoryGirl.create(:user_profile) }
     let(:date) { Date.today.end_of_week }
 
-    let(:iteration_start) { Rails.application.config.iteration_start }
+    let(:iteration_start) { beginning_of_current_iteration }
 
-    let(:two_weeks_ago) { (Rails.application.config.iteration_start - 2.weeks + 1.day).to_date }
-    let(:one_week_ago)  { (Rails.application.config.iteration_start - 1.weeks + 1.day).to_date }
-    let(:this_week)     { (Rails.application.config.iteration_start + 1.day).to_date }
+    let(:two_weeks_ago) { (iteration_start - 2.weeks + 1.day).to_date }
+    let(:one_week_ago)  { (iteration_start - 1.weeks + 1.day).to_date }
+    let(:this_week)     { (iteration_start + 1.day).to_date }
 
     before do
       [this_week, one_week_ago, two_weeks_ago].each do |weeks|
@@ -42,7 +43,7 @@ module Charts
     context "burn_up_rows" do
       let(:timestamp) { Time.now }
       let(:data) {  (0..3).map { |i| FactoryGirl.build(:burn_up, user_profile: user_profile, timestamp: timestamp - i.days) } }
-      before { Charts::BurnUpChart.stub(current_burn_up_data: data) }
+      #before { Charts::BurnUpChart.stub(current_burn_up_data: data) }
       subject { burn_up_rows(data) }
     
       it { should == [[timestamp, 16, 4], [timestamp - 1.day, 16, 4], [timestamp - 2.days, 16, 4], [timestamp - 3 .days, 16, 4]] }

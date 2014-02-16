@@ -43,13 +43,13 @@ module Adapters
         adapter.stub(request_lists_data: [list_data])
       end
       
-      subject { adapter.request_board(Rails.application.config.current_sprint_board[:id]) }
+      subject { adapter.request_board(user_profile.current_sprint_board_id) }
     
       its(:lists) { should have(1).item}
       its(:cards) { should have(1).item}
       
       context "request_board with archived cards" do
-        subject { adapter.request_board(Rails.application.config.current_sprint_board[:id], true) }
+        subject { adapter.request_board(user_profile.current_sprint_board_id, true) }
         its(:cards) { should have(2).items}
       end
     end
@@ -58,26 +58,26 @@ module Adapters
       before { uri.stub(read: "[#{card_json}]")}
 
       context "archived" do
-        subject { adapter.request_archived_cards_data(Rails.application.config.current_sprint_board[:id]) }
+        subject { adapter.request_archived_cards_data(user_profile.current_sprint_board_id) }
     
         it { should have(1).item }
 
         context "url" do
           after { subject }
      
-          it { expect(URI).to receive(:parse).with("https://api.trello.com/1/boards/#{Rails.application.config.current_sprint_board[:id]}/cards/closed?key=#{Rails.application.config.trello[:app_key]}&token=#{user_profile.readonly_token}").and_return(uri) }
+          it { expect(URI).to receive(:parse).with("https://api.trello.com/1/boards/#{user_profile.current_sprint_board_id}/cards/closed?key=#{Rails.application.config.trello[:app_key]}&token=#{user_profile.readonly_token}").and_return(uri) }
         end
       end
     
       context "current" do
-        subject { adapter.request_cards_data(Rails.application.config.current_sprint_board[:id]) }
+        subject { adapter.request_cards_data(user_profile.current_sprint_board_id) }
     
         it { should have(1).item }
 
         context "url" do
           after { subject }
      
-          it { expect(URI).to receive(:parse).with("https://api.trello.com/1/boards/#{Rails.application.config.current_sprint_board[:id]}/cards?key=#{Rails.application.config.trello[:app_key]}&token=#{user_profile.readonly_token}").and_return(uri) }
+          it { expect(URI).to receive(:parse).with("https://api.trello.com/1/boards/#{user_profile.current_sprint_board_id}/cards?key=#{Rails.application.config.trello[:app_key]}&token=#{user_profile.readonly_token}").and_return(uri) }
         end
       end
     end
@@ -85,13 +85,13 @@ module Adapters
     context "request_lists_data" do
       before { uri.stub(read: "[#{list_json}]")}
 
-      subject { adapter.request_lists_data(Rails.application.config.current_sprint_board[:id]) }
+      subject { adapter.request_lists_data(user_profile.current_sprint_board_id) }
       it { should have(1).item }
 
       context "url" do
         after{ subject }
 
-        it { expect(URI).to receive(:parse).with("https://api.trello.com/1/boards/#{Rails.application.config.current_sprint_board[:id]}/lists?key=#{Rails.application.config.trello[:app_key]}&token=#{user_profile.readonly_token}").and_return(uri) }
+        it { expect(URI).to receive(:parse).with("https://api.trello.com/1/boards/#{user_profile.current_sprint_board_id}/lists?key=#{Rails.application.config.trello[:app_key]}&token=#{user_profile.readonly_token}").and_return(uri) }
       end
     end
         

@@ -3,16 +3,11 @@ require 'open-uri'
 require 'json'
 
 module Adapters
-  class TrelloAdapter
-    attr_accessor :user_profile
+  class TrelloAdapter < BaseAdapter
     
     def initialize(user_profile)
-      @user_profile = user_profile
+      super
       @credentials = {key: Rails.application.config.trello[:app_key], token: user_profile.readonly_token }
-    end
-    
-    def current_sprint_board_properties
-      Rails.application.config.current_sprint_board
     end
         
     def request_board(board_id, include_archived = false)

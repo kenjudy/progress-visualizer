@@ -1,4 +1,5 @@
 class UserProfilesController < ApplicationController
+  include UserProfileConcern
   include IterationConcern
 
   before_filter :authenticate_user!
@@ -84,12 +85,12 @@ class UserProfilesController < ApplicationController
   # 
   def lists
     @lists = Rails.cache.fetch("#{Rails.env}::UserProfilesController.lists.#{@profile.current_sprint_board_id_short}", :expires_in => 10.minutes) do
-       adapter.request_lists(@profile.current_sprint_board_id_short)
+       Adapters::BaseAdapter.build_adapter(@profile).request_lists(@profile.current_sprint_board_id_short)
     end
   end
   def labels
     @labels = Rails.cache.fetch("#{Rails.env}::UserProfilesController.labels.#{@profile.current_sprint_board_id_short}", :expires_in => 10.minutes) do
-       meta = adapter.request_board_metadata(@profile.current_sprint_board_id_short)
+       meta = Adapters::BaseAdapter.build_adapter(@profile).request_board_metadata(@profile.current_sprint_board_id_short)
        meta["labelNames"].map { |k,v| v.empty? ? [k,k] : [k,v] }
     end
   end

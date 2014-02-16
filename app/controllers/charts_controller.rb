@@ -1,5 +1,6 @@
 class ChartsController < ApplicationController
   include Charts::ChartsPresenter
+  include UserProfileConcern
   include IterationConcern
   
   before_filter :authenticate_user!, :assign_user_profile
@@ -9,7 +10,7 @@ class ChartsController < ApplicationController
   end
   
   def burn_up
-    data = Charts::BurnUpChart.current_burn_up_data(user_profile)
+    data = Charts::BurnUpChart.new(user_profile).current_burn_up_data
         
     @estimates_chart = burn_up_chart_visualization({label: "Estimates", data:  data.map{ |burn_up| { timestamp: burn_up.timestamp, backlog: burn_up.backlog_estimates, done: burn_up.done_estimates} }})
 

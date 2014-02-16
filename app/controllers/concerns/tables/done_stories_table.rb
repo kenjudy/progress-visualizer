@@ -1,6 +1,7 @@
 module Tables
   class DoneStoriesTable
     extend ActiveSupport::Concern
+    include UserProfileConcern
     include IterationConcern
     
     def initialize(user_profile)
@@ -15,9 +16,10 @@ module Tables
     end
     
     def refresh
-      collated_data = collate(adapter.request_board(adapter.current_sprint_board_properties[:id]),
-                              adapter.current_sprint_board_properties[:labels_types_of_work], 
-                              adapter.current_sprint_board_properties[:done_lists].keys)
+      board = Adapters::BaseAdapter.build_adapter(user_profile).request_board(user_profile.current_sprint_board_id)
+      collated_data = collate(board,
+                              user_profile.labels_types_of_work.split(","), 
+                              JSON.parse(user_profile.done_lists).keys)
       update_done_stories_for(collated_data)
     end
     

@@ -12,7 +12,7 @@ module Charts
     end
     
     def types_of_work 
-      adapter.current_sprint_board_properties[:labels_types_of_work]
+      @user_profile.labels_types_of_work.split(",")
     end
   end
 end

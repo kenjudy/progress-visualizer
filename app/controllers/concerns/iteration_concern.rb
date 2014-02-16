@@ -1,24 +1,32 @@
 module IterationConcern
-  attr_accessor :adapter, :user_profile
+  extend UserProfileConcern
   
-  def adapter
-    @adapter ||= Rails.application.config.adapter_class.constantize.new(user_profile)
-  end
-  
+  attr_accessor :adapter
+       
   def end_of_current_iteration
-    Rails.application.config.iteration_end
+    @end_of_current_iteration ||= iteration_setup[1]
   end
   
   def beginning_of_current_iteration
-    Rails.application.config.iteration_start
+    @beginning_of_current_iteration ||= iteration_setup[0]
   end
   
-  def beginning_of_prior_iteration
-    Rails.application.config.iteration_start - (Rails.application.config.iteration_end - Rails.application.config.iteration_start - 1)
-  end
+  private
   
-  def assign_user_profile
-    @user_profile = params[:profile_id] ? current_user.user_profiles.find(params[:profile_id]) : session[:user_profile] ? current_user.user_profiles.find(session[:user_profile]) : current_user.default_profile
-  end
+  def iteration_setup
+    raise StandardError.new("TODO: Only WEEKLY Supported") if user_profile.duration != "WEEKLY"
+
+    end_day_of_week = user_profile.end_day_of_week ||= 6
+    start_day_of_week = user_profile.start_day_of_week ||= 1
+
+    end_day_of_week = end_day_of_week + 8 if end_day_of_week <= start_day_of_week 
+    end_hour = user_profile.end_hour ||= 0
+    start_hour = user_profile.start_hour ||= 0
+
+    @end_of_current_iteration = Time.zone.local_to_utc(Date.today.end_of_week.to_datetime - (7 - end_day_of_week).days +  end_hour.hours)
+    @beginning_of_current_iteration = Time.zone.local_to_utc(Date.today.end_of_week.to_datetime - (7 - start_day_of_week).days +  start_hour.hours)
+    
+    [@beginning_of_current_iteration, @end_of_current_iteration]
+  end    
   
 end

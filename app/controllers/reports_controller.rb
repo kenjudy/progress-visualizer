@@ -1,5 +1,6 @@
 class ReportsController < ApplicationController
   include IterationConcern
+  include UserProfileConcern
   include Charts::ChartsPresenter
 
   before_filter :authenticate_user!, :assign_user_profile

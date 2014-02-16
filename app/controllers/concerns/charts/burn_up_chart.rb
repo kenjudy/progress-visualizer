@@ -1,8 +1,9 @@
 module Charts
   class BurnUpChart
     extend ActiveSupport::Concern
-    extend ::IterationConcern
-    include ::IterationConcern
+    extend IterationConcern
+    include IterationConcern
+    include UserProfileConcern
     
     attr_accessor :done_lists, :backlog_lists, :timestamp
 
@@ -29,21 +30,17 @@ module Charts
       last_burnup.backlog_estimates == backlog_stats[:sum]
     end
     
-    def self.current(user_profile)
-      Charts::BurnUpChart.new(user_profile)
+    def current_burn_up_data
+      @user_profile.burn_ups.where("timestamp > ? and timestamp <= ?", beginning_of_current_iteration, end_of_current_iteration)
     end
-    
-    def self.current_burn_up_data(user_profile)
-      user_profile.burn_ups.where("timestamp > ? and timestamp <= ?", beginning_of_current_iteration, end_of_current_iteration)
-    end
-    
+
     private
     
     def request_data
-       @board = adapter.request_board(adapter.current_sprint_board_properties[:id])
+       @board = Adapters::BaseAdapter.build_adapter(@user_profile).request_board(@user_profile.current_sprint_board_id_short)
        @timestamp = Time.now
-       @done_lists = adapter.current_sprint_board_properties[:done_lists]
-       @backlog_lists =  adapter.current_sprint_board_properties[:backlog_lists]
+       @done_lists = JSON.parse(@user_profile.done_lists)
+       @backlog_lists =  JSON.parse(@user_profile.backlog_lists)
      end
     
     def stats(list_ids)
