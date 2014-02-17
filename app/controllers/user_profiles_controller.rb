@@ -53,7 +53,6 @@ class UserProfilesController < ApplicationController
   end
   
   def set
-    session[:user_profile] = params[:profile_id]
     assign_user_profile
     redirect_to request.referer
   end
