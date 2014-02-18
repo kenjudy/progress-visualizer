@@ -31,6 +31,14 @@ describe ChartsController do
         it { assigns(:estimates_chart).should_not be_nil }
         it { assigns(:stories_chart).should_not be_nil }
       end
+      context "with week param" do
+        before do
+          VCR.use_cassette('controllers/controllers/charts_controller') do
+            get :burn_up, iteration: "2014-02-24"
+          end
+        end
+        it { assigns(:iteration).should == Date.new(2014,2,24) }
+      end
     end
   
     context "burn_up_reload" do
@@ -42,7 +50,6 @@ describe ChartsController do
     
       its(:code) { should == "200" }
       its(:body) { should == { last_update: burn_up.timestamp }.to_json }
-    
     end
   
     context "yesterdays_weather" do

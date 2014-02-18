@@ -63,6 +63,10 @@ describe "routes" do
     context "burn_up" do
       subject { { get: "chart/burn-up" } }
       it { should route_to(controller: "charts", action: "burn_up")}
+      context "with iteration" do
+        subject { { get: "chart/burn-up/2014-02-24" } }
+        it { should route_to(controller: "charts", action: "burn_up", iteration: "2014-02-24")}
+      end
     end
     context "burn_up_reload" do
       subject { { get: "chart/burn-up-reload" } }

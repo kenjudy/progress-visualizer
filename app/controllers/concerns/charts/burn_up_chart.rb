@@ -8,10 +8,13 @@ module Charts
 
     def initialize(user_profile)
       @user_profile = user_profile
-      request_data
+      @timestamp = Time.now
+      @done_lists = JSON.parse(@user_profile.done_lists)
+      @backlog_lists =  JSON.parse(@user_profile.backlog_lists)
     end
         
     def update
+      request_data
       done_stats = stats(@done_lists.keys)
       backlog_stats = stats(@backlog_lists.keys)
       unless redundant?(done_stats, backlog_stats)
@@ -29,17 +32,18 @@ module Charts
       last_burnup.backlog_estimates == backlog_stats[:sum]
     end
     
-    def current_burn_up_data
-      @user_profile.burn_ups.where("timestamp > ? and timestamp <= ?", beginning_of_current_iteration, end_of_current_iteration)
+    def burn_up_data(containing = nil)
+      if containing 
+        @user_profile.burn_ups.where("timestamp > ? and timestamp <= ?", beginning_of_iteration(containing), end_of_iteration(containing))
+      else
+        @user_profile.burn_ups.where("timestamp > ? and timestamp <= ?", beginning_of_current_iteration, end_of_current_iteration)
+      end
     end
 
     private
     
     def request_data
        @board = Adapters::BaseAdapter.build_adapter(@user_profile).request_board(@user_profile.current_sprint_board_id_short)
-       @timestamp = Time.now
-       @done_lists = JSON.parse(@user_profile.done_lists)
-       @backlog_lists =  JSON.parse(@user_profile.backlog_lists)
      end
     
     def stats(list_ids)

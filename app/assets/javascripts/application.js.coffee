@@ -22,6 +22,8 @@ $ ->
     $(".chart").each (index) ->
       eval("draw_" + @id)
       return
+  
+  $('.carousel').carousel()
       
   $("a.tip").tooltip()
   

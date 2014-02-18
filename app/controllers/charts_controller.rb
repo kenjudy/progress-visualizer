@@ -10,12 +10,12 @@ class ChartsController < ApplicationController
   end
   
   def burn_up
-    data = Charts::BurnUpChart.new(user_profile).current_burn_up_data
-        
+    @iteration = Date.parse(params["iteration"]) if params["iteration"]
+    data = Charts::BurnUpChart.new(user_profile).burn_up_data(@iteration)
     @estimates_chart = burn_up_chart_visualization({label: "Estimates", data:  data.map{ |burn_up| { timestamp: burn_up.timestamp, backlog: burn_up.backlog_estimates, done: burn_up.done_estimates} }})
 
     @stories_chart = burn_up_chart_visualization({label: "Story Counts", data:  data.map{ |burn_up| { timestamp: burn_up.timestamp, backlog: burn_up.backlog, done: burn_up.done} }})
-  end
+   end
   
   def yesterdays_weather
     estimate_chart = Charts::YesterdaysWeatherChart.new(user_profile, {weeks: params[:weeks] ? params[:weeks].to_i : 3, label: :estimate})

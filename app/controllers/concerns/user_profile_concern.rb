@@ -2,7 +2,7 @@ module UserProfileConcern
   attr_accessor :user_profile
 
   def assign_user_profile
-    return unless self.respond_to?("current_user") #profile only exists in context of authenticated user
+    return unless self.respond_to?("current_user") && self.current_user #profile only exists in context of authenticated user
     
     if self.respond_to?("params") && self.params[:profile_id]
       @user_profile = self.current_user.user_profiles.find(self.params[:profile_id])

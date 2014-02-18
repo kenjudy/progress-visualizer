@@ -2,12 +2,51 @@
   <div class="container">
     <div class="row">
       <div>
-        <div class="well">
-          <h1 class="brand">Progress<span>Visualizer</span></h1>
-          <p>This is a pet project to provide visual reporting for progress against goals - starting with my development team's progress in <%= link_to "Trello", "http://www.trello.com/", target: "_blank" %> &mdash; <%= link_to "Ken Judy", "http://judykat.com/ken-judy" %>.</p>
-          <p><%= link_to "See an Example", charts_burn_up_path, class: "btn btn-primary btn-lg" %> </p>
+         
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <h1 class="brand">Progress<span>Visualizer</span></h1>
+            <p>A pet project to provide visual reporting for progress against goals - starting with my development team's progress in <%= link_to "Trello", "http://www.trello.com/", target: "_blank" %> &mdash; <%= link_to "Ken Judy", "http://judykat.com/ken-judy" %>.</p>
+          </div>
         </div>
-        <%= image_tag "fireworks.jpg", class: "img-responsive", style: "width: 100%" %>
+
+        <div id="carousel-homepage" class="carousel slide" data-ride="carousel">
+          <ol class="carousel-indicators">
+            <li data-target="#carousel-homepage" data-slide-to="0" class="active"></li>
+            <li data-target="#carousel-homepage" data-slide-to="1" class=""></li>
+            <li data-target="#carousel-homepage" data-slide-to="2" class=""></li>
+          </ol>
+          <div class="carousel-inner">
+            <div class="item active">
+              <%= image_tag "burn-up.jpg" %>
+              <div class="carousel-caption">
+                <h2>Burn ups</h2>
+                <h4>Create charts tracking work towards a commitment.</h4>
+              </div>
+            </div>
+            <div class="item">
+              <%= image_tag "long-term-trend.jpg" %>
+              <div class="carousel-caption">
+                <h2>Long Term Trends</h2>
+                <h4>Create charts tracking completed trello cards over time.</h4>
+              </div>
+            </div>
+            <div class="item">
+              <%= image_tag "yesterdays-weather.jpg" %>
+              <div class="carousel-caption">
+                <h2>Yesterday's Weather</h2>
+                <h4>Create charts comparing work completed week to week.</h4>
+              </div>
+            </div>
+          </div>
+          <a class="left carousel-control" href="#carousel-homepage" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left"></span>
+          </a>
+          <a class="right carousel-control" href="#carousel-homepage" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right"></span>
+          </a>
+        </div>
+
       </div>
     </div>
   </div>

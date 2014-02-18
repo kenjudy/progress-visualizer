@@ -10,18 +10,9 @@ module Charts
     let(:done_lists) { JSON.parse(profile.done_lists) }
     let(:backlog_lists) { JSON.parse(profile.backlog_lists) }
     
-    let(:board) do
-      VCR.use_cassette('controllers/concerns/charts/burn_up_chart_request_board') do
-        profile.current_sprint_board_id
-      end
-    end
- 
+    let(:board) { profile.current_sprint_board_id }
     
-    let(:burn_up_chart) do
-      VCR.use_cassette('controllers/concerns/charts/burn_up_chart') do
-        BurnUpChart.new(profile)
-      end
-    end
+    let(:burn_up_chart) { BurnUpChart.new(profile) }
     
     subject { burn_up_chart }
     
@@ -30,7 +21,6 @@ module Charts
     its(:timestamp) { should be_instance_of(Time) }
      
     context "assigned" do
-    
       its(:done_lists) { should == done_lists }
       its(:backlog_lists) { should == backlog_lists }
       its(:timestamp) { should be_instance_of(Time) }
@@ -42,7 +32,11 @@ module Charts
     end
         
     context "update" do
-      after { subject.update }
+      after do
+        VCR.use_cassette('controllers/concerns/charts/burn_up_chart') do
+          subject.update
+        end
+      end
 
       it { expect(BurnUp).to receive(:create).with({:user_profile=> profile, :timestamp=>anything, :done=>anything, :done_estimates=>anything, :backlog=>anything, :backlog_estimates=>anything})}
     end
@@ -70,11 +64,7 @@ module Charts
     end
     
     context "current" do
-      subject do
-        VCR.use_cassette('controllers/concerns/charts/burn_up_chart_current') do
-          BurnUpChart.new(profile)
-        end
-      end
+      subject { BurnUpChart.new(profile) }
       
       it { should be_instance_of(Charts::BurnUpChart) }
     end
