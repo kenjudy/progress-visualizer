@@ -23,7 +23,7 @@ $ ->
       eval("draw_" + @id)
       return
   
-  $('.carousel').carousel()
+  $('.carousel').carousel('cycle')
       
   $("a.tip").tooltip()
   

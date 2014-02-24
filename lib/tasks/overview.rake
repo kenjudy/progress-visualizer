@@ -3,7 +3,7 @@
 namespace :tables do
   desc "Update overview"
   task :overview => :environment do
-    UserProfiles.all.each do |profile|
+    UserProfile.all.each do |profile|
       Tables::DoneStoriesTable.new(profile).refresh
     end
   end
