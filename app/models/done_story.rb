@@ -8,7 +8,6 @@ class DoneStory < ActiveRecord::Base
                story: card.name,
                estimate: card.estimate }
     attribs.merge!({timestamp: beginning_of_current_iteration, iteration: beginning_of_current_iteration.strftime("%F")}) if story.timestamp.nil?
-binding.pry
     story.update_attributes(attribs)
   end
   
