@@ -37,7 +37,22 @@ module Adapters
         end
       end
       context "delete" do
+        subject do
+          VCR.use_cassette('adapters/trello_adapter/delete_webhook') do
+            adapter.delete_webhook("530d69f4ba42e3540e276228")
+          end
+        end
         
+        its(:code) { should == "200" }
+        its(:message) { should == "OK" }
+        
+        context "url" do
+          let(:url) { "https://trello.com/1/webhooks/530d69f4ba42e3540e276228?key=#{Rails.application.config.trello[:app_key]}&token=#{user_profile.readonly_token}" }
+          let(:uri) { URI.parse(url) }
+          after { subject }
+          
+          it { expect(adapter).to receive(:parse_url_string).with(url).and_return(uri) }
+        end
       end
     end
     

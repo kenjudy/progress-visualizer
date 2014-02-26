@@ -58,6 +58,10 @@ module Adapters
       return JSON.parse(response.body)
     end
 
+    def delete_webhook(webhook_id)
+      delete(Rails.application.config.trello[:manage_webhooks_path], {webhook_id: webhook_id})
+    end
+    
     private
     
     def generate_uri(url_template, options = {})
@@ -76,22 +80,23 @@ module Adapters
     
     def post_json(url_template, params, options = {})
       uri = generate_uri("#{Rails.application.config.trello[:trello_root_url]}#{url_template}", options)
-      http = Net::HTTP.new(uri.host, uri.port)
-      http.use_ssl = true
-      http.verify_mode = OpenSSL::SSL::VERIFY_PEER
       request = Net::HTTP::Post.new(uri.path+"?"+uri.query)
       request.add_field('Content-Type', 'application/json')
       request.body = params.to_json
+      http_request(uri, request)
+    end
+    
+    def delete(url_template, options)
+      uri = generate_uri("#{Rails.application.config.trello[:trello_root_url]}#{url_template}", options)
+      request = Net::HTTP::Delete.new(uri.path+"?"+uri.query)
+      http_request(uri, request)
+    end
+
+    def http_request(uri, request)
+      http = Net::HTTP.new(uri.host, uri.port)
+      http.use_ssl = true
+      http.verify_mode = OpenSSL::SSL::VERIFY_PEER
       http.request(request)
     end
-  
-  # DELETE WEBHOOK
-  # uri = URI.parse("https://trello.com/1/webhooks/530d1ab3bf67856a1b70a419?key=c4ba8f697ddf1843e4ef0b84fc3aff98&token=86f74af55b8ee238fc3830681f191ffb9a8e3be582564112bc4018ff8549dd74")
-  # http = Net::HTTP.new(uri.host, uri.port)
-  # http.use_ssl = true
-  # http.verify_mode = OpenSSL::SSL::VERIFY_PEER #OpenSSL::SSL::VERIFY_NONE
-  # request = Net::HTTP::Delete.new(uri.path+"?"+uri.query)
-  # response = http.request(request)
-
   end
 end
