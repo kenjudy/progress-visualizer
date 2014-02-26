@@ -9,6 +9,6 @@ module UserProfilesHelper
   end
   
   def request_token_url
-    Rails.application.config.adapter_class.constantize.new(@profile).request_user_token_url    
+    Rails.application.config.adapter_class.constantize.new(@profile).user_token_url    
   end
 end

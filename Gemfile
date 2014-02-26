@@ -32,8 +32,6 @@ gem 'jbuilder', '~> 1.2'
 
 gem 'thin' 
 
-gem 'ruby-trello'
-
 gem 'devise'
 
 gem 'omniauth-trello'
