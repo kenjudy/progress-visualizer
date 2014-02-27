@@ -24,6 +24,7 @@ end
 if Rails.env == "production"
   require 'memcachier'
   require 'dalli'
+  require 'rails_12factor'
 end
 
 
