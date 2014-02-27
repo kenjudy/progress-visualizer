@@ -6,7 +6,7 @@ describe WebhooksController do
     let(:user_profile) { FactoryGirl.create(:user_profile) }
   
     subject do
-      VCR.use_cassette('controllers/controllers/webhooks_controller') do
+      VCR.use_cassette('controllers/webhooks_controller') do
         post :burn_up, profile_id: user_profile.id, format: "json"
       end
     end
@@ -21,5 +21,9 @@ describe WebhooksController do
       
     end
     
+    context "no match" do
+      subject { post :burn_up, profile_id: -1, format: "json" }
+      its(:code) { should == "410" }
+    end
   end
 end

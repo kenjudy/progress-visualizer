@@ -24,9 +24,10 @@ module Adapters
           end
         end
         
-        its(["id"]) { should_not be_nil }
-        its(["description"]) { should == "#{user_profile.user.name} #{user_profile.name} burnup"}
-        its(["idModel"]) { should == "5170058469d58225070003cb"}
+        its(:external_id) { should_not be_nil }
+        its(:description) { should == "#{user_profile.user.name} #{user_profile.name} burnup"}
+        its(:id_model) { should == "5170058469d58225070003cb"}
+        its(:callback_url) { should =~ /ian4atzhmmh9ul\/burn-up\/\d+\.json/ }
         
         context "url" do
           let(:url) { "https://trello.com/1/tokens/#{user_profile.readonly_token}/webhooks/?key=#{Rails.application.config.trello[:app_key]}" }
@@ -37,9 +38,10 @@ module Adapters
         end
       end
       context "delete" do
+        let(:webhook) { Webhook.new(external_id: "530d69f4ba42e3540e276228")}
         subject do
           VCR.use_cassette('adapters/trello_adapter/destroy_webhook') do
-            adapter.destroy_webhook("530d69f4ba42e3540e276228")
+            adapter.destroy_webhook(webhook)
           end
         end
         

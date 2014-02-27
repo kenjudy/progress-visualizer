@@ -55,11 +55,12 @@ module Adapters
     def add_webhook(callback_url, id_model)
       params = {"description" => "#{user_profile.user.name} #{user_profile.name} burnup", "callbackURL" => callback_url, "idModel" => id_model, }
       response = post_json(Rails.application.config.trello[:add_webhooks_path], params)
-      return JSON.parse(response.body)
+      webhook_attr = JSON.parse(response.body)
+      Webhook.create(user_profile: user_profile, external_id: webhook_attr["id"], description: webhook_attr["description"], id_model: webhook_attr["idModel"], callback_url: webhook_attr["callbackURL"] )
     end
 
-    def destroy_webhook(webhook_id)
-      delete(Rails.application.config.trello[:manage_webhooks_path], {webhook_id: webhook_id})
+    def destroy_webhook(webhook)
+      delete(Rails.application.config.trello[:manage_webhooks_path], {webhook_id: webhook.external_id})
     end
     
     private

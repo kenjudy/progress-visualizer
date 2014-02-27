@@ -20,7 +20,7 @@ describe TablesController do
       before { sign_in user_profile.user }
 
       subject do
-        VCR.use_cassette('controllers/controllers/tables_controller') do
+        VCR.use_cassette('controllers/tables_controller') do
           get :done_stories
         end
       end

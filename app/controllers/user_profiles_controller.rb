@@ -42,6 +42,7 @@ class UserProfilesController < ApplicationController
     @profile.update_attributes(profile_params)
     @profile.save
     if (@profile.valid?)
+      add_webhook(@profile, webhooks_burn_up_url(profile_id: @profile.id, format: :json))
       redirect_to user_profiles_path
     else
       render 'edit'
@@ -49,7 +50,9 @@ class UserProfilesController < ApplicationController
   end
   
   def destroy
-    current_user.user_profiles.find(params[:id]).destroy
+    profile = current_user.user_profiles.find(params[:id])
+    destroy_webhook(profile, webhooks_burn_up_url(profile_id: profile.id, format: :json))
+    profile.destroy
   end
   
   def set
@@ -65,6 +68,17 @@ class UserProfilesController < ApplicationController
   end
   
   private
+  
+  def add_webhook(user_profile, callback_url)
+    Adapters::BaseAdapter.build_adapter(@profile).add_webhook(callback_url, user_profile.current_sprint_board_id) unless Webhook.find_by(user_profile: user_profile, callback_url: callback_url)
+  end
+
+  def destroy_webhook(user_profile, callback_url)
+    adapter = Adapters::BaseAdapter.build_adapter(user_profile)
+    Webhook.where("user_profile_id = ?", user_profile.id).each do |webhook|
+      adapter.destroy_webhook(webhook)
+    end
+  end
   
   def make_sole_default_if_is_default(current_profile)
     return unless current_profile.default == "1"

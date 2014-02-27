@@ -16,7 +16,7 @@ describe ReportsController do
     before { sign_in user_profile.user }
 
     subject do
-      VCR.use_cassette('controllers/controllers/reports_controller') do
+      VCR.use_cassette('controllers/reports_controller') do
         get :performance_summary
       end
     end

@@ -19,7 +19,7 @@ describe ChartsController do
     
     context "burn_up" do
       subject do
-        VCR.use_cassette('controllers/controllers/charts_controller') do
+        VCR.use_cassette('controllers/charts_controller') do
           get :burn_up
         end
       end
@@ -33,7 +33,7 @@ describe ChartsController do
       end
       context "with week param" do
         before do
-          VCR.use_cassette('controllers/controllers/charts_controller') do
+          VCR.use_cassette('controllers/charts_controller') do
             get :burn_up, iteration: "2014-02-24"
           end
         end
