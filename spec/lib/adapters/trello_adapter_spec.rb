@@ -38,8 +38,8 @@ module Adapters
       end
       context "delete" do
         subject do
-          VCR.use_cassette('adapters/trello_adapter/delete_webhook') do
-            adapter.delete_webhook("530d69f4ba42e3540e276228")
+          VCR.use_cassette('adapters/trello_adapter/destroy_webhook') do
+            adapter.destroy_webhook("530d69f4ba42e3540e276228")
           end
         end
         

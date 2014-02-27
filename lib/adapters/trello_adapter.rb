@@ -58,7 +58,7 @@ module Adapters
       return JSON.parse(response.body)
     end
 
-    def delete_webhook(webhook_id)
+    def destroy_webhook(webhook_id)
       delete(Rails.application.config.trello[:manage_webhooks_path], {webhook_id: webhook_id})
     end
     

@@ -4,7 +4,6 @@ ProgressVisualizer::Application.routes.draw do
   root 'homepage#index', as: 'homepage'
   
   resources :user_profiles
-  resources :webhooks
 
   get "user_profiles/set/:profile_id" => "user_profiles#set", as: 'set_user_profile'
   

@@ -106,6 +106,8 @@ ActiveRecord::Schema.define(version: 20140216211240) do
   create_table "webhooks", force: true do |t|
     t.integer  "user_profile_id"
     t.string   "external_id"
+    t.string   "callback_url"
+    t.string   "id_model"
     t.string   "description"
     t.string   "last_run"
     t.datetime "created_at"

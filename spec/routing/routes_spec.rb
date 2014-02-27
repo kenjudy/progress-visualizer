@@ -29,20 +29,6 @@ describe "routes" do
   end
    
   context "webhooks" do
-    { index: [:get, "/", nil], show: [:get, "/1", "1"], 
-      new: [:get, "/new", nil], edit: [:get, "/1/edit", "1"],
-      create: [:post, "/", nil], update: [:put, "/1", "1"],
-      destroy: [:delete, "/1", "1"]
-    }.each do |action, props|
-
-      context action do
-        subject { { props[0] => "webhooks#{props[1]}" } }
-        let(:params) {{controller: "webhooks", action: action.to_s, id: props[2]}.keep_if { |key, val| val }}
-        
-        it { should route_to(params) }
-      end
-
-    end
     context "burn_up" do
       subject { { post: "ian4atzhmmh9ul/burn-up/1.json" } }
       it { should route_to(controller: "webhooks", action: "burn_up", profile_id: "1", format: "json")}
