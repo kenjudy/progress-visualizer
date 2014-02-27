@@ -16,7 +16,7 @@ module Charts
     def update
       request_data
       done_stats = stats(@done_lists.keys)
-      backlog_stats = stats(@backlog_lists.keys)
+      backlog_stats = stats(@backlog_lists.keys + @done_lists.keys)
       unless redundant?(done_stats, backlog_stats)
         BurnUp.create(user_profile: @user_profile,timestamp: timestamp, done: done_stats[:count], done_estimates: done_stats[:sum], backlog: backlog_stats[:count], backlog_estimates: backlog_stats[:sum] )
       end
