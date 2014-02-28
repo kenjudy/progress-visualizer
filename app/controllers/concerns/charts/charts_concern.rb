@@ -1,4 +1,4 @@
-module Charts::ChartsPresenter
+module Charts::ChartsConcern
   extend ActiveSupport::Concern
   include IterationConcern
   
@@ -31,7 +31,11 @@ module Charts::ChartsPresenter
   def yesterdays_weather_visualization(chart, include_current = false)
     data_table = GoogleVisualr::DataTable.new
     data_table.new_column('string', 'timestamp' )
-    chart.types_of_work.each { |type_of_work| data_table.new_column('number', type_of_work.downcase ) }
+    if chart.types_of_work.any?
+      chart.types_of_work.each { |type_of_work| data_table.new_column('number', type_of_work.downcase ) }
+    else
+      data_table.new_column('number', "cards" )
+    end
     data_table.add_rows(yesterdays_weather_data_rows(chart, include_current))
     GoogleVisualr::Interactive::ColumnChart.new(data_table, @@default_properties.merge({ title: "Yesterday's Weather for #{chart.label.to_s.titleize.pluralize}",
                                                                                          isStacked: true }))
@@ -57,7 +61,7 @@ module Charts::ChartsPresenter
     data.map{ |burn_up| [burn_up[:timestamp].getlocal, burn_up[:backlog], burn_up[:done]] }
   end
   
-  def burn_up_uses_estimates(chart)
+  def uses_estimates(chart)
     s=0
     chart.data_table.rows.each { |cols| s += cols[1].v + cols[2].v  }
     return s > 0
@@ -78,10 +82,15 @@ module Charts::ChartsPresenter
     data = {}
     done_stories_data(chart.weeks, include_current).each do |done_story|
       timestamp = done_story.timestamp.to_s
-      data[timestamp] = data[timestamp] ||= [timestamp, 0, 0, 0]
 
       value = chart.label == :estimate ? done_story.estimate : 1
-      chart.types_of_work.each_with_index { |type_of_work, index| data[timestamp][index+1] += done_story.type_of_work.downcase == type_of_work.downcase ? value : 0 }
+      if chart.types_of_work.any?
+        data[timestamp] = data[timestamp] ||= [timestamp] + chart.types_of_work.length.times.map { 0 }
+        chart.types_of_work.each_with_index { |type_of_work, index| data[timestamp][index+1] += done_story.type_of_work.downcase == type_of_work.downcase ? value : 0 }
+      else
+        data[timestamp] = data[timestamp] ||= [timestamp, 0]
+        data[timestamp][1] += value
+      end
     end
     data.values.sort { |a,b| a[0] <=> b[0] }
   end

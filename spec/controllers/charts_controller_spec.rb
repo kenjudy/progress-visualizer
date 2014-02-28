@@ -62,11 +62,6 @@ describe ChartsController do
         it { assigns(:yesterdays_weather_estimate_chart).should_not be_nil }
         it { assigns(:yesterdays_weather_stories_chart).should_not be_nil }
       end
-      context "optional week param" do
-        subject { get :yesterdays_weather, weeks: "3" }
-        after { subject }
-        it("should present charts") { expect(controller).to receive(:yesterdays_weather_visualization).twice }
-      end
     end
   
     context "long_term_trend" do

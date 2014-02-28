@@ -2,8 +2,8 @@ require 'spec_helper'
 
 
 module Charts
-  describe ChartsPresenter do
-    include ChartsPresenter
+  describe ChartsConcern do
+    include ChartsConcern
     include IterationConcern
   
     let(:user_profile) { FactoryGirl.create(:user_profile) }
@@ -47,6 +47,17 @@ module Charts
     
       it { should == [[timestamp, 16, 4], [timestamp - 1.day, 16, 4], [timestamp - 2.days, 16, 4], [timestamp - 3 .days, 16, 4]] }
     
+      context "uses_estimates" do
+        let(:chart) { burn_up_chart_visualization({label: "Estimates", data:  data.map{ |burn_up| { timestamp: burn_up.timestamp, backlog: burn_up.backlog_estimates, done: burn_up.done_estimates} }}) }
+        subject { uses_estimates(chart)}
+        
+        it { should be_true }
+        
+        context "no estimates" do
+          let(:chart) { burn_up_chart_visualization({label: "Estimates", data:  data.map{ |burn_up| { timestamp: burn_up.timestamp, backlog: 0.0, done: 0.0} }}) }
+          it { should be_false }
+        end
+      end
     end
 
     context "long_term_trend_visualization_rows" do
@@ -67,10 +78,16 @@ module Charts
       let(:chart) { double("Chart", label: :estimate, weeks: 3, types_of_work: ["Committed", "Contingent", "Inserted"]) }
       subject { yesterdays_weather_data_rows(chart, include_current) }
       it { should == [[(two_weeks_ago).strftime("%F"), 8.0, 12.0, 16.0], [(one_week_ago).strftime("%F"), 8.0, 12.0, 16.0]] }
+      
       context "include current" do
         let(:include_current) { true }
         it { should == [[(two_weeks_ago).strftime("%F"), 8.0, 12.0, 16.0], [(one_week_ago).strftime("%F"), 8.0, 12.0, 16.0], [(this_week).strftime("%F"), 8.0, 12.0, 16.0]] }
-      end        
+      end  
+      
+      context "no types_of_work" do
+        let(:chart) { double("Chart", label: :estimate, weeks: 3, types_of_work: []) }
+        it { should == [[(two_weeks_ago).strftime("%F"), 36.0], [(one_week_ago).strftime("%F"), 36.0  ]] }
+      end
     end
     
   end
