@@ -64,7 +64,8 @@ module Charts
 
     context "yesterdays_weather_data_rows" do
       let(:include_current) { false }
-      subject { yesterdays_weather_data_rows(:estimate, 3, ["Committed", "Contingent", "Inserted"], include_current) }
+      let(:chart) { double("Chart", label: :estimate, weeks: 3, types_of_work: ["Committed", "Contingent", "Inserted"]) }
+      subject { yesterdays_weather_data_rows(chart, include_current) }
       it { should == [[(two_weeks_ago).strftime("%F"), 8.0, 12.0, 16.0], [(one_week_ago).strftime("%F"), 8.0, 12.0, 16.0]] }
       context "include current" do
         let(:include_current) { true }
