@@ -7,6 +7,7 @@ require 'bootstrap-sass'
 require 'google_visualr'
 require 'devise'
 require 'attr_encryptor'
+require 'mail_form'
 
 if ["development", "test"].include?(Rails.env)
   require 'better_errors'

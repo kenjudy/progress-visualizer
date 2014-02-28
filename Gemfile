@@ -38,6 +38,8 @@ gem 'omniauth-trello'
 
 gem 'attr_encryptor'
 
+gem 'mail_form'
+
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false
@@ -57,6 +59,7 @@ group :development, :test do
   gem 'lunchy'
   gem 'vcr'
   gem 'webmock'
+  gem 'mailcatcher'
 end
 
 gem "google_visualr", ">= 2.1"
