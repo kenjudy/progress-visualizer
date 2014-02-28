@@ -4,10 +4,12 @@
 
 <section>
   <div class="container">
+    <% if @uses_estimates %>
     <div class="row">
       <div id='estimates_chart' class='chart'></div>
       <%= render_chart(@estimates_chart, 'estimates_chart') %>
     </div>
+    <% end %>
     <div class="row">
       <div id='stories_chart' class='chart'></div>
       <%= render_chart(@stories_chart, 'stories_chart') %>
