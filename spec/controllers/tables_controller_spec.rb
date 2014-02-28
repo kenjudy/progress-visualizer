@@ -2,7 +2,6 @@ require 'spec_helper'
 require 'json'
 
 describe TablesController do
-  include ProgressVisualizerTrello::JsonData
 
 
   context "done_stories" do

@@ -3,7 +3,6 @@ require 'spec_helper'
 
 module Charts
   describe BurnUpChart do
-    include ProgressVisualizerTrello::JsonData
 
     let(:profile) { FactoryGirl.build(:user_profile) }
     let(:adapter) { ::Adapters::TrelloAdapter.new(profile) }

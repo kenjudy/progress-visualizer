@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe ReportsController do
-  include ProgressVisualizerTrello::JsonData
 
   let(:user_profile) { FactoryGirl.create(:user_profile)}
 

@@ -4,7 +4,6 @@ require 'json'
 
 module Exporters
   describe ExportBoardToCsv do
-    include ProgressVisualizerTrello::JsonData
 
     let(:user_profile) { FactoryGirl.build(:user_profile)}
     let(:csv) { [] }

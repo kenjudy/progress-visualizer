@@ -2,7 +2,6 @@ require 'spec_helper'
 require 'json'
 
 describe ChartsController do
-  include ProgressVisualizerTrello::JsonData
 
   context "not authenticated" do
     subject { get :burn_up }
