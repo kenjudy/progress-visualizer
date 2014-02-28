@@ -1,17 +1,17 @@
 <% classname ||= "" %>
 <% if current_user %>
 
-  <% if current_user.user_profiles.length > 1 && user_profile.name %>
-    <li class="dropdown <%= classname %>"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= user_profile.name.truncate(20, separator: ' ') %> <b class="caret"></b></a>
-      <ul class="dropdown-menu">
+  <li class="dropdown <%= classname %>"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= user_profile.name.truncate(20, separator: ' ') %> <b class="caret"></b></a>
+    <ul class="dropdown-menu">
+      <li><%= link_to(raw("View this board in Trello <span class=\"glyphicon glyphicon-new-window\"></span>"), "http://www.trello.com/b/#{user_profile.current_sprint_board_id_short}", target: "_blank") %></li>
+      <% if current_user.user_profiles.length > 1 && user_profile.name %>
+        <li class="divider"></li>
         <% current_user.user_profiles.keep_if{ |profile| profile.id != user_profile.id }.each do |profile| %>
           <% menu_list_item(profile.name, set_user_profile_path(profile))%>
         <% end %>
-      </ul>
-    </li>
-  <% else %>
-    <% menu_list_item(user_profile.name, "#", "disabled #{classname}") %>
-  <% end %>
+      <% end %>
+    </ul>
+  </li>
   
   
   <li class="dropdown <%= active_class_if([destroy_user_session_path,new_user_session_path]) %> <%= classname %>">
