@@ -23,6 +23,12 @@ describe "Tables::DoneStoriesTable" do
     its([:lists]) { should == {"Committed" => {cards: board.cards, :stories=>2, :estimates=>6.0} } }
     its([:totals]) { should == {:total_stories=>2, :total_estimates=>6.0}}
     its([:week_of]) { should == "February  2, 2014" }
+
+    context "no types of work" do
+      let(:types_of_work) { [] }
+      its([:lists]) { should == {"" => {cards: board.cards, :stories=>2, :estimates=>6.0} } }
+      its([:totals]) { should == {:total_stories=>2, :total_estimates=>6.0}}
+    end
   end
   
   context "update_done_stories_for" do
@@ -31,4 +37,9 @@ describe "Tables::DoneStoriesTable" do
     subject { DoneStory.all }
     its(:count) { should == 2}
   end
+  
+  # context "no types of work" do
+  #   let(:types_of_work) { [] }
+  #   its(:count) { should == 2}
+  # end
 end

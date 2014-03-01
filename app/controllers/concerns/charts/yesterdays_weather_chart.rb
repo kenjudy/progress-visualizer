@@ -12,7 +12,7 @@ module Charts
     end
     
     def types_of_work 
-      @user_profile.labels_types_of_work.split(",")
+      @user_profile.labels_types_of_work.split(",") if @user_profile.labels_types_of_work
     end
   end
 end

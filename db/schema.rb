@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140216211240) do
+ActiveRecord::Schema.define(version: 20140301154649) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,7 +42,7 @@ ActiveRecord::Schema.define(version: 20140216211240) do
     t.integer  "user_profile_id"
   end
 
-  add_index "done_stories", ["story_id"], name: "index_done_stories_on_story_id", unique: true, using: :btree
+  add_index "done_stories", ["user_profile_id", "story_id"], name: "index_done_stories_on_user_profile_id_and_story_id", unique: true, using: :btree
   add_index "done_stories", ["user_profile_id"], name: "index_done_stories_on_user_profile_id", using: :btree
 
   create_table "user_profiles", force: true do |t|

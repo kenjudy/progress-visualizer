@@ -34,7 +34,7 @@ module Charts::ChartsConcern
     if chart.types_of_work.any?
       chart.types_of_work.each { |type_of_work| data_table.new_column('number', type_of_work.downcase ) }
     else
-      data_table.new_column('number', "cards" )
+      data_table.new_column('number', "Cards" )
     end
     data_table.add_rows(yesterdays_weather_data_rows(chart, include_current))
     GoogleVisualr::Interactive::ColumnChart.new(data_table, @@default_properties.merge({ title: "Yesterday's Weather for #{chart.label.to_s.titleize.pluralize}",
@@ -61,9 +61,9 @@ module Charts::ChartsConcern
     data.map{ |burn_up| [burn_up[:timestamp].getlocal, burn_up[:backlog], burn_up[:done]] }
   end
   
-  def uses_estimates(chart)
+  def has_non_zero_values(chart)
     s=0
-    chart.data_table.rows.each { |cols| s += cols[1].v + cols[2].v  }
+    chart.data_table.rows.each { |cols| cols[1..-1].each { |col| s += col.v  }}
     return s > 0
   end
 
@@ -84,7 +84,7 @@ module Charts::ChartsConcern
       timestamp = done_story.timestamp.to_s
 
       value = chart.label == :estimate ? done_story.estimate : 1
-      if chart.types_of_work.any?
+      if chart.types_of_work && chart.types_of_work.any?
         data[timestamp] = data[timestamp] ||= [timestamp] + chart.types_of_work.length.times.map { 0 }
         chart.types_of_work.each_with_index { |type_of_work, index| data[timestamp][index+1] += done_story.type_of_work.downcase == type_of_work.downcase ? value : 0 }
       else

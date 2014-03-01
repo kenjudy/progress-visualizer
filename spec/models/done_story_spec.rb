@@ -12,6 +12,12 @@ describe DoneStory do
       before { DoneStory.create_or_update_from(user_profile, card, type_of_work, Time.now) }
       subject { DoneStory.last }
       its(:story) { should == "Test Story Name"}
+      its(:type_of_work) { should == "Committed"}
+      
+      context "no type of work in user profile" do
+        let(:type_of_work) { nil }
+        its(:type_of_work) { should be_nil }
+      end
     end
     
     context "does not create dups by idShort" do

@@ -5,8 +5,9 @@ module Charts
   describe ChartsConcern do
     include ChartsConcern
     include IterationConcern
-  
-    let(:user_profile) { FactoryGirl.create(:user_profile) }
+    
+    let(:types_of_work) { "Committed,Contingent,Inserted" }
+    let(:user_profile) { FactoryGirl.create(:user_profile, labels_types_of_work: types_of_work) }
     let(:date) { Date.today.end_of_week }
 
     let(:iteration_start) { beginning_of_current_iteration }
@@ -47,9 +48,9 @@ module Charts
     
       it { should == [[timestamp, 16, 4], [timestamp - 1.day, 16, 4], [timestamp - 2.days, 16, 4], [timestamp - 3 .days, 16, 4]] }
     
-      context "uses_estimates" do
+      context "has_non_zero_values" do
         let(:chart) { burn_up_chart_visualization({label: "Estimates", data:  data.map{ |burn_up| { timestamp: burn_up.timestamp, backlog: burn_up.backlog_estimates, done: burn_up.done_estimates} }}) }
-        subject { uses_estimates(chart)}
+        subject { has_non_zero_values(chart)}
         
         it { should be_true }
         
@@ -75,8 +76,10 @@ module Charts
 
     context "yesterdays_weather_data_rows" do
       let(:include_current) { false }
-      let(:chart) { double("Chart", label: :estimate, weeks: 3, types_of_work: ["Committed", "Contingent", "Inserted"]) }
+      let(:chart) { Charts::YesterdaysWeatherChart.new(user_profile, {weeks: 3, label: :estimate}) }
+
       subject { yesterdays_weather_data_rows(chart, include_current) }
+
       it { should == [[(two_weeks_ago).strftime("%F"), 8.0, 12.0, 16.0], [(one_week_ago).strftime("%F"), 8.0, 12.0, 16.0]] }
       
       context "include current" do
@@ -85,8 +88,25 @@ module Charts
       end  
       
       context "no types_of_work" do
-        let(:chart) { double("Chart", label: :estimate, weeks: 3, types_of_work: []) }
+        let(:types_of_work) { nil }
         it { should == [[(two_weeks_ago).strftime("%F"), 36.0], [(one_week_ago).strftime("%F"), 36.0  ]] }
+      end
+
+      context "has_non_zero_values" do
+        subject { has_non_zero_values(yesterdays_weather_visualization(chart)) }
+        it { should be_true }
+        
+        context "no estimates" do
+          before do
+            DoneStory.destroy_all
+            [this_week, one_week_ago, two_weeks_ago].each do |weeks|
+              (0..3).each { FactoryGirl.create(:done_story, user_profile: user_profile, type_of_work: "Committed", estimate: 0, timestamp: weeks) } 
+              (0..3).each { FactoryGirl.create(:done_story, user_profile: user_profile, type_of_work: "Contingent", estimate: 0, timestamp: weeks) } 
+              (0..3).each { FactoryGirl.create(:done_story, user_profile: user_profile, type_of_work: "Inserted", estimate: 0, timestamp: weeks) } 
+            end
+          end 
+          it { should be_false }
+        end
       end
     end
     

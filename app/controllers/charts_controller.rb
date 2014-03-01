@@ -13,14 +13,14 @@ class ChartsController < ApplicationController
     @iteration = Date.parse(params["iteration"]) if params["iteration"]
     data = Charts::BurnUpChart.new(user_profile).burn_up_data(@iteration)
     @estimates_chart = burn_up_chart_visualization({label: "Estimates", data:  data.map{ |burn_up| { timestamp: burn_up.timestamp, backlog: burn_up.backlog_estimates, done: burn_up.done_estimates} }})
-    @uses_estimates = uses_estimates(@estimates_chart)
+    @uses_estimates = has_non_zero_values(@estimates_chart)
     @stories_chart = burn_up_chart_visualization({label: "Story Counts", data:  data.map{ |burn_up| { timestamp: burn_up.timestamp, backlog: burn_up.backlog, done: burn_up.done} }})
    end
   
   def yesterdays_weather
     estimate_chart = Charts::YesterdaysWeatherChart.new(user_profile, {weeks: params[:weeks] ? params[:weeks].to_i : 3, label: :estimate})
     @yesterdays_weather_estimate_chart = yesterdays_weather_visualization(estimate_chart)
-    @uses_estimates = uses_estimates(@yesterdays_weather_estimate_chart)
+    @uses_estimates = has_non_zero_values(@yesterdays_weather_estimate_chart)
     stories_chart = Charts::YesterdaysWeatherChart.new(user_profile, {weeks: params[:weeks] ? params[:weeks].to_i : 3, label: :stories})
     @yesterdays_weather_stories_chart = yesterdays_weather_visualization(stories_chart)
   end

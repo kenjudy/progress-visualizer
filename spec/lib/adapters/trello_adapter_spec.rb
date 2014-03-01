@@ -79,7 +79,7 @@ module Adapters
       end
     end
 
-    context "cards" do
+    context "Cards" do
       context "request_all_cards_data" do
         subject do
           VCR.use_cassette('adapters/trello_adapter/request_all_cards_data') do
