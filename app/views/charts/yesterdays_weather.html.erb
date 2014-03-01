@@ -1,14 +1,5 @@
 <section>
   <div class="container">
-    <% if @uses_estimates %>
-      <div class="row">
-        <div id='yesterdays_weather_estimate_chart' class='chart'></div>
-        <%= render_chart(@yesterdays_weather_estimate_chart, 'yesterdays_weather_estimate_chart') %>
-      </div>
-    <% end %>
-    <div class="row">
-      <div id='yesterdays_weather_stories_chart' class='chart'></div>
-      <%= render_chart(@yesterdays_weather_stories_chart, 'yesterdays_weather_stories_chart') %>
-    </div>
+    <%= render "yesterdays_weather_charts" %>
   </div>
 </section>

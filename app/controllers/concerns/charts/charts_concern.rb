@@ -14,6 +14,24 @@ module Charts::ChartsConcern
                                     vAxis: { textStyle: { color: '#999999'}, gridLines: { color: "#eee"} },
                                     legend: {position: 'bottom', alignment: 'center'}}
 
+
+  
+  def yesterdays_weather_action
+    estimate_chart = Charts::YesterdaysWeatherChart.new(user_profile, {weeks: params[:weeks] ? params[:weeks].to_i : 3, label: :estimate})
+    @yesterdays_weather_estimate_chart = yesterdays_weather_visualization(estimate_chart)
+    @uses_estimates = has_non_zero_values(@yesterdays_weather_estimate_chart)
+
+    stories_chart = Charts::YesterdaysWeatherChart.new(user_profile, {weeks: params[:weeks] ? params[:weeks].to_i : 3, label: :stories})
+    @yesterdays_weather_stories_chart = yesterdays_weather_visualization(stories_chart)
+  end
+  
+  def long_term_trend_action
+    weeks = params[:weeks] ? params[:weeks].to_i : 10
+    @long_term_trend_chart = long_term_trend_visualization(weeks)
+  end
+  
+  private
+
   def burn_up_chart_visualization(options)
     data_table = GoogleVisualr::DataTable.new
     data_table.new_column('datetime', 'Timestamp' )
