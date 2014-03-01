@@ -7,12 +7,13 @@ module Charts::ChartsConcern
   @@red = "#991238"
   
   @@default_properties = { colors: [@@blue,@@green, @@red],
-                                    areaOpacity: 0.05, 
-                                    titleTextStyle: {color: @@green, fontSize: 24 },
-                                    chartArea: {width: '90%', height: '80%'},
-                                    hAxis: { textStyle: { color: '#999999'}, gridLines: { color: "#eee"}, format:'MMM d, y hh:mma' },
-                                    vAxis: { textStyle: { color: '#999999'}, gridLines: { color: "#eee"} },
-                                    legend: {position: 'bottom', alignment: 'center'}}
+                           pointSize: 8,
+                           areaOpacity: 0.05, 
+                           titleTextStyle: {color: @@green, fontSize: 24 },
+                           chartArea: {width: '90%', height: '80%'},
+                           hAxis: { textStyle: { color: '#999999'}, gridLines: { color: "#eee"}, format:'MMM d, y hh:mma' },
+                           vAxis: { textStyle: { color: '#999999'}, gridLines: { color: "#eee"} },
+                           legend: {position: 'bottom', alignment: 'center'}}
 
 
   
@@ -43,7 +44,7 @@ module Charts::ChartsConcern
   
     GoogleVisualr::Interactive::AreaChart.new(data_table, @@default_properties.merge({ title: "Burn Up Chart #{options[:label]}",
                                                                                         lineWidth: 6, 
-                                                                                        trendlines: { 1 => {} }}))
+                                                                                        trendlines: { 1 => {pointSize: 0} }}))
   end
   
   def yesterdays_weather_visualization(chart, include_current = false)
@@ -68,11 +69,10 @@ module Charts::ChartsConcern
     
     # Add Rows and Values
     data_table.add_rows(long_term_trend_visualization_rows(weeks, include_current))
-  
     GoogleVisualr::Interactive::AreaChart.new(data_table, @@default_properties.merge({ title: "Long Term Trend",
                                                                                        hAxis: { textStyle: { color: '#999999'}, gridLines: { color: "#eee"}, format:'M/d' },
                                                                                        lineWidth: 2, 
-                                                                                       trendlines: { 1 => {}, 0 => {} }}))
+                                                                                       trendlines: { 1 => {pointSize: 0}, 0 => {pointSize: 0} }}))
   end
   
   def burn_up_rows(data)
