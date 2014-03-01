@@ -1,5 +1,5 @@
 <% classname ||= "" %>
-<% if current_user %>
+<% if current_user && user_profile.name %>
 
   <li class="dropdown <%= classname %>"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= user_profile.name.truncate(20, separator: ' ') %> <b class="caret"></b></a>
     <ul class="dropdown-menu">
