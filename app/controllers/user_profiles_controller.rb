@@ -71,7 +71,7 @@ class UserProfilesController < ApplicationController
   private
   
   def add_webhook(user_profile, callback_url)
-    Adapters::BaseAdapter.build_adapter(@profile).add_webhook(callback_url, user_profile.current_sprint_board_id) unless Webhook.find_by(user_profile: user_profile, callback_url: callback_url)
+    Adapters::BaseAdapter.build_adapter(user_profile).add_webhook(callback_url, user_profile.current_sprint_board_id) unless Webhook.find_by(user_profile: user_profile, callback_url: callback_url)
   end
 
   def destroy_webhook(user_profile, callback_url)
