@@ -11,10 +11,12 @@ describe "routes" do
     subject { { get: "/about"} }
     it { should route_to(controller: "about", action: "index") }
   end
+
   context "terms-and-conditions" do
     subject { { get: "/terms-and-conditions"} }
     it { should route_to(controller: "about", action: "terms_and_conditions") }
   end
+
   context "privacy-policy" do
     subject { { get: "/privacy-policy"} }
     it { should route_to(controller: "about", action: "privacy_policy") }
@@ -23,6 +25,17 @@ describe "routes" do
   context "help" do
     subject { { get: "/help"} }
     it { should route_to(controller: "help", action: "index") }
+  end
+ 
+  context "contact_form new" do
+    subject { { post: "/contact_form/create"} }
+    it { should route_to(controller: "contact_form", action: "create") }
+  end
+
+ 
+  context "contact_form new" do
+    subject { { get: "/contact_form/new"} }
+    it { should route_to(controller: "contact_form", action: "new") }
   end
   
   context "user_profiles" do

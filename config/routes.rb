@@ -11,7 +11,7 @@ ProgressVisualizer::Application.routes.draw do
   get "help" => "help#index", as: "help_index"
 
   get "contact_form/new", as: "contact_form_new"
-  get "contact_form/create", as: "contact_form_create"
+  post "contact_form/create", as: "contact_form_create"
   
   resources :user_profiles
 

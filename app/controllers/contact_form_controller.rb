@@ -10,7 +10,7 @@ class ContactFormController < ApplicationController
       if @contact_form.deliver 
         flash.now[:notice] = 'Thank you for your message!' 
       else 
-        render :new 
+        render :new
       end 
     rescue ScriptError 
       flash[:error] = 'Sorry, this message appears to be spam and was not delivered.' 

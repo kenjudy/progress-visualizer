@@ -1,2 +1,63 @@
-<h1>ContactForm#new</h1>
-<p>Find me in app/views/contact_form/new.html.erb</p>
+<section>
+  <div class="container">
+    <div class="row">
+      <div class="content">
+
+        <div class="col-md-8 col-md-offset-2">
+          <%= form_for(@contact_form, url: contact_form_create_path, role: "form", html: {class: "form-horizontal panel panel-default"}) do |f| %>
+            <div class="panel-heading">
+              <h2>Questions / Feedback</h2>
+            </div>
+            <div class="panel-body">
+
+              <div class="form-group">
+                <%= f.label :name, class: "col-sm-3 control-label" %>
+                <div class="col-sm-9">
+                  <%= f.text_field :name, class: "form-control", placeholder: "Name" %>
+                </div>
+              </div>
+ 
+              <div class="form-group">
+                <%= f.label :email, class: "col-sm-3 control-label" %>
+                <div class="col-sm-9">
+                  <%= f.email_field :email, class: "form-control", placeholder: "Email" %>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <%= f.label :type_of_inquiry, class: "col-sm-3 control-label" %>
+                <div class="col-sm-9">
+                  <%= f.select(:type_of_inquiry, options_for_select(["Help", "Question", "Suggestion", "Other"]), {}, class: "form-control") %>
+                </div>
+              </div>
+              
+              <div class="form-group">
+                <%= f.label :message, class: "col-sm-3 control-label" %>
+                <div class="col-sm-9">
+                  <%= f.text_area :message, class: "form-control", rows: 10 %>
+                </div>
+              </div>
+             
+              <div class="form-group" style="display:none">
+                <%= f.label :nickname, class: "col-sm-3 control-label" %>
+                <div class="col-sm-9">
+                  <%= f.text_field :nickname, class: "form-control" %>
+                </div>
+              </div>
+              
+            </div>
+            
+            <div class="panel-footer">
+              <div class="form-group">
+                <div class="col-sm-12">
+                  <%= f.submit "Send Email", class: "btn btn-default" %>
+                </div>
+              </div>
+            <% end %>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
