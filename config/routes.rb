@@ -1,7 +1,13 @@
 ProgressVisualizer::Application.routes.draw do
   
   devise_for :users
+
   root 'homepage#index', as: 'homepage'
+  
+  get "about" => "about#index", as: "about"
+  get "help" => "help#index", as: "help_index"
+  get "contact_form/new"
+  get "contact_form/create"
   
   resources :user_profiles
 

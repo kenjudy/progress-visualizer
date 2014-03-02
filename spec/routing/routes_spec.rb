@@ -7,6 +7,16 @@ describe "routes" do
     it { should route_to(controller: "homepage", action: "index")}
   end
  
+  context "about" do
+    subject { { get: "/about"} }
+    it { should route_to(controller: "about", action: "index") }
+  end
+ 
+  context "help" do
+    subject { { get: "/help"} }
+    it { should route_to(controller: "help", action: "index") }
+  end
+  
   context "user_profiles" do
     { index: [:get, "/", nil], show: [:get, "/1", "1"], 
       new: [:get, "/new", nil], edit: [:get, "/1/edit", "1"],

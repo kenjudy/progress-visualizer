@@ -30,4 +30,7 @@ ProgressVisualizer::Application.configure do
   
   ActiveSupport::Dependencies.autoload_paths << File::join( Rails.root, 'lib')
   ActiveSupport::Dependencies.explicitly_unloadable_constants << '::Adapters::TrelloAdapter'
+  
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = { :address => "localhost", :port => 1025 }
 end

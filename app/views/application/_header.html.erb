@@ -35,6 +35,15 @@
         </ul>
       </li>
 
+      <li class="dropdown <%= active_class_if([help_index_path,about_path]) %>">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Help<b class="caret"></b></a>
+        <ul class="dropdown-menu">
+          <% menu_list_item("Help", help_index_path) %>
+          <li class="divider"></li>
+          <% menu_list_item("About", about_path) %>
+        </ul>
+      </li>
+      
       <%= render('user_menu', classname: "hidden-md hidden-lg") %>
     </ul>
   </div><!-- /.navbar-collapse -->
