@@ -2,15 +2,6 @@
   <div class="container">
     <div class="row">
       <div class="col-md-8 col-md-offset-2">
-        <% if @contact_form.errors.full_messages.any %>
-          <ul>
-            <div class="alert alert-danger">
-              <% @contact_form.errors.full_messages.each do |message| %>
-                <li><%= message %></li>
-              <% end %>
-            </div>
-          </ul>
-        <% end %>
         <%= form_for(resource, as: resource_name, url: session_path(resource_name), role: "form", html: {class: "form-horizontal panel panel-default"}) do |f| %>
           <div class="panel-heading">
             <h2>Sign in</h2>
