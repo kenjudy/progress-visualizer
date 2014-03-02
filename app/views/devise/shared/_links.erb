@@ -26,4 +26,7 @@
   <% end -%>
 <% end -%>
 
-<%= raw(links.join(" | ")) %>
+<%- links << link_to("Terms and Conditions", terms_and_conditions_path) << link_to("Privacy Policy", privacy_policy_path) %>
+<div style="text-align:center">
+  <%= raw(links.join(" | ")) %>
+</div>

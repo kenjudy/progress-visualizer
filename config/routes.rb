@@ -5,7 +5,11 @@ ProgressVisualizer::Application.routes.draw do
   root 'homepage#index', as: 'homepage'
   
   get "about" => "about#index", as: "about"
+  get "privacy-policy" => "about#privacy_policy", as: "privacy_policy"
+  get "terms-and-conditions" => "about#terms_and_conditions", as: "terms_and_conditions"
+
   get "help" => "help#index", as: "help_index"
+
   get "contact_form/new", as: "contact_form_new"
   get "contact_form/create", as: "contact_form_create"
   

@@ -11,6 +11,14 @@ describe "routes" do
     subject { { get: "/about"} }
     it { should route_to(controller: "about", action: "index") }
   end
+  context "terms-and-conditions" do
+    subject { { get: "/terms-and-conditions"} }
+    it { should route_to(controller: "about", action: "terms_and_conditions") }
+  end
+  context "privacy-policy" do
+    subject { { get: "/privacy-policy"} }
+    it { should route_to(controller: "about", action: "privacy_policy") }
+  end
  
   context "help" do
     subject { { get: "/help"} }
