@@ -44,6 +44,10 @@
           <% menu_list_item("About", about_path) %>
         </ul>
       </li>
+
+      <li class="hidden-sm hidden-xs">
+        <%= link_to raw("<span class=\"label label-info\" style=\"padding: 8px\">Provide Feedback!</span>"), contact_form_new_path %>
+      </li>
       
       <%= render('user_menu', classname: "hidden-md hidden-lg") %>
     </ul>
