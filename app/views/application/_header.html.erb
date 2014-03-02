@@ -35,10 +35,11 @@
         </ul>
       </li>
 
-      <li class="dropdown <%= active_class_if([help_index_path,about_path]) %>">
+      <li class="dropdown <%= active_class_if([help_index_path,about_path,contact_form_new_path]) %>">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Help<b class="caret"></b></a>
         <ul class="dropdown-menu">
           <% menu_list_item("Help", help_index_path) %>
+          <% menu_list_item("Contact Me", contact_form_new_path) %>
           <li class="divider"></li>
           <% menu_list_item("About", about_path) %>
         </ul>
