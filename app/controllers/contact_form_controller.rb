@@ -8,7 +8,7 @@ class ContactFormController < ApplicationController
       @contact_form = ContactForm.new(params[:contact_form]) 
       @contact_form.request = request 
       if @contact_form.deliver 
-        flash.now[:notice] = 'Thank you for your message!' 
+        flash.now[:notice] = "Thank you for your message! And for helping make <span class=\"brand\">Progress<span>Visualizer</span></span> better."
       else 
         render :new
       end 

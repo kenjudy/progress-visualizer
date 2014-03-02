@@ -4,14 +4,15 @@
       <div class="content">
 
         <div class="col-md-8 col-md-offset-2">
-          <% if @contact_form.errors.full_messages.any %>
-            <ul>
-              <div class="alert alert-danger">
+          <% if @contact_form.errors.any? %>
+            <div class="alert alert-danger">
+              <h4>Sorry, there are errors.</h4>
+              <ul>
                 <% @contact_form.errors.full_messages.each do |message| %>
                   <li><%= message %></li>
                 <% end %>
-              </div>
-            </ul>
+              </ul>
+            </div>
           <% end %>
           <%= form_for(@contact_form, url: contact_form_create_path, role: "form", html: {class: "form-horizontal panel panel-default"}) do |f| %>
             <div class="panel-heading">
