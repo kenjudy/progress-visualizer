@@ -22,10 +22,6 @@ description: "ken.judy progress visualizer burnup"
 id: "52f4df359053cccf6ac4d516"
 idModel: "<CURRENT BOARD>"
 
-
-["ProgressVisualizer 6b6fe08bec7db2ccd331954b03a7800458fdb5732cd87f5defb0493021861d39 x3",
- "Current Sprint 86f74af55b8ee238fc3830681f191ffb9a8e3be582564112bc4018ff8549dd74 ZoCdRXWT",
- "Ken's LIfe 6b6fe08bec7db2ccd331954b03a7800458fdb5732cd87f5defb0493021861d39 t8ZEIb3s"]
  
  DUMP DB AND RESTORE LOCAL
  
