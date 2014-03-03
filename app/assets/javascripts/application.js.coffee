@@ -20,7 +20,7 @@
 $ ->
   $(window).resize ->
     $(".chart").each (index) ->
-      eval("draw_" + @id)
+      eval("draw_" + @id + "()")
       return
   
   $('.carousel').carousel('cycle')
