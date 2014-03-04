@@ -23,7 +23,7 @@ FactoryGirl.define do
 
     labels_types_of_work "red"
 
-    duration "WEEKLY"
+    duration 7
     start_day_of_week 1
     end_day_of_week 0
     start_hour 9

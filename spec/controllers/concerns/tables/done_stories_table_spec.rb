@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe "Tables::DoneStoriesTable" do
   include ProgressVisualizerTrello::JsonData
+  include IterationConcern
   
   let(:user_profile) { FactoryGirl.create(:user_profile) }
   let(:done_stories_table) { Tables::DoneStoriesTable.new(user_profile) }
@@ -22,7 +23,7 @@ describe "Tables::DoneStoriesTable" do
     
     its([:lists]) { should == {"Committed" => {cards: board.cards, :stories=>2, :estimates=>6.0} } }
     its([:totals]) { should == {:total_stories=>2, :total_estimates=>6.0}}
-    its([:week_of]) { should == "February  2, 2014" }
+    its([:week_of]) { should == beginning_of_current_iteration.strftime("%B %l, %Y") }
 
     context "no types of work" do
       let(:types_of_work) { [] }

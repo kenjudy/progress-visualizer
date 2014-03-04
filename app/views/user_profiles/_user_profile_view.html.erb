@@ -43,7 +43,7 @@
               <td><%= display_keys(profile.backlog_lists) %></td>
               <td><%= display_keys(profile.done_lists) %></td>
               <td><%= profile.labels_types_of_work %></td>
-              <td><%= profile.duration %></td>
+              <td><%= duration_in_weeks(profile.duration) %></td>
               <td><%= day_of_week(profile.start_day_of_week) %> <%= hour_format(profile.start_hour) %></td>
               <td><%= day_of_week(profile.end_day_of_week) %> <%= hour_format(profile.end_hour) %></td>
             </tr>

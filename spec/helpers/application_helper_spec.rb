@@ -3,6 +3,19 @@ require 'spec_helper'
 describe ApplicationHelper do
   let(:request) { double("Request", fullpath: homepage_path).as_null_object }
   
+  context "duration_in_weeks" do
+    {"One week" => 7,"Two weeks" => 14, "Three weeks" => 21, "Four weeks" => 28}.each do |label, days|
+      context "#{label}" do
+        let(:label) { label }
+        let(:days) { days }
+        subject { duration_in_weeks(days) }
+        
+        it { should == label }
+        
+      end
+    end
+  end
+  
   context "menu_list_item" do
     subject { menu_list_item("Burn Up<span></span>", charts_burn_up_path) }
     

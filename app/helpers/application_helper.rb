@@ -1,5 +1,11 @@
 module ApplicationHelper
  
+  def duration_in_weeks(days)
+    duration = days / 7
+    label = duration > 9 ? duration : %w(Zero One Two Three Four Five Six Seven Eight Nine)[duration]
+    "#{label} week#{'s' if duration > 1}"
+  end
+ 
   def tooltip(tip, placement="right")
     concat "<a class=\"tip\" href=\"#\" data-toggle=\"tooltip\" data-placement=\"#{placement}\" title=\"#{tip}\" data-original-title=\"#{tip}\" data-container=\"body\"><span class=\"glyphicon glyphicon-question-sign\"></span></a>".html_safe if tip
   end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140301154649) do
+ActiveRecord::Schema.define(version: 20140304044013) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,7 +46,7 @@ ActiveRecord::Schema.define(version: 20140301154649) do
   add_index "done_stories", ["user_profile_id"], name: "index_done_stories_on_user_profile_id", using: :btree
 
   create_table "user_profiles", force: true do |t|
-    t.integer  "user_id",                                      null: false
+    t.integer  "user_id",                                                  null: false
     t.string   "name"
     t.binary   "default"
     t.string   "encrypted_readonly_token"
@@ -65,11 +65,11 @@ ActiveRecord::Schema.define(version: 20140301154649) do
     t.string   "encrypted_backlog_lists_salt"
     t.string   "encrypted_done_lists_salt"
     t.string   "labels_types_of_work"
-    t.string   "duration"
-    t.integer  "start_day_of_week"
-    t.integer  "end_day_of_week"
-    t.integer  "start_hour"
-    t.integer  "end_hour"
+    t.integer  "duration"
+    t.integer  "start_day_of_week",                            default: 1
+    t.integer  "end_day_of_week",                              default: 6
+    t.integer  "start_hour",                                   default: 0
+    t.integer  "end_hour",                                     default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
   end

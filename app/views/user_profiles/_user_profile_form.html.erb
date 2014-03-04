@@ -64,7 +64,14 @@
 
               </div>
               
-              <%= render('form_group_text_field', form: f, field: :duration, label_text: "Duration", field_width: 3, default_val: profile.duration || "WEEKLY", tooltip: "(only weekly for now...)", readonly: true) %>
+              <div class="form-group">
+
+                <%= f.label :duration, "Duration", class: "col-sm-3 control-label" %>
+
+                <div class="col-sm-3">
+                  <%= f.select(:duration, options_for_select([['One week', 7],['Two weeks', 14],['Three weeks', 21],['Four weeks', 28]], profile.end_day_of_week ), {}, class: "form-control") %>
+                </div>
+             </div>
 
             <% end %>
           </div>
