@@ -3,7 +3,7 @@
   <% if  user_profile.name %>
     <li class="dropdown <%= classname %>"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= user_profile.name.truncate(20, separator: ' ') %> <b class="caret"></b></a>
       <ul class="dropdown-menu">
-        <li><%= link_to(raw("View this board in Trello <span class=\"glyphicon glyphicon-new-window\"></span>"), "http://www.trello.com/b/#{user_profile.current_sprint_board_id_short}", target: "_blank") %></li>
+        <li><%= link_to(raw("View this board in Trello <span class=\"glyphicon glyphicon-new-window\"></span>"), "http://www.trello.com/b/#{user_profile.current_sprint_board_id_short}", target: "_blank", onClick: track_event("header_menu", ["view_trello"])) %></li>
         <% if current_user.user_profiles.length > 1 && user_profile.name %>
           <li class="divider"></li>
           <% current_user.user_profiles.keep_if{ |profile| profile.id != user_profile.id }.each do |profile| %>
@@ -21,9 +21,9 @@
     <ul class="dropdown-menu">
       <% menu_list_item("Your Profiles", user_profiles_path) %>
       <li class="divider"></li>
-      <%= content_tag(:li, link_to("Logout", destroy_user_session_path, method: :delete)) %>
+      <%= content_tag(:li, link_to("Logout", destroy_user_session_path, method: :delete, onClick: track_event("header_menu", ["logout"]))) %>
     </ul>
   </li>
 <% else %>
-  <li class="<%= classname %>"><%= link_to("Sign in", new_user_session_path) %></li>
+  <li class="<%= classname %>"><%= link_to("Sign in", new_user_session_path, onClick: track_event("header_menu", ["sign_in"])) %></li>
 <% end %>

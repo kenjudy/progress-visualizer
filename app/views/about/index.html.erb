@@ -3,17 +3,17 @@
     <div class="row">
       <div class="content">
         <h1 class="brand">About Progress<span>Visualizer</span></h1>
-        <h3>Quickly setup visual reporting for your <a href="http://www.trello.com" target="_blank">Trello</a> boards.</h3>
+        <h3>Quickly setup visual reporting for your <a href="http://www.trello.com" target="_blank" onClick="<%= track_event("about_page", ["view_trello", "tagline"])%>">Trello</a> boards.</h3>
         
         <p>Trello offers simplicity and openness. It doesn't impose unnecessary assumptions. It offers an API that lets you interact with your data and webhooks which allow you to do so in near real time. I've tried to follow Trello's lead and make <strong>ProgressVisualizer</strong> just as easy.</p>
         
         <h3>Available Visualizations</h3>
         <p>I wrote <strong>ProgressVisualizer</strong> to make my team's work visible to our dev, product and executive sponsors. This includes:</p> 
         <ul>
-          <li>a <%= link_to "classic scrum burn up chart", help_index_path(anchor: 'burn_up') %> showing progress in the current week,</li> 
-          <li>a <%= link_to "stacked bar chart for \"yesterday's weather\"", help_index_path(anchor: 'yesterdays_weather') %> &ndash; comparing the amount of work completed over a three week period,</li>
-          <li>a <%= link_to "long term trend chart", help_index_path(anchor: 'long_term_trend') %> showing the amount of work completed in the current rolling quarter,</li>
-          <li>a table showing <%= link_to "work completed in the current week", help_index_path(anchor: 'done_work_table') %>, and </li>
+          <li>a <%= link_to "classic scrum burn up chart", help_index_path(anchor: 'burn_up'), onClick: track_event("about_page", ["link_to_burn_up"]) %> showing progress in the current week,</li> 
+          <li>a <%= link_to "stacked bar chart for \"yesterday's weather\"", help_index_path(anchor: 'yesterdays_weather'), onClick: track_event("about_page", ["link_to_yesterdays_weather"]) %> &ndash; comparing the amount of work completed over a three week period,</li>
+          <li>a <%= link_to "long term trend chart", help_index_path(anchor: 'long_term_trend'), onClick: track_event("about_page", ["link_to_long_term_trend"]) %> showing the amount of work completed in the current rolling quarter,</li>
+          <li>a table showing <%= link_to "work completed in the current week", help_index_path(anchor: 'done_work_table'), onClick: track_event("about_page", ["link_to_done_work_table"]) %>, and </li>
           <li>a dashboard/report containing all of these except the burnup suitable for sharing with management.</li>
         </ul>
         
@@ -30,19 +30,22 @@
         <h4>Iterations</h4>
         <p>That said, <strong>ProgressVisualizer</strong> will be more helpful if you work in fixed regular iterations (one, two, three or four weeks) and archive or otherwise move cards out of your done list(s) at the end of those iterations.</p>
         <h4>Estimates</h4>
-        <p>If you estimate work using the <a href="http://scrumfortrello.com/" target="_blank">Scrum for Trello</a> convention &ndash; numbers in parentheses in front of the titles of your cards &ndash; <strong>ProgressVisualizer</strong> will report those estimates on the <%= link_to "burn up", help_index_path(anchor: 'burn_up') %>, <%= link_to "long term trend chart", help_index_path(anchor: 'long_term_trend') %> and the <%= link_to "done work table", help_index_path(anchor: 'done_work_table') %>.</p>
+        <p>If you estimate work using the <a href="http://scrumfortrello.com/" target="_blank" onClick="<%= track_event("about_page", ["view_scrum_for_trello"])%>">Scrum for Trello</a> convention &ndash; numbers in parentheses in front of the titles of your cards &ndash; <strong>ProgressVisualizer</strong> will report those estimates on the <%= link_to "burn up", help_index_path(anchor: 'burn_up') %>, <%= link_to "long term trend chart", help_index_path(anchor: 'long_term_trend'), onClick: track_event("about_page", ["link_to_burn_up"]) %> and the <%= link_to "done work table", help_index_path(anchor: 'done_work_table'), onClick: track_event("about_page", ["link_to_done_work_table"]) %>.</p>
         <h4>Classification of work</h4>
-        <p>If you classify work using Trello labels, these types of work can be broken out on the <%= link_to "yesterday's weather stacked bar chart", help_index_path(anchor: 'yesterdays_weather') %> and the done work table. For example, my team distinguishes between work planned for the week, inserted into the backlog mid-iteration, or pulled in to fill slack. </p>
+        <p>If you classify work using Trello labels, these types of work can be broken out on the <%= link_to "yesterday's weather stacked bar chart", help_index_path(anchor: 'yesterdays_weather'), onClick: track_event("about_page", ["link_to_yesterdays_weather"]) %> and the done work table. For example, my team distinguishes between work planned for the week, inserted into the backlog mid-iteration, or pulled in to fill slack. </p>
         
         <h3>Evolving</h3>
-        <p>I will contiue to work on <strong>ProgressVisualizer</strong>. <a href="https://trello.com/b/WWtHBRod/progress-visualizer" target="_blank">I track my backlog in Trello.</a> So, I hope you are able to use <strong>ProgressVisualizer</strong> no matter how you use Trello. Someday, I may provide visualizations for other services as well.</p>
+        <p>I will contiue to work on <strong>ProgressVisualizer</strong>. <a href="https://trello.com/b/WWtHBRod/progress-visualizer" target="_blank" onClick="<%= track_event("about_page", ["view_progress_visualizer_board"])%>">I track my backlog in Trello.</a> So, I hope you are able to use <strong>ProgressVisualizer</strong> no matter how you use Trello. Someday, I may provide visualizations for other services as well.</p>
         
-        <p><%= link_to "Please contact me", contact_form_new_path%> if you have suggestions, complaints, or problems using <strong>ProgressVisualizer</strong>.</p>
+        <p><%= link_to "Please contact me", contact_form_new_path, onClick: track_event("about_page", ["link_to_contact_me", "Please contact me"]) %> if you have suggestions, complaints, or problems using <strong>ProgressVisualizer</strong>.</p>
         
-        <p><%= link_to "More about the visualizations", help_index_path, class: "btn btn-default" %> <%= link_to "Get started", new_user_session_path, class: "btn btn-default" %></p>
+        <p>
+          <%= link_to "More about the visualizations", help_index_path, class: "btn btn-default", onClick: track_event("about_page", ["link_to_help", "more about the visualizations"]) %>
+          <%= link_to "Get started", new_user_session_path, class: "btn btn-default", onClick: track_event("about_page", ["link_to_new_user", "get started"]) %>
+        </p>
 
         
-        <p class="pull-right">Best wishes, &ndash; <a href="http://www.judykat.com/ken-judy">Ken</a></p>
+        <p class="pull-right">Best wishes, &ndash; <a href="http://www.judykat.com/ken-judy" onClick="<%= track_event("about_page", ["view_judykat"])%>">Ken</a></p>
 
       </div>
     </div>

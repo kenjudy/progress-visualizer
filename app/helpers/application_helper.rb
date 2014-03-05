@@ -11,7 +11,15 @@ module ApplicationHelper
   end
   
   def menu_list_item(label, path, classes = "")
-    concat(content_tag(:li, link_to(raw(label), path), class: "#{active_class_if(path)} #{classes}"))
+    concat(content_tag(:li, link_to(raw(label), path, onClick: track_event('header_menu', [label])), class: "#{active_class_if(path)} #{classes}"))
+  end
+  
+  def track_event(action, optional_args = [])
+    "_gaq.push(['_trackEvent', #{underscore_join_words(action)}, #{optional_args.collect { |arg| underscore_join_words(arg) }.join(",")}]);"
+  end
+  
+  def underscore_join_words(label)
+    "'#{label.underscore.gsub(" ", "_")}'"
   end
   
   def active_class_if(paths)

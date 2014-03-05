@@ -6,7 +6,10 @@
         <div class="panel panel-default">
           <div class="panel-body">
             <h1 class="brand">Progress<span>Visualizer</span></h1>
-            <p><strong>Quickly setup visual reporting for your <a href="http://www.trello.com" target="_blank">Trello</a> board</strong> <%= link_to "Learn more", about_path, class: "btn btn-default" %> <%= link_to "Get started", new_user_session_path, class: "btn btn-default" %></p>
+            <p>
+              <strong>Quickly setup visual reporting for your <a href="http://www.trello.com" target="_blank">Trello</a> board</strong> 
+              <%= link_to "Learn more", about_path, onClick: track_event("about_btn", ["homepage", "Learn more"]), class: "btn btn-default" %> 
+              <%= link_to "Get started", new_user_session_path, onClick: track_event("new_user_btn", ["homepage", "Get started"]), class: "btn btn-default" %></p>
           </div>
         </div>
 

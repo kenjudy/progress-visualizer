@@ -3,17 +3,17 @@
     <div class="row">
       <div class="content">
         <h1 class="brand">Progress<span>Visualizer</span></h1>
-        <p><strong>Quickly setup visual reporting for your <a href="http://www.trello.com" target="_blank">Trello</a> boards.</strong></p>
+        <p><strong>Quickly setup visual reporting for your <a href="http://www.trello.com" target="_blank" onClick="<%= track_event("help_page", ["view_trello", "tagline"])%>">Trello</a> boards.</strong></p>
         <ol class="list-group">
           <li class="list-group-item">
             <h2 id="signup">Sign up</h2>
-            <p>You need to create an account in order to associate your Trello account with <strong>ProgressVisualizer</strong>. See <%= link_to "Privacy Policy", privacy_policy_path %>.</p>
+            <p>You need to create an account in order to associate your Trello account with <strong>ProgressVisualizer</strong>. See <%= link_to "Privacy Policy", privacy_policy_path, onClick: track_event("help_page", ["privacy_policy", "see privacy policy"]) %>.</p>
             <p>You can manage your existing account anytime from a drop down in the far right of the header.</p>
             <div>
               <div class="callout" style="margin-left:180px;width:120px;height:44px"></div>
               <%= image_tag("header-right.png", alt: "screenshot of header", width: 300, height: 61 )%>
             </div>
-            <p><%= link_to("Sign up now", new_user_registration_path, class: "btn btn-default") %></p>
+            <p><%= link_to("Sign up now", new_user_registration_path, onClick: track_event("help_page", ["new_user", "Sign up now"]), class: "btn btn-default") %></p>
           </li>
           <li class="list-group-item">
             <h2 id="profile">Set up a profile</h2>
@@ -68,7 +68,7 @@
                   <%= image_tag("labels-selector.png", alt: "done lists selector", width: 600, height: 165 )%>
                 </div>
               </li>
-              <li>Set the start and end day and time for your iterations. Iterations define the start and end of the burn up, yesterday's weather, and done list report. For now, <strong>ProgressVisualizer</strong> assumes one, two, three, or four week iterations and times in the Eastern Timezone. <%= link_to "Please contact me", contact_form_new_path%> if these assumptions are too rigid.</li>
+              <li>Set the start and end day and time for your iterations. Iterations define the start and end of the burn up, yesterday's weather, and done list report. For now, <strong>ProgressVisualizer</strong> assumes one, two, three, or four week iterations and times in the Eastern Timezone. <%= link_to "Please contact me", contact_form_new_path, onClick: track_event("help_page", ["link_to_contact_me", "Please contact me"])%> if these assumptions are too rigid.</li>
                 <div class="hidden-sm hidden-xs">
                   <%= image_tag("iteration-datetime.png", alt: "iteration beginning and end", width: 600, height: 165 )%>
                 </div>
