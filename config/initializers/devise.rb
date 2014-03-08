@@ -1,3 +1,5 @@
+require 'omniauth-trello'
+
 # Use this hook to configure devise mailer, warden hooks and so forth.
 # Many of these configuration options can be set straight in your model.
 Devise.setup do |config|
@@ -257,6 +259,12 @@ Devise.setup do |config|
 end
 
 Rails.application.config.middleware.use OmniAuth::Builder do
-  provider :trello, ENV['TRELLO_KEY'], ENV['TRELLO_SECRET'],
-  app_name: "APP_NAME", scope: 'read,write,account', expiration: 'never'
+  case Rails.env
+  when "development"
+    provider :trello, Rails.application.config.trello[:key], Rails.application.config.trello[:secret],
+      app_name: "Progress Visualizer", scope: 'read,write,account', expiration: 'never'
+  when "production"
+    provider :trello, Rails.application.config.trello[:key], Rails.application.config.trello[:secret],
+      app_name: "Progress Visualizer", scope: 'read,write,account', expiration: 'never', :client_options => {:ssl => {:ca_file => '/usr/lib/ssl/certs/ca-certificates.crt'}}
+  end
 end

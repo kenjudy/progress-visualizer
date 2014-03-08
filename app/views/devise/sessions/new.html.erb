@@ -21,7 +21,7 @@
                 <%= f.password_field :password, class: "form-control" %>
               </div>
             </div>
-
+            
             <% if devise_mapping.rememberable? -%>
               <div class="form-group">
                 <div class="col-sm-offset-3 col-sm-9">
@@ -35,9 +35,14 @@
           </div>
           <div class="panel-footer">
             <div class="form-group">
-              <div class="col-sm-12">
+              <div class="col-sm-6">
                 <%= f.submit "Sign in", class: "btn btn-default" %>
               </div>
+              <% if params["test"] %>
+               <div class="col-sm-6">
+                 <%= link_to "Sign in with Trello", user_omniauth_authorize_path(:trello), class: "btn btn-default" %>
+               </div>
+             <% end %>
             </div>
           <% end %>
         </div>
