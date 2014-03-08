@@ -38,6 +38,20 @@ describe ChartsController do
         end
         it { assigns(:iteration).should == Date.new(2014,2,24) }
       end
+      
+      context "no data" do
+        before do
+          allow_any_instance_of(Charts::BurnUpChart).to receive(:burn_up_data).and_return([])
+          subject
+        end
+        
+        it { expect(flash.now[:notice]).to eq "No burn up data." }
+        
+        context "between iterations" do
+          before { controller.stub(between_iterations: true) }
+          it { expect(flash.now[:notice]).to eq "No burn up data." }
+        end
+      end
     end
   
     context "burn_up_reload" do

@@ -10,28 +10,33 @@ module IterationConcern
   def end_of_current_iteration
     @end_of_current_iteration ||= end_of_iteration(Date.today)
   end
-  
+      
   def beginning_of_iteration(containing)
-    Time.zone.local_to_utc(beginning_of_iteration_in_localtime(containing))
+    start = datetime_localtime(containing).beginning_of_week(:sunday).to_datetime + user_profile.start_day_of_week + user_profile.start_hour.hours
+    start - align_to_calendar(start)
   end
   
   def end_of_iteration(containing)
-    Time.zone.local_to_utc(end_of_iteration_in_localtime(containing))
+    (beginning_of_iteration(containing) + duration_adjusted_for_start_and_end_days).beginning_of_week(:sunday).to_datetime + user_profile.end_day_of_week + user_profile.end_hour.hours
+  end
+
+  def between_iterations(date)
+    date = datetime_localtime(date)
+    date < beginning_of_iteration(date) || date > end_of_iteration(date)
   end
   
   private
   
-  def beginning_of_iteration_in_localtime(containing)
-    containing.end_of_week.to_datetime - (7 - user_profile.start_day_of_week).days +  user_profile.start_hour.hours
+  def align_to_calendar(date)
+    user_profile.duration > 7 && user_profile.start_date ? (date.to_date - user_profile.start_date).to_i % user_profile.duration : 0
   end
   
-  def end_of_iteration_in_localtime(containing)
-    beginning_of_iteration_in_localtime(containing).to_date + iteration_days(user_profile) + user_profile.end_hour.hours
-  end  
-    
-  def iteration_days(user_profile)
-    day_offset = user_profile.end_day_of_week > user_profile.start_day_of_week ? user_profile.start_day_of_week + 7 : 1
-    user_profile.end_day_of_week + user_profile.duration - day_offset
+  def duration_adjusted_for_start_and_end_days
+    (user_profile.duration - (user_profile.end_day_of_week - user_profile.start_day_of_week)).days
   end
   
+  def datetime_localtime(date)
+    datetime = date.to_datetime
+    (datetime.utc? ? Time.zone.utc_to_local(datetime) : datetime)
+  end
 end
