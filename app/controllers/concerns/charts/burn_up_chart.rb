@@ -18,12 +18,12 @@ module Charts
       done_stats = stats(@done_lists.keys)
       backlog_stats = stats(@backlog_lists.keys + @done_lists.keys)
       unless redundant?(done_stats, backlog_stats)
-        BurnUp.create(user_profile: @user_profile,timestamp: timestamp, done: done_stats[:count], done_estimates: done_stats[:sum], backlog: backlog_stats[:count], backlog_estimates: backlog_stats[:sum] )
+        BurnUp.create(user_profile: @user_profile, timestamp: timestamp, done: done_stats[:count], done_estimates: done_stats[:sum], backlog: backlog_stats[:count], backlog_estimates: backlog_stats[:sum] )
       end
     end
     
     def redundant?(done_stats, backlog_stats)
-      last_burnup = BurnUp.last
+      last_burnup = @user_profile.burn_ups.last
       last_burnup && 
       last_burnup.timestamp > Time.now - 2.hours && 
       last_burnup.done == done_stats[:count] && 

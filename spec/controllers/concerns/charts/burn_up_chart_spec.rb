@@ -46,7 +46,7 @@ module Charts
       let(:done_stats) {{ count: 1, sum: 2.5 }}
       let(:backlog_stats) {{ count: 2, sum: 5.0 }}
 
-      before { BurnUp.stub(last: FactoryGirl.build(:burn_up, {user_profile: profile, timestamp: timestamp, backlog: backlog, done: 1, backlog_estimates: 5.0, done_estimates: 2.5})) }
+      before { profile.burn_ups << FactoryGirl.build(:burn_up, {user_profile: profile, timestamp: timestamp, backlog: backlog, done: 1, backlog_estimates: 5.0, done_estimates: 2.5}) }
  
       subject { burn_up_chart.redundant?(done_stats, backlog_stats) }
       

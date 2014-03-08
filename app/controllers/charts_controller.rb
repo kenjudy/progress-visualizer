@@ -6,7 +6,7 @@ class ChartsController < ApplicationController
   before_filter :authenticate_user!, :assign_user_profile
   
   def burn_up_reload
-    render json: { last_update: Rails.cache.fetch(BurnUp.last_update_key) }.to_json
+    render json: { last_update: Rails.cache.fetch(BurnUp.last_update_key(user_profile)) }.to_json
   end
   
   def burn_up
