@@ -261,10 +261,10 @@ end
 Rails.application.config.middleware.use OmniAuth::Builder do
   case Rails.env
   when "development"
-    provider :trello, Rails.application.config.trello[:key], Rails.application.config.trello[:secret],
+    provider :trello, Rails.application.config.trello[:app_key], Rails.application.config.trello[:secret],
       app_name: "Progress Visualizer", scope: 'read,write,account', expiration: 'never'
   when "production"
-    provider :trello, Rails.application.config.trello[:key], Rails.application.config.trello[:secret],
+    provider :trello, Rails.application.config.trello[:app_key], Rails.application.config.trello[:secret],
       app_name: "Progress Visualizer", scope: 'read,write,account', expiration: 'never', :client_options => {:ssl => {:ca_file => '/usr/lib/ssl/certs/ca-certificates.crt'}}
   end
 end
