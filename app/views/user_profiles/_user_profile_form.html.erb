@@ -4,6 +4,7 @@
   <div class="container">
     <div class="row">
       <div class="col-md-10 col-md-offset-1">
+        <%= render "form_errors", form: profile %>
         <%= form_for(profile, url: url, role: "form", html: {class: "form-horizontal panel panel-default", :method => method }) do |f| %>
         <div class="panel-heading">
           <h2>User Profile (Trello Properties)</h2>
@@ -69,8 +70,18 @@
                 <%= f.label :duration, "Duration", class: "col-sm-3 control-label" %>
 
                 <div class="col-sm-3">
-                  <%= f.select(:duration, options_for_select([['One week', 7],['Two weeks', 14],['Three weeks', 21],['Four weeks', 28]], profile.end_day_of_week ), {}, class: "form-control") %>
+                  <%= f.select(:duration, options_for_select([['One week', 7],['Two weeks', 14],['Three weeks', 21],['Four weeks', 28]], profile.duration ), {}, class: "form-control") %>
                 </div>
+             </div>
+
+              <div class="form-group date-select" style="<%= "visibility:hidden" if profile.duration <= 7 %>">
+
+                <%= f.label :start_date, "Start Date", class: "col-sm-3 control-label" %>
+
+                <div class="col-sm-6">
+                  <%= f.date_select(:start_date, {end_year: Date.today.year, order: [:month, :day, :year], prompt: true}, {class: "form-control pull-left"}) %>
+                </div>
+                <label class="col-sm-3 control-label">(Applies to multiweek)</label>
              </div>
 
             <% end %>

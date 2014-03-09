@@ -27,6 +27,13 @@ $ ->
       
   $("a.tip").tooltip()
   
+  $("#user_profile_duration").change ->
+    if $("#user_profile_duration").val() > 7
+      $(".date-select").css("visibility", "visible")
+    else
+      $(".date-select").css("visibility", "hidden")
+        
+  
   $(".cloud-selector").click (event) ->
     element = $(this)
     display_field = element.parent(".panel-body").parent(".panel").children(".panel-footer").children("textarea")

@@ -37,13 +37,19 @@ class UserProfilesController < ApplicationController
   
   def update
     @profile = current_user.user_profiles.find(params[:id])
+    start_date(params)
     lists
+    labels
     params["user_profile"]["backlog_lists"] = keys_from_values(@lists, params["user_profile"]["backlog_lists"])
     params["user_profile"]["done_lists"] = keys_from_values(@lists, params["user_profile"]["done_lists"])
     @profile.update_attributes(profile_params)
     @profile.save
     if (@profile.valid?)
-      add_webhook(@profile, webhooks_burn_up_url(profile_id: @profile.id, format: :json))
+      begin
+        add_webhook(@profile, webhooks_burn_up_url(profile_id: @profile.id, format: :json))
+      rescue JSON::ParserError => e
+        logger.error(e.message)
+      end
       redirect_to user_profiles_path
     else
       render 'edit'
@@ -70,6 +76,13 @@ class UserProfilesController < ApplicationController
   
   private
   
+  def start_date(params)
+    month = params["user_profile"].delete("start_date(2i)")
+    day   = params["user_profile"].delete("start_date(3i)")
+    year  = params["user_profile"].delete("start_date(1i)")
+    params["user_profile"]["start_date"] = params["user_profile"]["duration"] > "7" && month && day && year ? Time.local(year, month, day) : nil
+  end
+  
   def add_webhook(user_profile, callback_url)
     Adapters::BaseAdapter.build_adapter(user_profile).add_webhook(callback_url, user_profile.current_sprint_board_id) unless Webhook.find_by(user_profile: user_profile, callback_url: callback_url)
   end
@@ -92,7 +105,7 @@ class UserProfilesController < ApplicationController
   end
   
   def profile_params
-    allowed_attribs = [:name, :default, :readonly_token, :current_sprint_board_id_short, :current_sprint_board_id, :backlog_lists, :done_lists, :labels_types_of_work, :duration, :start_day_of_week, :start_hour, :end_day_of_week, :end_hour]
+    allowed_attribs = [:name, :default, :readonly_token, :current_sprint_board_id_short, :current_sprint_board_id, :backlog_lists, :done_lists, :labels_types_of_work, :duration, :start_day_of_week, :start_hour, :end_day_of_week, :end_hour, :start_date]
     params.require(:user_profile).permit(allowed_attribs)
   end
   

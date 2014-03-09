@@ -4,16 +4,7 @@
       <div class="content">
 
         <div class="col-md-8 col-md-offset-2">
-          <% if @contact_form.errors.any? %>
-            <div class="alert alert-danger">
-              <h4>Sorry, there are errors.</h4>
-              <ul>
-                <% @contact_form.errors.full_messages.each do |message| %>
-                  <li><%= message %></li>
-                <% end %>
-              </ul>
-            </div>
-          <% end %>
+          <%= render "form_errors", form: @contact_form %>
           <%= form_for(@contact_form, url: contact_form_create_path, role: "form", html: {class: "form-horizontal panel panel-default"}) do |f| %>
             <div class="panel-heading">
               <h2>Questions / Feedback</h2>
