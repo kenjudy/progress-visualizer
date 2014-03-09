@@ -38,7 +38,7 @@ describe UserProfilesController do
     end
     context "webhook" do
       subject { Webhook.last }
-      its(:user_profile) {should == UserProfile.find(profile.id)}
+      its(:user_profile_id) {should == profile.id}
     end
   end
 
