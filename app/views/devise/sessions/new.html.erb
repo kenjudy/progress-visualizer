@@ -38,12 +38,12 @@
               <div class="col-sm-6">
                 <%= f.submit "Sign in", class: "btn btn-default" %>
               </div>
-              <% if params["test"] %>
-               <div class="col-sm-6">
-                 <%= link_to "Sign in with Trello", user_omniauth_authorize_path(:trello), class: "btn btn-default" %>
-                 <%= link_to "Sign in with Twitter", user_omniauth_authorize_path(:twitter), class: "btn btn-default" %>
-               </div>
-             <% end %>
+             <div class="col-sm-6">
+               <%= link_to "Sign in with Trello", user_omniauth_authorize_path(:trello), class: "btn btn-default" %>
+               <%= link_to user_omniauth_authorize_path(:twitter), class: "btn btn-default"  do %>
+                  <%= image_tag "sign-in-with-twitter-gray.png", alt: "Sign in with Twitter" %> Sign in with Twitter
+               <% end %>
+             </div>
             </div>
           <% end %>
         </div>
