@@ -13,6 +13,8 @@ module UserProfileConcern
       @user_profile = self.current_user.default_profile
       self.session[:profile_id] = @user_profile.id if @user_profile
     end
+    flash.notice = "#{flash.notice} Please create a profile associating your account to a trello board. <a href='#{new_user_profile_path}' class='btn btn-default'>Add</a>" unless @user_profile || (flash.notice && flash.notice.include?("Please create a profile associating"))
+    redirect_to user_profiles_path unless request.fullpath.include?(user_profiles_path)
     return @user_profile
   end
 end
