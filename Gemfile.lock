@@ -145,6 +145,9 @@ GEM
       oauth (~> 0.4)
       omniauth (~> 1.0)
       omniauth-oauth (~> 1.0)
+    omniauth-twitter (1.0.1)
+      multi_json (~> 1.3)
+      omniauth-oauth (~> 1.0)
     orm_adapter (0.5.0)
     pg (0.17.1)
     polyglot (0.3.4)
@@ -287,6 +290,7 @@ DEPENDENCIES
   mailcatcher
   memcachier
   omniauth-trello
+  omniauth-twitter
   pg
   pry-rails
   pry-remote

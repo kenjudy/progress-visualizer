@@ -17,7 +17,13 @@ module Constants
     request_token_path: "/authorize?key=<KEY>&name=ProgressVisualizer&expiration=never&response_type=token"
   }
   
-
+  TWITTER_CONFIG = YAML::load(File.open("#{Rails.root}/config/twitter.yml"))
+  
+  Rails.application.config.twitter = { 
+    app_key: TWITTER_CONFIG['application']['key'],
+    secret: TWITTER_CONFIG['application']['secret'],
+  }
+  
   Rails.application.config.adapter_class = "::Adapters::TrelloAdapter"
     
   Rails.application.config.email_default_from = "progress-visualizer@judykat.com"

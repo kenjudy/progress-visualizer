@@ -35,6 +35,7 @@ gem 'unicorn'
 gem 'devise'
 
 gem 'omniauth-trello'
+gem 'omniauth-twitter'
 
 gem 'attr_encryptor'
 
