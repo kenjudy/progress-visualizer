@@ -74,7 +74,7 @@
                 </div>
              </div>
 
-              <div class="form-group date-select" style="<%= "visibility:hidden" if profile.duration <= 7 %>">
+              <div class="form-group date-select" style="<%= "visibility:hidden" if profile.duration.nil? || profile.duration <= 7 %>">
 
                 <%= f.label :start_date, "Start Date", class: "col-sm-3 control-label" %>
 
