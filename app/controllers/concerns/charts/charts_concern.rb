@@ -50,7 +50,7 @@ module Charts::ChartsConcern
   def yesterdays_weather_visualization(chart, include_current = false)
     data_table = GoogleVisualr::DataTable.new
     data_table.new_column('string', 'timestamp' )
-    if chart.types_of_work.any?
+    if chart.types_of_work && chart.types_of_work.any?
       chart.types_of_work.each { |type_of_work| data_table.new_column('number', type_of_work.downcase ) }
     else
       data_table.new_column('number', "Cards" )

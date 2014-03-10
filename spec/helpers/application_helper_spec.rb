@@ -14,6 +14,10 @@ describe ApplicationHelper do
         
       end
     end
+    context "days is nil" do
+      subject { duration_in_weeks(nil) }
+      it { should == "One week"}
+    end
   end
   
   context "underscore_join_words" do

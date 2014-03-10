@@ -35,14 +35,16 @@
           </div>
           <div class="panel-footer">
             <div class="form-group">
-              <div class="col-sm-6">
+              <div class="col-sm-4">
                 <%= f.submit "Sign in", class: "btn btn-default" %>
               </div>
-             <div class="col-sm-6">
-               <%= link_to "Sign in with Trello", user_omniauth_authorize_path(:trello), class: "btn btn-default" %>
-               <%= link_to user_omniauth_authorize_path(:twitter), class: "btn btn-default"  do %>
-                  <%= image_tag "sign-in-with-twitter-gray.png", alt: "Sign in with Twitter" %> Sign in with Twitter
-               <% end %>
+              <div class="col-sm-8">
+                <div class="oauth-buttons">
+                   <%= link_to "Sign in with Trello", user_omniauth_authorize_path(:trello), class: "btn btn-default" %>
+                   <%= link_to user_omniauth_authorize_path(:twitter), class: "btn btn-default"  do %>
+                      <%= image_tag "sign-in-with-twitter-gray.png", alt: "Sign in with Twitter" %> Sign in with Twitter
+                   <% end %>
+                </div>
              </div>
             </div>
           <% end %>

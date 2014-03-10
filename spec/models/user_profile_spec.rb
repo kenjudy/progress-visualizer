@@ -24,6 +24,15 @@ describe UserProfile do
        end
        
      end
+  end
+  
+  context "default values" do
+    before { UserProfile.new(user: FactoryGirl.create(:user)).save }
     
+    subject { UserProfile.first }
+    
+    its(:backlog_lists) { should == "{}"}
+    its(:done_lists) { should == "{}"}
+    its(:duration) { should == 7}
   end
 end

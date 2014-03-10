@@ -12,8 +12,15 @@ class UserProfile < ActiveRecord::Base
   
   validate :validate_start_date
   
-
+  before_save :default_values
+  
   def validate_start_date
     errors.add("Start date", "must not be in the future.") unless start_date.nil? || start_date <= Time.now
+  end
+  
+  def default_values
+    self.duration ||= 7
+    self.done_lists ||= "{}"
+    self.backlog_lists ||= "{}"
   end
 end

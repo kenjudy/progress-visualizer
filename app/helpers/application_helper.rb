@@ -1,7 +1,7 @@
 module ApplicationHelper
  
   def duration_in_weeks(days)
-    duration = days / 7
+    duration = days ? days / 7 : 1
     label = duration > 9 ? duration : %w(Zero One Two Three Four Five Six Seven Eight Nine)[duration]
     "#{label} week#{'s' if duration > 1}"
   end
