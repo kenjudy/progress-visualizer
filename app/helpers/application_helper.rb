@@ -19,7 +19,7 @@ module ApplicationHelper
   end
   
   def underscore_join_words(label)
-    "'#{label.underscore.gsub(" ", "_")}'"
+    "'#{label.underscore.gsub(" ", "_").gsub("'","")}'"
   end
   
   def active_class_if(paths)

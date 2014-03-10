@@ -20,6 +20,12 @@ describe ApplicationHelper do
     subject { underscore_join_words("Done Stories") }
     
     it { should == "'done_stories'"}
+    
+    context "strip quote" do
+      subject { underscore_join_words("Yesterday's Weather") }
+    
+      it { should == "'yesterdays_weather'"}
+    end
   end
   
   context "menu_list_item" do
