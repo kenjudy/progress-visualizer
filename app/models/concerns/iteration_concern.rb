@@ -2,11 +2,11 @@ module IterationConcern
   attr_accessor :adapter, :user_profile
   
   def beginning_of_current_iteration
-    @beginning_of_current_iteration ||= beginning_of_iteration(Date.today)
+    @beginning_of_current_iteration ||= beginning_of_iteration(Time.zone.now)
   end
        
   def end_of_current_iteration
-    @end_of_current_iteration ||= end_of_iteration(Date.today)
+    @end_of_current_iteration ||= end_of_iteration(Time.zone.now)
   end
       
   def beginning_of_iteration(containing)
@@ -34,7 +34,7 @@ module IterationConcern
   end
   
   def datetime_localtime(date)
-    datetime = date.to_datetime
+    datetime =  date.instance_of?(Date) ? Time.local(date.year, date.month, date.day) : date
     (datetime.utc? ? Time.zone.utc_to_local(datetime) : datetime)
   end
 end
