@@ -18,11 +18,11 @@ module Charts::ChartsConcern
 
   
   def yesterdays_weather_action
-    estimate_chart = Charts::YesterdaysWeatherChart.new(user_profile, {weeks: params[:weeks] ? params[:weeks].to_i : 3, label: :estimate})
+    estimate_chart = YesterdaysWeatherChart.new(user_profile, {weeks: params[:weeks] ? params[:weeks].to_i : 3, label: :estimate})
     @yesterdays_weather_estimate_chart = yesterdays_weather_visualization(estimate_chart)
     @uses_estimates = has_non_zero_values(@yesterdays_weather_estimate_chart)
 
-    stories_chart = Charts::YesterdaysWeatherChart.new(user_profile, {weeks: params[:weeks] ? params[:weeks].to_i : 3, label: :stories})
+    stories_chart = YesterdaysWeatherChart.new(user_profile, {weeks: params[:weeks] ? params[:weeks].to_i : 3, label: :stories})
     @yesterdays_weather_stories_chart = yesterdays_weather_visualization(stories_chart)
   end
   

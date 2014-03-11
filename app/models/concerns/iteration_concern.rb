@@ -1,7 +1,5 @@
 module IterationConcern
-  extend UserProfileConcern
-  
-  attr_accessor :adapter
+  attr_accessor :adapter, :user_profile
   
   def beginning_of_current_iteration
     @beginning_of_current_iteration ||= beginning_of_iteration(Date.today)

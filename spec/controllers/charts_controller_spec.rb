@@ -41,7 +41,7 @@ describe ChartsController do
       
       context "no data" do
         before do
-          allow_any_instance_of(Charts::BurnUpChart).to receive(:burn_up_data).and_return([])
+          allow_any_instance_of(Factories::BurnUpFactory).to receive(:burn_up_data).and_return([])
           subject
         end
         

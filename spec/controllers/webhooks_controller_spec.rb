@@ -17,7 +17,7 @@ describe WebhooksController do
     context "burnup data" do
       after { subject }
   
-      it("updates") { expect_any_instance_of(Charts::BurnUpChart).to receive(:update).once }
+      it("updates") { expect_any_instance_of(Factories::BurnUpFactory).to receive(:update).once }
       
     end
     

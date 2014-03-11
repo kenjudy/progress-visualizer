@@ -4,7 +4,7 @@ class WebhooksController < ApplicationController
   
   def burn_up
     begin
-      Charts::BurnUpChart.new(UserProfile.find(params["profile_id"])).update
+      Factories::BurnUpFactory.new(UserProfile.find(params["profile_id"])).update
       render text: "OK"
     rescue ActiveRecord::RecordNotFound
       render text: "Gone", status: "410"

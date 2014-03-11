@@ -11,7 +11,7 @@ class ChartsController < ApplicationController
   
   def burn_up
     @iteration = Date.parse(params["iteration"]) if params["iteration"]
-    data = Charts::BurnUpChart.new(user_profile).burn_up_data(@iteration)
+    data = Factories::BurnUpFactory.new(user_profile).burn_up_data(@iteration)
     unless data.any?
       flash.now[:notice] = "No burn up data."
       flash.now[:notice] << " Next iteration starts at #{beginning_of_iteration(@iteration || Date.today).strftime('%b %e, %l %p')}." if between_iterations(@iteration || Date.today)

@@ -76,7 +76,7 @@ module Charts
 
     context "yesterdays_weather_data_rows" do
       let(:include_current) { false }
-      let(:chart) { Charts::YesterdaysWeatherChart.new(user_profile, {weeks: 3, label: :estimate}) }
+      let(:chart) { YesterdaysWeatherChart.new(user_profile, {weeks: 3, label: :estimate}) }
 
       subject { yesterdays_weather_data_rows(chart, include_current) }
 
