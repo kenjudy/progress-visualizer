@@ -1,4 +1,4 @@
-$ ->
+ready = ->
   
   $("a.tip").tooltip()
 
@@ -25,8 +25,13 @@ $ ->
       $(".date-select").css("visibility", "visible")
     else
       $(".date-select").css("visibility", "hidden")
+
+spinnerOn = ->
+  $("#spinner").modal('show')
   
-  
+spinnerOff = ->
+  $("#spinner").modal('hide')
+
 window.tickUpdate = ->
   $.get "/chart/burn-up-reload", (data) ->
     timestamp =  Date.parse(data["last_update"])
@@ -42,3 +47,9 @@ $(window).resize ->
   $(".chart").each (index) ->
     eval("draw_" + @id + "()")
     return
+
+  
+$(document).ready(ready)
+$(document).on('page:load', ready)
+$(document).on('page:fetch', spinnerOn)
+$(document).on('page:receive', spinnerOff)

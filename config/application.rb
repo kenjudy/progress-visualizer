@@ -8,7 +8,6 @@ require 'google_visualr'
 require 'devise'
 require 'attr_encryptor'
 require 'mail_form'
-require 'jquery-turbolinks'
 
 if ["development", "test"].include?(Rails.env)
   require 'better_errors'
