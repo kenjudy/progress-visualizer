@@ -45,14 +45,17 @@ describe ChartsController do
           subject
         end
         
-        it { expect(flash.now[:notice]).to eq "No burn up data. Next iteration starts at Mar 10,  9 AM." }
-        
-        context "between iterations" do
-          before { controller.stub(between_iterations: true) }
-          it { expect(flash.now[:notice]).to eq "No burn up data. Next iteration starts at Mar 10,  9 AM." }
-        end
+        it { expect(flash.now[:notice]).to include("No burn up data.") }
       end
-    end
+      context "between iterations" do
+        before do
+          controller.stub(between_iterations: true)
+          subject
+        end
+        
+        it { expect(flash.now[:notice]).to eql "No burn up data. Next iteration starts at Mar 10,  9 AM." }
+      end
+     end
   
     context "burn_up_reload" do
       let(:burn_up) { FactoryGirl.create(:burn_up, user_profile: user_profile)}
@@ -95,3 +98,4 @@ describe ChartsController do
     end
   end
 end
+
