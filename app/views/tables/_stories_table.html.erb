@@ -1,5 +1,5 @@
 <table class="table table-bordered table-responsive">
-  <tr><td colspan=3><h3>Done stories week of <%= results[:week_of] %></h3></td></tr>
+  <tr><td colspan=3><h3><%= label %> week of <%= results[:week_of] %></h3></td></tr>
   <% results[:lists].each do |list, data| %>
     <tr>
       <th><%= list %></th>

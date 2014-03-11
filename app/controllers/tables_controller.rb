@@ -9,6 +9,7 @@ class TablesController < ApplicationController
   end
   
   def todo_stories
+    @results = Factories::TodoStoryFactory.new(user_profile).current
   end
   
 end
