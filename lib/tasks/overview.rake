@@ -4,7 +4,10 @@ namespace :tables do
   desc "Update overview"
   task :overview => :environment do
     UserProfile.all.each do |profile|
-      Tables::DoneStoriesTable.new(profile).refresh
+      begin
+        Factories::DoneStoryFactory.new(profile).refresh
+      rescue
+      end
     end
   end
 end

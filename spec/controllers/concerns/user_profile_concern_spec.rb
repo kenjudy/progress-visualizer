@@ -48,12 +48,12 @@ describe UserProfileConcern do
     before { user_profile = current_user }
     subject { assign_user_profile }
     
-    it { expect(subject).to_not raise_error }
+    it { expect{subject}.to_not raise_error }
     
     context "bad session with default" do
       before { profile2 }
       before { session[:profile_id] = 6 }
-      it { expect(subject).to_not raise_error }
+      it { expect{subject}.to_not raise_error }
       it { should == profile2 }
     end
     
@@ -64,7 +64,7 @@ describe UserProfileConcern do
     
     context "bad user_profile_id param" do
       before { params[:profile_id] = 6 }
-      it { expect(subject).to_not raise_error }
+      it { expect{subject}.to_not raise_error }
     end
   end
 end

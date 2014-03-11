@@ -63,6 +63,8 @@ group :development, :test do
   gem 'vcr'
   gem 'webmock'
   gem 'mailcatcher'
+  gem 'capybara'
+  gem 'poltergeist'
 end
 
 gem "google_visualr", ">= 2.1"
@@ -72,12 +74,6 @@ group :production do
   gem 'memcachier'
   gem 'dalli'
 end
-
-# Use unicorn as the app server
-# gem 'unicorn'
-
-# Use Capistrano for deployment
-# gem 'capistrano', group: :development
 
 # Use debugger
 # gem 'debugger', group: [:development, :test]

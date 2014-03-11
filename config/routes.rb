@@ -26,6 +26,7 @@ ProgressVisualizer::Application.routes.draw do
   get 'chart/long-term-trend/(:weeks)' => "charts#long_term_trend", as: 'charts_long_term_trend', constraints: {weeks: /[0-9]*/}
 
   get 'table/done-stories' => "tables#done_stories", as: 'tables_done_stories'
+  get 'table/todo-stories' => "tables#todo_stories", as: 'tables_todo_stories'
 
   get 'report/performance-summary' => "reports#performance_summary", as: 'reports_performance_summary'
 

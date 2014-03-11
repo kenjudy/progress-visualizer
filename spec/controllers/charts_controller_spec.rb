@@ -45,11 +45,11 @@ describe ChartsController do
           subject
         end
         
-        it { expect(flash.now[:notice]).to eq "No burn up data." }
+        it { expect(flash.now[:notice]).to eq "No burn up data. Next iteration starts at Mar 10,  9 AM." }
         
         context "between iterations" do
           before { controller.stub(between_iterations: true) }
-          it { expect(flash.now[:notice]).to eq "No burn up data." }
+          it { expect(flash.now[:notice]).to eq "No burn up data. Next iteration starts at Mar 10,  9 AM." }
         end
       end
     end

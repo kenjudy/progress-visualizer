@@ -6,7 +6,7 @@ class ReportsController < ApplicationController
   before_filter :authenticate_user!, :assign_user_profile
   
   def performance_summary
-    @results = Tables::DoneStoriesTable.new(user_profile).current
+    @results = Factories::DoneStoryFactory.new(user_profile).current
     
     yesterdays_weather_action
 

@@ -5,7 +5,10 @@ class TablesController < ApplicationController
   before_filter :authenticate_user!, :assign_user_profile
   
   def done_stories
-    @results = Tables::DoneStoriesTable.new(user_profile).current
+    @results = Factories::DoneStoryFactory.new(user_profile).current
+  end
+  
+  def todo_stories
   end
   
 end
