@@ -1,5 +1,7 @@
 class DoneStory < ActiveRecord::Base
   extend Tables::TablesConcern
+
+  alias_attribute :name, :story
   
   belongs_to :user_profile
         
@@ -13,6 +15,4 @@ class DoneStory < ActiveRecord::Base
     attribs.merge!({timestamp: beginning_of_current_iteration, iteration: beginning_of_current_iteration.strftime("%F")}) if story.timestamp.nil?
     story.update_attributes(attribs)
   end
-  
-  
 end

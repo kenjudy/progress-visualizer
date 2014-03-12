@@ -6,7 +6,9 @@ class ReportsController < ApplicationController
   before_filter :authenticate_user!, :assign_user_profile
   
   def performance_summary
-    @results = Factories::DoneStoryFactory.new(user_profile).current
+    @iteration = params["iteration"]
+
+    @results = @iteration ? Factories::DoneStoryFactory.new(user_profile).for_iteration(@iteration) : Factories::DoneStoryFactory.new(user_profile).current
     
     yesterdays_weather_action
 

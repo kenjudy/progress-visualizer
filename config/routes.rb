@@ -28,6 +28,6 @@ ProgressVisualizer::Application.routes.draw do
   get 'table/done-stories' => "tables#done_stories", as: 'tables_done_stories'
   get 'table/todo-stories' => "tables#todo_stories", as: 'tables_todo_stories'
 
-  get 'report/performance-summary' => "reports#performance_summary", as: 'reports_performance_summary'
+  get 'report/performance-summary/(:iteration)' => "reports#performance_summary", as: 'reports_performance_summary'
 
 end

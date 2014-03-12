@@ -130,6 +130,10 @@ describe "routes" do
     context "performance summary" do
       subject { { get: "report/performance-summary" } }
       it { should route_to(controller: "reports", action: "performance_summary")}
+      context "with iteration" do
+        subject { { get: "report/performance-summary/2014-02-24" } }
+        it { should route_to(controller: "reports", action: "performance_summary", iteration: "2014-02-24")}
+      end
     end
   end
   

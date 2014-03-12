@@ -1,6 +1,7 @@
 module Factories
   class DoneStoryFactory
     include Tables::TablesConcern
+    include IterationConcern
  
     def refresh
       board = Adapters::BaseAdapter.build_adapter(user_profile).request_board(user_profile.current_sprint_board_id)
@@ -17,6 +18,14 @@ module Factories
         end
       end
       return collated_data
+    end
+    
+    def for_iteration(iteration)
+      done_stories = user_profile.done_stories.where('timestamp = ? and status in (?)', iteration, JSON.parse(user_profile.done_lists).keys)
+      collated_data = collate(done_stories,
+                              user_profile.labels_types_of_work.split(","), 
+                              JSON.parse(user_profile.done_lists).keys,
+                              iteration)
     end
   end
 end
