@@ -25,8 +25,8 @@ describe ReportsController do
 
     context "optional date param" do
       let(:iteration) { "2014-03-04" }
-      before { subject }
-      it { expect(assigns(:iteration)).to eql "2014-03-04" }
+      before { expect_any_instance_of(Factories::DoneStoryFactory).to receive(:for_iteration).with(iteration) }
+      it("retrieves done stories for iteration") { subject }
     end
   end
   

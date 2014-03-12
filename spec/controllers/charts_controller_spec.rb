@@ -92,7 +92,7 @@ describe ChartsController do
       context "optional week param" do
         subject { get :long_term_trend, weeks: "3" }
         after { subject }
-        it { expect(controller).to receive(:long_term_trend_visualization).with(3) }
+        it { expect(controller).to receive(:long_term_trend_visualization).with(3, anything()) }
       end
     
     end

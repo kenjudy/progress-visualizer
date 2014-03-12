@@ -22,11 +22,11 @@ class ChartsController < ApplicationController
    end
   
   def yesterdays_weather
-    yesterdays_weather_action
+    yesterdays_weather_action(params[:weeks] ? params[:weeks].to_i : 3)
   end
   
   def long_term_trend
-    long_term_trend_action
+    long_term_trend_action(params[:weeks] ? params[:weeks].to_i : 10)
   end
   
   

@@ -6,13 +6,36 @@ class ReportsController < ApplicationController
   before_filter :authenticate_user!, :assign_user_profile
   
   def performance_summary
-    @iteration = params["iteration"]
+    if params["iteration"]
+      @iteration = params["iteration"]
+      @results = Factories::DoneStoryFactory.new(user_profile).for_iteration(@iteration)
+      yesterdays_weather_action(3, @iteration)
+      long_term_trend_action(10, @iteration)
+    else
+      @iteration = beginning_of_current_iteration.strftime("%Y-%m-%d")
+      @results = Factories::DoneStoryFactory.new(user_profile).current
+      yesterdays_weather_action(3)
+      long_term_trend_action(10)
+    end
 
-    @results = @iteration ? Factories::DoneStoryFactory.new(user_profile).for_iteration(@iteration) : Factories::DoneStoryFactory.new(user_profile).current
+    @prior_iteration = prior_iteration(@iteration)
+    @next_iteration = next_iteration(@iteration)
+
     
-    yesterdays_weather_action
-
-    long_term_trend_action
+  end
+  
+  private 
+  
+  def prior_iteration(iteration)
+    adjacent_iteration("<", iteration)
+  end
+  def next_iteration(iteration)
+    adjacent_iteration(">", iteration)
+  end
+  
+  def adjacent_iteration(comparitor, iteration)
+    results = user_profile.done_stories.where("iteration #{comparitor} ?", iteration).order(iteration: comparitor == "<" ? :desc : :asc).limit(1)
+    results.any? ? results.first.iteration : nil
   end
 end
   

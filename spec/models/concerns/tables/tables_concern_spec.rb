@@ -35,7 +35,7 @@ describe Tables::TablesConcern do
       let(:types_of_work) { [] }
       its([:lists]) { should == {"" => {cards: board.cards, :stories=>2, :estimates=>6.0} } }
       its([:totals]) { should == {:total_stories=>2, :total_estimates=>6.0}}
-      its([:week_of]) { should == test_object.beginning_of_current_iteration.strftime("%B %l, %Y") }
+      its([:iteration_range]) { should == "#{test_object.beginning_of_current_iteration.strftime("%B %e, %Y")} - #{test_object.end_of_current_iteration.strftime("%B %e, %Y")}" }
     end
   end
 

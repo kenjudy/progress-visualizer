@@ -18,7 +18,7 @@ describe "Factories::DoneStoryFactory" do
   
   
   context "update_done_stories_for" do
-    let(:collated_data) { done_story_factory.collate(board, types_of_work, done_list_ids, "work label") }
+    let(:collated_data) { done_story_factory.collate(board, types_of_work, done_list_ids, "2014-03-04") }
     before { done_story_factory.update_done_stories_for(collated_data) }
     subject { DoneStory.all }
     its(:count) { should == 2}

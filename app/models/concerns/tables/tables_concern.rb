@@ -1,8 +1,7 @@
 module Tables::TablesConcern
   extend ActiveSupport::Concern
   include IterationConcern
-  include UserProfileConcern
-  
+   
       
   attr_accessor :user_profile
 
@@ -31,8 +30,8 @@ module Tables::TablesConcern
             JSON.parse(lists).keys)
   end
   
-  def collate(board, types_of_work, list_ids, week_of_label = beginning_of_current_iteration.strftime("%B %l, %Y"))
-    results = { week_of: week_of_label, lists: {}}
+  def collate(board, types_of_work, list_ids, date_string = nil)
+    results = { iteration_range: iteration_range_label(date_string), lists: {}}
     results[:totals] = {total_stories: 0, total_estimates: 0}
     if types_of_work.any?
       types_of_work.each do |type_of_work|
@@ -45,6 +44,18 @@ module Tables::TablesConcern
   end
   
   private
+  
+  def iteration_range_label(iteration)
+    if iteration
+      date = Date.parse(iteration)
+      start_range = beginning_of_iteration(date)
+      end_range = end_of_iteration(date)
+    else
+      start_range = beginning_of_current_iteration
+      end_range = end_of_current_iteration
+    end
+    "#{start_range.strftime("%B %e, %Y")} - #{end_range.strftime("%B %e, %Y")}"
+  end
   
   def totals_by_type(collection, list_ids, results, type_of_work = "")
     if collection.respond_to?("cards")
@@ -89,6 +100,7 @@ module Tables::TablesConcern
     stories.each { |story| estimates += story.estimate }
     estimates
   end
+
 
 
 end

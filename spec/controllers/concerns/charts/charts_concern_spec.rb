@@ -26,17 +26,17 @@ module Charts
 
     
     context "done_stories_data" do
-      let(:include_current) { false }
-      subject { done_stories_data(3, include_current) }
+      let(:iteration) { one_week_ago }
+      subject { done_stories_data(3, iteration) }
     
       its(:length) { should == 24 }
       its(:first) { should be_instance_of(DoneStory) }
-      it("doesn't contain this iteration") { expect(subject.last.timestamp < iteration_start) }
+      it("includes this iteration") { expect(subject.last.timestamp < iteration_start) }
 
-      context "include current" do
-        let(:include_current) { true }
+      context "explicit iteration" do
+        let(:iteration) { nil}
         its(:length) { should == 36 }
-        it("contains this iteration") { expect(subject.last.timestamp >= iteration_start) }
+        it("doesn't contain this iteration") { expect(subject.last.timestamp >= iteration_start) }
       end
 
     end
@@ -62,34 +62,34 @@ module Charts
     end
 
     context "long_term_trend_visualization_rows" do
-      let(:include_current) { false }
-      subject { long_term_trend_visualization_rows(10, include_current) }
+      subject { long_term_trend_visualization_rows(10, iteration) }
 
-      it { should == [[two_weeks_ago, 36.0, 12], [one_week_ago, 36.0, 12]] }
-      
-      context "include current" do
-        let(:include_current) { true }
+      let(:iteration) { nil }
 
-        it { should == [[two_weeks_ago, 36.0, 12], [one_week_ago, 36.0, 12], [this_week, 36.0, 12]] }
+      it { should == [[two_weeks_ago, 36.0, 12], [one_week_ago, 36.0, 12], [this_week, 36.0, 12]] }
+     
+      context "explicit iteration" do
+        let(:iteration) { one_week_ago }
+        it { should == [[two_weeks_ago, 36.0, 12], [one_week_ago, 36.0, 12]] }
       end
     end
 
     context "yesterdays_weather_data_rows" do
-      let(:include_current) { false }
       let(:chart) { YesterdaysWeatherChart.new(user_profile, {weeks: 3, label: :estimate}) }
+      let(:iteration) { nil }
 
-      subject { yesterdays_weather_data_rows(chart, include_current) }
+      subject { yesterdays_weather_data_rows(chart, iteration) }
+      it { should == [[(two_weeks_ago).strftime("%F"), 8.0, 12.0, 16.0], [(one_week_ago).strftime("%F"), 8.0, 12.0, 16.0], [(this_week).strftime("%F"), 8.0, 12.0, 16.0]] }
 
-      it { should == [[(two_weeks_ago).strftime("%F"), 8.0, 12.0, 16.0], [(one_week_ago).strftime("%F"), 8.0, 12.0, 16.0]] }
       
-      context "include current" do
-        let(:include_current) { true }
-        it { should == [[(two_weeks_ago).strftime("%F"), 8.0, 12.0, 16.0], [(one_week_ago).strftime("%F"), 8.0, 12.0, 16.0], [(this_week).strftime("%F"), 8.0, 12.0, 16.0]] }
+      context "explicit iteration" do
+        let(:iteration) { one_week_ago }
+        it { should == [[(two_weeks_ago).strftime("%F"), 8.0, 12.0, 16.0], [(one_week_ago).strftime("%F"), 8.0, 12.0, 16.0]] }
       end  
       
       context "no types_of_work" do
         let(:types_of_work) { nil }
-        it { should == [[(two_weeks_ago).strftime("%F"), 36.0], [(one_week_ago).strftime("%F"), 36.0  ]] }
+        it { should == [[(two_weeks_ago).strftime("%F"), 36.0], [(one_week_ago).strftime("%F"), 36.0  ], [(this_week).strftime("%F"), 36.0  ]] }
       end
 
       context "has_non_zero_values" do

@@ -17,18 +17,17 @@ module Charts::ChartsConcern
 
 
   
-  def yesterdays_weather_action
-    estimate_chart = YesterdaysWeatherChart.new(user_profile, {weeks: params[:weeks] ? params[:weeks].to_i : 3, label: :estimate})
-    @yesterdays_weather_estimate_chart = yesterdays_weather_visualization(estimate_chart)
+  def yesterdays_weather_action(range, iteration = nil)
+    estimate_chart = YesterdaysWeatherChart.new(user_profile, {weeks: range, label: :estimate})
+    @yesterdays_weather_estimate_chart = yesterdays_weather_visualization(estimate_chart, iteration)
     @uses_estimates = has_non_zero_values(@yesterdays_weather_estimate_chart)
 
-    stories_chart = YesterdaysWeatherChart.new(user_profile, {weeks: params[:weeks] ? params[:weeks].to_i : 3, label: :stories})
-    @yesterdays_weather_stories_chart = yesterdays_weather_visualization(stories_chart)
+    stories_chart = YesterdaysWeatherChart.new(user_profile, {weeks: range, label: :stories})
+    @yesterdays_weather_stories_chart = yesterdays_weather_visualization(stories_chart, iteration)
   end
   
-  def long_term_trend_action
-    weeks = params[:weeks] ? params[:weeks].to_i : 10
-    @long_term_trend_chart = long_term_trend_visualization(weeks)
+  def long_term_trend_action(range, iteration = nil)
+    @long_term_trend_chart = long_term_trend_visualization(range, iteration)
   end
   
   private
@@ -47,7 +46,7 @@ module Charts::ChartsConcern
                                                                                         trendlines: { 1 => {pointSize: 0} }}))
   end
   
-  def yesterdays_weather_visualization(chart, include_current = false)
+  def yesterdays_weather_visualization(chart, iteration = nil)
     data_table = GoogleVisualr::DataTable.new
     data_table.new_column('string', 'timestamp' )
     if chart.types_of_work && chart.types_of_work.any?
@@ -55,20 +54,20 @@ module Charts::ChartsConcern
     else
       data_table.new_column('number', "Cards" )
     end
-    data_table.add_rows(yesterdays_weather_data_rows(chart, include_current))
+    data_table.add_rows(yesterdays_weather_data_rows(chart, iteration))
     GoogleVisualr::Interactive::ColumnChart.new(data_table, @@default_properties.merge({ title: "Yesterday's Weather for #{chart.label.to_s.titleize.pluralize}",
                                                                                          isStacked: true }))
   
   end
   
-  def long_term_trend_visualization(weeks, include_current = false)
+  def long_term_trend_visualization(weeks, iteration = nil)
     data_table = GoogleVisualr::DataTable.new
     data_table.new_column('date', 'timestamp' )
     data_table.new_column('number', "estimates")
     data_table.new_column('number', "stories")
     
     # Add Rows and Values
-    data_table.add_rows(long_term_trend_visualization_rows(weeks, include_current))
+    data_table.add_rows(long_term_trend_visualization_rows(weeks, iteration))
     GoogleVisualr::Interactive::AreaChart.new(data_table, @@default_properties.merge({ title: "Long Term Trend",
                                                                                        hAxis: { textStyle: { color: '#999999'}, gridLines: { color: "#eee"}, format:'M/d' },
                                                                                        lineWidth: 2, 
@@ -85,9 +84,9 @@ module Charts::ChartsConcern
     return s > 0
   end
 
-  def long_term_trend_visualization_rows(weeks, include_current = false)
+  def long_term_trend_visualization_rows(weeks, iteration = nil)
     data = {}
-    done_stories_data(weeks, include_current).each do |done_story|
+    done_stories_data(weeks, iteration).each do |done_story|
       timestamp = done_story.timestamp
       data[timestamp] ||= [timestamp, 0, 0]
       data[timestamp][1] += done_story.estimate
@@ -96,9 +95,9 @@ module Charts::ChartsConcern
     data.values.sort { |a,b| a[0] <=> b[0] }
   end
   
-  def yesterdays_weather_data_rows(chart, include_current = false)
+  def yesterdays_weather_data_rows(chart, iteration = nil)
     data = {}
-    done_stories_data(chart.weeks, include_current).each do |done_story|
+    done_stories_data(chart.weeks, iteration).each do |done_story|
       timestamp = done_story.timestamp.to_s
 
       value = chart.label == :estimate ? done_story.estimate : 1
@@ -113,8 +112,15 @@ module Charts::ChartsConcern
     data.values.sort { |a,b| a[0] <=> b[0] }
   end
   
-  def done_stories_data(range, include_current = false)
-    offset = include_current ? 0 : 1.week
-    user_profile.done_stories.order("timestamp").where('timestamp > ? and timestamp <= ?', beginning_of_current_iteration - range.weeks - offset, end_of_current_iteration - offset).to_a
+  def done_stories_data(range, iteration = nil)
+    date =
+    if iteration.instance_of?(String)
+      end_of_iteration(Date.parse(iteration)) 
+    elsif iteration.nil?
+      end_of_current_iteration
+    else
+      end_of_iteration(iteration)
+    end
+    user_profile.done_stories.order("timestamp").where('timestamp >= ? and timestamp <= ?', date - (range * user_profile.duration).days, date).to_a
   end
 end
