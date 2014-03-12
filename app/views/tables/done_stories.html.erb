@@ -1,6 +1,16 @@
 <section>
   <div class="container">
     <div class="row">
+      <ul class="pager">
+        <li class="previous <%= 'disabled' unless  @prior_iteration %>">
+          <%= link_to raw("&larr; Older"), tables_done_stories_path(iteration: @prior_iteration) %>
+        </li>
+        <li class="next <%= 'disabled' unless  @next_iteration %>">
+          <%= link_to raw("Newer &rarr;"), tables_done_stories_path(iteration: @next_iteration) %>
+        </li>
+      </ul>
+    </div>
+    <div class="row">
       <%= render "stories_table", label: "Completed work ", results: @results %>
     </div>
   </div>

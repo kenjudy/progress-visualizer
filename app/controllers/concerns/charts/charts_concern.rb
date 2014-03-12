@@ -41,7 +41,7 @@ module Charts::ChartsConcern
     # Add Rows and Values
     data_table.add_rows(burn_up_rows(options[:data]))
   
-    GoogleVisualr::Interactive::AreaChart.new(data_table, @@default_properties.merge({ title: "Burn Up Chart #{options[:label]}",
+    GoogleVisualr::Interactive::AreaChart.new(data_table, @@default_properties.merge({ title: "Burn Up Chart for #{options[:label]}",
                                                                                         lineWidth: 6, 
                                                                                         trendlines: { 1 => {pointSize: 0} }}))
   end

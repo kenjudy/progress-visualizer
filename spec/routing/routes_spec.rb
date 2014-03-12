@@ -119,6 +119,10 @@ describe "routes" do
     context "done stories" do
       subject { { get: "table/done-stories" } }
       it { should route_to(controller: "tables", action: "done_stories")}
+      context "done stories" do
+        subject { { get: "table/done-stories/2014-03-14" } }
+        it { should route_to(controller: "tables", action: "done_stories", iteration: "2014-03-14")}
+      end
     end
     context "todo stories" do
       subject { { get: "table/todo-stories" } }

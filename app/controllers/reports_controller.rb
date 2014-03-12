@@ -2,6 +2,7 @@ class ReportsController < ApplicationController
   include IterationConcern
   include UserProfileConcern
   include Charts::ChartsConcern
+  include Tables::DoneStoriesConcern
 
   before_filter :authenticate_user!, :assign_user_profile
   
@@ -22,20 +23,6 @@ class ReportsController < ApplicationController
     @next_iteration = next_iteration(@iteration)
 
     
-  end
-  
-  private 
-  
-  def prior_iteration(iteration)
-    adjacent_iteration("<", iteration)
-  end
-  def next_iteration(iteration)
-    adjacent_iteration(">", iteration)
-  end
-  
-  def adjacent_iteration(comparitor, iteration)
-    results = user_profile.done_stories.where("iteration #{comparitor} ?", iteration).order(iteration: comparitor == "<" ? :desc : :asc).limit(1)
-    results.any? ? results.first.iteration : nil
   end
 end
   
