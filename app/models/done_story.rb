@@ -1,5 +1,6 @@
 class DoneStory < ActiveRecord::Base
   alias_attribute :name, :story
+  alias_attribute :id_short, :story_id
 
   belongs_to :user_profile
 
@@ -20,6 +21,9 @@ class DoneStory < ActiveRecord::Base
   
   def next_iteration
     adjacent_iteration(">")
+  end
+  
+  def short_url
   end
 
   private

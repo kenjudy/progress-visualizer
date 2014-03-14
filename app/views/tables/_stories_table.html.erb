@@ -9,7 +9,7 @@
     </tr>
     <% data[:cards].each do |card| %>
       <tr>
-        <td><%= link_to(card.id_short, card.short_url, target: "_blank") %></td>
+        <td><%= link_to_if(card.short_url, card.id_short, card.short_url, target: "_blank") %></td>
         <td><%= card.name %></td>
         <td></td>
         <td class="estimate"><%= card.estimate %></td>

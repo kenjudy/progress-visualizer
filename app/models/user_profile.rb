@@ -7,8 +7,9 @@ class UserProfile < ActiveRecord::Base
 
   attr_encryptor :readonly_token, :current_sprint_board_id, :current_sprint_board_id_short, :backlog_lists, :done_lists, key: 'eovnpsimvkzrahjmhoqgyeoqngabrkemoexkmzuqiqvepfqmcq'
 
-  alias :burn_ups :burn_up
-  alias :done_stories :done_story
+  alias_attribute :burn_ups, :burn_up
+  alias_attribute :done_stories, :done_story
+  alias_attribute :webhooks, :webhook
 
   validate :validate_start_date
 
