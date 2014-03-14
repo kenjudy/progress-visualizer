@@ -66,6 +66,7 @@ group :development, :test do
   gem 'capybara'
   gem 'poltergeist'
   gem 'rails_best_practices'
+  gem 'metric_fu'
 end
 
 gem "google_visualr", ">= 2.1"

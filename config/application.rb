@@ -16,6 +16,7 @@ if ["development", "test"].include?(Rails.env)
   require 'pry-rails'
   require 'pry-rescue'
   require 'rails_best_practices'
+  require 'metric_fu'
 end
 
 if Rails.env == "test"
