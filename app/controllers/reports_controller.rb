@@ -1,8 +1,8 @@
 class ReportsController < ApplicationController
   include IterationConcern
   include UserProfileConcern
-  include Charts::ChartsConcern
-  include Tables::DoneStoriesConcern
+  include ChartsConcern
+  include TablesConcern
 
   before_filter :authenticate_user!, :assign_user_profile
 
@@ -21,8 +21,6 @@ class ReportsController < ApplicationController
 
     @prior_iteration = prior_iteration(@iteration)
     @next_iteration = next_iteration(@iteration)
-
-
   end
 end
 

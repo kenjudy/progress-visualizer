@@ -1,5 +1,5 @@
 class ChartsController < ApplicationController
-  include Charts::ChartsConcern
+  include ChartsConcern
   include UserProfileConcern
   include IterationConcern
 
@@ -19,7 +19,11 @@ class ChartsController < ApplicationController
     @estimates_chart = burn_up_chart_visualization({label: "Estimates", data:  data.map{ |burn_up| { timestamp: burn_up.timestamp, backlog: burn_up.backlog_estimates, done: burn_up.done_estimates} }})
     @uses_estimates = has_non_zero_values(@estimates_chart)
     @stories_chart = burn_up_chart_visualization({label: "Story Counts", data:  data.map{ |burn_up| { timestamp: burn_up.timestamp, backlog: burn_up.backlog, done: burn_up.done} }})
-   end
+    @iteration = beginning_of_current_iteration.strftime("%Y-%m-%d") unless @iteration
+    # @prior_iteration = prior_iteration(@iteration)
+    # @next_iteration = next_iteration(@iteration)
+    
+  end
 
   def yesterdays_weather
     yesterdays_weather_action(params[:weeks] ? params[:weeks].to_i : 3)

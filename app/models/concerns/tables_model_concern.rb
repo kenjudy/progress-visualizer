@@ -1,4 +1,4 @@
-module Tables::TablesConcern
+module TablesModelConcern
   extend ActiveSupport::Concern
   include IterationConcern
 
@@ -42,7 +42,7 @@ module Tables::TablesConcern
     end
     return results
   end
-
+  
   private
 
   def iteration_range_label(iteration)
@@ -100,7 +100,5 @@ module Tables::TablesConcern
     stories.each { |story| estimates += story.estimate }
     estimates
   end
-
-
 
 end

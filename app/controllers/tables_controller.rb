@@ -1,7 +1,7 @@
 class TablesController < ApplicationController
   include UserProfileConcern
   include IterationConcern
-  include Tables::DoneStoriesConcern
+  include TablesConcern
 
   before_filter :authenticate_user!, :assign_user_profile
 

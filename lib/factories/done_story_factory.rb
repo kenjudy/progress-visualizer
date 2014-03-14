@@ -1,6 +1,6 @@
 module Factories
   class DoneStoryFactory
-    include Tables::TablesConcern
+    include TablesModelConcern
     include IterationConcern
 
     def refresh

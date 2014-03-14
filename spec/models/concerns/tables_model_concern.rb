@@ -1,15 +1,14 @@
 require 'spec_helper'
 
 class TestObject
-  include Tables::TablesConcern
+  include TablesModelConcern
   include IterationConcern
   include UserProfileConcern
 
 end
 
-describe Tables::TablesConcern do
+describe TablesModelConcern do
   include ProgressVisualizerTrello::JsonData
-
 
   let(:user_profile) { FactoryGirl.create(:user_profile) }
   let(:test_object) { TestObject.new(user_profile) }

@@ -1,4 +1,4 @@
-module Charts::ChartsConcern
+module ChartsConcern
   extend ActiveSupport::Concern
   include IterationConcern
 

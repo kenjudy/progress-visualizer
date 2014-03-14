@@ -1,5 +1,5 @@
 class DoneStory < ActiveRecord::Base
-  extend Tables::TablesConcern
+  extend TablesModelConcern
 
   alias_attribute :name, :story
 

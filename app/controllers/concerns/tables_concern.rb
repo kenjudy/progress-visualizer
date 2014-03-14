@@ -1,4 +1,4 @@
-module Tables::DoneStoriesConcern
+module TablesConcern
   extend ActiveSupport::Concern
   def prior_iteration(iteration)
     adjacent_iteration("<", iteration)
