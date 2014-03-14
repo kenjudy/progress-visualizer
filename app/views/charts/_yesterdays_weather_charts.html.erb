@@ -1,10 +1,10 @@
-<% if @uses_estimates %>
+<% if uses_estimates %>
   <div class="row">
     <div id='yesterdays_weather_estimate_chart' class='chart'></div>
-    <%= render_chart(@yesterdays_weather_estimate_chart, 'yesterdays_weather_estimate_chart') %>
+    <%= render_chart(estimate_chart, 'yesterdays_weather_estimate_chart') %>
   </div>
 <% end %>
 <div class="row">
   <div id='yesterdays_weather_stories_chart' class='chart'></div>
-  <%= render_chart(@yesterdays_weather_stories_chart, 'yesterdays_weather_stories_chart') %>
+  <%= render_chart(stories_chart, 'yesterdays_weather_stories_chart') %>
 </div>

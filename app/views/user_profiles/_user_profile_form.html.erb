@@ -10,9 +10,9 @@
           <h2>User Profile (Trello Properties)</h2>
         </div>
         <div class="panel-body">
- 
+
           <%= render('form_group_text_field', form: f, field: :name, label_text: "Nickname", field_width: 3, tooltip: "e.g. 'Current Sprint'" ) %>
-          
+
             <div class="form-group">
               <%= f.label :default, "Default?", class: "col-sm-3 control-label" %>
               <div class="col-sm-9">
@@ -21,27 +21,27 @@
             </div>
 
             <%= render('form_group_text_field', form: f, field: :readonly_token, label_text: "User Token", field_width: 6, tooltip: "Allow READ ONLY access to your trello data", aside: link_to(raw("Request new token <span class=\"glyphicon glyphicon-new-window\"></span>"), request_token_url, target: "_blank")) %>
- 
+
             <%= render('form_group_text_field', form: f, field: :current_sprint_board_id_short, label_text: "Board ID", field_width: 3, tooltip: "In the URL of your trello board. https://trello.com/b/[Board ID]/name", aside: link_to(raw("Trello.com <span class=\"glyphicon glyphicon-new-window\"></span>"), profile.current_sprint_board_id_short ? "http://trello.com/b/#{profile.current_sprint_board_id_short}" : "http://trello.com", target: "_blank")) %>
 
-            <% if @lists %> 
+            <% if lists %>
                <hr />
-                              
-               <%= render('form_group_text_field', form: f, field: :current_sprint_board_id, label_text: "Board Unique ID", default_val: @lists.first.id_board, readonly: true) %>
-               
-               <%= render('cloud_selector', form: f, field: :backlog_lists, lists: @lists, label_text: "Todo Lists", heading: "Which lists on your board represent todo items (the backlog)?")%>
 
-               <%= render('cloud_selector', form: f, field: :done_lists, lists: @lists, label_text: "Done Lists", heading: "Which lists on your board represent complete items?")%>
-                             
-              <%= render('cloud_selector', form: f, field: :labels_types_of_work, lists: @labels, label_text: "Labels", heading: "Which (if any) labels do you use to group work?")%>
-            
+               <%= render('form_group_text_field', form: f, field: :current_sprint_board_id, label_text: "Board Unique ID", default_val: lists.first.id_board, readonly: true) %>
+
+               <%= render('cloud_selector', form: f, field: :backlog_lists, lists: lists, label_text: "Todo Lists", heading: "Which lists on your board represent todo items (the backlog)?")%>
+
+               <%= render('cloud_selector', form: f, field: :done_lists, lists: lists, label_text: "Done Lists", heading: "Which lists on your board represent complete items?")%>
+
+              <%= render('cloud_selector', form: f, field: :labels_types_of_work, lists: labels, label_text: "Labels", heading: "Which (if any) labels do you use to group work?")%>
+
               <hr />
               <div class="form-group">
 
                 <%= f.label :start_day_of_week, "Iteration Start", class: "col-sm-3 control-label" %>
 
                 <div class="col-sm-2">
-                  <%= f.select(:start_day_of_week, options_for_select([['Sunday', 0],['Monday', 1],['Tuesday', 2],['Wednesday', 3],['Thursday', 4],['Friday', 5], ['Saturday', 6]], profile.start_day_of_week ), {}, class: "form-control") %>
+                  <%= f.select(:start_day_of_week, options_for_day_of_week(profile.start_day_of_week), {}, class: "form-control") %>
                 </div>
 
                 <div class="col-sm-2">
@@ -49,13 +49,13 @@
                  </div>
                  <label class="col-sm-5 control-label" style="text-align:left">Eastern Timezone</label>
               </div>
-              
+
               <div class="form-group">
 
                 <%= f.label :end_day_of_week, "End", class: "col-sm-3 control-label" %>
 
                 <div class="col-sm-2">
-                  <%= f.select(:end_day_of_week, options_for_select([['Sunday', 0],['Monday', 1],['Tuesday', 2],['Wednesday', 3],['Thursday', 4],['Friday', 5], ['Saturday', 6]], profile.end_day_of_week ), {}, class: "form-control") %>
+                  <%= f.select(:end_day_of_week, options_for_day_of_week(profile.end_day_of_week), {}, class: "form-control") %>
                 </div>
 
                 <div class="col-sm-2">
@@ -64,13 +64,13 @@
                 <label class="col-sm-5 control-label" style="text-align:left">Eastern Timezone</label>
 
               </div>
-              
+
               <div class="form-group">
 
                 <%= f.label :duration, "Duration", class: "col-sm-3 control-label" %>
 
                 <div class="col-sm-3">
-                  <%= f.select(:duration, options_for_select([['One week', 7],['Two weeks', 14],['Three weeks', 21],['Four weeks', 28]], profile.duration ), {}, class: "form-control") %>
+                  <%= f.select(:duration, options_for_duration(profile.duration), {}, class: "form-control") %>
                 </div>
              </div>
 
@@ -93,7 +93,7 @@
               </div>
               <div class="col-sm-6">
                 <div class="pull-right">
-                  <label class="control-label text-muted">(<%= @lists && @lists.any? ? 2 : 1 %> of 2)</label>
+                  <label class="control-label text-muted">(<%= lists && lists.any? ? 2 : 1 %> of 2)</label>
                 </div>
               </div>
             </div>
@@ -101,7 +101,7 @@
             <% if profile.id %>
               <%= f.hidden_field :id, class: "form-control", value: profile.id %>
             <% end %>
-            
+
           </div> <%# well %>
         <% end %>
       </div>

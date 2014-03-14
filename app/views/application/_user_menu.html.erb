@@ -13,7 +13,7 @@
       </ul>
     </li>
   <% end %>
-  
+
   <li class="dropdown <%= active_class_if([destroy_user_session_path,new_user_session_path]) %> <%= classname %>">
     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
       Hello <%= current_user.name.truncate(20, separator: ' ') %>

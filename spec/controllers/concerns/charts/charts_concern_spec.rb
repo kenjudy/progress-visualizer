@@ -5,7 +5,7 @@ module Charts
   describe ChartsConcern do
     include ChartsConcern
     include IterationConcern
-    
+
     let(:types_of_work) { "Committed,Contingent,Inserted" }
     let(:user_profile) { FactoryGirl.create(:user_profile, labels_types_of_work: types_of_work) }
     let(:date) { Date.today.end_of_week }
@@ -18,17 +18,17 @@ module Charts
 
     before do
       [this_week, one_week_ago, two_weeks_ago].each do |weeks|
-        (0..3).each { FactoryGirl.create(:done_story, user_profile: user_profile, type_of_work: "Committed", estimate: 2, timestamp: weeks) } 
-        (0..3).each { FactoryGirl.create(:done_story, user_profile: user_profile, type_of_work: "Contingent", estimate: 3, timestamp: weeks) } 
-        (0..3).each { FactoryGirl.create(:done_story, user_profile: user_profile, type_of_work: "Inserted", estimate: 4, timestamp: weeks) } 
+        (0..3).each { FactoryGirl.create(:done_story, user_profile: user_profile, type_of_work: "Committed", estimate: 2, timestamp: weeks) }
+        (0..3).each { FactoryGirl.create(:done_story, user_profile: user_profile, type_of_work: "Contingent", estimate: 3, timestamp: weeks) }
+        (0..3).each { FactoryGirl.create(:done_story, user_profile: user_profile, type_of_work: "Inserted", estimate: 4, timestamp: weeks) }
       end
-    end 
+    end
 
-    
+
     context "done_stories_data" do
       let(:iteration) { one_week_ago }
       subject { done_stories_data(3, iteration) }
-    
+
       its(:length) { should == 24 }
       its(:first) { should be_instance_of(DoneStory) }
       it("includes this iteration") { expect(subject.last.timestamp < iteration_start) }
@@ -45,15 +45,15 @@ module Charts
       let(:timestamp) { Time.now }
       let(:data) {  (0..3).map { |i| FactoryGirl.build(:burn_up, user_profile: user_profile, timestamp: timestamp - i.days) } }
       subject { burn_up_rows(data) }
-    
+
       it { should == [[timestamp, 16, 4], [timestamp - 1.day, 16, 4], [timestamp - 2.days, 16, 4], [timestamp - 3 .days, 16, 4]] }
-    
+
       context "has_non_zero_values" do
         let(:chart) { burn_up_chart_visualization({label: "Estimates", data:  data.map{ |burn_up| { timestamp: burn_up.timestamp, backlog: burn_up.backlog_estimates, done: burn_up.done_estimates} }}) }
         subject { has_non_zero_values(chart)}
-        
+
         it { should be_true }
-        
+
         context "no estimates" do
           let(:chart) { burn_up_chart_visualization({label: "Estimates", data:  data.map{ |burn_up| { timestamp: burn_up.timestamp, backlog: 0.0, done: 0.0} }}) }
           it { should be_false }
@@ -67,7 +67,7 @@ module Charts
       let(:iteration) { nil }
 
       it { should == [[two_weeks_ago, 36.0, 12], [one_week_ago, 36.0, 12], [this_week, 36.0, 12]] }
-     
+
       context "explicit iteration" do
         let(:iteration) { one_week_ago }
         it { should == [[two_weeks_ago, 36.0, 12], [one_week_ago, 36.0, 12]] }
@@ -81,12 +81,12 @@ module Charts
       subject { yesterdays_weather_data_rows(chart, iteration) }
       it { should == [[(two_weeks_ago).strftime("%F"), 8.0, 12.0, 16.0], [(one_week_ago).strftime("%F"), 8.0, 12.0, 16.0], [(this_week).strftime("%F"), 8.0, 12.0, 16.0]] }
 
-      
+
       context "explicit iteration" do
         let(:iteration) { one_week_ago }
         it { should == [[(two_weeks_ago).strftime("%F"), 8.0, 12.0, 16.0], [(one_week_ago).strftime("%F"), 8.0, 12.0, 16.0]] }
-      end  
-      
+      end
+
       context "no types_of_work" do
         let(:types_of_work) { nil }
         it { should == [[(two_weeks_ago).strftime("%F"), 36.0], [(one_week_ago).strftime("%F"), 36.0  ], [(this_week).strftime("%F"), 36.0  ]] }
@@ -95,21 +95,21 @@ module Charts
       context "has_non_zero_values" do
         subject { has_non_zero_values(yesterdays_weather_visualization(chart)) }
         it { should be_true }
-        
+
         context "no estimates" do
           before do
             DoneStory.destroy_all
             [this_week, one_week_ago, two_weeks_ago].each do |weeks|
-              (0..3).each { FactoryGirl.create(:done_story, user_profile: user_profile, type_of_work: "Committed", estimate: 0, timestamp: weeks) } 
-              (0..3).each { FactoryGirl.create(:done_story, user_profile: user_profile, type_of_work: "Contingent", estimate: 0, timestamp: weeks) } 
-              (0..3).each { FactoryGirl.create(:done_story, user_profile: user_profile, type_of_work: "Inserted", estimate: 0, timestamp: weeks) } 
+              (0..3).each { FactoryGirl.create(:done_story, user_profile: user_profile, type_of_work: "Committed", estimate: 0, timestamp: weeks) }
+              (0..3).each { FactoryGirl.create(:done_story, user_profile: user_profile, type_of_work: "Contingent", estimate: 0, timestamp: weeks) }
+              (0..3).each { FactoryGirl.create(:done_story, user_profile: user_profile, type_of_work: "Inserted", estimate: 0, timestamp: weeks) }
             end
-          end 
+          end
           it { should be_false }
         end
       end
     end
-    
+
   end
-    
+
 end

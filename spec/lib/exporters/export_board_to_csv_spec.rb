@@ -13,7 +13,7 @@ module Exporters
 
       after do
         VCR.use_cassette('lib/exportboardtocsv_writes_csv') do
-          ExportBoardToCsv.export_current_sprint_board(user_profile, "tmp/eraseme.txt") 
+          ExportBoardToCsv.export_current_sprint_board(user_profile, "tmp/eraseme.txt")
         end
       end
 

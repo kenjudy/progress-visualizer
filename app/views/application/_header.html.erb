@@ -16,7 +16,7 @@
   <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
     <ul class="nav navbar-nav">
       <% menu_list_item("Burn Up", charts_burn_up_path) %>
-      
+
       <li class="dropdown <%= active_class_if([charts_yesterdays_weather_path,charts_long_term_trend_path]) %>">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Charts<b class="caret"></b></a>
         <ul class="dropdown-menu">
@@ -25,7 +25,7 @@
           <% menu_list_item("Long Term Trend", charts_long_term_trend_path) %>
         </ul>
       </li>
- 
+
       <li class="dropdown <%= active_class_if([tables_done_stories_path,reports_performance_summary_path]) %>">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Tables / Reports<b class="caret"></b></a>
         <ul class="dropdown-menu">
@@ -49,7 +49,7 @@
       <li class="hidden-sm hidden-xs">
         <%= link_to raw("<span class=\"label label-info\" style=\"padding: 8px\">Provide Feedback!</span>"), contact_form_new_path, onClick: track_event("header_menu", ["provide feedback"]) %>
       </li>
-      
+
       <%= render('user_menu', classname: "hidden-md hidden-lg") %>
     </ul>
   </div><!-- /.navbar-collapse -->

@@ -30,7 +30,7 @@ gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 1.2'
 
-gem 'unicorn' 
+gem 'unicorn'
 
 gem 'devise'
 
@@ -65,6 +65,7 @@ group :development, :test do
   gem 'mailcatcher'
   gem 'capybara'
   gem 'poltergeist'
+  gem 'rails_best_practices'
 end
 
 gem "google_visualr", ">= 2.1"

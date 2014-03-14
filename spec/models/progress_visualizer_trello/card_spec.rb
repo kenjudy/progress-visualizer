@@ -4,32 +4,32 @@ require 'json'
 module ProgressVisualizerTrello
   describe ProgressVisualizerTrello::Card do
     include JsonData
-  
-  
+
+
     let(:card_data) { example_card_data }
     let(:card) { Card.new(card_data) }
     let(:card_arr) { card.to_array }
     let(:card_array_attributes) { %w(number estimate name last_known_state closed? date_last_activity due labels id id_short id_board short_link short_url url id_list list_name) }
 
     subject { card }
-  
+
     context "accepts json" do
       its(:data) { should eql(card_data) }
     end
-  
+
     context "has list" do
       before { card.list = List.new({"name" => "ListName"}) }
       its(:list) { should be_instance_of(List) }
       its(:list_name) { should == "ListName" }
     end
-    
+
     context "parses json" do
       its(:id) { should == "524478cbd6c2a2ec3a0001d0" }
       its(:last_known_state) { should == "complete" }
       its(:closed?) { should be_true }
       its(:date_last_activity) { should == Date.parse('2014-01-08T20:18:10.292Z')}
       its(:description) { should =~ /ADULT LIBRARIANS WILL BE FIRST/ }
-    
+
       its(:id_board) { should == "5170058469d58225070003cb" }
       its(:id_list) { should == "52653272e6fa31217b001705" }
       its(:number) { should == 605 }
@@ -59,7 +59,7 @@ module ProgressVisualizerTrello
         end
       end
     end
-  
+
     context "outputs to array" do
 
       Card.array_attributes.each_with_index do |attribute, index|
@@ -67,16 +67,16 @@ module ProgressVisualizerTrello
           let(:attr) { attribute }
           it { expect(card_arr[index]).to eql(attribute == "labels" ? "Tech Stories,Pimsleur" : card.send(attribute.to_sym)) }
         end
-        
+
       end
-    
+
     end
-  
+
     context "has array attributes" do
       subject { Card.array_attributes }
-    
+
       it { should == card_array_attributes }
     end
   end
-  
+
 end

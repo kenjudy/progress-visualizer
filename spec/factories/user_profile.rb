@@ -27,7 +27,7 @@ FactoryGirl.define do
     start_day_of_week 1
     end_day_of_week 0
     start_hour 9
-    end_hour 0   
+    end_hour 0
 
     association :user
   end

@@ -17,13 +17,13 @@
 </section>
 <hr />
 <section>
-  <%= render "charts/yesterdays_weather_charts" %>
+  <%= render "charts/yesterdays_weather_charts", estimate_chart: @yesterdays_weather_estimate_chart, stories_chart: @yesterdays_weather_stories_chart, uses_estimates: @uses_estimates %>
 </section>
 <hr />
 <section>
   <div class="container">
     <div class="row">
-      <%= render "charts/long_term_trend_chart" %>
+      <%= render "charts/long_term_trend_chart", chart: @long_term_trend_chart %>
     </div>
   </div>
 </section>

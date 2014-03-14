@@ -10,10 +10,10 @@
   <div class="container">
     <div class="row">
       <h3>
-        You've created <%= pluralize(@profiles.count,"profile") %>
+        You've created <%= pluralize(profiles.count,"profile") %>
         <%= link_to "add", new_user_profile_path, class: "btn btn-default" %>
       </h3>
-      <% if @profiles.any? %>
+      <% if profiles.any? %>
         <table class="table">
           <tr>
             <th></th>
@@ -27,7 +27,7 @@
             <th>start</th>
             <th>end</th>
           </tr>
-          <% @profiles.each do |profile| %>
+          <% profiles.each do |profile| %>
             <tr class="<%= profile.id %> <%= user_profile.id %>">
               <td>
                 <%= link_to "edit", edit_user_profile_path(profile), class: "btn btn-xs btn-default" %>
@@ -36,7 +36,7 @@
               <td>
                 <%= profile.name %>
                 <%= "(current)" if profile.id == user_profile.id %>
-                <%= "(new)" if @profile && @profile.id == profile.id %>
+                <%= "(new)" if current_profile && current_profile.id == profile.id %>
               </td>
               <td><%= profile.default == "1" ? "true" : "false" %></td>
               <td><%= profile.current_sprint_board_id_short %></td>

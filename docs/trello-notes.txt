@@ -22,12 +22,12 @@ description: "ken.judy progress visualizer burnup"
 id: "52f4df359053cccf6ac4d516"
 idModel: "<CURRENT BOARD>"
 
- 
+
  DUMP DB AND RESTORE LOCAL
- 
+
  heroku pgbackups:capture
  curl -o latest.dump `heroku pgbackups:url`
  pg_restore --verbose --clean --no-acl --no-owner -h localhost -d progress_visualizer_development latest.dump
- 
+
  KEY ERROR IN POSTGRESS
  SELECT setval('done_stories_id_seq', (SELECT MAX(id) FROM done_stories));

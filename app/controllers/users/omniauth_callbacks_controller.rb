@@ -12,7 +12,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       redirect_to new_user_registration_url
     end
   end
-    
+
   def trello
     @user = User.find_for_trello_oauth(request.env["omniauth.auth"])
 

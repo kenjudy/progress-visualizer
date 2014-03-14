@@ -1,26 +1,26 @@
 require 'spec_helper'
 
 describe UserProfilesController do
-  
+
   let(:profile) { FactoryGirl.create(:user_profile) }
   let(:user) { profile.user }
   let(:user_id) { user.id }
   let(:profile_new) { FactoryGirl.build(:user_profile, user: user) }
   let(:profile_partial) { {"name" => profile_new.name, "default" => "1", "readonly_token" => profile_new.readonly_token, "current_sprint_board_id_short" => profile_new.current_sprint_board_id_short, "user_id" => user_id} }
-    
-  { index: :get, show: :get, 
+
+  { index: :get, show: :get,
     new: :get, edit: :get,
     destroy: :delete }.each do |action, method|
-      
+
     context "#{action} " do
       subject { send(method, action, id: profile.id, user_profile: profile_partial) }
-      
-      context "unauthenticated" do 
+
+      context "unauthenticated" do
         its(:code) { should == "302" }
       end
-    end       
+    end
   end
-  
+
   context 'update' do
     let(:full_profile) { profile_partial.merge("done_lists" => "Done", "backlog_lists" => "To Do", "labels_types_of_work" => "Committed,Contingent", "duration" => "7", "start_day_of_week" => "0", "end_day_of_week" => "6", "start_hour" => "6", "end_hour" => "23") }
 
@@ -47,31 +47,31 @@ describe UserProfilesController do
     before { sign_in user }
 
     subject { post :create, user_profile: profile_partial }
-    
+
     it("saves profile") do
       subject
       expect(user.reload.user_profiles).to_not be_empty
     end
-    
+
     context "replaces old default" do
       let(:older_profile) { UserProfile.create(user: user, name: "old", default: "1") }
-    
+
       before do
         older_profile
         post :create, user_profile: profile_partial
       end
-      
+
       subject { user.user_profiles.find_by(name: "old") }
-      
+
       its(:default) { should == "0" }
-      
+
     end
   end
-  
+
   # context "destroy" do
   #   let(:id) { profile.id }
   #   subject {delete :destroy, id: id}
-  #   
+  #
   #   context "destroys profile" do
   #     before { subject }
   #     it { expect{ UserProfile.find(id)}.to raise_error(ActiveRecord::RecordNotFound) }
@@ -87,14 +87,14 @@ describe UserProfilesController do
     end
 
     context "new" do
-      before do 
+      before do
         profile.destroy!
         get :new
       end
       it("assigns profile"){ expect(assigns(:profile)).to_not be_nil }
       it("sets default"){ expect(assigns(:profile).default).to eq("1") }
     end
-    
+
     [:show, :edit].each do |action|
       context action do
         before do
@@ -112,23 +112,23 @@ describe UserProfilesController do
           get :edit, id: profile.id
         end
       end
-      
+
       it("assings lists") { expect(assigns(:lists)).to have(4).items }
     end
-    
-    
+
+
     context "destroy" do
       let(:id) { profile.id }
       before { delete :destroy, id: id }
-      
+
       it("destroys profile") { expect{ UserProfile.find(id)}.to raise_error(ActiveRecord::RecordNotFound) }
     end
   end
-  
+
   context "keys_from_values" do
     let(:lists) { [::ProgressVisualizerTrello::List.new({"id" => "ADSFSDF", "name" => "Done"}), ::ProgressVisualizerTrello::List.new({"id" => "FHGSDFG", "name" => "ToDo"})] }
     subject { controller.keys_from_values(lists, "Done,ToDo") }
-    
+
     it { should == {"ADSFSDF" => "Done","FHGSDFG" => "ToDo"}.to_json }
   end
  end

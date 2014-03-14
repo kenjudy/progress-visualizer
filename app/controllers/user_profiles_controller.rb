@@ -8,17 +8,17 @@ class UserProfilesController < ApplicationController
   def index
     @profiles = current_user.user_profiles
   end
-  
+
   def show
     @profiles = current_user.user_profiles
     @profile = current_user.user_profiles.find(params[:id])
   end
-  
+
   def new
     @profile = UserProfile.new(user: current_user)
     @profile.default = "1" if current_user.user_profiles.length == 0
   end
-  
+
   def edit
     @profile ||= current_user.user_profiles.find(params[:id])
     alert = "User profile doesn't exist!" unless @profile
@@ -26,7 +26,7 @@ class UserProfilesController < ApplicationController
     labels
     render 'edit', alert: alert
   end
-  
+
   def create
     profile = UserProfile.new(user: current_user)
     profile.update_attributes(profile_params)
@@ -34,7 +34,7 @@ class UserProfilesController < ApplicationController
     make_sole_default_if_is_default(profile)
     redirect_to edit_user_profile_path(profile.id)
   end
-  
+
   def update
     @profile = current_user.user_profiles.find(params[:id])
     start_date(params)
@@ -55,34 +55,34 @@ class UserProfilesController < ApplicationController
       render 'edit'
     end
   end
-  
+
   def destroy
     profile = current_user.user_profiles.find(params[:id])
     destroy_webhook(profile, webhooks_burn_up_url(profile_id: profile.id, format: :json))
     profile.destroy
   end
-  
+
   def set
     assign_user_profile
     redirect_to request.referer
   end
-  
+
   def keys_from_values(lists, values = "")
     result = {}
     list_matches = values.split(",").map{ |value| lists.select{|list| value == list.name } }.flatten.compact
     list_matches.map{ |list| result[list.id] = list.name } if list_matches.any?
     result.to_json
   end
-  
+
   private
-  
+
   def start_date(params)
     month = params["user_profile"].delete("start_date(2i)")
     day   = params["user_profile"].delete("start_date(3i)")
     year  = params["user_profile"].delete("start_date(1i)")
     params["user_profile"]["start_date"] = params["user_profile"]["duration"] > "7" && month && day && year ? Time.local(year, month, day) : nil
   end
-  
+
   def add_webhook(user_profile, callback_url)
     Adapters::BaseAdapter.build_adapter(user_profile).add_webhook(callback_url, user_profile.current_sprint_board_id) unless Webhook.find_by(user_profile: user_profile, callback_url: callback_url)
   end
@@ -93,7 +93,7 @@ class UserProfilesController < ApplicationController
       adapter.destroy_webhook(webhook)
     end
   end
-  
+
   def make_sole_default_if_is_default(current_profile)
     return unless current_profile.default == "1"
     current_user.user_profiles.each do |p|
@@ -103,13 +103,13 @@ class UserProfilesController < ApplicationController
       end
     end
   end
-  
+
   def profile_params
     allowed_attribs = [:name, :default, :readonly_token, :current_sprint_board_id_short, :current_sprint_board_id, :backlog_lists, :done_lists, :labels_types_of_work, :duration, :start_day_of_week, :start_hour, :end_day_of_week, :end_hour, :start_date]
     params.require(:user_profile).permit(allowed_attribs)
   end
-  
-  # 
+
+  #
   def lists
     @lists = Rails.cache.fetch("#{Rails.env}::UserProfilesController.lists.#{@profile.current_sprint_board_id_short}", :expires_in => 10.minutes) do
        Adapters::BaseAdapter.build_adapter(@profile).request_lists(@profile.current_sprint_board_id_short)

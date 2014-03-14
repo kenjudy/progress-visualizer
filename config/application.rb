@@ -15,6 +15,7 @@ if ["development", "test"].include?(Rails.env)
   require 'pry-remote'
   require 'pry-rails'
   require 'pry-rescue'
+  require 'rails_best_practices'
 end
 
 if Rails.env == "test"
@@ -46,7 +47,7 @@ module ProgressVisualizer
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
-    
+
     config.autoload_paths += Dir["#{config.root}/lib/**/"]
     config.time_zone = 'Eastern Time (US & Canada)'
     I18n.enforce_available_locales = true

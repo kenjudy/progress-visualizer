@@ -234,7 +234,7 @@ Devise.setup do |config|
 
   config.omniauth :trello, Rails.application.config.trello[:app_key], Rails.application.config.trello[:secret],
       {app_name: "Progress Visualizer", scope: 'read,write,account', expiration: 'never'}.merge(Rails.env == "production" ? {:client_options => {:ssl => {:ca_file => '/usr/lib/ssl/certs/ca-certificates.crt'}}} : {})
-      
+
   config.omniauth :twitter, Rails.application.config.twitter[:app_key], Rails.application.config.twitter[:secret],
       {:scope => 'email, offline_access'}.merge(Rails.env == "production" ? {:client_options => {:ssl => {:ca_file => '/usr/lib/ssl/certs/ca-certificates.crt'}}} : {})
 

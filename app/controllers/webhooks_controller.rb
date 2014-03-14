@@ -1,7 +1,7 @@
 class WebhooksController < ApplicationController
   include UserProfileConcern
   include IterationConcern
-  
+
   def burn_up
     begin
       Factories::BurnUpFactory.new(UserProfile.find(params["profile_id"])).update

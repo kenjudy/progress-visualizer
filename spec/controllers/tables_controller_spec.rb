@@ -7,22 +7,22 @@ describe TablesController do
 
 
   context "not authenticated" do
-    
+
     context "done stories" do
       subject { get :done_stories }
-  
+
       its(:code) { should == "302" }
 
     end
-  
+
     context "todo stories" do
       subject { get :todo_stories }
-  
+
       its(:code) { should == "302" }
 
     end
   end
-  
+
   context "authenticated" do
     before { sign_in user_profile.user }
 
@@ -32,7 +32,7 @@ describe TablesController do
           get :done_stories
         end
       end
-  
+
       its(:code) { should == "200" }
     end
 
@@ -42,7 +42,7 @@ describe TablesController do
           get :todo_stories
         end
       end
-  
+
       its(:code) { should == "200" }
     end
 

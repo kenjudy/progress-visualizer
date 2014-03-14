@@ -5,7 +5,7 @@ class ReportsController < ApplicationController
   include Tables::DoneStoriesConcern
 
   before_filter :authenticate_user!, :assign_user_profile
-  
+
   def performance_summary
     if params["iteration"]
       @iteration = params["iteration"]
@@ -22,7 +22,7 @@ class ReportsController < ApplicationController
     @prior_iteration = prior_iteration(@iteration)
     @next_iteration = next_iteration(@iteration)
 
-    
+
   end
 end
-  
+

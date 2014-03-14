@@ -1,5 +1,5 @@
 ready = ->
-  
+
   $("a.tip").tooltip()
 
   $('.carousel').carousel('cycle')
@@ -18,8 +18,8 @@ ready = ->
       display_field.val(display_field.val().replace(new RegExp(element.text()), ""))
     display_field.val(display_field.val().replace(/^,|,$|/g, ""))
     display_field.val(display_field.val().replace(/,,/g, ","))
-      
-  
+
+
   $("#user_profile_duration").change ->
     if $("#user_profile_duration").val() > 7
       $(".date-select").css("visibility", "visible")
@@ -28,7 +28,7 @@ ready = ->
 
 spinnerOn = ->
   $("#spinner").modal('show')
-  
+
 spinnerOff = ->
   $("#spinner").modal('hide')
 
@@ -48,7 +48,7 @@ $(window).resize ->
     eval("draw_" + @id + "()")
     return
 
-  
+
 $(document).ready(ready)
 $(document).on('page:load', ready)
 $(document).on('page:fetch', spinnerOn)

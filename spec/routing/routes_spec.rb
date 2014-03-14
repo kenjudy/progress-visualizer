@@ -1,12 +1,12 @@
 require 'spec_helper'
 
 describe "routes" do
-  
+
   context "homepage" do
     subject { { get: "/" } }
     it { should route_to(controller: "homepage", action: "index")}
   end
- 
+
   context "about" do
     subject { { get: "/about"} }
     it { should route_to(controller: "about", action: "index") }
@@ -21,25 +21,25 @@ describe "routes" do
     subject { { get: "/privacy-policy"} }
     it { should route_to(controller: "about", action: "privacy_policy") }
   end
- 
+
   context "help" do
     subject { { get: "/help"} }
     it { should route_to(controller: "help", action: "index") }
   end
- 
+
   context "contact_form new" do
     subject { { post: "/contact_form/create"} }
     it { should route_to(controller: "contact_form", action: "create") }
   end
 
- 
+
   context "contact_form new" do
     subject { { get: "/contact_form/new"} }
     it { should route_to(controller: "contact_form", action: "new") }
   end
-  
+
   context "user_profiles" do
-    { index: [:get, "/", nil], show: [:get, "/1", "1"], 
+    { index: [:get, "/", nil], show: [:get, "/1", "1"],
       new: [:get, "/new", nil], edit: [:get, "/1/edit", "1"],
       create: [:post, "/", nil], update: [:put, "/1", "1"],
       destroy: [:delete, "/1", "1"]
@@ -48,7 +48,7 @@ describe "routes" do
       context action do
         subject { { props[0] => "user_profiles#{props[1]}" } }
         let(:params) {{controller: "user_profiles", action: action.to_s, id: props[2]}.keep_if { |key, val| val }}
-        
+
         it { should route_to(params) }
       end
 
@@ -58,7 +58,7 @@ describe "routes" do
       it { should route_to(controller: "user_profiles", action: "set", profile_id: "1")}
     end
   end
-   
+
   context "webhooks" do
     context "burn_up" do
       subject { { post: "ian4atzhmmh9ul/burn-up/1.json" } }
@@ -75,7 +75,7 @@ describe "routes" do
 
     end
   end
-  
+
   context "charts" do
     context "burn_up" do
       subject { { get: "chart/burn-up" } }
@@ -129,7 +129,7 @@ describe "routes" do
       it { should route_to(controller: "tables", action: "todo_stories")}
     end
   end
-  
+
   context "reports" do
     context "performance summary" do
       subject { { get: "report/performance-summary" } }
@@ -140,5 +140,5 @@ describe "routes" do
       end
     end
   end
-  
+
 end

@@ -17,7 +17,7 @@
                   <%= f.text_field :name, class: "form-control", placeholder: "Name" %>
                 </div>
               </div>
- 
+
               <div class="form-group">
                 <%= f.label :email, class: "col-sm-3 control-label" %>
                 <div class="col-sm-9">
@@ -28,26 +28,26 @@
               <div class="form-group">
                 <%= f.label :type_of_inquiry, class: "col-sm-3 control-label" %>
                 <div class="col-sm-9">
-                  <%= f.select(:type_of_inquiry, options_for_select(["Help", "Question", "Suggestion", "Other"]), {}, class: "form-control") %>
+                  <%= f.select(:type_of_inquiry, options_for_type_of_inquiry(@contact_form.type_of_inquiry), {}, class: "form-control") %>
                 </div>
               </div>
-              
+
               <div class="form-group">
                 <%= f.label :message, class: "col-sm-3 control-label" %>
                 <div class="col-sm-9">
                   <%= f.text_area :message, class: "form-control", rows: 10 %>
                 </div>
               </div>
-             
+
               <div class="form-group" style="display:none">
                 <%= f.label :nickname, class: "col-sm-3 control-label" %>
                 <div class="col-sm-9">
                   <%= f.text_field :nickname, class: "form-control" %>
                 </div>
               </div>
-              
+
             </div>
-            
+
             <div class="panel-footer">
               <div class="form-group">
                 <div class="col-sm-12">

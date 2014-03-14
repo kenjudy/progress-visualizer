@@ -4,17 +4,17 @@ class TestObject
   include Tables::TablesConcern
   include IterationConcern
   include UserProfileConcern
-  
+
 end
 
 describe Tables::TablesConcern do
   include ProgressVisualizerTrello::JsonData
-   
+
 
   let(:user_profile) { FactoryGirl.create(:user_profile) }
   let(:test_object) { TestObject.new(user_profile) }
 
-  let(:cards) do 
+  let(:cards) do
     (0..1).map do |i|
       example_card_data({ "idShort" => "#{i}", "idList" => "5170058469d58225070003ce", "labels" => [{color: "blue", name: "Committed"}], "name" => "(3) Foo #{i}" })
     end
@@ -23,11 +23,11 @@ describe Tables::TablesConcern do
   let(:board) { ProgressVisualizerTrello::Board.new({lists: [example_list_data], cards: cards}) }
   let(:types_of_work) { ["Committed"] }
   let(:done_list_ids) { ["5170058469d58225070003ce"] }
-  
+
   context "collate" do
-  
+
     subject { test_object.collate(board, types_of_work, done_list_ids) }
-  
+
     its([:lists]) { should == {"Committed" => {cards: board.cards, :stories=>2, :estimates=>6.0} } }
     its([:totals]) { should == {:total_stories=>2, :total_estimates=>6.0}}
 

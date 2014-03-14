@@ -7,7 +7,7 @@ class CreateWebhooks < ActiveRecord::Migration
       t.string :id_model
       t.string :description
       t.string :last_run
-      
+
       t.timestamps
     end
   end

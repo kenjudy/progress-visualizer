@@ -14,13 +14,13 @@ describe ReportsController do
   context "authenticated" do
     before { sign_in user_profile.user }
     let(:iteration) { nil }
-    
+
     subject do
       VCR.use_cassette('controllers/reports_controller') do
         get :performance_summary, iteration: iteration
       end
     end
-  
+
     its(:code) { should == "200" }
 
     context "optional date param" do
@@ -29,5 +29,5 @@ describe ReportsController do
       it("retrieves done stories for iteration") { subject }
     end
   end
-  
+
 end
