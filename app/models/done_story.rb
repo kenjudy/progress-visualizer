@@ -1,6 +1,4 @@
 class DoneStory < ActiveRecord::Base
-  extend TablesModelConcern
-
   alias_attribute :name, :story
 
   belongs_to :user_profile
@@ -14,5 +12,20 @@ class DoneStory < ActiveRecord::Base
                estimate: card.estimate }
     attribs.merge!({timestamp: beginning_of_current_iteration, iteration: beginning_of_current_iteration.strftime("%F")}) if story.timestamp.nil?
     story.update_attributes(attribs)
+  end
+  
+  def prior_iteration
+    adjacent_iteration("<")
+  end
+  
+  def next_iteration
+    adjacent_iteration(">")
+  end
+
+  private
+  
+  def adjacent_iteration(comparitor)
+    results = user_profile.done_stories.where("iteration #{comparitor} ?", iteration).order(iteration: comparitor == "<" ? :desc : :asc).limit(1)
+    results.any? ? results.first.iteration : nil
   end
 end

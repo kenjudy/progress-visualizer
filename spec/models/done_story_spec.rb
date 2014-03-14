@@ -3,8 +3,9 @@ require 'spec_helper'
 describe DoneStory do
   include ProgressVisualizerTrello::JsonData
 
+  let(:user_profile) { FactoryGirl.create(:user_profile) }
+
   context "create_or_update_from" do
-    let(:user_profile) { FactoryGirl.create(:user_profile) }
     let(:card) { ProgressVisualizerTrello::Card.new(example_card_data({ "idList" => "5170058469d58225070003ce", "labels" => [{color: "blue", name: "Committed"}], "name" => "(3) Test Story Name" })) }
     let(:type_of_work) { "Committed" }
 
@@ -26,6 +27,31 @@ describe DoneStory do
 
       subject { DoneStory.all }
       its(:length) { should == 1 }
+    end
+  end
+  
+  context "iteration" do
+    let(:today) { Date.today }
+    let(:iterations) { (0..3).map { |offset| (today - (offset * user_profile.duration).days).strftime("%Y-%m-%d") } }
+    before { iterations.each { |iteration| FactoryGirl.create(:done_story, user_profile: user_profile, iteration: iteration) } }
+    
+    context "prior" do
+      let(:done_story) { DoneStory.find_by(iteration: iterations[2])}
+      subject { done_story.prior_iteration }
+      it { should == iterations[3] }
+      context "earliest iteration" do
+        let(:done_story) { DoneStory.find_by(iteration: iterations[3])}
+        it { should be_nil }
+      end
+    end
+    context "next" do
+      let(:done_story) { DoneStory.find_by(iteration: iterations[2])}
+      subject { done_story.next_iteration }
+      it { should == iterations[1] }
+      context "most recent iteration" do
+        let(:done_story) { DoneStory.find_by(iteration: iterations[0])}
+        it { should be_nil }
+      end
     end
   end
 

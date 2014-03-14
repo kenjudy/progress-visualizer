@@ -23,7 +23,22 @@ module IterationConcern
     date < beginning_of_iteration(date) || date > end_of_iteration(date)
   end
 
+  def prior_iteration(iteration)
+    done_story = user_profile.done_story.find_by(iteration: iteration)
+    done_story.prior_iteration if done_story
+  end
+
+  def next_iteration(iteration)
+    done_story = user_profile.done_story.find_by(iteration: iteration)
+    done_story.next_iteration if done_story
+  end
+
   private
+
+  def adjacent_iteration(comparitor, iteration)
+    results = user_profile.done_stories.where("iteration #{comparitor} ?", iteration).order(iteration: comparitor == "<" ? :desc : :asc).limit(1)
+    results.any? ? results.first.iteration : nil
+  end
 
   def align_to_calendar(date)
     user_profile.duration > 7 && user_profile.start_date ? (date.to_date - user_profile.start_date).to_i % user_profile.duration : 0

@@ -4,6 +4,16 @@
 
 <section>
   <div class="container">
+    <div class="row">
+      <ul class="pager">
+        <li class="previous <%= 'disabled' unless  @prior_iteration %>">
+          <%= link_to raw("&larr; Older"), charts_burn_up_path(iteration: @prior_iteration) %>
+        </li>
+        <li class="next <%= 'disabled' unless  @next_iteration %>">
+          <%= link_to raw("Newer &rarr;"), charts_burn_up_path(iteration: @next_iteration) %>
+        </li>
+      </ul>
+    </div>
     <% if @uses_estimates %>
     <div class="row">
       <div id='estimates_chart' class='chart'></div>

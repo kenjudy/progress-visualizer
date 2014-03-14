@@ -1,7 +1,7 @@
 module Factories
   class DoneStoryFactory
-    include TablesModelConcern
     include IterationConcern
+    include TablesModelConcern
 
     def refresh
       board = Adapters::BaseAdapter.build_adapter(user_profile).request_board(user_profile.current_sprint_board_id)

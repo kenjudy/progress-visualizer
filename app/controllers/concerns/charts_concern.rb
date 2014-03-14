@@ -9,7 +9,7 @@ module ChartsConcern
   @@default_properties = { colors: [@@blue,@@green, @@red],
                            pointSize: 8,
                            areaOpacity: 0.05,
-                           titleTextStyle: {color: @@green, fontSize: 24 },
+                           titleTextStyle: {color: @@green, fontSize: 24, fontName: 'Questrial', bold: false },
                            chartArea: {width: '90%', height: '80%'},
                            hAxis: { textStyle: { color: '#999999'}, gridLines: { color: "#eee"}, format:'MMM d, y hh:mma' },
                            vAxis: { textStyle: { color: '#999999'}, gridLines: { color: "#eee"} },
@@ -40,10 +40,13 @@ module ChartsConcern
 
     # Add Rows and Values
     data_table.add_rows(burn_up_rows(options[:data]))
-
-    GoogleVisualr::Interactive::AreaChart.new(data_table, @@default_properties.merge({ title: "Burn Up Chart for #{options[:label]}",
+    GoogleVisualr::Interactive::AreaChart.new(data_table, @@default_properties.merge({ title: "Burn Up for #{options[:label]} #{date_label(data_table)}",
                                                                                         lineWidth: 6,
                                                                                         trendlines: { 1 => {pointSize: 0} }}))
+  end
+
+  def date_label(data_table)
+    "#{data_table.rows.first[0].v.strftime("%B %e, %Y")} - #{data_table.rows.last[0].v.strftime("%B %e, %Y")}" if data_table.rows.any?
   end
 
   def yesterdays_weather_visualization(chart, iteration = nil)
