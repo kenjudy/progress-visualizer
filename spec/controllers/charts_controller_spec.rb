@@ -18,43 +18,43 @@ describe ChartsController do
 
     context "burn_up" do
       let(:format) { :html }
-      subject do
-        VCR.use_cassette('controllers/charts_controller') do
-          get :burn_up, format: format
-        end
-      end
+      subject { get :burn_up, format: format }
 
       its(:code) { should == "200" }
 
-      context "assigns" do
-        before { subject }
-        it { assigns(:estimates_chart).should_not be_nil }
-        it { assigns(:stories_chart).should_not be_nil }
-      end
-      
-      context "json" do
-        let(:format) { :json }
-        its(:code) { should == "200" }
-        context "has estimates" do
-          before { controller.stub(has_non_zero_values: true) }
-          it("contains estimate and story charts") { expect(JSON.parse(subject.body).keys).to eql ["estimates_chart", "stories_chart"] }
-        end
+      context "has data" do
+        before { FactoryGirl.create(:burn_up, user_profile: user_profile) }
         
-        context "no estimates" do
-          before { controller.stub(has_non_zero_values: false) }
-          it("contains story charts") { expect(JSON.parse(subject.body).keys).to eql ["stories_chart"] }
+        context "assigns" do
+          before { subject }
+          it { assigns(:estimates_chart).should_not be_nil }
+          it { assigns(:stories_chart).should_not be_nil }
         end
-      end
       
-      context "with week param" do
-        before do
-          VCR.use_cassette('controllers/charts_controller') do
-            get :burn_up, iteration: "2014-02-24"
+        context "json" do
+          let(:format) { :json }
+          its(:code) { should == "200" }
+          context "has estimates" do
+            before { controller.stub(has_non_zero_values: true) }
+            it("contains estimate and story charts") { expect(JSON.parse(subject.body).keys).to eql ["estimates_chart", "stories_chart"] }
+          end
+        
+          context "no estimates" do
+            before { controller.stub(has_non_zero_values: false) }
+            it("contains story charts") { expect(JSON.parse(subject.body).keys).to eql ["stories_chart"] }
           end
         end
-        it { assigns(:iteration).should == Date.new(2014,2,24) }
+      
+        context "with week param" do
+          before do
+            VCR.use_cassette('controllers/charts_controller') do
+              get :burn_up, iteration: "2014-02-24"
+            end
+          end
+          it { assigns(:iteration).should == Date.new(2014,2,24) }
+        end
       end
-
+      
       context "no data" do
         before do
           allow_any_instance_of(Factories::BurnUpFactory).to receive(:burn_up_data).and_return([])

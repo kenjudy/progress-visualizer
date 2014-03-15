@@ -5,12 +5,7 @@ module UserProfileConcern
     return unless self.respond_to?("current_user") && self.current_user #profile only exists in context of authenticated user
 
     begin
-      if self.respond_to?("params") && self.params[:profile_id]
-        @user_profile = self.current_user.user_profiles.find(self.params[:profile_id])
-        self.session[:profile_id] = @user_profile.id if @user_profile
-      elsif self.session[:profile_id]
-        @user_profile = self.current_user.user_profiles.find(self.session[:profile_id])
-      end
+      profile_from_params || profile_from_session
     rescue ActiveRecord::RecordNotFound => e
       Rails.logger.error(e.message)
     end
@@ -25,5 +20,22 @@ module UserProfileConcern
       redirect_to user_profiles_path unless request.fullpath.include?(user_profiles_path)
     end
     return @user_profile
+  end
+  
+  private
+  
+  def profile_from_params
+    if self.respond_to?("params") && self.params[:profile_id]
+      @user_profile = self.current_user.user_profiles.find(self.params[:profile_id])
+      self.session[:profile_id] = @user_profile.id if @user_profile
+      @user_profile
+    end
+  end
+  
+  def profile_from_session
+    if self.session[:profile_id]
+      @user_profile = self.current_user.user_profiles.find(self.session[:profile_id])
+      @user_profile
+    end
   end
 end

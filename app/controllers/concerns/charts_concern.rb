@@ -101,16 +101,7 @@ module ChartsConcern
   def yesterdays_weather_data_rows(chart, iteration = nil)
     data = {}
     done_stories_data(chart.weeks, iteration).each do |done_story|
-      timestamp = done_story.timestamp.to_s
-
-      value = chart.label == :estimate ? done_story.estimate : 1
-      if chart.types_of_work && chart.types_of_work.any?
-        data[timestamp] = data[timestamp] ||= [timestamp] + chart.types_of_work.length.times.map { 0 }
-        chart.types_of_work.each_with_index { |type_of_work, index| data[timestamp][index+1] += done_story.type_of_work.downcase == type_of_work.downcase ? value : 0 }
-      else
-        data[timestamp] = data[timestamp] ||= [timestamp, 0]
-        data[timestamp][1] += value
-      end
+      stack_by_types_of_work(chart, data, done_story)
     end
     data.values.sort { |a,b| a[0] <=> b[0] }
   end
@@ -125,5 +116,19 @@ module ChartsConcern
       end_of_iteration(iteration)
     end
     user_profile.done_stories.order("timestamp").where('timestamp >= ? and timestamp <= ?', date - (range * user_profile.duration).days, date).to_a
+  end
+  
+  private
+  
+  def stack_by_types_of_work(chart, data, done_story)
+    timestamp = done_story.timestamp.to_s
+    value = chart.label == :estimate ? done_story.estimate : 1
+    if chart.types_of_work && chart.types_of_work.any?
+      data[timestamp] = data[timestamp] ||= [timestamp] + chart.types_of_work.length.times.map { 0 }
+      chart.types_of_work.each_with_index { |type_of_work, index| data[timestamp][index+1] += done_story.type_of_work.downcase == type_of_work.downcase ? value : 0 }
+    else
+      data[timestamp] = data[timestamp] ||= [timestamp, 0]
+      data[timestamp][1] += value
+    end
   end
 end

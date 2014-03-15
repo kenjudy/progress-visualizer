@@ -8,6 +8,7 @@ class Factories::BurnUpFactory
     @timestamp = Time.now
     @done_lists = JSON.parse(@user_profile.done_lists)
     @backlog_lists =  JSON.parse(@user_profile.backlog_lists)
+    @burn_up_data = {}
   end
 
   def update
@@ -29,15 +30,25 @@ class Factories::BurnUpFactory
     last_burnup.backlog_estimates == backlog_stats[:sum]
   end
 
-  def burn_up_data(containing = nil)
-    if containing
-      @user_profile.burn_ups.where("timestamp > ? and timestamp <= ?", beginning_of_iteration(containing), end_of_iteration(containing)).order(timestamp: :asc)
-    else
-      @user_profile.burn_ups.where("timestamp > ? and timestamp <= ?", beginning_of_current_iteration, end_of_current_iteration).order(timestamp: :asc)
-    end
+  def estimates_burn_up_data(containing = nil)
+    burn_up_data(containing).map{ |burn_up| { timestamp: burn_up.timestamp, backlog: burn_up.backlog_estimates, done: burn_up.done_estimates} }
+  end
+  
+  def stories_burn_up_data(containing = nil)
+    burn_up_data(containing).map{ |burn_up| { timestamp: burn_up.timestamp, backlog: burn_up.backlog, done: burn_up.done} }
   end
 
   private
+  
+  def burn_up_data(containing = nil)
+    return @burn_up_data[containing] if @burn_up_data[containing]
+    
+    if containing
+      @burn_up_data[containing] = @user_profile.burn_ups.where("timestamp > ? and timestamp <= ?", beginning_of_iteration(containing), end_of_iteration(containing)).order(timestamp: :asc)
+    else
+      @burn_up_data[containing] =@user_profile.burn_ups.where("timestamp > ? and timestamp <= ?", beginning_of_current_iteration, end_of_current_iteration).order(timestamp: :asc)
+    end
+  end
 
   def request_data
      @board = Adapters::BaseAdapter.build_adapter(@user_profile).request_board(@user_profile.current_sprint_board_id_short)
