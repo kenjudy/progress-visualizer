@@ -35,6 +35,15 @@ describe ChartsController do
       context "json" do
         let(:format) { :json }
         its(:code) { should == "200" }
+        context "has estimates" do
+          before { controller.stub(has_non_zero_values: true) }
+          it("contains estimate and story charts") { expect(JSON.parse(subject.body).keys).to eql ["estimates_chart", "stories_chart"] }
+        end
+        
+        context "no estimates" do
+          before { controller.stub(has_non_zero_values: false) }
+          it("contains story charts") { expect(JSON.parse(subject.body).keys).to eql ["stories_chart"] }
+        end
       end
       
       context "with week param" do

@@ -25,7 +25,7 @@ class ChartsController < ApplicationController
     @next_iteration = next_iteration(iteration)
     respond_to do |format|
       format.html { render }
-      format.json { render :json => {estimates_chart: @estimates_chart, stories_chart: @stories_chart}.to_json }
+      format.json { render :json => (@uses_estimates ? {estimates_chart: @estimates_chart} : {}).merge({stories_chart: @stories_chart}).to_json }
     end
   end
 
