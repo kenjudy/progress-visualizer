@@ -46,8 +46,19 @@ describe ApplicationHelper do
       before { request.stub(fullpath: charts_burn_up_path)}
       it { should == "active" }
 
-      context "multiple patha args" do
+      context "multiple path args" do
         subject { active_class_if([charts_burn_up_path, tables_done_stories_path]) }
+        it { should == "active" }
+      end
+
+      context "path with date param" do
+        before { request.stub(fullpath: charts_burn_up_path(iteration: "2014-03-14"))}
+        it { should == "active" }
+      end
+
+      context "path with weeks param" do
+        subject { active_class_if(charts_yesterdays_weather_path) }
+        before { request.stub(fullpath: charts_yesterdays_weather_path(weeks: "14"))}
         it { should == "active" }
       end
     end

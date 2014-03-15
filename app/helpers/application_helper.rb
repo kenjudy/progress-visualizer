@@ -24,7 +24,7 @@ module ApplicationHelper
 
   def active_class_if(paths)
     arr = paths.instance_of?(String) ? [paths] : paths
-    "active" if arr.include?(request.fullpath)
+    "active" if arr.include?(request.fullpath.gsub(/\d{4}-\d{2}-\d{2}$|\d+$/, "").gsub(/\/?$/,""))
   end
 
   def time_options(hour)
