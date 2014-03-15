@@ -315,6 +315,8 @@ GEM
       rack (~> 1.4)
       rack-protection (~> 1.4)
       tilt (~> 1.3, >= 1.3.4)
+    sitemap_generator (5.0.1)
+      builder
     skinny (0.2.3)
       eventmachine (~> 1.0.0)
       thin (~> 1.5.0)
@@ -402,6 +404,7 @@ DEPENDENCIES
   rspec-rails
   sass-rails (~> 4.0.0)
   sdoc
+  sitemap_generator
   terminal-notifier-guard
   turbolinks
   uglifier (>= 1.3.0)
