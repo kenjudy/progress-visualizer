@@ -67,6 +67,7 @@ group :development, :test do
   gem 'poltergeist'
   gem 'rails_best_practices'
   gem 'metric_fu'
+  gem 'database_cleaner'
 end
 
 gem "google_visualr", ">= 2.1"

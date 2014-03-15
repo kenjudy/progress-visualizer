@@ -82,6 +82,7 @@ GEM
       safe_yaml (~> 1.0.0)
     daemons (1.1.9)
     dalli (2.7.0)
+    database_cleaner (1.2.0)
     debug_inspector (0.0.2)
     devise (3.2.3)
       bcrypt-ruby (~> 3.0)
@@ -374,6 +375,7 @@ DEPENDENCIES
   capybara
   coffee-rails (~> 4.0.0)
   dalli
+  database_cleaner
   devise
   factory_girl_rails
   google_visualr (>= 2.1)

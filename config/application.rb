@@ -22,6 +22,7 @@ end
 if Rails.env == "test"
   require 'vcr'
   require 'webmock'
+  require 'database_cleaner'
 end
 
 if Rails.env == "production"
