@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<!-- saved from url=(0059)yesterdays-weather.html -->
+<html><script type="text/javascript" async="" src="assets/ga.js"></script><script type="text/javascript">window["_gaUserPrefs"] = { ioo : function() { return true; } }</script><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>Progress Visualizer Yesterdays Weather Charts</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <link data-turbolinks-track="true" href="assets/application-d457805d6ceb436d3000f26e4080b01d.css" media="all" rel="stylesheet">
+  <link href="assets/print/application-2e0ac484218278ddab5a925d9b72933f.css" media="print" rel="stylesheet">
+  <script data-turbolinks-track="true" src="assets/application-83cdf1507421236ef89d7290038a88d8.js"></script>
+  <script src="assets/jsapi"></script>
+  <meta content="authenticity_token" name="csrf-param">
+<meta content="rW5aXlJqsMH0y5Na9D25NjDb0yztWnfLdZeZnPi7sjE=" name="csrf-token">
+    <meta http-equiv="refresh" content="900">
+
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-48660757-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+<script type="text/javascript" src="assets/saved_resource"></script><style id="clearly_highlighting_css" type="text/css">/* selection */ html.clearly_highlighting_enabled ::-moz-selection { background: rgba(246, 238, 150, 0.99); } html.clearly_highlighting_enabled ::selection { background: rgba(246, 238, 150, 0.99); } /* cursor */ html.clearly_highlighting_enabled {    /* cursor and hot-spot position -- requires a default cursor, after the URL one */    cursor: url("chrome-extension://pioclpoplcdbaefihamjohnefbikjilc/clearly/images/highlight--cursor.png") 14 16, text; } /* highlight tag */ em.clearly_highlight_element {    font-style: inherit !important; font-weight: inherit !important;    background-image: url("chrome-extension://pioclpoplcdbaefihamjohnefbikjilc/clearly/images/highlight--yellow.png");    background-repeat: repeat-x; background-position: top left; background-size: 100% 100%; } /* the delete-buttons are positioned relative to this */ em.clearly_highlight_element.clearly_highlight_first { position: relative; } /* delete buttons */ em.clearly_highlight_element a.clearly_highlight_delete_element {    display: none; cursor: pointer;    padding: 0; margin: 0; line-height: 0;    position: absolute; width: 34px; height: 34px; left: -17px; top: -17px;    background-image: url("chrome-extension://pioclpoplcdbaefihamjohnefbikjilc/clearly/images/highlight--delete-sprite.png"); background-repeat: no-repeat; background-position: 0px 0px; } em.clearly_highlight_element a.clearly_highlight_delete_element:hover { background-position: -34px 0px; } /* retina */ @media (min--moz-device-pixel-ratio: 2), (-webkit-min-device-pixel-ratio: 2), (min-device-pixel-ratio: 2) {    em.clearly_highlight_element { background-image: url("chrome-extension://pioclpoplcdbaefihamjohnefbikjilc/clearly/images/highlight--yellow@2x.png"); }    em.clearly_highlight_element a.clearly_highlight_delete_element { background-image: url("chrome-extension://pioclpoplcdbaefihamjohnefbikjilc/clearly/images/highlight--delete-sprite@2x.png"); background-size: 68px 34px; } } </style><link type="text/css" href="assets/ui+en.css" rel="stylesheet"><script type="text/javascript" src="assets/format+en,default+en,ui+en,corechart+en.I.js"></script><style>[touch-action="none"]{ -ms-touch-action: none; touch-action: none; }[touch-action="pan-x"]{ -ms-touch-action: pan-x; touch-action: pan-x; }[touch-action="pan-y"]{ -ms-touch-action: pan-y; touch-action: pan-y; }[touch-action="scroll"],[touch-action="pan-x pan-y"],[touch-action="pan-y pan-x"]{ -ms-touch-action: pan-x pan-y; touch-action: pan-x pan-y; }</style><link href="assets/tooltip.css" rel="stylesheet" type="text/css"></head>
+<body class="charts yesterdays_weather">
+  <nav class="navbar navbar-default" role="navigation">
+
+  <div class="navbar-header">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <a class="navbar-brand" href="/" onclick="_gaq.push(['_trackEvent', 'demo_header_menu', 'navbar_brand']);">Progress<span>Visualizer</span></a>
+  </div>
+
+  <ul class="nav navbar-nav navbar-right hidden-sm hidden-xs">
+        <li class="dropdown "><a href="yesterdays-weather.html#" class="dropdown-toggle" data-toggle="dropdown">Demo Trello Board <b class="caret"></b></a>
+      <ul class="dropdown-menu">
+                <li class="disabled"><a href="#" title="demo link" alt="demo link" onclick="_gaq.push(['_trackEvent', 'demo_header_menu', 'view_trello']);">View this board in Trello <span class="glyphicon glyphicon-new-window"></span></a></li><li class="divider"></li><li class="disabled"><a href="#" onclick="_gaq.push(['_trackEvent', 'demo_header_menu', 'progress_visualizer']);">Another trello board</a></li>
+      </ul>
+    </li>
+
+  <li class="dropdown  ">
+    <a href="yesterdays-weather.html#" class="dropdown-toggle" data-toggle="dropdown">
+      Hello Guest
+      <b class="caret"></b></a>
+    <ul class="dropdown-menu">
+<li class="disabled"><a href="#" title="demo link" alt="demo link" onclick="_gaq.push(['_trackEvent', 'demo_header_menu', 'your_profiles']);">Your Profiles</a></li>      <li class="divider"></li>
+      <li class="disabled"><a data-method="delete" href="#" title="demo link" alt="demo link" onclick="_gaq.push(['_trackEvent', 'demo_header_menu', 'logout']);" rel="nofollow">Logout</a></li>
+    </ul>
+  </li>
+
+  </ul>
+  <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    <ul class="nav navbar-nav">
+<li class=" "><a href="burn-up.html" onclick="_gaq.push(['_trackEvent', 'demo_header_menu', 'burn_up']);">Burn Up</a></li>
+      <li class="dropdown active">
+        <a href="yesterdays-weather.html#" class="dropdown-toggle" data-toggle="dropdown">Charts<b class="caret"></b></a>
+        <ul class="dropdown-menu">
+<li class="active "><a href="assets/yesterdays_weather.html" onclick="_gaq.push(['_trackEvent', 'demo_header_menu', 'yesterdays_weather']);">Yesterday's Weather</a></li>          <li class="divider"></li>
+<li class=" "><a href="long-term-trend.html" onclick="_gaq.push(['_trackEvent', 'demo_header_menu', 'long_term_trend']);">Long Term Trend</a></li>        </ul>
+      </li>
+
+      <li class="dropdown ">
+        <a href="yesterdays-weather.html#" class="dropdown-toggle" data-toggle="dropdown">Tables / Reports<b class="caret"></b></a>
+        <ul class="dropdown-menu">
+<li class=" "><a href="done-stories.html" onclick="_gaq.push(['_trackEvent', 'demo_header_menu', 'completed_work']);">Completed Work</a></li><li class=" "><a href="todo-stories.html" onclick="_gaq.push(['_trackEvent', 'demo_header_menu', 'current_todos']);">Current Todo's</a></li>          <li class="divider"></li>
+<li class=" "><a href="performance-summary.html" onclick="_gaq.push(['_trackEvent', 'demo_header_menu', 'performance_summary']);">Performance Summary</a></li>        </ul>
+      </li>
+
+      <li class="dropdown ">
+        <a href="yesterdays-weather.html#" class="dropdown-toggle" data-toggle="dropdown">Help<b class="caret"></b></a>
+        <ul class="dropdown-menu">
+<li class=" "><a href="/help" onclick="_gaq.push(['_trackEvent', 'demo_header_menu', 'help']);">Help</a></li><li class=" "><a href="/contact_form/new" onclick="_gaq.push(['_trackEvent', 'demo_header_menu', 'contact']);">Contact</a></li>          <li class="divider"></li>
+<li class=" "><a href="/about" onclick="_gaq.push(['_trackEvent', 'demo_header_menu', 'about']);">About</a></li>        </ul>
+      </li>
+
+      <li class="hidden-sm hidden-xs">
+        <a href="/contact_form/new" onclick="_gaq.push(['_trackEvent', 'demo_header_menu', 'provide_feedback']);"><span class="label label-info" style="padding: 8px">Provide Feedback!</span></a>
+      </li>
+
+          <li class="dropdown hidden-md hidden-lg"><a href="yesterdays-weather.html#" class="dropdown-toggle" data-toggle="dropdown">Demo Trello Board <b class="caret"></b></a>
+      <ul class="dropdown-menu">
+                <li class="disabled"><a href="#" title="demo link" alt="demo link" onclick="_gaq.push(['_trackEvent', 'demo_header_menu', 'view_trello']);">View this board in Trello <span class="glyphicon glyphicon-new-window"></span></a></li><li class="divider"></li><li class="disabled"><a href="#" onclick="_gaq.push(['_trackEvent', 'demo_header_menu', 'progress_visualizer']);">Another trello board</a></li>
+      </ul>
+    </li>
+
+  <li class="dropdown  hidden-md hidden-lg">
+    <a href="yesterdays-weather.html#" class="dropdown-toggle" data-toggle="dropdown">
+      Hello Guest
+      <b class="caret"></b></a>
+    <ul class="dropdown-menu">
+<li class="disabled"><a href="#" title="demo link" alt="demo link" onclick="_gaq.push(['_trackEvent', 'demo_header_menu', 'your_profiles']);">Your Profiles</a></li>      <li class="divider"></li>
+      <li class="disabled"><a data-method="delete" href="#" title="demo link" alt="demo link" onclick="_gaq.push(['_trackEvent', 'demo_header_menu', 'logout']);" rel="nofollow">Logout</a></li>
+    </ul>
+  </li>
+
+    </ul>
+  </div><!-- /.navbar-collapse -->
+</nav>
+
+  <section>
+  <div class="container">
+    <div class="row">
+      <div class="alert alert-info">
+        <strong>This is a demo page.</strong> Quickly setup visual reporting with <span class="brand">Progress<span>Visualizer</span></span>.&nbsp;&nbsp; 
+              <a class="btn btn-default" href="/about" onclick="_gaq.push(['_trackEvent', 'about_btn', 'homepage','learn_more']);">Learn more</a>
+              <a class="btn btn-default" href="/users/sign_in" onclick="_gaq.push(['_trackEvent', 'new_user_btn', 'homepage','get_started']);">Get started</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+  <section class="hidden">
+  <div class="container">
+    <div class="row">
+      <div class="alert alert-danger ">
+        
+      </div>
+    </div>
+  </div>
+</section>
+  <article>
+    <section>
+  <div class="container">
+      <div class="row">
+    <div id="yesterdays_weather_estimate_chart" class="chart" style="position: relative;"><div dir="ltr" style="position: relative; width: 1170px; height: 600px;"><div style="position: absolute; left: 0px; top: 0px; width: 100%; height: 100%;"><svg width="1170" height="600" style="overflow: hidden;"><defs id="defs"><clippath id="_ABSTRACT_RENDERER_ID_14"><rect x="59" y="60" width="1053" height="480"></rect></clippath></defs><rect x="0" y="0" width="1170" height="600" stroke="none" stroke-width="0" fill="#ffffff"></rect><g><text text-anchor="start" x="59" y="38.4" font-family="Questrial" font-size="24" stroke="none" stroke-width="0" fill="#3d7477">Yesterday's Weather for Estimates</text></g><g><rect x="428" y="575" width="314" height="15" stroke="none" stroke-width="0" fill-opacity="0" fill="#ffffff"></rect><g><rect x="428" y="575" width="94" height="15" stroke="none" stroke-width="0" fill-opacity="0" fill="#ffffff"></rect><g><text text-anchor="start" x="449" y="587.75" font-family="Arial" font-size="15" stroke="none" stroke-width="0" fill="#222222">committed</text></g><rect x="428" y="575" width="15" height="15" stroke="none" stroke-width="0" fill="#091d58"></rect></g><g><rect x="546" y="575" width="94" height="15" stroke="none" stroke-width="0" fill-opacity="0" fill="#ffffff"></rect><g><text text-anchor="start" x="567" y="587.75" font-family="Arial" font-size="15" stroke="none" stroke-width="0" fill="#222222">contingent</text></g><rect x="546" y="575" width="15" height="15" stroke="none" stroke-width="0" fill="#3d7477"></rect></g><g><rect x="664" y="575" width="78" height="15" stroke="none" stroke-width="0" fill-opacity="0" fill="#ffffff"></rect><g><text text-anchor="start" x="685" y="587.75" font-family="Arial" font-size="15" stroke="none" stroke-width="0" fill="#222222">inserted</text></g><rect x="664" y="575" width="15" height="15" stroke="none" stroke-width="0" fill="#991238"></rect></g></g><g><rect x="59" y="60" width="1053" height="480" stroke="none" stroke-width="0" fill-opacity="0" fill="#ffffff"></rect><g clip-path="url(#_ABSTRACT_RENDERER_ID_14)"><g><rect x="59" y="539" width="1053" height="1" stroke="none" stroke-width="0" fill="#cccccc"></rect><rect x="59" y="419" width="1053" height="1" stroke="none" stroke-width="0" fill="#cccccc"></rect><rect x="59" y="300" width="1053" height="1" stroke="none" stroke-width="0" fill="#cccccc"></rect><rect x="59" y="180" width="1053" height="1" stroke="none" stroke-width="0" fill="#cccccc"></rect><rect x="59" y="60" width="1053" height="1" stroke="none" stroke-width="0" fill="#cccccc"></rect></g><g><g><rect x="126" y="281" width="216" height="258" stroke="none" stroke-width="0" fill="#091d58"></rect><rect x="125.5" y="280.5" width="217" height="259" stroke="#000000" stroke-width="1" stroke-opacity="0.3" fill-opacity="1" fill="none"></rect><rect x="124.5" y="279.5" width="219" height="261" stroke="#000000" stroke-width="1" stroke-opacity="0.15" fill-opacity="1" fill="none"></rect><rect x="123.5" y="278.5" width="221" height="263" stroke="#000000" stroke-width="1" stroke-opacity="0.05" fill-opacity="1" fill="none"></rect></g><rect x="477" y="340" width="216" height="199" stroke="none" stroke-width="0" fill="#091d58"></rect><rect x="828" y="380" width="216" height="159" stroke="none" stroke-width="0" fill="#091d58"></rect><rect x="126" y="201" width="216" height="79" stroke="none" stroke-width="0" fill="#3d7477"></rect><rect x="477" y="171" width="216" height="168" stroke="none" stroke-width="0" fill="#3d7477"></rect><rect x="828" y="161" width="216" height="218" stroke="none" stroke-width="0" fill="#3d7477"></rect><rect x="126" y="171" width="216" height="29" stroke="none" stroke-width="0" fill="#991238"></rect><rect x="477" y="131" width="216" height="39" stroke="none" stroke-width="0" fill="#991238"></rect><rect x="828" y="151" width="216" height="9" stroke="none" stroke-width="0" fill="#991238"></rect></g><g><rect x="59" y="539" width="1053" height="1" stroke="none" stroke-width="0" fill="#333333"></rect></g></g><g></g><g><g><text text-anchor="middle" x="234.83333333333334" y="561.75" font-family="Arial" font-size="15" stroke="none" stroke-width="0" fill="#999999">2014-02-24</text></g><g><text text-anchor="middle" x="585.5" y="561.75" font-family="Arial" font-size="15" stroke="none" stroke-width="0" fill="#999999">2014-03-03</text></g><g><text text-anchor="middle" x="936.1666666666667" y="561.75" font-family="Arial" font-size="15" stroke="none" stroke-width="0" fill="#999999">2014-03-10</text></g><g><text text-anchor="end" x="44" y="544.75" font-family="Arial" font-size="15" stroke="none" stroke-width="0" fill="#999999">0</text></g><g><text text-anchor="end" x="44" y="425" font-family="Arial" font-size="15" stroke="none" stroke-width="0" fill="#999999">6</text></g><g><text text-anchor="end" x="44" y="305.25" font-family="Arial" font-size="15" stroke="none" stroke-width="0" fill="#999999">12</text></g><g><text text-anchor="end" x="44" y="185.5" font-family="Arial" font-size="15" stroke="none" stroke-width="0" fill="#999999">18</text></g><g><text text-anchor="end" x="44" y="65.75" font-family="Arial" font-size="15" stroke="none" stroke-width="0" fill="#999999">24</text></g></g></g><g><g><path d="M299.5,266.5A1,1,0,0,1,298.5,265.5L298.5,214.5A1,1,0,0,1,299.5,213.5L416.5,213.5A1,1,0,0,1,417.5,214.5L417.5,265.5A1,1,0,0,1,416.5,266.5L372.5,266.5L342.5,281.5L357.5,266.5Z" stroke="none" stroke-width="0" fill-opacity="0.4" fill="#cccccc" transform="translate(2, 2)"></path><path d="M299.5,266.5A1,1,0,0,1,298.5,265.5L298.5,214.5A1,1,0,0,1,299.5,213.5L416.5,213.5A1,1,0,0,1,417.5,214.5L417.5,265.5A1,1,0,0,1,416.5,266.5L372.5,266.5L342.5,281.5L357.5,266.5Z" stroke="none" stroke-width="0" fill-opacity="0.6" fill="#cccccc" transform="translate(1, 1)"></path><path d="M299.5,266.5A1,1,0,0,1,298.5,265.5L298.5,214.5A1,1,0,0,1,299.5,213.5L416.5,213.5A1,1,0,0,1,417.5,214.5L417.5,265.5A1,1,0,0,1,416.5,266.5L372.5,266.5L342.5,281.5L357.5,266.5Z" stroke="#cccccc" stroke-width="1" fill="#ffffff" transform="translate(0, 0)"></path><g><text text-anchor="start" x="307" y="234.75" font-family="Arial" font-size="15" font-weight="bold" stroke="none" stroke-width="0" fill="#000000">2014-02-24</text></g><g><text text-anchor="start" x="307" y="254.75" font-family="Arial" font-size="15" stroke="none" stroke-width="0" fill="#000000">committed:</text><text text-anchor="start" x="390" y="254.75" font-family="Arial" font-size="15" font-weight="bold" stroke="none" stroke-width="0" fill="#000000">13</text></g></g></g></svg></div></div><div style="display: none; position: absolute; top: 610px; left: 1180px; white-space: nowrap; font-family: Arial; font-size: 15px; font-weight: bold;">13</div><div></div></div>
+    
+<script type="text/javascript">
+  google.load('visualization','1', {packages: ['corechart'], callback: draw_yesterdays_weather_estimate_chart});
+  function draw_yesterdays_weather_estimate_chart() {
+    var data_table = new google.visualization.DataTable();data_table.addColumn({"type":"string","label":"timestamp"});data_table.addColumn({"type":"number","label":"committed"});data_table.addColumn({"type":"number","label":"contingent"});data_table.addColumn({"type":"number","label":"inserted"});data_table.addRow([{v: "2014-02-24"}, {v: 13.0}, {v: 4.0}, {v: 1.5}]);data_table.addRow([{v: "2014-03-03"}, {v: 10.0}, {v: 8.5}, {v: 2.0}]);data_table.addRow([{v: "2014-03-10"}, {v: 8.0}, {v: 11.0}, {v: 0.5}]);
+    var chart = new google.visualization.ColumnChart(document.getElementById('yesterdays_weather_estimate_chart'));
+    chart.draw(data_table, {colors: ["#091D58","#3D7477","#991238"], pointSize: 8, areaOpacity: 0.05, titleTextStyle: {color: "#3D7477", fontSize: 24, fontName: "Questrial", bold: false}, chartArea: {width: "90%", height: "80%"}, hAxis: {textStyle: {color: "#999999"}, gridLines: {color: "#eee"}, format: "MMM d, y hh:mma"}, vAxis: {textStyle: {color: "#999999"}, gridLines: {color: "#eee"}}, legend: {position: "bottom", alignment: "center"}, title: "Yesterday's Weather for Estimates", isStacked: true});
+  };
+</script>
+  </div>
+<div class="row">
+  <div id="yesterdays_weather_stories_chart" class="chart" style="position: relative;"><div dir="ltr" style="position: relative; width: 1170px; height: 600px;"><div style="position: absolute; left: 0px; top: 0px; width: 100%; height: 100%;"><svg width="1170" height="600" style="overflow: hidden;"><defs id="defs"><clippath id="_ABSTRACT_RENDERER_ID_15"><rect x="59" y="60" width="1053" height="480"></rect></clippath></defs><rect x="0" y="0" width="1170" height="600" stroke="none" stroke-width="0" fill="#ffffff"></rect><g><text text-anchor="start" x="59" y="38.4" font-family="Questrial" font-size="24" stroke="none" stroke-width="0" fill="#3d7477">Yesterday's Weather for Stories</text></g><g><rect x="428" y="575" width="314" height="15" stroke="none" stroke-width="0" fill-opacity="0" fill="#ffffff"></rect><g><rect x="428" y="575" width="94" height="15" stroke="none" stroke-width="0" fill-opacity="0" fill="#ffffff"></rect><g><text text-anchor="start" x="449" y="587.75" font-family="Arial" font-size="15" stroke="none" stroke-width="0" fill="#222222">committed</text></g><rect x="428" y="575" width="15" height="15" stroke="none" stroke-width="0" fill="#091d58"></rect></g><g><rect x="546" y="575" width="94" height="15" stroke="none" stroke-width="0" fill-opacity="0" fill="#ffffff"></rect><g><text text-anchor="start" x="567" y="587.75" font-family="Arial" font-size="15" stroke="none" stroke-width="0" fill="#222222">contingent</text></g><rect x="546" y="575" width="15" height="15" stroke="none" stroke-width="0" fill="#3d7477"></rect></g><g><rect x="664" y="575" width="78" height="15" stroke="none" stroke-width="0" fill-opacity="0" fill="#ffffff"></rect><g><text text-anchor="start" x="685" y="587.75" font-family="Arial" font-size="15" stroke="none" stroke-width="0" fill="#222222">inserted</text></g><rect x="664" y="575" width="15" height="15" stroke="none" stroke-width="0" fill="#991238"></rect></g></g><g><rect x="59" y="60" width="1053" height="480" stroke="none" stroke-width="0" fill-opacity="0" fill="#ffffff"></rect><g clip-path="url(#_ABSTRACT_RENDERER_ID_15)"><g><rect x="59" y="539" width="1053" height="1" stroke="none" stroke-width="0" fill="#cccccc"></rect><rect x="59" y="419" width="1053" height="1" stroke="none" stroke-width="0" fill="#cccccc"></rect><rect x="59" y="300" width="1053" height="1" stroke="none" stroke-width="0" fill="#cccccc"></rect><rect x="59" y="180" width="1053" height="1" stroke="none" stroke-width="0" fill="#cccccc"></rect><rect x="59" y="60" width="1053" height="1" stroke="none" stroke-width="0" fill="#cccccc"></rect></g><g><rect x="126" y="253" width="216" height="286" stroke="none" stroke-width="0" fill="#091d58"></rect><rect x="477" y="468" width="216" height="71" stroke="none" stroke-width="0" fill="#091d58"></rect><rect x="828" y="468" width="216" height="71" stroke="none" stroke-width="0" fill="#091d58"></rect><rect x="126" y="205" width="216" height="47" stroke="none" stroke-width="0" fill="#3d7477"></rect><rect x="477" y="324" width="216" height="143" stroke="none" stroke-width="0" fill="#3d7477"></rect><rect x="828" y="277" width="216" height="190" stroke="none" stroke-width="0" fill="#3d7477"></rect><rect x="126" y="157" width="216" height="47" stroke="none" stroke-width="0" fill="#991238"></rect><g><rect x="477" y="277" width="216" height="46" stroke="none" stroke-width="0" fill="#991238"></rect><rect x="476.5" y="276.5" width="217" height="47" stroke="#000000" stroke-width="1" stroke-opacity="0.3" fill-opacity="1" fill="none"></rect><rect x="475.5" y="275.5" width="219" height="49" stroke="#000000" stroke-width="1" stroke-opacity="0.15" fill-opacity="1" fill="none"></rect><rect x="474.5" y="274.5" width="221" height="51" stroke="#000000" stroke-width="1" stroke-opacity="0.05" fill-opacity="1" fill="none"></rect></g><rect x="828" y="253" width="216" height="23" stroke="none" stroke-width="0" fill="#991238"></rect></g><g><rect x="59" y="539" width="1053" height="1" stroke="none" stroke-width="0" fill="#333333"></rect></g></g><g></g><g><g><text text-anchor="middle" x="234.83333333333334" y="561.75" font-family="Arial" font-size="15" stroke="none" stroke-width="0" fill="#999999">2014-02-24</text></g><g><text text-anchor="middle" x="585.5" y="561.75" font-family="Arial" font-size="15" stroke="none" stroke-width="0" fill="#999999">2014-03-03</text></g><g><text text-anchor="middle" x="936.1666666666667" y="561.75" font-family="Arial" font-size="15" stroke="none" stroke-width="0" fill="#999999">2014-03-10</text></g><g><text text-anchor="end" x="44" y="544.75" font-family="Arial" font-size="15" stroke="none" stroke-width="0" fill="#999999">0</text></g><g><text text-anchor="end" x="44" y="425" font-family="Arial" font-size="15" stroke="none" stroke-width="0" fill="#999999">5</text></g><g><text text-anchor="end" x="44" y="305.25" font-family="Arial" font-size="15" stroke="none" stroke-width="0" fill="#999999">10</text></g><g><text text-anchor="end" x="44" y="185.5" font-family="Arial" font-size="15" stroke="none" stroke-width="0" fill="#999999">15</text></g><g><text text-anchor="end" x="44" y="65.75" font-family="Arial" font-size="15" stroke="none" stroke-width="0" fill="#999999">20</text></g></g></g><g><g><path d="M659.5,262.5A1,1,0,0,1,658.5,261.5L658.5,210.5A1,1,0,0,1,659.5,209.5L758.5,209.5A1,1,0,0,1,759.5,210.5L759.5,261.5A1,1,0,0,1,758.5,262.5L723.5,262.5L693.5,277.5L708.5,262.5Z" stroke="none" stroke-width="0" fill-opacity="0.4" fill="#cccccc" transform="translate(2, 2)"></path><path d="M659.5,262.5A1,1,0,0,1,658.5,261.5L658.5,210.5A1,1,0,0,1,659.5,209.5L758.5,209.5A1,1,0,0,1,759.5,210.5L759.5,261.5A1,1,0,0,1,758.5,262.5L723.5,262.5L693.5,277.5L708.5,262.5Z" stroke="none" stroke-width="0" fill-opacity="0.6" fill="#cccccc" transform="translate(1, 1)"></path><path d="M659.5,262.5A1,1,0,0,1,658.5,261.5L658.5,210.5A1,1,0,0,1,659.5,209.5L758.5,209.5A1,1,0,0,1,759.5,210.5L759.5,261.5A1,1,0,0,1,758.5,262.5L723.5,262.5L693.5,277.5L708.5,262.5Z" stroke="#cccccc" stroke-width="1" fill="#ffffff" transform="translate(0, 0)"></path><g><text text-anchor="start" x="667" y="230.75" font-family="Arial" font-size="15" font-weight="bold" stroke="none" stroke-width="0" fill="#000000">2014-03-03</text></g><g><text text-anchor="start" x="667" y="250.75" font-family="Arial" font-size="15" stroke="none" stroke-width="0" fill="#000000">inserted:</text><text text-anchor="start" x="733" y="250.75" font-family="Arial" font-size="15" font-weight="bold" stroke="none" stroke-width="0" fill="#000000">2</text></g></g></g></svg></div></div><div style="display: none; position: absolute; top: 610px; left: 1180px; white-space: nowrap; font-family: Arial; font-size: 15px; font-weight: bold;">2014-03-03</div><div></div></div>
+  
+<script type="text/javascript">
+  google.load('visualization','1', {packages: ['corechart'], callback: draw_yesterdays_weather_stories_chart});
+  function draw_yesterdays_weather_stories_chart() {
+    var data_table = new google.visualization.DataTable();data_table.addColumn({"type":"string","label":"timestamp"});data_table.addColumn({"type":"number","label":"committed"});data_table.addColumn({"type":"number","label":"contingent"});data_table.addColumn({"type":"number","label":"inserted"});data_table.addRow([{v: "2014-02-24"}, {v: 12}, {v: 2}, {v: 2}]);data_table.addRow([{v: "2014-03-03"}, {v: 3}, {v: 6}, {v: 2}]);data_table.addRow([{v: "2014-03-10"}, {v: 3}, {v: 8}, {v: 1}]);
+    var chart = new google.visualization.ColumnChart(document.getElementById('yesterdays_weather_stories_chart'));
+    chart.draw(data_table, {colors: ["#091D58","#3D7477","#991238"], pointSize: 8, areaOpacity: 0.05, titleTextStyle: {color: "#3D7477", fontSize: 24, fontName: "Questrial", bold: false}, chartArea: {width: "90%", height: "80%"}, hAxis: {textStyle: {color: "#999999"}, gridLines: {color: "#eee"}, format: "MMM d, y hh:mma"}, vAxis: {textStyle: {color: "#999999"}, gridLines: {color: "#eee"}}, legend: {position: "bottom", alignment: "center"}, title: "Yesterday's Weather for Stories", isStacked: true});
+  };
+</script>
+</div>
+
+  </div>
+</section>
+  </article>
+  <footer class="muted">
+    <div class="content">
+      <p>
+        <a href="/">www.<span class="brand">progress<span>-visualizer</span></span>.com</a>
+        is a trello dashboard in ruby on rails by
+        <a href="http://judykat.com/ken-judy">Guest Judy</a>
+        |
+        github: <a href="https://github.com/kenjudy">kenjudy</a>
+      </p>
+      <p class="hide-print">
+        <a href="/help" onclick="_gaq.push(['_trackEvent', 'demo_footer', 'link_to_help','help']);">Help</a>
+        |
+        <a href="/about" onclick="_gaq.push(['_trackEvent', 'demo_footer', 'link_to_about','about']);">About</a>
+        |
+        <a href="terms-and-conditions" onclick="_gaq.push(['_trackEvent', 'demo_footer', 'link_to_terms_and_conditions','terms_and_conditions']);">Terms and Conditions</a>
+        |
+        <a href="privacy-policy" onclick="_gaq.push(['_trackEvent', 'demo_footer', 'link_to_privacy_policy','privacy_policy']);">Privacy Policy</a>
+      </p>
+    </div>
+  </footer>
+  <div id="spinner" class="modal fade" tabindex="-1" role="dialog" aria-hidden="false">
+  <div class="modal-dialog">
+    <div id="floatingCirclesG">
+      <div class="f_circleG" id="frotateG_01"></div>
+      <div class="f_circleG" id="frotateG_02"></div>
+      <div class="f_circleG" id="frotateG_03"></div>
+      <div class="f_circleG" id="frotateG_04"></div>
+      <div class="f_circleG" id="frotateG_05"></div>
+      <div class="f_circleG" id="frotateG_06"></div>
+      <div class="f_circleG" id="frotateG_07"></div>
+      <div class="f_circleG" id="frotateG_08"></div>
+    </div>
+  </div>
+</div>
+
+
+</body></html>

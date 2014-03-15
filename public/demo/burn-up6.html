@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<!-- saved from url=(0059)burn-up6.html -->
+<html><script type="text/javascript" async="" src="assets/ga.js"></script><script type="text/javascript">window["_gaUserPrefs"] = { ioo : function() { return true; } }</script><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>Progress Visualizer Burn Up Charts</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <link data-turbolinks-track="true" href="assets/application-d457805d6ceb436d3000f26e4080b01d.css" media="all" rel="stylesheet">
+  <link href="assets/print/application-2e0ac484218278ddab5a925d9b72933f.css" media="print" rel="stylesheet">
+  <script data-turbolinks-track="true" src="assets/application-83cdf1507421236ef89d7290038a88d8.js"></script>
+  <script src="assets/jsapi"></script>
+  <meta content="authenticity_token" name="csrf-param">
+<meta content="rW5aXlJqsMH0y5Na9D25NjDb0yztWnfLdZeZnPi7sjE=" name="csrf-token">
+    <meta http-equiv="refresh" content="900">
+
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-48660757-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+<script type="text/javascript" src="assets/saved_resource"></script><style id="clearly_highlighting_css" type="text/css">/* selection */ html.clearly_highlighting_enabled ::-moz-selection { background: rgba(246, 238, 150, 0.99); } html.clearly_highlighting_enabled ::selection { background: rgba(246, 238, 150, 0.99); } /* cursor */ html.clearly_highlighting_enabled {    /* cursor and hot-spot position -- requires a default cursor, after the URL one */    cursor: url("chrome-extension://pioclpoplcdbaefihamjohnefbikjilc/clearly/images/highlight--cursor.png") 14 16, text; } /* highlight tag */ em.clearly_highlight_element {    font-style: inherit !important; font-weight: inherit !important;    background-image: url("chrome-extension://pioclpoplcdbaefihamjohnefbikjilc/clearly/images/highlight--yellow.png");    background-repeat: repeat-x; background-position: top left; background-size: 100% 100%; } /* the delete-buttons are positioned relative to this */ em.clearly_highlight_element.clearly_highlight_first { position: relative; } /* delete buttons */ em.clearly_highlight_element a.clearly_highlight_delete_element {    display: none; cursor: pointer;    padding: 0; margin: 0; line-height: 0;    position: absolute; width: 34px; height: 34px; left: -17px; top: -17px;    background-image: url("chrome-extension://pioclpoplcdbaefihamjohnefbikjilc/clearly/images/highlight--delete-sprite.png"); background-repeat: no-repeat; background-position: 0px 0px; } em.clearly_highlight_element a.clearly_highlight_delete_element:hover { background-position: -34px 0px; } /* retina */ @media (min--moz-device-pixel-ratio: 2), (-webkit-min-device-pixel-ratio: 2), (min-device-pixel-ratio: 2) {    em.clearly_highlight_element { background-image: url("chrome-extension://pioclpoplcdbaefihamjohnefbikjilc/clearly/images/highlight--yellow@2x.png"); }    em.clearly_highlight_element a.clearly_highlight_delete_element { background-image: url("chrome-extension://pioclpoplcdbaefihamjohnefbikjilc/clearly/images/highlight--delete-sprite@2x.png"); background-size: 68px 34px; } } </style><link type="text/css" href="assets/ui+en.css" rel="stylesheet"><script type="text/javascript" src="assets/format+en,default+en,ui+en,corechart+en.I.js"></script><style>[touch-action="none"]{ -ms-touch-action: none; touch-action: none; }[touch-action="pan-x"]{ -ms-touch-action: pan-x; touch-action: pan-x; }[touch-action="pan-y"]{ -ms-touch-action: pan-y; touch-action: pan-y; }[touch-action="scroll"],[touch-action="pan-x pan-y"],[touch-action="pan-y pan-x"]{ -ms-touch-action: pan-x pan-y; touch-action: pan-x pan-y; }</style><link href="assets/tooltip.css" rel="stylesheet" type="text/css"></head>
+<body class="charts burn_up">
+  <nav class="navbar navbar-default" role="navigation">
+
+  <div class="navbar-header">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <a class="navbar-brand" href="/" onclick="_gaq.push(['_trackEvent', 'demo_header_menu', 'navbar_brand']);">Progress<span>Visualizer</span></a>
+  </div>
+
+  <ul class="nav navbar-nav navbar-right hidden-sm hidden-xs">
+        <li class="dropdown "><a href="burn-up6.html#" class="dropdown-toggle" data-toggle="dropdown">Demo Trello Board <b class="caret"></b></a>
+      <ul class="dropdown-menu">
+                <li class="disabled"><a href="#" title="demo link" alt="demo link" onclick="_gaq.push(['_trackEvent', 'demo_header_menu', 'view_trello']);">View this board in Trello <span class="glyphicon glyphicon-new-window"></span></a></li><li class="divider"></li><li class="disabled"><a href="#" onclick="_gaq.push(['_trackEvent', 'demo_header_menu', 'progress_visualizer']);">Another trello board</a></li>
+      </ul>
+    </li>
+
+  <li class="dropdown  ">
+    <a href="burn-up6.html#" class="dropdown-toggle" data-toggle="dropdown">
+      Hello Guest
+      <b class="caret"></b></a>
+    <ul class="dropdown-menu">
+<li class="disabled"><a href="#" title="demo link" alt="demo link" onclick="_gaq.push(['_trackEvent', 'demo_header_menu', 'your_profiles']);">Your Profiles</a></li>      <li class="divider"></li>
+      <li class="disabled"><a data-method="delete" href="#" title="demo link" alt="demo link" onclick="_gaq.push(['_trackEvent', 'demo_header_menu', 'logout']);" rel="nofollow">Logout</a></li>
+    </ul>
+  </li>
+
+  </ul>
+  <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    <ul class="nav navbar-nav">
+<li class=" "><a href="burn-up.html" onclick="_gaq.push(['_trackEvent', 'demo_header_menu', 'burn_up']);">Burn Up</a></li>
+      <li class="dropdown ">
+        <a href="burn-up6.html#" class="dropdown-toggle" data-toggle="dropdown">Charts<b class="caret"></b></a>
+        <ul class="dropdown-menu">
+<li class=" "><a href="yesterdays-weather.html" onclick="_gaq.push(['_trackEvent', 'demo_header_menu', 'yesterdays_weather']);">Yesterday's Weather</a></li>          <li class="divider"></li>
+<li class=" "><a href="long-term-trend.html" onclick="_gaq.push(['_trackEvent', 'demo_header_menu', 'long_term_trend']);">Long Term Trend</a></li>        </ul>
+      </li>
+
+      <li class="dropdown ">
+        <a href="burn-up6.html#" class="dropdown-toggle" data-toggle="dropdown">Tables / Reports<b class="caret"></b></a>
+        <ul class="dropdown-menu">
+<li class=" "><a href="done-stories.html" onclick="_gaq.push(['_trackEvent', 'demo_header_menu', 'completed_work']);">Completed Work</a></li><li class=" "><a href="todo-stories.html" onclick="_gaq.push(['_trackEvent', 'demo_header_menu', 'current_todos']);">Current Todo's</a></li>          <li class="divider"></li>
+<li class=" "><a href="performance-summary.html" onclick="_gaq.push(['_trackEvent', 'demo_header_menu', 'performance_summary']);">Performance Summary</a></li>        </ul>
+      </li>
+
+      <li class="dropdown ">
+        <a href="burn-up6.html#" class="dropdown-toggle" data-toggle="dropdown">Help<b class="caret"></b></a>
+        <ul class="dropdown-menu">
+<li class=" "><a href="/help" onclick="_gaq.push(['_trackEvent', 'demo_header_menu', 'help']);">Help</a></li><li class=" "><a href="/contact_form/new" onclick="_gaq.push(['_trackEvent', 'demo_header_menu', 'contact']);">Contact</a></li>          <li class="divider"></li>
+<li class=" "><a href="/about" onclick="_gaq.push(['_trackEvent', 'demo_header_menu', 'about']);">About</a></li>        </ul>
+      </li>
+
+      <li class="hidden-sm hidden-xs">
+        <a href="/contact_form/new" onclick="_gaq.push(['_trackEvent', 'demo_header_menu', 'provide_feedback']);"><span class="label label-info" style="padding: 8px">Provide Feedback!</span></a>
+      </li>
+
+          <li class="dropdown hidden-md hidden-lg"><a href="burn-up6.html#" class="dropdown-toggle" data-toggle="dropdown">Demo Trello Board <b class="caret"></b></a>
+      <ul class="dropdown-menu">
+                <li class="disabled"><a href="#" title="demo link" alt="demo link" onclick="_gaq.push(['_trackEvent', 'demo_header_menu', 'view_trello']);">View this board in Trello <span class="glyphicon glyphicon-new-window"></span></a></li><li class="divider"></li><li class="disabled"><a href="#" onclick="_gaq.push(['_trackEvent', 'demo_header_menu', 'progress_visualizer']);">Another trello board</a></li>
+      </ul>
+    </li>
+
+  <li class="dropdown  hidden-md hidden-lg">
+    <a href="burn-up6.html#" class="dropdown-toggle" data-toggle="dropdown">
+      Hello Guest
+      <b class="caret"></b></a>
+    <ul class="dropdown-menu">
+<li class="disabled"><a href="#" title="demo link" alt="demo link" onclick="_gaq.push(['_trackEvent', 'demo_header_menu', 'your_profiles']);">Your Profiles</a></li>      <li class="divider"></li>
+      <li class="disabled"><a data-method="delete" href="#" title="demo link" alt="demo link" onclick="_gaq.push(['_trackEvent', 'demo_header_menu', 'logout']);" rel="nofollow">Logout</a></li>
+    </ul>
+  </li>
+
+    </ul>
+  </div><!-- /.navbar-collapse -->
+</nav>
+
+  <section>
+  <div class="container">
+    <div class="row">
+      <div class="alert alert-info">
+        <strong>This is a demo page.</strong> Quickly setup visual reporting with <span class="brand">Progress<span>Visualizer</span></span>.&nbsp;&nbsp; 
+              <a class="btn btn-default" href="/about" onclick="_gaq.push(['_trackEvent', 'about_btn', 'homepage','learn_more']);">Learn more</a>
+              <a class="btn btn-default" href="/users/sign_in" onclick="_gaq.push(['_trackEvent', 'new_user_btn', 'homepage','get_started']);">Get started</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+  <section class="hidden">
+  <div class="container">
+    <div class="row">
+      <div class="alert alert-danger ">
+        
+      </div>
+    </div>
+  </div>
+</section>
+  <article>
+    
+<section>
+  <div class="container">
+    <div class="row">
+      <ul class="pager">
+        <li class="previous disabled">
+          <a href="#" title="demo link" alt="demo link">← Older</a>
+        </li>
+        <li class="next ">
+          <a href="burn-up5.html">Newer →</a>
+        </li>
+      </ul>
+    </div>
+    <div class="row">
+      <div id="estimates_chart" class="chart" style="position: relative;"><div dir="ltr" style="position: relative; width: 1170px; height: 600px;"><div style="position: absolute; left: 0px; top: 0px; width: 100%; height: 100%;"><svg width="1170" height="600" style="overflow: hidden;"><defs id="defs"><clippath id="_ABSTRACT_RENDERER_ID_12"><rect x="59" y="60" width="1053" height="480"></rect></clippath></defs><rect x="0" y="0" width="1170" height="600" stroke="none" stroke-width="0" fill="#ffffff"></rect><g><text text-anchor="start" x="59" y="38.4" font-family="Questrial" font-size="24" stroke="none" stroke-width="0" fill="#3d7477">Burn Up for Estimates January 20, 2014 - January 25, 2014</text></g><g><rect x="396" y="575" width="378" height="15" stroke="none" stroke-width="0" fill-opacity="0" fill="#ffffff"></rect><g><rect x="396" y="575" width="171" height="15" stroke="none" stroke-width="0" fill-opacity="0" fill="#ffffff"></rect><g><text text-anchor="start" x="417" y="587.75" font-family="Arial" font-size="15" stroke="none" stroke-width="0" fill="#222222">Backlog by Estimates</text></g><rect x="396" y="575" width="15" height="15" stroke="none" stroke-width="0" fill="#091d58"></rect></g><g><rect x="591" y="575" width="183" height="15" stroke="none" stroke-width="0" fill-opacity="0" fill="#ffffff"></rect><g><text text-anchor="start" x="612" y="587.75" font-family="Arial" font-size="15" stroke="none" stroke-width="0" fill="#222222">Complete by Estimates</text></g><rect x="591" y="575" width="15" height="15" stroke="none" stroke-width="0" fill="#3d7477"></rect></g></g><g><rect x="59" y="60" width="1053" height="480" stroke="none" stroke-width="0" fill-opacity="0" fill="#ffffff"></rect><g clip-path="url(#_ABSTRACT_RENDERER_ID_12)"><g><rect x="152" y="60" width="1" height="480" stroke="none" stroke-width="0" fill="#cccccc"></rect><rect x="374" y="60" width="1" height="480" stroke="none" stroke-width="0" fill="#cccccc"></rect><rect x="597" y="60" width="1" height="480" stroke="none" stroke-width="0" fill="#cccccc"></rect><rect x="819" y="60" width="1" height="480" stroke="none" stroke-width="0" fill="#cccccc"></rect><rect x="1041" y="60" width="1" height="480" stroke="none" stroke-width="0" fill="#cccccc"></rect><rect x="59" y="539" width="1053" height="1" stroke="none" stroke-width="0" fill="#cccccc"></rect><rect x="59" y="419" width="1053" height="1" stroke="none" stroke-width="0" fill="#cccccc"></rect><rect x="59" y="300" width="1053" height="1" stroke="none" stroke-width="0" fill="#cccccc"></rect><rect x="59" y="180" width="1053" height="1" stroke="none" stroke-width="0" fill="#cccccc"></rect><rect x="59" y="60" width="1053" height="1" stroke="none" stroke-width="0" fill="#cccccc"></rect></g><g><g><path d="M59.5,539.5L59.5,343.11L281.9161346446076,252.10000000000002L504.3322692892153,204.2L726.7484039338228,199.41000000000003L949.1645385784306,137.14L987.7913221472076,194.62L987.9972630126192,194.62L1111.5,194.62L1111.5,539.5Z" stroke="none" stroke-width="0" fill-opacity="0.05" fill="#091d58"></path></g><g><path d="M59.5,539.5L59.5,529.92L281.9161346446076,414.96L504.3322692892153,386.22L726.7484039338228,352.69L949.1645385784306,290.41999999999996L987.7913221472076,290.41999999999996L987.9972630126192,290.41999999999996L1111.5,290.41999999999996L1111.5,539.5Z" stroke="none" stroke-width="0" fill-opacity="0.05" fill="#3d7477"></path></g></g><g><rect x="59" y="60" width="1" height="480" stroke="none" stroke-width="0" fill="#333333"></rect><rect x="59" y="539" width="1053" height="1" stroke="none" stroke-width="0" fill="#333333"></rect></g><g><path d="M59.5,343.11L281.9161346446076,252.10000000000002L504.3322692892153,204.2L726.7484039338228,199.41000000000003L949.1645385784306,137.14L987.7913221472076,194.62L987.9972630126192,194.62L1111.5,194.62" stroke="#091d58" stroke-width="6" fill-opacity="1" fill="none"></path><path d="M59.5,529.92L281.9161346446076,414.96L504.3322692892153,386.22L726.7484039338228,352.69L949.1645385784306,290.41999999999996L987.7913221472076,290.41999999999996L987.9972630126192,290.41999999999996L1111.5,290.41999999999996" stroke="#3d7477" stroke-width="6" fill-opacity="1" fill="none"></path><path d="M59.5,495.87593860601424L70.09124266812834,493.5617765474331L80.68248791051752,491.247614488852L91.27373315290669,488.93345243054966L101.86497582103505,486.61929037196853L112.45622106342421,484.3051283136662L123.04746630581337,481.99096625480627L133.63871154820254,479.67680419622513L144.2299542163309,477.3626421379228L154.82119945872006,475.0484800793417L165.41244470110922,472.73431802103937L176.00368736923758,470.42015596245824L186.59493261162675,468.1059939041559L197.1861778540159,465.7918318455748L207.77742309640507,463.4776697872725L218.36866576453343,461.16350772869134L228.9599110069226,458.8493456698314L239.55115624931176,456.5351836115291L250.14239891744012,454.22102155294795L260.7336441598293,451.90685949464563L271.32488940221845,449.5926974360645L281.9161346446076,447.2785353777622L292.50737731273597,444.96437331918105L303.0986225551252,442.6502112605999L313.68986779751435,440.3360492022976L324.28111046564266,438.02188714371647L334.8723557080318,435.70772508541415L345.463600950421,433.3935630265542L356.05484619281015,431.0794009679731L366.6460888609385,428.76523890967076L377.23733410332767,426.4510768510896L387.82857934571683,424.13691479278725L398.4198220138452,421.8227527342061L409.01106725623436,419.50859067590386L419.6023124986235,417.1944286173227L430.19355774101274,414.88026655902036L440.78480040914104,412.5661045004392L451.3760456515302,410.25194244157933L461.9672908939194,407.93778038327696L472.5585335620477,405.6236183246958L483.1497788044369,403.30945626639357L493.7410240468261,400.99529420781244L504.3322692892153,398.6811321492313L514.9235119573436,396.36697009092893L525.5147571997328,394.0528080323478L536.106002442122,391.73864597404554L546.6972451102504,389.4244839154644L557.2884903526394,387.11032185716203L567.8797355950287,384.79615979830214L578.4709808374178,382.481997739721L589.0622235055462,380.16783568141864L599.6534687479353,377.8536736228375L610.2447139903245,375.53951156453525L620.8359566584528,373.2253495059541L631.427201900842,370.91118744765174L642.0184471432311,368.5970253890706L652.6096923856203,366.2828633307683L663.2009350537487,363.96870127218716L673.7921802961379,361.6545392133272L684.383425538527,359.3403771550249L694.9746682066553,357.02621509644376L705.5659134490445,354.71205303814145L716.1571586914337,352.3978909795603L726.7484039338228,350.0837289209792L737.3396466019512,347.76956686267687L747.9308918443404,345.45540480409574L758.5221370867296,343.1412427457934L769.1133797548579,340.8270806872123L779.704624997247,338.51291862891L790.2958702396362,336.19875657005L800.8871154820255,333.8845945114689L811.4783581501538,331.5704324531666L822.069603392543,329.25627039458544L832.6608486349321,326.9421083362831L843.2520913030604,324.627946277702L853.8433365454497,322.3137842193997L864.4345817878389,319.99962216081855L875.025827030228,317.6854601022374L885.6170696983563,315.3712980439351L896.2083149407455,313.05713598507515L906.7995601831346,310.74297392677283L917.3908028512631,308.4288118681917L927.9820480936522,306.11464980961057L938.5732933360414,303.80048775130825L949.1645385784306,301.4863256927271L958.8212344706247,299.3763603127602L968.477930362819,297.2663949319569L978.1346262550134,295.15642955199L987.7913221472076,293.04646417174433L987.9972630126192,293.0014665760833L998.2891551873068,290.752711737004L1008.581052510516,288.5039568976458L1018.8729472594645,286.2552020585665L1029.1648394341519,284.0064472194872L1039.4567367573613,281.757692380129L1049.7486315063097,279.50893754104965L1060.0405236809972,277.26018270197034L1070.3324210042065,275.01142786261215L1080.6243157531549,272.76267302353284L1090.9162079278424,270.51391818445353L1101.2081052510516,268.26516334481653L1111.5,266.0164085057372" stroke="#3d7477" stroke-width="6" stroke-opacity="0.5" fill-opacity="1" fill="none"></path></g></g><g><circle cx="59.5" cy="343.11" r="5" stroke="none" stroke-width="0" fill="#091d58"></circle><circle cx="281.9161346446076" cy="252.10000000000002" r="5" stroke="none" stroke-width="0" fill="#091d58"></circle><circle cx="504.3322692892153" cy="204.2" r="5" stroke="none" stroke-width="0" fill="#091d58"></circle><circle cx="726.7484039338228" cy="199.41000000000003" r="5" stroke="none" stroke-width="0" fill="#091d58"></circle><circle cx="949.1645385784306" cy="137.14" r="5" stroke="none" stroke-width="0" fill="#091d58"></circle><circle cx="987.7913221472076" cy="194.62" r="5" stroke="none" stroke-width="0" fill="#091d58"></circle><circle cx="987.9972630126192" cy="194.62" r="5" stroke="none" stroke-width="0" fill="#091d58"></circle><circle cx="1111.5" cy="194.62" r="5" stroke="none" stroke-width="0" fill="#091d58"></circle><circle cx="59.5" cy="529.92" r="5" stroke="none" stroke-width="0" fill="#3d7477"></circle><circle cx="281.9161346446076" cy="414.96" r="5" stroke="none" stroke-width="0" fill="#3d7477"></circle><circle cx="504.3322692892153" cy="386.22" r="5" stroke="none" stroke-width="0" fill="#3d7477"></circle><circle cx="726.7484039338228" cy="352.69" r="5" stroke="none" stroke-width="0" fill="#3d7477"></circle><circle cx="949.1645385784306" cy="290.41999999999996" r="5" stroke="none" stroke-width="0" fill="#3d7477"></circle><circle cx="987.7913221472076" cy="290.41999999999996" r="5" stroke="none" stroke-width="0" fill="#3d7477"></circle><circle cx="987.9972630126192" cy="290.41999999999996" r="5" stroke="none" stroke-width="0" fill="#3d7477"></circle><circle cx="1111.5" cy="290.41999999999996" r="5" stroke="none" stroke-width="0" fill="#3d7477"></circle></g><g><g><text text-anchor="middle" x="152.17338943525317" y="561.75" font-family="Arial" font-size="15" stroke="none" stroke-width="0" fill="#999999">Jan 21, 2014 12:00AM</text></g><g><text text-anchor="middle" x="374.5895240798608" y="561.75" font-family="Arial" font-size="15" stroke="none" stroke-width="0" fill="#999999">Jan 22, 2014 12:00AM</text></g><g><text text-anchor="middle" x="597.0056587244684" y="561.75" font-family="Arial" font-size="15" stroke="none" stroke-width="0" fill="#999999">Jan 23, 2014 12:00AM</text></g><g><text text-anchor="middle" x="819.4217933690761" y="561.75" font-family="Arial" font-size="15" stroke="none" stroke-width="0" fill="#999999">Jan 24, 2014 12:00AM</text></g><g><text text-anchor="middle" x="1041.8379280136837" y="561.75" font-family="Arial" font-size="15" stroke="none" stroke-width="0" fill="#999999">Jan 25, 2014 12:00AM</text></g><g><text text-anchor="end" x="45" y="544.75" font-family="Arial" font-size="15" stroke="none" stroke-width="0" fill="#999999">0.0</text></g><g><text text-anchor="end" x="45" y="425" font-family="Arial" font-size="15" stroke="none" stroke-width="0" fill="#999999">12.5</text></g><g><text text-anchor="end" x="45" y="305.25" font-family="Arial" font-size="15" stroke="none" stroke-width="0" fill="#999999">25.0</text></g><g><text text-anchor="end" x="45" y="185.5" font-family="Arial" font-size="15" stroke="none" stroke-width="0" fill="#999999">37.5</text></g><g><text text-anchor="end" x="45" y="65.75" font-family="Arial" font-size="15" stroke="none" stroke-width="0" fill="#999999">50.0</text></g></g></g><g></g></svg></div></div><div style="display: none; position: absolute; top: 610px; left: 1180px; white-space: nowrap; font-family: Arial; font-size: 15px;">Complete by Estimates</div><div></div></div>
+      
+<script type="text/javascript">
+  google.load('visualization','1', {packages: ['corechart'], callback: draw_estimates_chart});
+  function draw_estimates_chart() {
+    var data_table = new google.visualization.DataTable();data_table.addColumn({"type":"datetime","label":"Timestamp"});data_table.addColumn({"type":"number","label":"Backlog by Estimates"});data_table.addColumn({"type":"number","label":"Complete by Estimates"});data_table.addRow([{v: new Date(2014, 0, 20, 14, 0, 0)}, {v: 20.5}, {v: 1.0}]);data_table.addRow([{v: new Date(2014, 0, 21, 14, 0, 0)}, {v: 30.0}, {v: 13.0}]);data_table.addRow([{v: new Date(2014, 0, 22, 14, 0, 0)}, {v: 35.0}, {v: 16.0}]);data_table.addRow([{v: new Date(2014, 0, 23, 14, 0, 0)}, {v: 35.5}, {v: 19.5}]);data_table.addRow([{v: new Date(2014, 0, 24, 14, 0, 0)}, {v: 42.0}, {v: 26.0}]);data_table.addRow([{v: new Date(2014, 0, 24, 18, 10, 5)}, {v: 36.0}, {v: 26.0}]);data_table.addRow([{v: new Date(2014, 0, 24, 18, 11, 25)}, {v: 36.0}, {v: 26.0}]);data_table.addRow([{v: new Date(2014, 0, 25, 7, 31, 1)}, {v: 36.0}, {v: 26.0}]);
+    var chart = new google.visualization.AreaChart(document.getElementById('estimates_chart'));
+    chart.draw(data_table, {colors: ["#091D58","#3D7477","#991238"], pointSize: 8, areaOpacity: 0.05, titleTextStyle: {color: "#3D7477", fontSize: 24, fontName: "Questrial", bold: false}, chartArea: {width: "90%", height: "80%"}, hAxis: {textStyle: {color: "#999999"}, gridLines: {color: "#eee"}, format: "MMM d, y hh:mma"}, vAxis: {textStyle: {color: "#999999"}, gridLines: {color: "#eee"}}, legend: {position: "bottom", alignment: "center"}, title: "Burn Up for Estimates January 20, 2014 - January 25, 2014", lineWidth: 6, trendlines: {1: {pointSize: 0}}});
+  };
+</script>
+    </div>
+    <div class="row">
+      <div id="stories_chart" class="chart" style="position: relative;"><div dir="ltr" style="position: relative; width: 1170px; height: 600px;"><div style="position: absolute; left: 0px; top: 0px; width: 100%; height: 100%;"><svg width="1170" height="600" style="overflow: hidden;"><defs id="defs"><clippath id="_ABSTRACT_RENDERER_ID_13"><rect x="59" y="60" width="1053" height="480"></rect></clippath></defs><rect x="0" y="0" width="1170" height="600" stroke="none" stroke-width="0" fill="#ffffff"></rect><g><text text-anchor="start" x="59" y="38.4" font-family="Questrial" font-size="24" stroke="none" stroke-width="0" fill="#3d7477">Burn Up for Story Counts January 20, 2014 - January 25, 2014</text></g><g><rect x="374" y="575" width="422" height="15" stroke="none" stroke-width="0" fill-opacity="0" fill="#ffffff"></rect><g><rect x="374" y="575" width="193" height="15" stroke="none" stroke-width="0" fill-opacity="0" fill="#ffffff"></rect><g><text text-anchor="start" x="395" y="587.75" font-family="Arial" font-size="15" stroke="none" stroke-width="0" fill="#222222">Backlog by Story Counts</text></g><rect x="374" y="575" width="15" height="15" stroke="none" stroke-width="0" fill="#091d58"></rect></g><g><rect x="591" y="575" width="205" height="15" stroke="none" stroke-width="0" fill-opacity="0" fill="#ffffff"></rect><g><text text-anchor="start" x="612" y="587.75" font-family="Arial" font-size="15" stroke="none" stroke-width="0" fill="#222222">Complete by Story Counts</text></g><rect x="591" y="575" width="15" height="15" stroke="none" stroke-width="0" fill="#3d7477"></rect></g></g><g><rect x="59" y="60" width="1053" height="480" stroke="none" stroke-width="0" fill-opacity="0" fill="#ffffff"></rect><g clip-path="url(#_ABSTRACT_RENDERER_ID_13)"><g><rect x="152" y="60" width="1" height="480" stroke="none" stroke-width="0" fill="#cccccc"></rect><rect x="374" y="60" width="1" height="480" stroke="none" stroke-width="0" fill="#cccccc"></rect><rect x="597" y="60" width="1" height="480" stroke="none" stroke-width="0" fill="#cccccc"></rect><rect x="819" y="60" width="1" height="480" stroke="none" stroke-width="0" fill="#cccccc"></rect><rect x="1041" y="60" width="1" height="480" stroke="none" stroke-width="0" fill="#cccccc"></rect><rect x="59" y="539" width="1053" height="1" stroke="none" stroke-width="0" fill="#cccccc"></rect><rect x="59" y="419" width="1053" height="1" stroke="none" stroke-width="0" fill="#cccccc"></rect><rect x="59" y="300" width="1053" height="1" stroke="none" stroke-width="0" fill="#cccccc"></rect><rect x="59" y="180" width="1053" height="1" stroke="none" stroke-width="0" fill="#cccccc"></rect><rect x="59" y="60" width="1053" height="1" stroke="none" stroke-width="0" fill="#cccccc"></rect></g><g><g><path d="M59.5,539.5L59.5,347.9L281.9161346446076,204.2L504.3322692892153,132.35000000000002L726.7484039338228,132.35000000000002L949.1645385784306,60.5L987.7913221472076,60.5L987.9972630126192,60.5L1111.5,60.5L1111.5,539.5Z" stroke="none" stroke-width="0" fill-opacity="0.05" fill="#091d58"></path></g><g><path d="M59.5,539.5L59.5,491.6L281.9161346446076,300L504.3322692892153,276.05L726.7484039338228,204.2L949.1645385784306,132.35000000000002L987.7913221472076,204.2L987.9972630126192,204.2L1111.5,180.25L1111.5,539.5Z" stroke="none" stroke-width="0" fill-opacity="0.05" fill="#3d7477"></path></g></g><g><rect x="59" y="60" width="1" height="480" stroke="none" stroke-width="0" fill="#333333"></rect><rect x="59" y="539" width="1053" height="1" stroke="none" stroke-width="0" fill="#333333"></rect></g><g><path d="M59.5,347.9L281.9161346446076,204.2L504.3322692892153,132.35000000000002L726.7484039338228,132.35000000000002L949.1645385784306,60.5L987.7913221472076,60.5L987.9972630126192,60.5L1111.5,60.5" stroke="#091d58" stroke-width="6" fill-opacity="1" fill="none"></path><path d="M59.5,491.6L281.9161346446076,300L504.3322692892153,276.05L726.7484039338228,204.2L949.1645385784306,132.35000000000002L987.7913221472076,204.2L987.9972630126192,204.2L1111.5,180.25" stroke="#3d7477" stroke-width="6" fill-opacity="1" fill="none"></path><path d="M59.5,416.45288262386237L70.09124266812834,413.6904802984624L80.68248791051752,410.9280779727138L91.27373315290669,408.1656756473138L101.86497582103505,405.40327332191373L112.45622106342421,402.6408709961652L123.04746630581337,399.8784686700681L133.63871154820254,397.11606634466807L144.2299542163309,394.3536640192681L154.82119945872006,391.5912616935195L165.41244470110922,388.8288593681194L176.00368736923758,386.06645704237087L186.59493261162675,383.3040547169709L197.1861778540159,380.5416523912223L207.77742309640507,377.7792500658223L218.36866576453343,375.01684774042224L228.9599110069226,372.2544454143252L239.55115624931176,369.49204308892513L250.14239891744012,366.7296407631766L260.7336441598293,363.9672384377766L271.32488940221845,361.20483611202803L281.9161346446076,358.44243378662793L292.50737731273597,355.6800314608794L303.0986225551252,352.9176291354794L313.68986779751435,350.15522680973083L324.28111046564266,347.3928244843308L334.8723557080318,344.63042215893074L345.463600950421,341.8680198328337L356.05484619281015,339.10561750743364L366.6460888609385,336.3432151816851L377.23733410332767,333.5808128562851L387.82857934571683,330.81841053053654L398.4198220138452,328.05600820513644L409.01106725623436,325.2936058793879L419.6023124986235,322.5312035539879L430.19355774101274,319.76880122858785L440.78480040914104,317.0063989028393L451.3760456515302,314.24399657674223L461.9672908939194,311.4815942513422L472.5585335620477,308.71919192594214L483.1497788044369,305.9567896001936L493.7410240468261,303.1943872747936L504.3322692892153,300.43198494904505L514.9235119573436,297.66958262364494L525.5147571997328,294.9071802978964L536.106002442122,292.1447779724964L546.6972451102504,289.38237564709635L557.2884903526394,286.6199733213478L567.8797355950287,283.85757099559925L578.4709808374178,281.0951686698507L589.0622235055462,278.33276634445065L599.6534687479353,275.5703640187021L610.2447139903245,272.80796169330205L620.8359566584528,270.0455593675535L631.427201900842,267.2831570421535L642.0184471432311,264.52075471640495L652.6096923856203,261.7583523910049L663.2009350537487,258.99595006560486L673.7921802961379,256.2335477395078L684.383425538527,253.47114541410775L694.9746682066553,250.7087430883592L705.5659134490445,247.94634076295915L716.1571586914337,245.1839384372106L726.7484039338228,242.42153611181055L737.3396466019512,239.659133786062L747.9308918443404,236.896731460662L758.5221370867296,234.13432913526196L769.1133797548579,231.3719268095134L779.704624997247,228.60952448411336L790.2958702396362,225.8471221580163L800.8871154820255,223.08471983261626L811.4783581501538,220.3223175068677L822.069603392543,217.55991518146766L832.6608486349321,214.7975128557191L843.2520913030604,212.03511053031906L853.8433365454497,209.2727082045705L864.4345817878389,206.51030587917052L875.025827030228,203.74790355377047L885.6170696983563,200.98550122802192L896.2083149407455,198.22309890227336L906.7995601831346,195.4606965765248L917.3908028512631,192.69829425112476L927.9820480936522,189.9358919253762L938.5732933360414,187.17348959997616L949.1645385784306,184.4110872742276L958.8212344706247,181.89243338344676L968.477930362819,179.37377949162038L978.1346262550134,176.85512560083953L987.7913221472076,174.33647170971017L987.9972630126192,174.28275833111041L998.2891551873068,171.59843223821736L1008.581052510516,168.91410614462728L1018.8729472594645,166.22978005173428L1029.1648394341519,163.54545395849271L1039.4567367573613,160.8611278652512L1049.7486315063097,158.17680177200964L1060.0405236809972,155.49247567911664L1070.3324210042065,152.80814958552656L1080.6243157531549,150.123823492285L1090.9162079278424,147.439497399392L1101.2081052510516,144.75517130580192L1111.5,142.07084521290892" stroke="#3d7477" stroke-width="6" stroke-opacity="0.5" fill-opacity="1" fill="none"></path></g></g><g><circle cx="59.5" cy="347.9" r="5" stroke="none" stroke-width="0" fill="#091d58"></circle><circle cx="281.9161346446076" cy="204.2" r="5" stroke="none" stroke-width="0" fill="#091d58"></circle><circle cx="504.3322692892153" cy="132.35000000000002" r="5" stroke="none" stroke-width="0" fill="#091d58"></circle><circle cx="726.7484039338228" cy="132.35000000000002" r="5" stroke="none" stroke-width="0" fill="#091d58"></circle><circle cx="949.1645385784306" cy="60.5" r="5" stroke="none" stroke-width="0" fill="#091d58"></circle><circle cx="987.7913221472076" cy="60.5" r="5" stroke="none" stroke-width="0" fill="#091d58"></circle><circle cx="987.9972630126192" cy="60.5" r="5" stroke="none" stroke-width="0" fill="#091d58"></circle><circle cx="1111.5" cy="60.5" r="5" stroke="none" stroke-width="0" fill="#091d58"></circle><circle cx="59.5" cy="491.6" r="5" stroke="none" stroke-width="0" fill="#3d7477"></circle><circle cx="281.9161346446076" cy="300" r="5" stroke="none" stroke-width="0" fill="#3d7477"></circle><circle cx="504.3322692892153" cy="276.05" r="5" stroke="none" stroke-width="0" fill="#3d7477"></circle><circle cx="726.7484039338228" cy="204.2" r="5" stroke="none" stroke-width="0" fill="#3d7477"></circle><circle cx="949.1645385784306" cy="132.35000000000002" r="5" stroke="none" stroke-width="0" fill="#3d7477"></circle><circle cx="987.7913221472076" cy="204.2" r="5" stroke="none" stroke-width="0" fill="#3d7477"></circle><circle cx="987.9972630126192" cy="204.2" r="5" stroke="none" stroke-width="0" fill="#3d7477"></circle><circle cx="1111.5" cy="180.25" r="5" stroke="none" stroke-width="0" fill="#3d7477"></circle></g><g><g><text text-anchor="middle" x="152.17338943525317" y="561.75" font-family="Arial" font-size="15" stroke="none" stroke-width="0" fill="#999999">Jan 21, 2014 12:00AM</text></g><g><text text-anchor="middle" x="374.5895240798608" y="561.75" font-family="Arial" font-size="15" stroke="none" stroke-width="0" fill="#999999">Jan 22, 2014 12:00AM</text></g><g><text text-anchor="middle" x="597.0056587244684" y="561.75" font-family="Arial" font-size="15" stroke="none" stroke-width="0" fill="#999999">Jan 23, 2014 12:00AM</text></g><g><text text-anchor="middle" x="819.4217933690761" y="561.75" font-family="Arial" font-size="15" stroke="none" stroke-width="0" fill="#999999">Jan 24, 2014 12:00AM</text></g><g><text text-anchor="middle" x="1041.8379280136837" y="561.75" font-family="Arial" font-size="15" stroke="none" stroke-width="0" fill="#999999">Jan 25, 2014 12:00AM</text></g><g><text text-anchor="end" x="44" y="544.75" font-family="Arial" font-size="15" stroke="none" stroke-width="0" fill="#999999">0</text></g><g><text text-anchor="end" x="44" y="425" font-family="Arial" font-size="15" stroke="none" stroke-width="0" fill="#999999">5</text></g><g><text text-anchor="end" x="44" y="305.25" font-family="Arial" font-size="15" stroke="none" stroke-width="0" fill="#999999">10</text></g><g><text text-anchor="end" x="44" y="185.5" font-family="Arial" font-size="15" stroke="none" stroke-width="0" fill="#999999">15</text></g><g><text text-anchor="end" x="44" y="65.75" font-family="Arial" font-size="15" stroke="none" stroke-width="0" fill="#999999">20</text></g></g></g><g></g></svg></div></div><div style="display: none; position: absolute; top: 610px; left: 1180px; white-space: nowrap; font-family: Arial; font-size: 15px;">Complete by Story Counts</div><div></div></div>
+      
+<script type="text/javascript">
+  google.load('visualization','1', {packages: ['corechart'], callback: draw_stories_chart});
+  function draw_stories_chart() {
+    var data_table = new google.visualization.DataTable();data_table.addColumn({"type":"datetime","label":"Timestamp"});data_table.addColumn({"type":"number","label":"Backlog by Story Counts"});data_table.addColumn({"type":"number","label":"Complete by Story Counts"});data_table.addRow([{v: new Date(2014, 0, 20, 14, 0, 0)}, {v: 8}, {v: 2}]);data_table.addRow([{v: new Date(2014, 0, 21, 14, 0, 0)}, {v: 14}, {v: 10}]);data_table.addRow([{v: new Date(2014, 0, 22, 14, 0, 0)}, {v: 17}, {v: 11}]);data_table.addRow([{v: new Date(2014, 0, 23, 14, 0, 0)}, {v: 17}, {v: 14}]);data_table.addRow([{v: new Date(2014, 0, 24, 14, 0, 0)}, {v: 20}, {v: 17}]);data_table.addRow([{v: new Date(2014, 0, 24, 18, 10, 5)}, {v: 20}, {v: 14}]);data_table.addRow([{v: new Date(2014, 0, 24, 18, 11, 25)}, {v: 20}, {v: 14}]);data_table.addRow([{v: new Date(2014, 0, 25, 7, 31, 1)}, {v: 20}, {v: 15}]);
+    var chart = new google.visualization.AreaChart(document.getElementById('stories_chart'));
+    chart.draw(data_table, {colors: ["#091D58","#3D7477","#991238"], pointSize: 8, areaOpacity: 0.05, titleTextStyle: {color: "#3D7477", fontSize: 24, fontName: "Questrial", bold: false}, chartArea: {width: "90%", height: "80%"}, hAxis: {textStyle: {color: "#999999"}, gridLines: {color: "#eee"}, format: "MMM d, y hh:mma"}, vAxis: {textStyle: {color: "#999999"}, gridLines: {color: "#eee"}}, legend: {position: "bottom", alignment: "center"}, title: "Burn Up for Story Counts January 20, 2014 - January 25, 2014", lineWidth: 6, trendlines: {1: {pointSize: 0}}});
+  };
+</script>
+    </div>
+  </div>
+</section>
+
+<script type="text/javascript" charset="utf-8">
+  window.tickUpdate();
+</script>
+  </article>
+  <footer class="muted">
+    <div class="content">
+      <p>
+        <a href="/">www.<span class="brand">progress<span>-visualizer</span></span>.com</a>
+        is a trello dashboard in ruby on rails by
+        <a href="http://judykat.com/ken-judy">Guest Judy</a>
+        |
+        github: <a href="https://github.com/kenjudy">kenjudy</a>
+      </p>
+      <p class="hide-print">
+        <a href="/help" onclick="_gaq.push(['_trackEvent', 'demo_footer', 'link_to_help','help']);">Help</a>
+        |
+        <a href="/about" onclick="_gaq.push(['_trackEvent', 'demo_footer', 'link_to_about','about']);">About</a>
+        |
+        <a href="terms-and-conditions" onclick="_gaq.push(['_trackEvent', 'demo_footer', 'link_to_terms_and_conditions','terms_and_conditions']);">Terms and Conditions</a>
+        |
+        <a href="privacy-policy" onclick="_gaq.push(['_trackEvent', 'demo_footer', 'link_to_privacy_policy','privacy_policy']);">Privacy Policy</a>
+      </p>
+    </div>
+  </footer>
+  <div id="spinner" class="modal fade" tabindex="-1" role="dialog" aria-hidden="false">
+  <div class="modal-dialog">
+    <div id="floatingCirclesG">
+      <div class="f_circleG" id="frotateG_01"></div>
+      <div class="f_circleG" id="frotateG_02"></div>
+      <div class="f_circleG" id="frotateG_03"></div>
+      <div class="f_circleG" id="frotateG_04"></div>
+      <div class="f_circleG" id="frotateG_05"></div>
+      <div class="f_circleG" id="frotateG_06"></div>
+      <div class="f_circleG" id="frotateG_07"></div>
+      <div class="f_circleG" id="frotateG_08"></div>
+    </div>
+  </div>
+</div>
+
+
+</body></html>

@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<!-- saved from url=(0072)performance-summary3.html -->
+<html><script type="text/javascript" async="" src="assets/ga.js"></script><script type="text/javascript">window["_gaUserPrefs"] = { ioo : function() { return true; } }</script><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>Progress Visualizer Performance Summary Reports</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <link data-turbolinks-track="true" href="assets/application-d457805d6ceb436d3000f26e4080b01d.css" media="all" rel="stylesheet">
+  <link href="assets/print/application-2e0ac484218278ddab5a925d9b72933f.css" media="print" rel="stylesheet">
+  <script data-turbolinks-track="true" src="assets/application-83cdf1507421236ef89d7290038a88d8.js"></script>
+  <script src="assets/jsapi"></script>
+  <meta content="authenticity_token" name="csrf-param">
+<meta content="rW5aXlJqsMH0y5Na9D25NjDb0yztWnfLdZeZnPi7sjE=" name="csrf-token">
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-48660757-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+<style id="clearly_highlighting_css" type="text/css">/* selection */ html.clearly_highlighting_enabled ::-moz-selection { background: rgba(246, 238, 150, 0.99); } html.clearly_highlighting_enabled ::selection { background: rgba(246, 238, 150, 0.99); } /* cursor */ html.clearly_highlighting_enabled {    /* cursor and hot-spot position -- requires a default cursor, after the URL one */    cursor: url("chrome-extension://pioclpoplcdbaefihamjohnefbikjilc/clearly/images/highlight--cursor.png") 14 16, text; } /* highlight tag */ em.clearly_highlight_element {    font-style: inherit !important; font-weight: inherit !important;    background-image: url("chrome-extension://pioclpoplcdbaefihamjohnefbikjilc/clearly/images/highlight--yellow.png");    background-repeat: repeat-x; background-position: top left; background-size: 100% 100%; } /* the delete-buttons are positioned relative to this */ em.clearly_highlight_element.clearly_highlight_first { position: relative; } /* delete buttons */ em.clearly_highlight_element a.clearly_highlight_delete_element {    display: none; cursor: pointer;    padding: 0; margin: 0; line-height: 0;    position: absolute; width: 34px; height: 34px; left: -17px; top: -17px;    background-image: url("chrome-extension://pioclpoplcdbaefihamjohnefbikjilc/clearly/images/highlight--delete-sprite.png"); background-repeat: no-repeat; background-position: 0px 0px; } em.clearly_highlight_element a.clearly_highlight_delete_element:hover { background-position: -34px 0px; } /* retina */ @media (min--moz-device-pixel-ratio: 2), (-webkit-min-device-pixel-ratio: 2), (min-device-pixel-ratio: 2) {    em.clearly_highlight_element { background-image: url("chrome-extension://pioclpoplcdbaefihamjohnefbikjilc/clearly/images/highlight--yellow@2x.png"); }    em.clearly_highlight_element a.clearly_highlight_delete_element { background-image: url("chrome-extension://pioclpoplcdbaefihamjohnefbikjilc/clearly/images/highlight--delete-sprite@2x.png"); background-size: 68px 34px; } } </style><style>[touch-action="none"]{ -ms-touch-action: none; touch-action: none; }[touch-action="pan-x"]{ -ms-touch-action: pan-x; touch-action: pan-x; }[touch-action="pan-y"]{ -ms-touch-action: pan-y; touch-action: pan-y; }[touch-action="scroll"],[touch-action="pan-x pan-y"],[touch-action="pan-y pan-x"]{ -ms-touch-action: pan-x pan-y; touch-action: pan-x pan-y; }</style><script type="text/javascript" src="assets/saved_resource"></script><link type="text/css" href="assets/ui+en.css" rel="stylesheet"><script type="text/javascript" src="assets/format+en,default+en,ui+en,corechart+en.I.js"></script><link href="assets/tooltip.css" rel="stylesheet" type="text/css"></head>
+<body class="reports performance_summary">
+  <nav class="navbar navbar-default" role="navigation">
+
+  <div class="navbar-header">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <a class="navbar-brand" href="/" onclick="_gaq.push(['_trackEvent', 'demo_header_menu', 'navbar_brand']);">Progress<span>Visualizer</span></a>
+  </div>
+
+  <ul class="nav navbar-nav navbar-right hidden-sm hidden-xs">
+        <li class="dropdown "><a href="performance-summary3.html#" class="dropdown-toggle" data-toggle="dropdown">Demo Trello Board <b class="caret"></b></a>
+      <ul class="dropdown-menu">
+                <li class="disabled"><a href="#" title="demo link" alt="demo link" onclick="_gaq.push(['_trackEvent', 'demo_header_menu', 'view_trello']);">View this board in Trello <span class="glyphicon glyphicon-new-window"></span></a></li><li class="divider"></li><li class="disabled"><a href="#" onclick="_gaq.push(['_trackEvent', 'demo_header_menu', 'progress_visualizer']);">Another trello board</a></li>
+      </ul>
+    </li>
+
+  <li class="dropdown  ">
+    <a href="performance-summary3.html#" class="dropdown-toggle" data-toggle="dropdown">
+      Hello Guest
+      <b class="caret"></b></a>
+    <ul class="dropdown-menu">
+<li class="disabled"><a href="#" title="demo link" alt="demo link" onclick="_gaq.push(['_trackEvent', 'demo_header_menu', 'your_profiles']);">Your Profiles</a></li>      <li class="divider"></li>
+      <li class="disabled"><a data-method="delete" href="#" title="demo link" alt="demo link" onclick="_gaq.push(['_trackEvent', 'demo_header_menu', 'logout']);" rel="nofollow">Logout</a></li>
+    </ul>
+  </li>
+
+  </ul>
+  <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    <ul class="nav navbar-nav">
+<li class=" "><a href="burn-up.html" onclick="_gaq.push(['_trackEvent', 'demo_header_menu', 'burn_up']);">Burn Up</a></li>
+      <li class="dropdown ">
+        <a href="performance-summary3.html#" class="dropdown-toggle" data-toggle="dropdown">Charts<b class="caret"></b></a>
+        <ul class="dropdown-menu">
+<li class=" "><a href="yesterdays-weather.html" onclick="_gaq.push(['_trackEvent', 'demo_header_menu', 'yesterdays_weather']);">Yesterday's Weather</a></li>          <li class="divider"></li>
+<li class=" "><a href="long-term-trend.html" onclick="_gaq.push(['_trackEvent', 'demo_header_menu', 'long_term_trend']);">Long Term Trend</a></li>        </ul>
+      </li>
+
+      <li class="dropdown ">
+        <a href="performance-summary3.html#" class="dropdown-toggle" data-toggle="dropdown">Tables / Reports<b class="caret"></b></a>
+        <ul class="dropdown-menu">
+<li class=" "><a href="done-stories.html" onclick="_gaq.push(['_trackEvent', 'demo_header_menu', 'completed_work']);">Completed Work</a></li><li class=" "><a href="todo-stories.html" onclick="_gaq.push(['_trackEvent', 'demo_header_menu', 'current_todos']);">Current Todo's</a></li>          <li class="divider"></li>
+<li class=" "><a href="performance-summary.html" onclick="_gaq.push(['_trackEvent', 'demo_header_menu', 'performance_summary']);">Performance Summary</a></li>        </ul>
+      </li>
+
+      <li class="dropdown ">
+        <a href="performance-summary3.html#" class="dropdown-toggle" data-toggle="dropdown">Help<b class="caret"></b></a>
+        <ul class="dropdown-menu">
+<li class=" "><a href="/help" onclick="_gaq.push(['_trackEvent', 'demo_header_menu', 'help']);">Help</a></li><li class=" "><a href="/contact_form/new" onclick="_gaq.push(['_trackEvent', 'demo_header_menu', 'contact']);">Contact</a></li>          <li class="divider"></li>
+<li class=" "><a href="/about" onclick="_gaq.push(['_trackEvent', 'demo_header_menu', 'about']);">About</a></li>        </ul>
+      </li>
+
+      <li class="hidden-sm hidden-xs">
+        <a href="/contact_form/new" onclick="_gaq.push(['_trackEvent', 'demo_header_menu', 'provide_feedback']);"><span class="label label-info" style="padding: 8px">Provide Feedback!</span></a>
+      </li>
+
+          <li class="dropdown hidden-md hidden-lg"><a href="performance-summary3.html#" class="dropdown-toggle" data-toggle="dropdown">Demo Trello Board <b class="caret"></b></a>
+      <ul class="dropdown-menu">
+                <li class="disabled"><a href="#" title="demo link" alt="demo link" onclick="_gaq.push(['_trackEvent', 'demo_header_menu', 'view_trello']);">View this board in Trello <span class="glyphicon glyphicon-new-window"></span></a></li><li class="divider"></li><li class="disabled"><a href="#" onclick="_gaq.push(['_trackEvent', 'demo_header_menu', 'progress_visualizer']);">Another trello board</a></li>
+      </ul>
+    </li>
+
+  <li class="dropdown  hidden-md hidden-lg">
+    <a href="performance-summary3.html#" class="dropdown-toggle" data-toggle="dropdown">
+      Hello Guest
+      <b class="caret"></b></a>
+    <ul class="dropdown-menu">
+<li class="disabled"><a href="#" title="demo link" alt="demo link" onclick="_gaq.push(['_trackEvent', 'demo_header_menu', 'your_profiles']);">Your Profiles</a></li>      <li class="divider"></li>
+      <li class="disabled"><a data-method="delete" href="#" title="demo link" alt="demo link" onclick="_gaq.push(['_trackEvent', 'demo_header_menu', 'logout']);" rel="nofollow">Logout</a></li>
+    </ul>
+  </li>
+
+    </ul>
+  </div><!-- /.navbar-collapse -->
+</nav>
+
+  <section>
+  <div class="container">
+    <div class="row">
+      <div class="alert alert-info">
+        <strong>This is a demo page.</strong> Quickly setup visual reporting with <span class="brand">Progress<span>Visualizer</span></span>.&nbsp;&nbsp; 
+              <a class="btn btn-default" href="/about" onclick="_gaq.push(['_trackEvent', 'about_btn', 'homepage','learn_more']);">Learn more</a>
+              <a class="btn btn-default" href="/users/sign_in" onclick="_gaq.push(['_trackEvent', 'new_user_btn', 'homepage','get_started']);">Get started</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+  <section class="hidden">
+  <div class="container">
+    <div class="row">
+      <div class="alert alert-danger ">
+        
+      </div>
+    </div>
+  </div>
+</section>
+  <article>
+    <section>
+  <div class="container">
+    <div class="row">
+      <ul class="pager">
+        <li class="previous ">
+          <a href="performance-summary4.html">← Older</a>
+        </li>
+        <li class="next ">
+          <a href="performance-summary2.html">Newer →</a>
+        </li>
+      </ul>
+    </div>
+    <div class="row">
+      <table class="table table-bordered table-responsive">
+  <tbody><tr><td colspan="4"><h3>Done stories February 24, 2014 - March  2, 2014</h3></td></tr>
+    <tr>
+      <th>ID</th>
+      <th>Committed</th>
+      <th class="count">12</th>
+      <th class="estimate">13.0</th>
+    </tr>
+      <tr>
+        <td>724</td>
+        <td>Adipiscing conventio mara uxor sagaciter occuro erat lucidus</td>
+        <td></td>
+        <td class="estimate">2.0</td>
+      </tr>
+      <tr>
+        <td>718</td>
+        <td>Adipiscing conventio mara uxor sagaciter occuro erat lucidus</td>
+        <td></td>
+        <td class="estimate">2.0</td>
+      </tr>
+      <tr>
+        <td>719</td>
+        <td>Adipiscing conventio mara uxor sagaciter occuro erat lucidus</td>
+        <td></td>
+        <td class="estimate">1.0</td>
+      </tr>
+      <tr>
+        <td>715</td>
+        <td>Adipiscing conventio mara uxor sagaciter occuro erat lucidus</td>
+        <td></td>
+        <td class="estimate">2.0</td>
+      </tr>
+      <tr>
+        <td>722</td>
+        <td>Adipiscing conventio mara uxor sagaciter occuro erat lucidus</td>
+        <td></td>
+        <td class="estimate">1.0</td>
+      </tr>
+      <tr>
+        <td>734</td>
+        <td>Adipiscing conventio mara uxor sagaciter occuro erat lucidus</td>
+        <td></td>
+        <td class="estimate">0.5</td>
+      </tr>
+      <tr>
+        <td>728</td>
+        <td>Adipiscing conventio mara uxor sagaciter occuro erat lucidus</td>
+        <td></td>
+        <td class="estimate">0.5</td>
+      </tr>
+      <tr>
+        <td>727</td>
+        <td>Adipiscing conventio mara uxor sagaciter occuro erat lucidus</td>
+        <td></td>
+        <td class="estimate">0.5</td>
+      </tr>
+      <tr>
+        <td>720</td>
+        <td>Adipiscing conventio mara uxor sagaciter occuro erat lucidus</td>
+        <td></td>
+        <td class="estimate">0.0</td>
+      </tr>
+      <tr>
+        <td>710</td>
+        <td>Adipiscing conventio mara uxor sagaciter occuro erat lucidus</td>
+        <td></td>
+        <td class="estimate">2.0</td>
+      </tr>
+      <tr>
+        <td>735</td>
+        <td>Adipiscing conventio mara uxor sagaciter occuro erat lucidus</td>
+        <td></td>
+        <td class="estimate">0.5</td>
+      </tr>
+      <tr>
+        <td>717</td>
+        <td>Adipiscing conventio mara uxor sagaciter occuro erat lucidus</td>
+        <td></td>
+        <td class="estimate">1.0</td>
+      </tr>
+    <tr>
+      <th>ID</th>
+      <th>Contingent</th>
+      <th class="count">2</th>
+      <th class="estimate">4.0</th>
+    </tr>
+      <tr>
+        <td>732</td>
+        <td>Adipiscing conventio mara uxor sagaciter occuro erat lucidus</td>
+        <td></td>
+        <td class="estimate">1.0</td>
+      </tr>
+      <tr>
+        <td>697</td>
+        <td>Adipiscing conventio mara uxor sagaciter occuro erat lucidus</td>
+        <td></td>
+        <td class="estimate">3.0</td>
+      </tr>
+    <tr>
+      <th>ID</th>
+      <th>Inserted</th>
+      <th class="count">2</th>
+      <th class="estimate">1.5</th>
+    </tr>
+      <tr>
+        <td>730</td>
+        <td>Adipiscing conventio mara uxor sagaciter occuro erat lucidus</td>
+        <td></td>
+        <td class="estimate">0.5</td>
+      </tr>
+      <tr>
+        <td>729</td>
+        <td>Adipiscing conventio mara uxor sagaciter occuro erat lucidus</td>
+        <td></td>
+        <td class="estimate">1.0</td>
+      </tr>
+  <tr>
+    <th colspan="2"><div class="pull-right">TOTALS</div></th>
+    <th class="count">16</th>
+    <th class="estimate">18.5</th>
+  </tr>
+</tbody></table>
+
+    </div>
+  </div>
+</section>
+<hr>
+<section>
+    <div class="row">
+    <div id="yesterdays_weather_estimate_chart" class="chart" style="position: relative;"><div dir="ltr" style="position: relative; width: 1433px; height: 600px;"><div style="position: absolute; left: 0px; top: 0px; width: 100%; height: 100%;"><svg width="1433" height="600" style="overflow: hidden;"><defs id="defs"><clippath id="_ABSTRACT_RENDERER_ID_9"><rect x="72" y="60" width="1290" height="480"></rect></clippath></defs><rect x="0" y="0" width="1433" height="600" stroke="none" stroke-width="0" fill="#ffffff"></rect><g><text text-anchor="start" x="72" y="38.4" font-family="Questrial" font-size="24" stroke="none" stroke-width="0" fill="#3d7477">Yesterday's Weather for Estimates</text></g><g><rect x="556" y="575" width="321" height="16" stroke="none" stroke-width="0" fill-opacity="0" fill="#ffffff"></rect><g><rect x="556" y="575" width="95" height="16" stroke="none" stroke-width="0" fill-opacity="0" fill="#ffffff"></rect><g><text text-anchor="start" x="578" y="588.6" font-family="Arial" font-size="16" stroke="none" stroke-width="0" fill="#222222">committed</text></g><rect x="556" y="575" width="16" height="16" stroke="none" stroke-width="0" fill="#091d58"></rect></g><g><rect x="677" y="575" width="95" height="16" stroke="none" stroke-width="0" fill-opacity="0" fill="#ffffff"></rect><g><text text-anchor="start" x="699" y="588.6" font-family="Arial" font-size="16" stroke="none" stroke-width="0" fill="#222222">contingent</text></g><rect x="677" y="575" width="16" height="16" stroke="none" stroke-width="0" fill="#3d7477"></rect></g><g><rect x="798" y="575" width="79" height="16" stroke="none" stroke-width="0" fill-opacity="0" fill="#ffffff"></rect><g><text text-anchor="start" x="820" y="588.6" font-family="Arial" font-size="16" stroke="none" stroke-width="0" fill="#222222">inserted</text></g><rect x="798" y="575" width="16" height="16" stroke="none" stroke-width="0" fill="#991238"></rect></g></g><g><rect x="72" y="60" width="1290" height="480" stroke="none" stroke-width="0" fill-opacity="0" fill="#ffffff"></rect><g clip-path="url(#_ABSTRACT_RENDERER_ID_9)"><g><rect x="72" y="539" width="1290" height="1" stroke="none" stroke-width="0" fill="#cccccc"></rect><rect x="72" y="419" width="1290" height="1" stroke="none" stroke-width="0" fill="#cccccc"></rect><rect x="72" y="300" width="1290" height="1" stroke="none" stroke-width="0" fill="#cccccc"></rect><rect x="72" y="180" width="1290" height="1" stroke="none" stroke-width="0" fill="#cccccc"></rect><rect x="72" y="60" width="1290" height="1" stroke="none" stroke-width="0" fill="#cccccc"></rect></g><g><rect x="154" y="301" width="265" height="238" stroke="none" stroke-width="0" fill="#091d58"></rect><rect x="584" y="253" width="265" height="286" stroke="none" stroke-width="0" fill="#091d58"></rect><rect x="1014" y="229" width="265" height="310" stroke="none" stroke-width="0" fill="#091d58"></rect><rect x="154" y="133" width="265" height="167" stroke="none" stroke-width="0" fill="#3d7477"></rect><rect x="584" y="157" width="265" height="95" stroke="none" stroke-width="0" fill="#3d7477"></rect><rect x="1014" y="133" width="265" height="95" stroke="none" stroke-width="0" fill="#3d7477"></rect><rect x="154" y="61" width="265" height="71" stroke="none" stroke-width="0" fill="#991238"></rect><rect x="584" y="145" width="265" height="11" stroke="none" stroke-width="0" fill="#991238"></rect><rect x="1014" y="97" width="265" height="35" stroke="none" stroke-width="0" fill="#991238"></rect></g><g><rect x="72" y="539" width="1290" height="1" stroke="none" stroke-width="0" fill="#333333"></rect></g></g><g></g><g><g><text text-anchor="middle" x="287.33333333333337" y="562.9333333333334" font-family="Arial" font-size="16" stroke="none" stroke-width="0" fill="#999999">2014-02-10</text></g><g><text text-anchor="middle" x="717" y="562.9333333333334" font-family="Arial" font-size="16" stroke="none" stroke-width="0" fill="#999999">2014-02-17</text></g><g><text text-anchor="middle" x="1146.6666666666667" y="562.9333333333334" font-family="Arial" font-size="16" stroke="none" stroke-width="0" fill="#999999">2014-02-24</text></g><g><text text-anchor="end" x="56" y="545.1" font-family="Arial" font-size="16" stroke="none" stroke-width="0" fill="#999999">0</text></g><g><text text-anchor="end" x="56" y="425.35" font-family="Arial" font-size="16" stroke="none" stroke-width="0" fill="#999999">5</text></g><g><text text-anchor="end" x="56" y="305.6" font-family="Arial" font-size="16" stroke="none" stroke-width="0" fill="#999999">10</text></g><g><text text-anchor="end" x="56" y="185.85" font-family="Arial" font-size="16" stroke="none" stroke-width="0" fill="#999999">15</text></g><g><text text-anchor="end" x="56" y="66.1" font-family="Arial" font-size="16" stroke="none" stroke-width="0" fill="#999999">20</text></g></g></g><g></g></svg></div></div><div style="display: none; position: absolute; top: 610px; left: 1443px; white-space: nowrap; font-family: Arial; font-size: 16px;">inserted</div><div></div></div>
+    
+<script type="text/javascript">
+  google.load('visualization','1', {packages: ['corechart'], callback: draw_yesterdays_weather_estimate_chart});
+  function draw_yesterdays_weather_estimate_chart() {
+    var data_table = new google.visualization.DataTable();data_table.addColumn({"type":"string","label":"timestamp"});data_table.addColumn({"type":"number","label":"committed"});data_table.addColumn({"type":"number","label":"contingent"});data_table.addColumn({"type":"number","label":"inserted"});data_table.addRow([{v: "2014-02-10"}, {v: 10.0}, {v: 7.0}, {v: 3.0}]);data_table.addRow([{v: "2014-02-17"}, {v: 12.0}, {v: 4.0}, {v: 0.5}]);data_table.addRow([{v: "2014-02-24"}, {v: 13.0}, {v: 4.0}, {v: 1.5}]);
+    var chart = new google.visualization.ColumnChart(document.getElementById('yesterdays_weather_estimate_chart'));
+    chart.draw(data_table, {colors: ["#091D58","#3D7477","#991238"], pointSize: 8, areaOpacity: 0.05, titleTextStyle: {color: "#3D7477", fontSize: 24, fontName: "Questrial", bold: false}, chartArea: {width: "90%", height: "80%"}, hAxis: {textStyle: {color: "#999999"}, gridLines: {color: "#eee"}, format: "MMM d, y hh:mma"}, vAxis: {textStyle: {color: "#999999"}, gridLines: {color: "#eee"}}, legend: {position: "bottom", alignment: "center"}, title: "Yesterday's Weather for Estimates", isStacked: true});
+  };
+</script>
+  </div>
+<div class="row">
+  <div id="yesterdays_weather_stories_chart" class="chart" style="position: relative;"><div dir="ltr" style="position: relative; width: 1433px; height: 600px;"><div style="position: absolute; left: 0px; top: 0px; width: 100%; height: 100%;"><svg width="1433" height="600" style="overflow: hidden;"><defs id="defs"><clippath id="_ABSTRACT_RENDERER_ID_10"><rect x="72" y="60" width="1290" height="480"></rect></clippath></defs><rect x="0" y="0" width="1433" height="600" stroke="none" stroke-width="0" fill="#ffffff"></rect><g><text text-anchor="start" x="72" y="38.4" font-family="Questrial" font-size="24" stroke="none" stroke-width="0" fill="#3d7477">Yesterday's Weather for Stories</text></g><g><rect x="556" y="575" width="321" height="16" stroke="none" stroke-width="0" fill-opacity="0" fill="#ffffff"></rect><g><rect x="556" y="575" width="95" height="16" stroke="none" stroke-width="0" fill-opacity="0" fill="#ffffff"></rect><g><text text-anchor="start" x="578" y="588.6" font-family="Arial" font-size="16" stroke="none" stroke-width="0" fill="#222222">committed</text></g><rect x="556" y="575" width="16" height="16" stroke="none" stroke-width="0" fill="#091d58"></rect></g><g><rect x="677" y="575" width="95" height="16" stroke="none" stroke-width="0" fill-opacity="0" fill="#ffffff"></rect><g><text text-anchor="start" x="699" y="588.6" font-family="Arial" font-size="16" stroke="none" stroke-width="0" fill="#222222">contingent</text></g><rect x="677" y="575" width="16" height="16" stroke="none" stroke-width="0" fill="#3d7477"></rect></g><g><rect x="798" y="575" width="79" height="16" stroke="none" stroke-width="0" fill-opacity="0" fill="#ffffff"></rect><g><text text-anchor="start" x="820" y="588.6" font-family="Arial" font-size="16" stroke="none" stroke-width="0" fill="#222222">inserted</text></g><rect x="798" y="575" width="16" height="16" stroke="none" stroke-width="0" fill="#991238"></rect></g></g><g><rect x="72" y="60" width="1290" height="480" stroke="none" stroke-width="0" fill-opacity="0" fill="#ffffff"></rect><g clip-path="url(#_ABSTRACT_RENDERER_ID_10)"><g><rect x="72" y="539" width="1290" height="1" stroke="none" stroke-width="0" fill="#cccccc"></rect><rect x="72" y="419" width="1290" height="1" stroke="none" stroke-width="0" fill="#cccccc"></rect><rect x="72" y="300" width="1290" height="1" stroke="none" stroke-width="0" fill="#cccccc"></rect><rect x="72" y="180" width="1290" height="1" stroke="none" stroke-width="0" fill="#cccccc"></rect><rect x="72" y="60" width="1290" height="1" stroke="none" stroke-width="0" fill="#cccccc"></rect></g><g><rect x="154" y="420" width="265" height="119" stroke="none" stroke-width="0" fill="#091d58"></rect><rect x="584" y="420" width="265" height="119" stroke="none" stroke-width="0" fill="#091d58"></rect><rect x="1014" y="253" width="265" height="286" stroke="none" stroke-width="0" fill="#091d58"></rect><rect x="154" y="301" width="265" height="118" stroke="none" stroke-width="0" fill="#3d7477"></rect><rect x="584" y="324" width="265" height="95" stroke="none" stroke-width="0" fill="#3d7477"></rect><rect x="1014" y="205" width="265" height="47" stroke="none" stroke-width="0" fill="#3d7477"></rect><rect x="154" y="229" width="265" height="71" stroke="none" stroke-width="0" fill="#991238"></rect><rect x="584" y="301" width="265" height="22" stroke="none" stroke-width="0" fill="#991238"></rect><rect x="1014" y="157" width="265" height="47" stroke="none" stroke-width="0" fill="#991238"></rect></g><g><rect x="72" y="539" width="1290" height="1" stroke="none" stroke-width="0" fill="#333333"></rect></g></g><g></g><g><g><text text-anchor="middle" x="287.33333333333337" y="562.9333333333334" font-family="Arial" font-size="16" stroke="none" stroke-width="0" fill="#999999">2014-02-10</text></g><g><text text-anchor="middle" x="717" y="562.9333333333334" font-family="Arial" font-size="16" stroke="none" stroke-width="0" fill="#999999">2014-02-17</text></g><g><text text-anchor="middle" x="1146.6666666666667" y="562.9333333333334" font-family="Arial" font-size="16" stroke="none" stroke-width="0" fill="#999999">2014-02-24</text></g><g><text text-anchor="end" x="56" y="545.1" font-family="Arial" font-size="16" stroke="none" stroke-width="0" fill="#999999">0</text></g><g><text text-anchor="end" x="56" y="425.35" font-family="Arial" font-size="16" stroke="none" stroke-width="0" fill="#999999">5</text></g><g><text text-anchor="end" x="56" y="305.6" font-family="Arial" font-size="16" stroke="none" stroke-width="0" fill="#999999">10</text></g><g><text text-anchor="end" x="56" y="185.85" font-family="Arial" font-size="16" stroke="none" stroke-width="0" fill="#999999">15</text></g><g><text text-anchor="end" x="56" y="66.1" font-family="Arial" font-size="16" stroke="none" stroke-width="0" fill="#999999">20</text></g></g></g><g></g></svg></div></div><div style="display: none; position: absolute; top: 610px; left: 1443px; white-space: nowrap; font-family: Arial; font-size: 16px;">inserted</div><div></div></div>
+  
+<script type="text/javascript">
+  google.load('visualization','1', {packages: ['corechart'], callback: draw_yesterdays_weather_stories_chart});
+  function draw_yesterdays_weather_stories_chart() {
+    var data_table = new google.visualization.DataTable();data_table.addColumn({"type":"string","label":"timestamp"});data_table.addColumn({"type":"number","label":"committed"});data_table.addColumn({"type":"number","label":"contingent"});data_table.addColumn({"type":"number","label":"inserted"});data_table.addRow([{v: "2014-02-10"}, {v: 5}, {v: 5}, {v: 3}]);data_table.addRow([{v: "2014-02-17"}, {v: 5}, {v: 4}, {v: 1}]);data_table.addRow([{v: "2014-02-24"}, {v: 12}, {v: 2}, {v: 2}]);
+    var chart = new google.visualization.ColumnChart(document.getElementById('yesterdays_weather_stories_chart'));
+    chart.draw(data_table, {colors: ["#091D58","#3D7477","#991238"], pointSize: 8, areaOpacity: 0.05, titleTextStyle: {color: "#3D7477", fontSize: 24, fontName: "Questrial", bold: false}, chartArea: {width: "90%", height: "80%"}, hAxis: {textStyle: {color: "#999999"}, gridLines: {color: "#eee"}, format: "MMM d, y hh:mma"}, vAxis: {textStyle: {color: "#999999"}, gridLines: {color: "#eee"}}, legend: {position: "bottom", alignment: "center"}, title: "Yesterday's Weather for Stories", isStacked: true});
+  };
+</script>
+</div>
+
+</section>
+<hr>
+<section>
+  <div class="container">
+    <div class="row">
+      <div class="row">
+  <div id="long_term_trend_chart" class="chart" style="position: relative;"><div dir="ltr" style="position: relative; width: 1200px; height: 600px;"><div style="position: absolute; left: 0px; top: 0px; width: 100%; height: 100%;"><svg width="1200" height="600" style="overflow: hidden;"><defs id="defs"><clippath id="_ABSTRACT_RENDERER_ID_11"><rect x="60" y="60" width="1080" height="480"></rect></clippath></defs><rect x="0" y="0" width="1200" height="600" stroke="none" stroke-width="0" fill="#ffffff"></rect><g><text text-anchor="start" x="60" y="38.4" font-family="Questrial" font-size="24" stroke="none" stroke-width="0" fill="#3d7477">Long Term Trend</text></g><g><rect x="509" y="575" width="181" height="15" stroke="none" stroke-width="0" fill-opacity="0" fill="#ffffff"></rect><g><rect x="509" y="575" width="89" height="15" stroke="none" stroke-width="0" fill-opacity="0" fill="#ffffff"></rect><g><text text-anchor="start" x="530" y="587.75" font-family="Arial" font-size="15" stroke="none" stroke-width="0" fill="#222222">estimates</text></g><rect x="509" y="575" width="15" height="15" stroke="none" stroke-width="0" fill="#091d58"></rect></g><g><rect x="622" y="575" width="68" height="15" stroke="none" stroke-width="0" fill-opacity="0" fill="#ffffff"></rect><g><text text-anchor="start" x="643" y="587.75" font-family="Arial" font-size="15" stroke="none" stroke-width="0" fill="#222222">stories</text></g><rect x="622" y="575" width="15" height="15" stroke="none" stroke-width="0" fill="#3d7477"></rect></g></g><g><rect x="60" y="60" width="1080" height="480" stroke="none" stroke-width="0" fill-opacity="0" fill="#ffffff"></rect><g clip-path="url(#_ABSTRACT_RENDERER_ID_11)"><g><rect x="163" y="60" width="1" height="480" stroke="none" stroke-width="0" fill="#cccccc"></rect><rect x="403" y="60" width="1" height="480" stroke="none" stroke-width="0" fill="#cccccc"></rect><rect x="642" y="60" width="1" height="480" stroke="none" stroke-width="0" fill="#cccccc"></rect><rect x="882" y="60" width="1" height="480" stroke="none" stroke-width="0" fill="#cccccc"></rect><rect x="60" y="539" width="1080" height="1" stroke="none" stroke-width="0" fill="#cccccc"></rect><rect x="60" y="419" width="1080" height="1" stroke="none" stroke-width="0" fill="#cccccc"></rect><rect x="60" y="300" width="1080" height="1" stroke="none" stroke-width="0" fill="#cccccc"></rect><rect x="60" y="180" width="1080" height="1" stroke="none" stroke-width="0" fill="#cccccc"></rect><rect x="60" y="60" width="1080" height="1" stroke="none" stroke-width="0" fill="#cccccc"></rect></g><g><g><path d="M60.5,539.5L60.5,377.8375L180.38888888888889,407.775L300.27777777777777,437.7125L420.1666666666667,156.3L540.0555555555555,335.925L659.9444444444445,264.075L899.7222222222222,300L1019.6111111111111,341.9125L1139.5,317.9625L1139.5,539.5Z" stroke="none" stroke-width="0" fill-opacity="0.05" fill="#091d58"></path></g><g><path d="M60.5,539.5L60.5,407.775L180.38888888888889,455.675L300.27777777777777,419.75L420.1666666666667,323.95000000000005L540.0555555555555,407.775L659.9444444444445,395.8L899.7222222222222,383.82500000000005L1019.6111111111111,419.75L1139.5,347.9L1139.5,539.5Z" stroke="none" stroke-width="0" fill-opacity="0.05" fill="#3d7477"></path></g></g><g><rect x="60" y="60" width="1" height="480" stroke="none" stroke-width="0" fill="#333333"></rect><rect x="60" y="539" width="1080" height="1" stroke="none" stroke-width="0" fill="#333333"></rect></g><g><path d="M60.5,377.8375L180.38888888888889,407.775L300.27777777777777,437.7125L420.1666666666667,156.3L540.0555555555555,335.925L659.9444444444445,264.075L899.7222222222222,300L1019.6111111111111,341.9125L1139.5,317.9625" stroke="#091d58" stroke-width="2" fill-opacity="1" fill="none"></path><path d="M60.5,407.775L180.38888888888889,455.675L300.27777777777777,419.75L420.1666666666667,323.95000000000005L540.0555555555555,407.775L659.9444444444445,395.8L899.7222222222222,383.82500000000005L1019.6111111111111,419.75L1139.5,347.9" stroke="#3d7477" stroke-width="2" fill-opacity="1" fill="none"></path><path d="M60.5,360.44880208327595L71.39898986294827,359.7389204544925L82.29797972589654,359.02903882570354L93.1969695888448,358.31915719692006L104.09595945179306,357.60927556812567L114.99494931474132,356.8993939393422L125.89393937591858,356.18951231055325L136.79292923886686,355.4796306817698L147.6919191018151,354.76974905298084L158.59090896476337,354.05986742419736L169.48989882771164,353.349985795403L180.38888888888889,352.64010416662495L191.28787875183716,351.9302225378415L202.18686861478542,351.2203409090471L213.0858584777337,350.5104592802636L223.98484834068194,349.80057765147467L234.8838382036302,349.09069602269113L245.78282826480748,348.3808143939022L256.6818181277557,347.6709327651187L267.580807990704,346.96105113632433L278.47979785365226,346.25116950754085L289.3787877166005,345.5412878787519L300.27777777777777,344.8314062499684L311.17676764072604,344.1215246211849L322.0757575036743,343.41164299239597L332.9747473666226,342.7017613636125L343.87373722957085,341.99187973482356L354.7727270925191,341.2819981060401L365.67171715369636,340.5721164772457L376.57070701664463,339.8622348484622L387.4696968795929,339.1523532196733L398.3686867425412,338.4424715908898L409.2676766054894,337.73258996210086L420.1666666666667,337.0227083333174L431.06565652961496,336.3128267045339L441.96464639256317,335.6029450757395L452.86363625551144,334.8930634469615L463.7626261184597,334.1831818181671L474.661615981408,333.4733001893836L485.5606060425852,332.7634185605947L496.4595959055335,332.05353693181115L507.35858576848176,331.3436553030168L518.25757563143,330.63377367423874L529.1565654943784,329.92389204544435L540.0555555555555,329.21401041666087L550.9545454185038,328.50412878787733L561.8535352814521,327.7942471590884L572.7525251444004,327.0843655303049L583.6515150073486,326.374483901516L594.5505048702969,325.6646022727325L605.4494949314741,324.9547206439381L616.3484847944223,324.24483901515464L627.2474746573706,323.5349573863657L638.1464645203189,322.8250757575822L649.0454543832672,322.1151941287933L659.9444444444445,321.4053125000098L670.8434343073927,320.69543087122634L681.742424170341,319.9855492424374L692.6414140332893,319.2756676136539L703.5404038962375,318.56578598485953L714.4393937591858,317.85590435607605L725.338383820363,317.1460227272871L736.2373736833113,316.43614109850364L747.1363635462595,315.7262594697147L758.0353534092078,315.01637784093117L768.9343432721561,314.30649621213684L779.8333333333334,313.5966145833533L790.7323231962816,312.8867329545752L801.6313130592299,312.1768513257809L812.5303029221781,311.46696969699735L823.4292927851263,310.7570880682084L834.3282826480746,310.04720643942494L845.2272727092519,309.337324810636L856.1262625722002,308.6274431818525L867.0252524351484,307.91756155305814L877.9242422980967,307.20767992427466L888.823232161045,306.4977982954857L899.7222222222222,305.78791666670224L910.6212120851704,305.07803503791877L921.5202019481187,304.36815340912983L932.419191811067,303.65827178034635L943.3181816740152,302.94839015155196L954.2171715369635,302.2385085227685L965.1161615981408,301.52862689397955L976.0151514610891,300.81874526519607L986.9141413240374,300.10886363640714L997.8131311869856,299.39898200762366L1008.7121210499339,298.68910037882927L1019.6111111111111,297.9792187500512L1030.5101009740592,297.2693371212677L1041.4090908370076,296.5594554924733L1052.308080699956,295.84957386368984L1063.2070705629042,295.1396922349009L1074.1060604258523,294.42981060611737L1085.0050504870296,293.71992897732844L1095.904040349978,293.01004734854496L1106.8030302129262,292.30016571975057L1117.7020200758745,291.5902840909671L1128.6010099388227,290.88040246217815L1139.5,290.1705208333947" stroke="#091d58" stroke-width="2" stroke-opacity="0.5" fill-opacity="1" fill="none"></path><path d="M60.5,416.55666666666957L71.39898986294827,416.1212121212154L82.29797972589654,415.6857575757558L93.1969695888448,415.2503030303071L104.09595945179306,414.8148484848475L114.99494931474132,414.37939393939337L125.89393937591858,413.9439393939392L136.79292923886686,413.50848484848507L147.6919191018151,413.0730303030309L158.59090896476337,412.63757575757677L169.48989882771164,412.20212121211716L180.38888888888889,411.76666666666847L191.28787875183716,411.3312121212143L202.18686861478542,410.8957575757602L213.0858584777337,410.460303030306L223.98484834068194,410.0248484848464L234.8838382036302,409.5893939393977L245.78282826480748,409.1539393939381L256.6818181277557,408.71848484848397L267.580807990704,408.2830303030298L278.47979785365226,407.84757575757567L289.3787877166005,407.4121212121215L300.27777777777777,406.97666666666737L311.17676764072604,406.5412121212132L322.0757575036743,406.10575757575907L332.9747473666226,405.6703030303049L343.87373722957085,405.2348484848508L354.7727270925191,404.7993939393966L365.67171715369636,404.363939393937L376.57070701664463,403.9284848484883L387.4696968795929,403.4930303030287L398.3686867425412,403.05757575757457L409.2676766054894,402.6221212121204L420.1666666666667,402.18666666666627L431.06565652961496,401.7512121212176L441.96464639256317,401.31575757575797L452.86363625551144,400.8803030303038L463.7626261184597,400.4448484848497L474.661615981408,400.0093939393955L485.5606060425852,399.573939393936L496.4595959055335,399.1384848484872L507.35858576848176,398.7030303030277L518.25757563143,398.2675757575789L529.1565654943784,397.8321212121194L540.0555555555555,397.3966666666652L550.9545454185038,396.9612121212165L561.8535352814521,396.5257575757569L572.7525251444004,396.0903030303028L583.6515150073486,395.6548484848486L594.5505048702969,395.2193939393945L605.4494949314741,394.78393939394033L616.3484847944223,394.3484848484862L627.2474746573706,393.9130303030266L638.1464645203189,393.4775757575779L649.0454543832672,393.0421212121183L659.9444444444445,392.6066666666696L670.8434343073927,392.17121212121543L681.742424170341,391.7357575757558L692.6414140332893,391.30030303030713L703.5404038962375,390.8648484848475L714.4393937591858,390.4293939393934L725.338383820363,389.99393939393923L736.2373736833113,389.5584848484851L747.1363635462595,389.12303030303093L758.0353534092078,388.6875757575768L768.9343432721561,388.25212121211723L779.8333333333334,387.8166666666685L790.7323231962816,387.38121212121433L801.6313130592299,386.9457575757602L812.5303029221781,386.51030303030603L823.4292927851263,386.0748484848465L834.3282826480746,385.63939393939773L845.2272727092519,385.2039393939382L856.1262625722002,384.76848484848404L867.0252524351484,384.3330303030299L877.9242422980967,383.89757575757574L888.823232161045,383.4621212121216L899.7222222222222,383.02666666666744L910.6212120851704,382.5912121212133L921.5202019481187,382.15575757575914L932.419191811067,381.720303030305L943.3181816740152,381.28484848485084L954.2171715369635,380.8493939393967L965.1161615981408,380.4139393939371L976.0151514610891,379.9784848484884L986.9141413240374,379.5430303030288L997.8131311869856,379.10757575757464L1008.7121210499339,378.6721212121205L1019.6111111111111,378.23666666666634L1030.5101009740592,377.80121212121765L1041.4090908370076,377.36575757575804L1052.308080699956,376.9303030303039L1063.2070705629042,376.49484848484974L1074.1060604258523,376.0593939393956L1085.0050504870296,375.623939393936L1095.904040349978,375.1884848484873L1106.8030302129262,374.7530303030277L1117.7020200758745,374.317575757579L1128.6010099388227,373.8821212121194L1139.5,373.44666666666524" stroke="#3d7477" stroke-width="2" stroke-opacity="0.5" fill-opacity="1" fill="none"></path></g></g><g><circle cx="60.5" cy="377.8375" r="5" stroke="none" stroke-width="0" fill="#091d58"></circle><circle cx="180.38888888888889" cy="407.775" r="5" stroke="none" stroke-width="0" fill="#091d58"></circle><circle cx="300.27777777777777" cy="437.7125" r="5" stroke="none" stroke-width="0" fill="#091d58"></circle><circle cx="420.1666666666667" cy="156.3" r="5" stroke="none" stroke-width="0" fill="#091d58"></circle><circle cx="540.0555555555555" cy="335.925" r="5" stroke="none" stroke-width="0" fill="#091d58"></circle><circle cx="659.9444444444445" cy="264.075" r="5" stroke="none" stroke-width="0" fill="#091d58"></circle><circle cx="899.7222222222222" cy="300" r="5" stroke="none" stroke-width="0" fill="#091d58"></circle><circle cx="1019.6111111111111" cy="341.9125" r="5" stroke="none" stroke-width="0" fill="#091d58"></circle><circle cx="1139.5" cy="317.9625" r="5" stroke="none" stroke-width="0" fill="#091d58"></circle><circle cx="60.5" cy="407.775" r="5" stroke="none" stroke-width="0" fill="#3d7477"></circle><circle cx="180.38888888888889" cy="455.675" r="5" stroke="none" stroke-width="0" fill="#3d7477"></circle><circle cx="300.27777777777777" cy="419.75" r="5" stroke="none" stroke-width="0" fill="#3d7477"></circle><circle cx="420.1666666666667" cy="323.95000000000005" r="5" stroke="none" stroke-width="0" fill="#3d7477"></circle><circle cx="540.0555555555555" cy="407.775" r="5" stroke="none" stroke-width="0" fill="#3d7477"></circle><circle cx="659.9444444444445" cy="395.8" r="5" stroke="none" stroke-width="0" fill="#3d7477"></circle><circle cx="899.7222222222222" cy="383.82500000000005" r="5" stroke="none" stroke-width="0" fill="#3d7477"></circle><circle cx="1019.6111111111111" cy="419.75" r="5" stroke="none" stroke-width="0" fill="#3d7477"></circle><circle cx="1139.5" cy="347.9" r="5" stroke="none" stroke-width="0" fill="#3d7477"></circle></g><g><g><text text-anchor="middle" x="163.26190476190476" y="561.75" font-family="Arial" font-size="15" stroke="none" stroke-width="0" fill="#999999">12/29</text></g><g><text text-anchor="middle" x="403.03968253968253" y="561.75" font-family="Arial" font-size="15" stroke="none" stroke-width="0" fill="#999999">1/12</text></g><g><text text-anchor="middle" x="642.8174603174604" y="561.75" font-family="Arial" font-size="15" stroke="none" stroke-width="0" fill="#999999">1/26</text></g><g><text text-anchor="middle" x="882.5952380952381" y="561.75" font-family="Arial" font-size="15" stroke="none" stroke-width="0" fill="#999999">2/9</text></g><g><text text-anchor="end" x="45" y="544.75" font-family="Arial" font-size="15" stroke="none" stroke-width="0" fill="#999999">0</text></g><g><text text-anchor="end" x="45" y="425" font-family="Arial" font-size="15" stroke="none" stroke-width="0" fill="#999999">10</text></g><g><text text-anchor="end" x="45" y="305.25" font-family="Arial" font-size="15" stroke="none" stroke-width="0" fill="#999999">20</text></g><g><text text-anchor="end" x="45" y="185.5" font-family="Arial" font-size="15" stroke="none" stroke-width="0" fill="#999999">30</text></g><g><text text-anchor="end" x="45" y="65.75" font-family="Arial" font-size="15" stroke="none" stroke-width="0" fill="#999999">40</text></g></g></g><g></g></svg></div></div><div style="display: none; position: absolute; top: 610px; left: 1210px; white-space: nowrap; font-family: Arial; font-size: 15px;">stories</div><div></div></div>
+  
+<script type="text/javascript">
+  google.load('visualization','1', {packages: ['corechart'], callback: draw_long_term_trend_chart});
+  function draw_long_term_trend_chart() {
+    var data_table = new google.visualization.DataTable();data_table.addColumn({"type":"date","label":"timestamp"});data_table.addColumn({"type":"number","label":"estimates"});data_table.addColumn({"type":"number","label":"stories"});data_table.addRow([{v: new Date(2013, 11, 23)}, {v: 13.5}, {v: 11}]);data_table.addRow([{v: new Date(2013, 11, 30)}, {v: 11.0}, {v: 7}]);data_table.addRow([{v: new Date(2014, 0, 6)}, {v: 8.5}, {v: 10}]);data_table.addRow([{v: new Date(2014, 0, 13)}, {v: 32.0}, {v: 18}]);data_table.addRow([{v: new Date(2014, 0, 20)}, {v: 17.0}, {v: 11}]);data_table.addRow([{v: new Date(2014, 0, 27)}, {v: 23.0}, {v: 12}]);data_table.addRow([{v: new Date(2014, 1, 10)}, {v: 20.0}, {v: 13}]);data_table.addRow([{v: new Date(2014, 1, 17)}, {v: 16.5}, {v: 10}]);data_table.addRow([{v: new Date(2014, 1, 24)}, {v: 18.5}, {v: 16}]);
+    var chart = new google.visualization.AreaChart(document.getElementById('long_term_trend_chart'));
+    chart.draw(data_table, {colors: ["#091D58","#3D7477","#991238"], pointSize: 8, areaOpacity: 0.05, titleTextStyle: {color: "#3D7477", fontSize: 24, fontName: "Questrial", bold: false}, chartArea: {width: "90%", height: "80%"}, hAxis: {textStyle: {color: "#999999"}, gridLines: {color: "#eee"}, format: "M/d"}, vAxis: {textStyle: {color: "#999999"}, gridLines: {color: "#eee"}}, legend: {position: "bottom", alignment: "center"}, title: "Long Term Trend", lineWidth: 2, trendlines: {1: {pointSize: 0}, 0: {pointSize: 0}}});
+  };
+</script>
+</div>
+    </div>
+  </div>
+</section>
+  </article>
+  <footer class="muted">
+    <div class="content">
+      <p>
+        <a href="/">www.<span class="brand">progress<span>-visualizer</span></span>.com</a>
+        is a trello dashboard in ruby on rails by
+        <a href="http://judykat.com/ken-judy">Guest Judy</a>
+        |
+        github: <a href="https://github.com/kenjudy">kenjudy</a>
+      </p>
+      <p class="hide-print">
+        <a href="/help" onclick="_gaq.push(['_trackEvent', 'demo_footer', 'link_to_help','help']);">Help</a>
+        |
+        <a href="/about" onclick="_gaq.push(['_trackEvent', 'demo_footer', 'link_to_about','about']);">About</a>
+        |
+        <a href="terms-and-conditions" onclick="_gaq.push(['_trackEvent', 'demo_footer', 'link_to_terms_and_conditions','terms_and_conditions']);">Terms and Conditions</a>
+        |
+        <a href="privacy-policy" onclick="_gaq.push(['_trackEvent', 'demo_footer', 'link_to_privacy_policy','privacy_policy']);">Privacy Policy</a>
+      </p>
+    </div>
+  </footer>
+  <div id="spinner" class="modal fade" tabindex="-1" role="dialog" aria-hidden="false">
+  <div class="modal-dialog">
+    <div id="floatingCirclesG">
+      <div class="f_circleG" id="frotateG_01"></div>
+      <div class="f_circleG" id="frotateG_02"></div>
+      <div class="f_circleG" id="frotateG_03"></div>
+      <div class="f_circleG" id="frotateG_04"></div>
+      <div class="f_circleG" id="frotateG_05"></div>
+      <div class="f_circleG" id="frotateG_06"></div>
+      <div class="f_circleG" id="frotateG_07"></div>
+      <div class="f_circleG" id="frotateG_08"></div>
+    </div>
+  </div>
+</div>
+
+
+</body></html>
