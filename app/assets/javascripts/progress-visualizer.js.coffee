@@ -36,12 +36,30 @@ window.tickUpdate = ->
   $.get "/chart/burn-up-reload", (data) ->
     timestamp =  Date.parse(data["last_update"])
     if (timestamp > window.last_timestamp)
-      window.location.reload()
+      $.get "/chart/burn-up.json", (data) ->
+        $.each data, (key, value) ->
+          window.redraw_chart(key, value["data_table"], value["options"])
     else
       window.last_timestamp = timestamp
   setTimeout (->
     window.tickUpdate();
-    ), 30000
+    ), 6000
+
+window.redraw_chart = (chart_id, chart_data, chart_options) ->
+  data_table = new google.visualization.DataTable()
+  
+  $.each chart_data["cols"], (index, col) ->
+    data_table.addColumn
+      type: col["type"]
+      label: col["label"]
+
+  $.each chart_data["rows"], (index, row) ->
+    row[0]["v"] = new Date(row[0]["v"])
+    data_table.addRow [row...]
+
+  chart = new google.visualization.AreaChart(document.getElementById(chart_id))
+  chart.draw data_table, chart_options
+  return
 
 $(window).resize ->
   $(".chart").each (index) ->

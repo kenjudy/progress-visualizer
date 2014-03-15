@@ -17,9 +17,10 @@ describe ChartsController do
     before { sign_in user }
 
     context "burn_up" do
+      let(:format) { :html }
       subject do
         VCR.use_cassette('controllers/charts_controller') do
-          get :burn_up
+          get :burn_up, format: format
         end
       end
 
@@ -30,6 +31,12 @@ describe ChartsController do
         it { assigns(:estimates_chart).should_not be_nil }
         it { assigns(:stories_chart).should_not be_nil }
       end
+      
+      context "json" do
+        let(:format) { :json }
+        its(:code) { should == "200" }
+      end
+      
       context "with week param" do
         before do
           VCR.use_cassette('controllers/charts_controller') do

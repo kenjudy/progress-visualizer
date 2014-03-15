@@ -20,10 +20,13 @@ class ChartsController < ApplicationController
     @uses_estimates = has_non_zero_values(@estimates_chart)
 
     @stories_chart = burn_up_chart_visualization({label: "Story Counts", data:  data.map{ |burn_up| { timestamp: burn_up.timestamp, backlog: burn_up.backlog, done: burn_up.done} }})
-    @iteration = beginning_of_current_iteration.strftime("%Y-%m-%d") unless @iteration
-    @prior_iteration = prior_iteration(@iteration)
-    @next_iteration = next_iteration(@iteration)
-  
+    iteration = @iteration || beginning_of_current_iteration.strftime("%Y-%m-%d")
+    @prior_iteration = prior_iteration(iteration)
+    @next_iteration = next_iteration(iteration)
+    respond_to do |format|
+      format.html { render }
+      format.json { render :json => {estimates_chart: @estimates_chart, stories_chart: @stories_chart}.to_json }
+    end
   end
 
   def yesterdays_weather
