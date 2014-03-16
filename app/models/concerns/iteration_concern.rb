@@ -10,7 +10,7 @@ module IterationConcern
   end
 
   def beginning_of_iteration(containing)
-    start = datetime_localtime(containing).beginning_of_week(:sunday).to_datetime + user_profile.start_day_of_week + user_profile.start_hour.hours
+    start = sunday_start_of_week_for(containing) + user_profile.start_day_of_week + user_profile.start_hour.hours
     start - align_to_calendar(start)
   end
 
@@ -24,16 +24,23 @@ module IterationConcern
   end
 
   def prior_iteration(iteration)
-    done_story = user_profile.done_story.find_by(iteration: iteration)
+    done_story = user_profile.done_story.find_by(iteration: iteration || beginning_of_current_iteration.to_date)
     done_story.prior_iteration if done_story
   end
 
   def next_iteration(iteration)
-    done_story = user_profile.done_story.find_by(iteration: iteration)
+    done_story = user_profile.done_story.find_by(iteration: iteration || beginning_of_current_iteration.to_date)
     done_story.next_iteration if done_story
   end
 
   private
+  
+  def sunday_start_of_week_for(date)
+    #if iteration contain
+    sunday = datetime_localtime(date).beginning_of_week(:sunday).to_datetime
+    sunday -= 7.days if sunday.to_date == date.to_date
+    sunday
+  end
 
   def adjacent_iteration(comparitor, iteration)
     results = user_profile.done_stories.where("iteration #{comparitor} ?", iteration).order(iteration: comparitor == "<" ? :desc : :asc).limit(1)
