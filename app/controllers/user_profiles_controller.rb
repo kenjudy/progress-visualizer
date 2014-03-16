@@ -113,7 +113,6 @@ class UserProfilesController < ApplicationController
     params.require(:user_profile).permit(allowed_attribs)
   end
 
-  #
   def lists
     @lists = Rails.cache.fetch("#{Rails.env}::UserProfilesController.lists.#{@profile.current_sprint_board_id_short}", :expires_in => 10.minutes) do
        Adapters::BaseAdapter.build_adapter(@profile).request_lists(@profile.current_sprint_board_id_short)

@@ -2,21 +2,23 @@ module ChartsConcern
   extend ActiveSupport::Concern
   include IterationConcern
 
-  @@green = "#3D7477"
-  @@blue = "#091D58"
-  @@red = "#991238"
 
-  @@default_properties = { colors: [@@blue,@@green, @@red],
-                           pointSize: 8,
-                           areaOpacity: 0.05,
-                           titleTextStyle: {color: @@green, fontSize: 24, fontName: 'Questrial', bold: false },
-                           chartArea: {width: '90%', height: '80%'},
-                           hAxis: { textStyle: { color: '#999999'}, gridLines: { color: "#eee"}, format:'MMM d, y hh:mma' },
-                           vAxis: { textStyle: { color: '#999999'}, gridLines: { color: "#eee"} },
-                           legend: {position: 'bottom', alignment: 'center'}}
+  def default_properties
+    green = "#3D7477"
+    blue = "#091D58"
+    red = "#991238"
 
-
-
+    { colors: [blue,green, red],
+      pointSize: 8,
+      areaOpacity: 0.05,
+      titleTextStyle: {color: green, fontSize: 24, fontName: 'Questrial', bold: false },
+      chartArea: {width: '90%', height: '80%'},
+      hAxis: { textStyle: { color: '#999999'}, gridLines: { color: "#eee"}, format:'MMM d, y hh:mma' },
+      vAxis: { textStyle: { color: '#999999'}, gridLines: { color: "#eee"} },
+      legend: {position: 'bottom', alignment: 'center'}
+    }
+  end
+  
   def yesterdays_weather_action(range, iteration = nil)
     estimate_chart = YesterdaysWeatherChart.new(user_profile, {weeks: range, label: :estimate})
     @yesterdays_weather_estimate_chart = yesterdays_weather_visualization(estimate_chart, iteration)
@@ -40,9 +42,9 @@ module ChartsConcern
 
     # Add Rows and Values
     data_table.add_rows(burn_up_rows(options[:data]))
-    GoogleVisualr::Interactive::AreaChart.new(data_table, @@default_properties.merge({ title: "Burn Up for #{options[:label]} #{date_label(data_table)}",
-                                                                                        lineWidth: 6,
-                                                                                        trendlines: { 1 => {pointSize: 0} }}))
+    GoogleVisualr::Interactive::AreaChart.new(data_table, default_properties.merge({ title: "Burn Up for #{options[:label]} #{date_label(data_table)}",
+                                                                                     lineWidth: 6,
+                                                                                     trendlines: { 1 => {pointSize: 0} }}))
   end
 
   def date_label(data_table)
@@ -58,8 +60,8 @@ module ChartsConcern
       data_table.new_column('number', "Cards" )
     end
     data_table.add_rows(yesterdays_weather_data_rows(chart, iteration))
-    GoogleVisualr::Interactive::ColumnChart.new(data_table, @@default_properties.merge({ title: "Yesterday's Weather for #{chart.label.to_s.titleize.pluralize}",
-                                                                                         isStacked: true }))
+    GoogleVisualr::Interactive::ColumnChart.new(data_table, default_properties.merge({ title: "Yesterday's Weather for #{chart.label.to_s.titleize.pluralize}",
+                                                                                       isStacked: true }))
 
   end
 
@@ -71,10 +73,10 @@ module ChartsConcern
 
     # Add Rows and Values
     data_table.add_rows(long_term_trend_visualization_rows(weeks, iteration))
-    GoogleVisualr::Interactive::AreaChart.new(data_table, @@default_properties.merge({ title: "Long Term Trend",
-                                                                                       hAxis: { textStyle: { color: '#999999'}, gridLines: { color: "#eee"}, format:'M/d' },
-                                                                                       lineWidth: 2,
-                                                                                       trendlines: { 1 => {pointSize: 0}, 0 => {pointSize: 0} }}))
+    GoogleVisualr::Interactive::AreaChart.new(data_table, default_properties.merge({ title: "Long Term Trend",
+                                                                                     hAxis: { textStyle: { color: '#999999'}, gridLines: { color: "#eee"}, format:'M/d' },
+                                                                                     lineWidth: 2,
+                                                                                     trendlines: { 1 => {pointSize: 0}, 0 => {pointSize: 0} }}))
   end
 
   def burn_up_rows(data)

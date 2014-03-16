@@ -33,11 +33,13 @@ module UserProfileConcern
   end
   
   def profile_from_params
-    if self.respond_to?("params") && self.params[:profile_id]
-      user_profile = self.current_user.user_profiles.find(self.params[:profile_id])
-      self.session[:profile_id] = user_profile.id if user_profile
-      user_profile
-    end
+    profile_id = self.params[:profile_id] if self.respond_to?("params")
+    
+    return unless profile_id
+      
+    user_profile = self.current_user.user_profiles.find(profile_id)
+    self.session[:profile_id] = user_profile.id if user_profile
+    user_profile
   end
   
   def profile_from_session

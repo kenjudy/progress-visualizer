@@ -24,16 +24,20 @@ module IterationConcern
   end
 
   def prior_iteration(iteration)
-    done_story = user_profile.done_story.find_by(iteration: iteration || beginning_of_current_iteration.to_date)
+    done_story = done_story_this_iteration(iteration)
     done_story.prior_iteration if done_story
   end
 
   def next_iteration(iteration)
-    done_story = user_profile.done_story.find_by(iteration: iteration || beginning_of_current_iteration.to_date)
+    done_story = done_story_this_iteration(iteration)
     done_story.next_iteration if done_story
   end
 
   private
+  
+  def done_story_this_iteration(iteration)
+    user_profile.done_story.find_by(iteration: iteration || beginning_of_current_iteration.to_date)
+  end
   
   def sunday_start_of_week_for(date)
     #if iteration contain

@@ -31,22 +31,26 @@ class Factories::BurnUpFactory
   end
 
   def estimates_burn_up_data(containing = nil)
-    burn_up_data(containing).map{ |burn_up| { timestamp: burn_up.timestamp, backlog: burn_up.backlog_estimates, done: burn_up.done_estimates} }
+    burn_up_data(true, containing)
   end
   
   def stories_burn_up_data(containing = nil)
-    burn_up_data(containing).map{ |burn_up| { timestamp: burn_up.timestamp, backlog: burn_up.backlog, done: burn_up.done} }
+    burn_up_date(false, containing)
   end
 
   private
   
-  def burn_up_data(containing = nil)
-    return @burn_up_data[containing] if @burn_up_data[containing]
-    if containing
-      @burn_up_data[containing] = @user_profile.burn_ups.where("timestamp > ? and timestamp <= ?", beginning_of_iteration(containing), end_of_iteration(containing)).order(timestamp: :asc)
-    else
-      @burn_up_data[containing] =@user_profile.burn_ups.where("timestamp > ? and timestamp <= ?", beginning_of_current_iteration, end_of_current_iteration).order(timestamp: :asc)
-    end
+  def burn_up_data(for_estimates, containing = nil)
+    suffix = for_estimates ? "_estimates" : ""
+    data = 
+      if @burn_up_data[containing]
+        @burn_up_data[containing]
+      elsif containing
+        @burn_up_data[containing] = @user_profile.burn_ups.where("timestamp > ? and timestamp <= ?", beginning_of_iteration(containing), end_of_iteration(containing)).order(timestamp: :asc)
+      else
+        @burn_up_data[containing] =@user_profile.burn_ups.where("timestamp > ? and timestamp <= ?", beginning_of_current_iteration, end_of_current_iteration).order(timestamp: :asc)
+      end
+    data.map{ |burn_up| { timestamp: burn_up.timestamp, backlog: burn_up.send("backlog#{suffix}"), done: burn_up.send("done#{suffix}")} }
   end
 
   def request_data
