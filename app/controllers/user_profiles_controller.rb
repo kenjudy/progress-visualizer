@@ -42,14 +42,8 @@ class UserProfilesController < ApplicationController
     labels
     params["user_profile"]["backlog_lists"] = keys_from_values(@lists, params["user_profile"]["backlog_lists"])
     params["user_profile"]["done_lists"] = keys_from_values(@lists, params["user_profile"]["done_lists"])
-    @profile.update_attributes(profile_params)
-    @profile.save
-    if (@profile.valid?)
-      begin
-        add_webhook(@profile, webhooks_burn_up_url(profile_id: @profile.id, format: :json))
-      rescue JSON::ParserError => e
-        logger.error(e.message)
-      end
+    if (update_profile(user_profile, profile_params).valid?)
+      add_webhook(@profile, webhooks_burn_up_url(profile_id: @profile.id, format: :json))
       redirect_to user_profiles_path
     else
       render 'edit'
@@ -75,6 +69,12 @@ class UserProfilesController < ApplicationController
   end
 
   private
+  
+  def update_profile(user_profile, profile_params)
+    user_profile.update_attributes(profile_params)
+    user_profile.save
+    return user_profile
+  end
 
   def start_date(params)
     month = params["user_profile"].delete("start_date(2i)")
@@ -84,7 +84,11 @@ class UserProfilesController < ApplicationController
   end
 
   def add_webhook(user_profile, callback_url)
-    Adapters::BaseAdapter.build_adapter(user_profile).add_webhook(callback_url, user_profile.current_sprint_board_id) unless Webhook.find_by(user_profile: user_profile, callback_url: callback_url)
+    begin
+      Adapters::BaseAdapter.build_adapter(user_profile).add_webhook(callback_url, user_profile.current_sprint_board_id) unless Webhook.find_by(user_profile: user_profile, callback_url: callback_url)
+    rescue JSON::ParserError => e
+     logger.error(e.message)
+   end
   end
 
   def destroy_webhook(user_profile, callback_url)

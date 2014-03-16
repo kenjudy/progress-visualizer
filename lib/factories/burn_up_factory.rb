@@ -41,8 +41,8 @@ class Factories::BurnUpFactory
   private
   
   def burn_up_data(containing = nil)
+    binding.pry
     return @burn_up_data[containing] if @burn_up_data[containing]
-    
     if containing
       @burn_up_data[containing] = @user_profile.burn_ups.where("timestamp > ? and timestamp <= ?", beginning_of_iteration(containing), end_of_iteration(containing)).order(timestamp: :asc)
     else
