@@ -42,7 +42,7 @@ class UserProfilesController < ApplicationController
     labels
     params["user_profile"]["backlog_lists"] = keys_from_values(@lists, params["user_profile"]["backlog_lists"])
     params["user_profile"]["done_lists"] = keys_from_values(@lists, params["user_profile"]["done_lists"])
-    if (update_profile(user_profile, profile_params).valid?)
+    if (update_profile(@profile, profile_params).valid?)
       add_webhook(@profile, webhooks_burn_up_url(profile_id: @profile.id, format: :json))
       redirect_to user_profiles_path
     else
@@ -70,10 +70,10 @@ class UserProfilesController < ApplicationController
 
   private
   
-  def update_profile(user_profile, profile_params)
-    user_profile.update_attributes(profile_params)
-    user_profile.save
-    return user_profile
+  def update_profile(profile, profile_params)
+    profile.update_attributes(profile_params)
+    profile.save
+    return profile
   end
 
   def start_date(params)

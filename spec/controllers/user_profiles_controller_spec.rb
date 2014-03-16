@@ -41,6 +41,22 @@ describe UserProfilesController do
       its(:user_profile_id) {should == profile.id}
     end
   end
+  context "update model different than current" do
+    let(:full_profile) { profile_partial.merge("done_lists" => "Done", "backlog_lists" => "To Do", "labels_types_of_work" => "Committed,Contingent", "duration" => "7", "start_day_of_week" => "0", "end_day_of_week" => "6", "start_hour" => "6", "end_hour" => "23") }
+    let(:current_profile) { FactoryGirl.create(:user_profile, user: user, labels_types_of_work: "Sample,Types") }
+    before do
+      sign_in user
+      full_profile.delete("user_id")
+      controller.stub(user_profile: current_profile)
+      VCR.use_cassette('controllers/user_profiles_controller/update') do
+        put :update, id: profile.id, user_profile: full_profile
+      end
+    end
+
+    subject { UserProfile.find(current_profile.id) }
+    its(:labels_types_of_work) { should == "Sample,Types" }
+  end
+  
 
   context "create" do
     let(:user) { FactoryGirl.create(:user) }
