@@ -24,7 +24,7 @@ class TablesController < ApplicationController
   end
 
   def todo_stories
-    factory = Factories::DoneStoryFactory.new(user_profile)
+    factory = Factories::TodoStoryFactory.new(user_profile)
     @collated_results = factory.current
     
     respond_to do |format|
