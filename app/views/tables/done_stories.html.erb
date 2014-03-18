@@ -11,7 +11,7 @@
       </ul>
     </div>
     <div class="row">
-      <%= render "stories_table", label: "Completed work ", results: @collated_results %>
+      <%= render "stories_table", label: "Completed work ", export_path: tables_done_stories_path(format: :csv), results: @collated_results %>
     </div>
   </div>
 </section>

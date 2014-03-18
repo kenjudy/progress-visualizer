@@ -43,7 +43,22 @@ module TablesModelConcern
     return results
   end
   
+  def to_csv(collated_data)
+    CSV.generate do |csv|
+      csv << %w(list id_short name estimate url_short)
+      collated_data[:lists].each do |list, data|
+        data[:cards].each do |card|
+          csv << [list, card.id_short, card.name, card.estimate, card.short_url]
+        end
+      end
+    end
+  end
+  
   private
+  
+  def column_names
+    
+  end
 
   def iteration_range_label(iteration)
     if iteration

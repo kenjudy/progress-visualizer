@@ -1,7 +1,7 @@
 <section>
   <div class="container">
     <div class="row">
-      <%= render "stories_table", label: "To Do's for ", results: @collated_results %>
+      <%= render "stories_table", label: "To Do's for ", export_path: tables_todo_stories_path(format: :csv), results: @collated_results %>
     </div>
   </div>
 </section>

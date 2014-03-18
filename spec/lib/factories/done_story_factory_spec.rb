@@ -16,14 +16,24 @@ describe "Factories::DoneStoryFactory" do
     end
   end
 
-
-  context "update_done_stories_for" do
+  context "collated data" do
     let(:collated_data) { done_story_factory.collate(board, types_of_work, done_list_ids, "2014-03-04") }
-    before { done_story_factory.update_done_stories_for(collated_data) }
-    subject { DoneStory.all }
-    its(:count) { should == 2}
+    context "update_done_stories_for" do
+      before { done_story_factory.update_done_stories_for(collated_data) }
+      subject { DoneStory.all }
+      its(:count) { should == 2}
+    end
+    context "to_csv" do
+      subject { done_story_factory.to_csv(collated_data) }
+      it do
+        should == <<-EOF
+list,id_short,name,estimate,url_short
+Committed,0,Foo 0,3.0,https://trello.com/c/j56OGdXO
+Committed,1,Foo 1,3.0,https://trello.com/c/j56OGdXO
+EOF
+      end
+    end
   end
-
 
   context "for_iteration" do
     before do
@@ -32,10 +42,10 @@ describe "Factories::DoneStoryFactory" do
         (0..3).each { FactoryGirl.create(:done_story, user_profile: user_profile, type_of_work: type_of_work, estimate: 2, timestamp: "2014-03-04", status: "NOT DONE") }
       end
     end
-
     subject { done_story_factory.for_iteration("2014-03-04") }
 
     its([:totals]) { should == {:total_stories=>4, :total_estimates=>8.0} }
     its([:lists]) { should have(1).item }
+
   end
 end

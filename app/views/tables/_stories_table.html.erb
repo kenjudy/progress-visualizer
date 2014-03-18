@@ -1,3 +1,4 @@
+<% export_path ||= nil %>
 <table class="table table-bordered table-responsive">
   <tr><td colspan="4"><h3><%= label %> <%= results[:iteration_range] %></h3></td></tr>
   <% results[:lists].each do |list, data| %>
@@ -22,3 +23,4 @@
     <th class="estimate"><%= results[:totals][:total_estimates] %></th>
   </tr>
 </table>
+<%= export_button(export_path) %>

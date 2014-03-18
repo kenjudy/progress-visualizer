@@ -27,19 +27,26 @@ describe TablesController do
     before { sign_in user_profile.user }
 
     context "done stories" do
+      let(:format) { :html }
       subject do
         VCR.use_cassette('controllers/tables_controller') do
-          get :done_stories
+          get :done_stories, format: format
         end
       end
 
       its(:code) { should == "200" }
+      
+      context "csv" do
+        let(:format) { :csv }
+        it { expect(subject.body).to eq ""}
+      end
     end
 
     context "todo stories" do
+      let(:format) { :html }
       subject do
         VCR.use_cassette('controllers/tables_controller') do
-          get :todo_stories
+          get :todo_stories, format: format
         end
       end
 

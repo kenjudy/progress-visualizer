@@ -54,4 +54,9 @@ module ApplicationHelper
   def user_profile
     @user_profile || UserProfile.new
   end
+  
+  def export_button(path)
+    link_to raw("CSV <span class=\"glyphicon glyphicon-file\"></span>"), path, 
+      alt: "Export to CSV file", title: "Export to CSV file", class: "btn btn-default hide-print" if path
+  end
 end
