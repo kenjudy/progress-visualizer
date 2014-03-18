@@ -35,7 +35,7 @@ class Factories::BurnUpFactory
   end
   
   def stories_burn_up_data(containing = nil)
-    burn_up_date(false, containing)
+    burn_up_data(false, containing)
   end
 
   private

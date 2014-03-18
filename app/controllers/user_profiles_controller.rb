@@ -40,8 +40,7 @@ class UserProfilesController < ApplicationController
     start_date(params)
     lists
     labels
-    params["user_profile"]["backlog_lists"] = keys_from_values(@lists, params["user_profile"]["backlog_lists"])
-    params["user_profile"]["done_lists"] = keys_from_values(@lists, params["user_profile"]["done_lists"])
+    list_keys(params)
     if (update_profile(@profile, profile_params).valid?)
       add_webhook(@profile, webhooks_burn_up_url(profile_id: @profile.id, format: :json))
       redirect_to user_profiles_path
@@ -69,7 +68,7 @@ class UserProfilesController < ApplicationController
   end
 
   private
-  
+
   def update_profile(profile, profile_params)
     profile.update_attributes(profile_params)
     profile.save
@@ -118,6 +117,12 @@ class UserProfilesController < ApplicationController
        Adapters::BaseAdapter.build_adapter(@profile).request_lists(@profile.current_sprint_board_id_short)
     end
   end
+  
+  def list_keys(params)
+    params["user_profile"]["backlog_lists"] = keys_from_values(@lists, params["user_profile"]["backlog_lists"])
+    params["user_profile"]["done_lists"] = keys_from_values(@lists, params["user_profile"]["done_lists"])
+  end
+
   def labels
     @labels = Rails.cache.fetch("#{Rails.env}::UserProfilesController.labels.#{@profile.current_sprint_board_id_short}", :expires_in => 10.minutes) do
        meta = Adapters::BaseAdapter.build_adapter(@profile).request_board_metadata(@profile.current_sprint_board_id_short)
