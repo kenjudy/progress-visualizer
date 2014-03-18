@@ -1,6 +1,6 @@
 #!/bin/bash
 
-heroku pgbackups:capture
+heroku pgbackups:capture --expire
 curl -o latest.dump `heroku pgbackups:url`
 pg_restore --verbose --clean --no-acl --no-owner -h localhost -d progress_visualizer_development latest.dump
 
