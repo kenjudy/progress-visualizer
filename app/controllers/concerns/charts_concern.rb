@@ -111,13 +111,16 @@ module ChartsConcern
   def done_stories_data(range, iteration = nil)
     date =
     if iteration.instance_of?(String)
-      end_of_iteration(Date.parse(iteration))
+      query = 'timestamp > ? and timestamp <= ?'
+      beginning_of_iteration(Date.parse(iteration))
     elsif iteration.nil?
-      end_of_current_iteration
+      query = 'timestamp >= ? and timestamp < ?'
+      beginning_of_current_iteration
     else
-      end_of_iteration(iteration)
+      query = 'timestamp > ? and timestamp <= ?'
+      beginning_of_iteration(iteration)
     end
-    user_profile.done_stories.order("timestamp").where('timestamp >= ? and timestamp <= ?', date - (range * user_profile.duration).days, date).to_a
+    user_profile.done_stories.order("timestamp").where(query, date - (range * user_profile.duration).days, date).to_a
   end
   
   private
