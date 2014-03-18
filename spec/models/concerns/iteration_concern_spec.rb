@@ -111,6 +111,13 @@ describe IterationConcern do
           subject { prior_iteration(nil) }
           it { should == (beginning_of_current_iteration - user_profile.duration.days).strftime("%Y-%m-%d") }
         end
+        
+        context "between iteration returns DoneStory.last" do
+          let(:date) { (beginning_of_current_iteration - user_profile.duration.days).to_date }
+          before { FactoryGirl.create(:done_story, user_profile: user_profile, iteration: date) }
+          subject { prior_iteration(nil) }
+          it { should == date.strftime("%Y-%m-%d") }
+        end
       end
       
       context "next_iteration" do
