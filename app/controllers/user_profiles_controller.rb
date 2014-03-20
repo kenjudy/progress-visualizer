@@ -12,6 +12,13 @@ class UserProfilesController < ApplicationController
   def show
     @profiles = current_user.user_profiles
     @profile = current_user.user_profiles.find(params[:id])
+    respond_to do |format|
+      format.html { render }
+      format.json { render json: @profile.to_json(only: UserProfile.array_attributes.map{|attrib_name| attrib_name.to_sym},
+                                                  methods: [:readonly_token, :current_sprint_board_id, :current_sprint_board_id_short, :backlog_lists, :done_lists],
+                                                  include: [:done_stories, :burn_ups]) }
+      format.csv  { render text: @profile.to_csv }
+    end
   end
 
   def new

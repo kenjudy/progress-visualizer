@@ -1,4 +1,5 @@
 class BurnUp < ActiveRecord::Base
+  include ModelToArrayConcern
   after_save :last_update
   belongs_to :user_profile
 

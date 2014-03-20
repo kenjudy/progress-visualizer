@@ -17,6 +17,7 @@
         <table class="table">
           <tr>
             <th></th>
+            <th class="hidden-xs">export</th>
             <th>name</th>
             <th>default</th>
             <th>board id</th>
@@ -32,6 +33,10 @@
               <td>
                 <%= link_to "edit", edit_user_profile_path(profile), class: "btn btn-xs btn-default" %>
                 <%= link_to "delete", user_profile_path(profile), class: "btn btn-xs btn-danger", method: :delete %>
+              </td>
+              <td class="hidden-xs">
+                <%= link_to "CSV",  user_profile_path(profile, format: :csv), class: "btn btn-xs btn-default", alt: "Export to CSV file", title: "Export to CSV file"  %>
+                <%= link_to "json", user_profile_path(profile, format: :json), class: "btn btn-xs btn-default", alt: "Export to Json file", title: "Export to Json file"  %>
               </td>
               <td>
                 <%= profile.name %>

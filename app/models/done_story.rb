@@ -1,4 +1,6 @@
 class DoneStory < ActiveRecord::Base
+  include ModelToArrayConcern
+  
   alias_attribute :name, :story
   alias_attribute :id_short, :story_id
 
