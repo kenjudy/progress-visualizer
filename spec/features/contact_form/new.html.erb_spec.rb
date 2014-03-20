@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "contact_form", type:  :feature, js: true do
+describe "contact_form", type:  :feature, js: false do
   before { visit '/contact_form/new' }
 
   subject { page }

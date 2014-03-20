@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "about", type:  :feature, js: true do
+describe "about", type:  :feature, js: false do
   before { visit '/about' }
 
   subject { page }

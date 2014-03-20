@@ -12,12 +12,13 @@ module Charts
 
     let(:iteration_start) { beginning_of_current_iteration }
 
+    let(:three_weeks_ago) { (iteration_start - 3.weeks + 1.day).to_date }
     let(:two_weeks_ago) { (iteration_start - 2.weeks + 1.day).to_date }
     let(:one_week_ago)  { (iteration_start - 1.weeks + 1.day).to_date }
     let(:this_week)     { (iteration_start + 1.day).to_date }
 
     before do
-      [this_week, one_week_ago, two_weeks_ago].each do |weeks|
+      [this_week, one_week_ago, two_weeks_ago, three_weeks_ago].each do |weeks|
         (0..3).each { FactoryGirl.create(:done_story, user_profile: user_profile, type_of_work: "Committed", estimate: 2, timestamp: weeks) }
         (0..3).each { FactoryGirl.create(:done_story, user_profile: user_profile, type_of_work: "Contingent", estimate: 3, timestamp: weeks) }
         (0..3).each { FactoryGirl.create(:done_story, user_profile: user_profile, type_of_work: "Inserted", estimate: 4, timestamp: weeks) }
@@ -66,11 +67,11 @@ module Charts
 
       let(:iteration) { nil }
 
-      it { should == [[two_weeks_ago, 36.0, 12], [one_week_ago, 36.0, 12], [this_week, 36.0, 12]] }
+      it { should == [[three_weeks_ago, 36.0, 12], [two_weeks_ago, 36.0, 12], [one_week_ago, 36.0, 12]] }
 
       context "explicit iteration" do
         let(:iteration) { one_week_ago }
-        it { should == [[two_weeks_ago, 36.0, 12], [one_week_ago, 36.0, 12]] }
+        it { should == [[three_weeks_ago, 36.0, 12], [two_weeks_ago, 36.0, 12]] }
       end
     end
 
@@ -79,17 +80,17 @@ module Charts
       let(:iteration) { nil }
 
       subject { yesterdays_weather_data_rows(chart, iteration) }
-      it { should == [[(two_weeks_ago).strftime("%F"), 8.0, 12.0, 16.0], [(one_week_ago).strftime("%F"), 8.0, 12.0, 16.0], [(this_week).strftime("%F"), 8.0, 12.0, 16.0]] }
+      it { should == [[(three_weeks_ago).strftime("%F"), 8.0, 12.0, 16.0], [(two_weeks_ago).strftime("%F"), 8.0, 12.0, 16.0], [(one_week_ago).strftime("%F"), 8.0, 12.0, 16.0]] }
 
 
       context "explicit iteration" do
         let(:iteration) { one_week_ago }
-        it { should == [[(two_weeks_ago).strftime("%F"), 8.0, 12.0, 16.0], [(one_week_ago).strftime("%F"), 8.0, 12.0, 16.0]] }
+        it { should == [[(three_weeks_ago).strftime("%F"), 8.0, 12.0, 16.0], [(two_weeks_ago).strftime("%F"), 8.0, 12.0, 16.0]] }
       end
 
       context "no types_of_work" do
         let(:types_of_work) { nil }
-        it { should == [[(two_weeks_ago).strftime("%F"), 36.0], [(one_week_ago).strftime("%F"), 36.0  ], [(this_week).strftime("%F"), 36.0  ]] }
+        it { should == [[(three_weeks_ago).strftime("%F"), 36.0  ], [(two_weeks_ago).strftime("%F"), 36.0], [(one_week_ago).strftime("%F"), 36.0  ]] }
       end
 
       context "has_non_zero_values" do

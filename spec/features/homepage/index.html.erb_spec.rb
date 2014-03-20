@@ -7,7 +7,7 @@ describe "index", type:  :feature, js: true do
 
   it { should have_content 'ProgressVisualizer'   }
 
-  context "get started" do
+  context "get started", js: false do
     before { click_link 'Get started' }
     it { should have_content 'Sign in'}
   end
