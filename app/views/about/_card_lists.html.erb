@@ -1,0 +1,9 @@
+<% if cards.any? %>
+  <h3><%= title %></h3>
+  <ul>
+    <% cards.first(10).each do |item| %>
+      <li><%= link_to item["name"], item["shortUrl"], target: "trello_progress_visualizer" %></li>
+    <% end %>
+    <li><%= link_to "See all...", "https://trello.com/b/WWtHBRod/progress-visualizer", target: "trello_progress_visualizer" %></li>
+  </ul>
+<% end %>

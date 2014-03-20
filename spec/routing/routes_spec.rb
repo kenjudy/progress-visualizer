@@ -12,6 +12,11 @@ describe "routes" do
     it { should route_to(controller: "about", action: "index") }
   end
 
+  context "release-notes" do
+    subject { { get: "/release-notes"} }
+    it { should route_to(controller: "about", action: "release_notes") }
+  end
+
   context "terms-and-conditions" do
     subject { { get: "/terms-and-conditions"} }
     it { should route_to(controller: "about", action: "terms_and_conditions") }
@@ -31,7 +36,6 @@ describe "routes" do
     subject { { post: "/contact_form/create"} }
     it { should route_to(controller: "contact_form", action: "create") }
   end
-
 
   context "contact_form new" do
     subject { { get: "/contact_form/new"} }

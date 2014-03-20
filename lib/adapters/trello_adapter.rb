@@ -10,6 +10,13 @@ module Adapters
       @credentials = {key: Rails.application.config.trello[:app_key], token: user_profile.readonly_token }
     end
 
+    def self.release_notes
+      board = JSON.parse(URI.parse("https://api.trello.com/1/boards/WWtHBRod/lists?cards=open&card_fields=idShort,shortUrl,name").read)
+      { done:  cards_for_list(board,"52e6778d5922b7e16a641e5b") + cards_for_list(board, "53120d43dc95e0400afad581"),
+        doing: cards_for_list(board, "52e6778d5922b7e16a641e5a"),
+        todo:  cards_for_list(board, "52e6778d5922b7e16a641e59") }
+    end
+
     def request_board(board_id, include_archived = false)
       ProgressVisualizerTrello::Board.new(request_board_data(board_id, include_archived))
     end
@@ -64,6 +71,10 @@ module Adapters
     end
 
     private
+
+    def self.cards_for_list(board, id)
+      board.find{ |list| list["id"] == id }["cards"]
+    end
 
     def generate_uri(url_template, options = {})
       url = url_template
