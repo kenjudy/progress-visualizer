@@ -2,22 +2,22 @@
 <table class="table table-bordered table-responsive">
   <tr><td colspan="4"><h3><%= label %> <%= results[:iteration_range] %></h3></td></tr>
   <% results[:lists].each do |list, data| %>
-    <tr>
+    <tr class="list">
       <th>ID</th>
-      <th><%= list %></th>
+      <th class="label"><%= list %></th>
       <th class="count"><%= data[:stories] %></th>
       <th class="estimate"><%= data[:estimates] %></th>
     </tr>
     <% data[:cards].each do |card| %>
-      <tr>
-        <td><%= link_to_if(card.short_url, card.id_short, card.short_url, target: "_blank") %></td>
-        <td><%= card.name %></td>
+      <tr class="story">
+        <td class="id"><%= link_to_if(card.short_url, card.id_short, card.short_url, target: "_blank") %></td>
+        <td class="name"><%= card.name %></td>
         <td></td>
         <td class="estimate"><%= card.estimate %></td>
       </tr>
     <% end %>
   <% end %>
-  <tr>
+  <tr class="totals">
     <th colspan="2"><div class="pull-right">TOTALS</div></th>
     <th class="count"><%= results[:totals][:total_stories] %></th>
     <th class="estimate"><%= results[:totals][:total_estimates] %></th>

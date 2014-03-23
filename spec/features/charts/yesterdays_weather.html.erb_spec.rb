@@ -3,7 +3,7 @@ require 'spec_helper'
 describe "yesterday's weather chart", type:  :feature, js: true do
   include_context "authentication"
 
-  let(:iteration) { double(DateTime).as_null_object }
+  let(:iteration) { user_profile.beginning_of_current_iteration }
 
   before do
     (1..3).each do |i|
@@ -14,7 +14,7 @@ describe "yesterday's weather chart", type:  :feature, js: true do
   end
   
   subject do
-    visit "/chart/yesterdays-weather/#{iteration.strftime("%Y-%m-%d")}"
+    visit "/chart/yesterdays-weather"
     page
   end
   

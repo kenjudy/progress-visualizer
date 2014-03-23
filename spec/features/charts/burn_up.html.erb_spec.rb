@@ -42,7 +42,7 @@ describe "burn_up", type:  :feature, js: true do
 
       it { should have_content("Burn Up for Estimates #{iteration.strftime("%B %e, %Y")} - #{iteration.strftime("%B %e, %Y")}") }
       
-      it_behaves_like "a paginatable graph"
+      it_behaves_like "a paginatable visualization"
     end
   end
 end

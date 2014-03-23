@@ -1,4 +1,4 @@
-shared_examples "a paginatable graph" do
+shared_examples "a paginatable visualization" do
 
   context "pagination" do
     before do
