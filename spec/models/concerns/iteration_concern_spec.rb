@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe IterationConcern do
-  include IterationConcern
 
   [ { duration: 7, start_day_of_week: 1, end_day_of_week: 5, start_hour: 10, end_hour: 23, start_date: nil,
       it_p: DateTime.parse("Mon, 24 Feb 2014 10:00:00 EST -05:00"),
@@ -61,18 +60,18 @@ describe IterationConcern do
       let(:date_mid) { scenario[:dt_m] }
 
       context "beginning_of_iteration #{scenario[:it_s].strftime("%a, %m/%d/%Y %I:%M%p")}" do
-        subject { beginning_of_iteration(date_mid) }
+        subject { user_profile.beginning_of_iteration(date_mid) }
         it { should == it_start }
       end
 
       context "end_of_iteration #{scenario[:dt_m].strftime("%a, %m/%d/%Y %I:%M%p")}" do
-        subject { end_of_iteration(date_mid) }
+        subject { user_profile.end_of_iteration(date_mid) }
         it { should == it_end }
       end
 
       context "between_iterations" do
         let(:date) { date_before }
-        subject { between_iterations(date) }
+        subject { user_profile.between_iterations(date) }
         
         context "#{scenario[:dt_b].strftime("%a, %m/%d/%Y %I:%M%p")}" do
           it { should be_true }
@@ -85,13 +84,13 @@ describe IterationConcern do
       end
 
       context "beginning_of_current_iteration #{Date.today.strftime("%a, %m/%d/%Y %I:%M%p")}" do
-        subject { beginning_of_current_iteration }
-        it { should == beginning_of_iteration(Date.today) }
+        subject { user_profile.beginning_of_current_iteration }
+        it { should == user_profile.beginning_of_iteration(Date.today) }
       end
 
       context "end_of_current_iteration #{Date.today.strftime("%a, %m/%d/%Y %I:%M%p")}" do
-        subject { end_of_current_iteration }
-        it { should == end_of_iteration(Date.today) }
+        subject { user_profile.end_of_current_iteration }
+        it { should == user_profile.end_of_iteration(Date.today) }
       end
       
       context "prior_iteration" do
@@ -100,22 +99,22 @@ describe IterationConcern do
           FactoryGirl.create(:done_story, user_profile: user_profile, iteration: it_prev.to_date)
         end
         
-        subject { prior_iteration(it_start.to_date) }
+        subject { user_profile.prior_iteration(it_start.to_date) }
         it { should == it_prev.strftime("%Y-%m-%d") }
         
         context "nil defaults to current" do
           before do
-            FactoryGirl.create(:done_story, user_profile: user_profile, iteration: beginning_of_current_iteration.to_date)
-            FactoryGirl.create(:done_story, user_profile: user_profile, iteration: (beginning_of_current_iteration - user_profile.duration.days).to_date)
+            FactoryGirl.create(:done_story, user_profile: user_profile, iteration: user_profile.beginning_of_current_iteration.to_date)
+            FactoryGirl.create(:done_story, user_profile: user_profile, iteration: (user_profile.beginning_of_current_iteration - user_profile.duration.days).to_date)
           end
-          subject { prior_iteration(nil) }
-          it { should == (beginning_of_current_iteration - user_profile.duration.days).strftime("%Y-%m-%d") }
+          subject { user_profile.prior_iteration(nil) }
+          it { should == (user_profile.beginning_of_current_iteration - user_profile.duration.days).strftime("%Y-%m-%d") }
         end
         
         context "between iteration returns DoneStory.last" do
-          let(:date) { (beginning_of_current_iteration - user_profile.duration.days).to_date }
+          let(:date) { (user_profile.beginning_of_current_iteration - user_profile.duration.days).to_date }
           before { FactoryGirl.create(:done_story, user_profile: user_profile, iteration: date) }
-          subject { prior_iteration(nil) }
+          subject { user_profile.prior_iteration(nil) }
           it { should == date.strftime("%Y-%m-%d") }
         end
       end
@@ -126,16 +125,16 @@ describe IterationConcern do
           FactoryGirl.create(:done_story, user_profile: user_profile, iteration: it_next.to_date)
         end
         
-        subject { next_iteration(it_start.to_date) }
+        subject { user_profile.next_iteration(it_start.to_date) }
         it { should == it_next.strftime("%Y-%m-%d") }
         
         context "nil defaults to current" do
           before do
-            FactoryGirl.create(:done_story, user_profile: user_profile, iteration: beginning_of_current_iteration.to_date)
-            FactoryGirl.create(:done_story, user_profile: user_profile, iteration: (beginning_of_current_iteration + user_profile.duration.days).to_date)
+            FactoryGirl.create(:done_story, user_profile: user_profile, iteration: user_profile.beginning_of_current_iteration.to_date)
+            FactoryGirl.create(:done_story, user_profile: user_profile, iteration: (user_profile.beginning_of_current_iteration + user_profile.duration.days).to_date)
           end
-          subject { next_iteration(nil) }
-          it { should == (beginning_of_current_iteration + user_profile.duration.days).strftime("%Y-%m-%d") }
+          subject { user_profile.next_iteration(nil) }
+          it { should == (user_profile.beginning_of_current_iteration + user_profile.duration.days).strftime("%Y-%m-%d") }
         end
       end
 

@@ -2,7 +2,6 @@ require 'spec_helper'
 require 'json'
 
 describe ChartsController do
-  include IterationConcern
 
   context "not authenticated" do
     subject { get :burn_up }
@@ -24,7 +23,7 @@ describe ChartsController do
       its(:code) { should == "200" }
 
       context "has data" do
-        before { FactoryGirl.create(:burn_up, user_profile: user_profile, timestamp: beginning_of_current_iteration + 1.day) }
+        before { FactoryGirl.create(:burn_up, user_profile: user_profile, timestamp: user_profile.beginning_of_current_iteration + 1.day) }
         
         context "assigns" do
           before { subject }
@@ -66,11 +65,11 @@ describe ChartsController do
       end
       context "between iterations" do
         before do
-          controller.stub(between_iterations: true)
+          allow_any_instance_of(UserProfile).to receive(:between_iterations).and_return(true)
           subject
         end
 
-        it { expect(flash.now[:notice]).to eql "No burn up data. Next iteration starts at #{beginning_of_current_iteration.strftime('%b %e, %l %p')}." }
+        it { expect(flash.now[:notice]).to eql "No burn up data. Next iteration starts at #{user_profile.beginning_of_current_iteration.strftime('%b %e, %l %p')}." }
       end
      end
 

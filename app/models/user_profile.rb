@@ -2,6 +2,8 @@ require 'csv'
 
 class UserProfile < ActiveRecord::Base
   include ModelToArrayConcern
+  include IterationConcern
+  
   belongs_to :user
 
   has_many :done_story, :dependent => :delete_all

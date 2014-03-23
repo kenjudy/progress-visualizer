@@ -1,7 +1,5 @@
 module ChartsConcern
   extend ActiveSupport::Concern
-  include IterationConcern
-
 
   def default_properties
     green = "#3D7477"
@@ -112,13 +110,13 @@ module ChartsConcern
     date =
     if iteration.instance_of?(String)
       query = 'timestamp > ? and timestamp <= ?'
-      beginning_of_iteration(Date.parse(iteration))
+      user_profile.beginning_of_iteration(Date.parse(iteration))
     elsif iteration.nil?
       query = 'timestamp >= ? and timestamp < ?'
-      beginning_of_current_iteration
+      user_profile.beginning_of_current_iteration
     else
       query = 'timestamp > ? and timestamp <= ?'
-      beginning_of_iteration(iteration)
+      user_profile.beginning_of_iteration(iteration)
     end
     user_profile.done_stories.order("timestamp").where(query, date - (range * user_profile.duration).days, date).to_a
   end

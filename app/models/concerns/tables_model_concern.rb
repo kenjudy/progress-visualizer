@@ -1,7 +1,5 @@
 module TablesModelConcern
   extend ActiveSupport::Concern
-  include IterationConcern
-
 
   attr_accessor :user_profile
 
@@ -63,11 +61,11 @@ module TablesModelConcern
   def iteration_range_label(iteration)
     if iteration
       date = Date.parse(iteration)
-      start_range = beginning_of_iteration(date)
-      end_range = end_of_iteration(date)
+      start_range = user_profile.beginning_of_iteration(date)
+      end_range = user_profile.end_of_iteration(date)
     else
-      start_range = beginning_of_current_iteration
-      end_range = end_of_current_iteration
+      start_range = user_profile.beginning_of_current_iteration
+      end_range = user_profile.end_of_current_iteration
     end
     "#{start_range.strftime("%B %e, %Y")} - #{end_range.strftime("%B %e, %Y")}"
   end

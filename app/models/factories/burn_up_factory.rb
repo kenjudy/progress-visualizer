@@ -1,6 +1,4 @@
 class Factories::BurnUpFactory
-  include IterationConcern
-
   attr_accessor :done_lists, :backlog_lists, :timestamp
 
   def initialize(user_profile)
@@ -46,9 +44,9 @@ class Factories::BurnUpFactory
       if @burn_up_data[containing]
         @burn_up_data[containing]
       elsif containing
-        @burn_up_data[containing] = @user_profile.burn_ups.where("timestamp > ? and timestamp <= ?", beginning_of_iteration(containing), end_of_iteration(containing)).order(timestamp: :asc)
+        @burn_up_data[containing] = @user_profile.burn_ups.where("timestamp > ? and timestamp <= ?", @user_profile.beginning_of_iteration(containing), @user_profile.end_of_iteration(containing)).order(timestamp: :asc)
       else
-        @burn_up_data[containing] =@user_profile.burn_ups.where("timestamp > ? and timestamp <= ?", beginning_of_current_iteration, end_of_current_iteration).order(timestamp: :asc)
+        @burn_up_data[containing] = @user_profile.burn_ups.where("timestamp > ? and timestamp <= ?", @user_profile.beginning_of_current_iteration, @user_profile.end_of_current_iteration).order(timestamp: :asc)
       end
     data.map{ |burn_up| { timestamp: burn_up.timestamp, backlog: burn_up.send("backlog#{suffix}"), done: burn_up.send("done#{suffix}")} }
   end

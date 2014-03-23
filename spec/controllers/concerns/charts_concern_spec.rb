@@ -4,13 +4,12 @@ require 'spec_helper'
 module Charts
   describe ChartsConcern do
     include ChartsConcern
-    include IterationConcern
 
     let(:types_of_work) { "Committed,Contingent,Inserted" }
     let(:user_profile) { FactoryGirl.create(:user_profile, labels_types_of_work: types_of_work) }
     let(:date) { Date.today.end_of_week }
 
-    let(:iteration_start) { beginning_of_current_iteration }
+    let(:iteration_start) { user_profile.beginning_of_current_iteration }
 
     let(:three_weeks_ago) { (iteration_start - 3.weeks + 1.day).to_date }
     let(:two_weeks_ago) { (iteration_start - 2.weeks + 1.day).to_date }

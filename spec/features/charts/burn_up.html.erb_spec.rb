@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe "burn_up", type:  :feature, js: false do
-  #include IterationConcern
   
   subject do
     visit '/chart/burn-up' 

@@ -1,6 +1,5 @@
 module Factories
   class DoneStoryFactory
-    include IterationConcern
     include TablesModelConcern
 
     def refresh
@@ -14,7 +13,7 @@ module Factories
     def update_done_stories_for(collated_data)
       collated_data[:lists].keys.each do |type_of_work|
         collated_data[:lists][type_of_work][:cards].each do |card|
-          DoneStory.create_or_update_from(@user_profile, card, type_of_work, beginning_of_current_iteration)
+          DoneStory.create_or_update_from(@user_profile, card, type_of_work, user_profile.beginning_of_current_iteration)
         end
       end
       return collated_data

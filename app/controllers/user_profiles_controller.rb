@@ -1,6 +1,5 @@
 class UserProfilesController < ApplicationController
   include UserProfileConcern
-  include IterationConcern
 
   before_filter :authenticate_user!
   before_filter :assign_user_profile, only: [:index, :show, :edit, :update]

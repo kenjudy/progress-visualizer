@@ -1,6 +1,4 @@
 class WebhooksController < ApplicationController
-  include UserProfileConcern
-  include IterationConcern
 
   def burn_up
     begin

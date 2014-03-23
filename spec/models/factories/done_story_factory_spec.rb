@@ -2,7 +2,6 @@ require 'spec_helper'
 
 describe "Factories::DoneStoryFactory" do
   include ProgressVisualizerTrello::JsonData
-  include IterationConcern
 
   let(:board) { ProgressVisualizerTrello::Board.new({lists: [example_list_data], cards: cards}) }
   let(:types_of_work) { ["Committed"] }

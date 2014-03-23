@@ -1,7 +1,6 @@
 class ChartsController < ApplicationController
   include ChartsConcern
   include UserProfileConcern
-  include IterationConcern
 
   before_filter :authenticate_user!, :assign_user_profile
   before_filter :set_iteration, only: :burn_up
@@ -21,8 +20,8 @@ class ChartsController < ApplicationController
       flash.now[:notice] = "No burn up data.#{next_iteration_flash(@iteration)}"
     end
 
-    @prior_iteration = prior_iteration(@iteration)
-    @next_iteration = next_iteration(@iteration)
+    @prior_iteration = user_profile.prior_iteration(@iteration)
+    @next_iteration = user_profile.next_iteration(@iteration)
 
     respond_to do |format|
       format.html { render }
@@ -56,7 +55,7 @@ class ChartsController < ApplicationController
   
   def next_iteration_flash(iteration)
     iteration ||= Date.today
-    between_iterations(iteration) ? " Next iteration starts at #{beginning_of_iteration(iteration).strftime('%b %e, %l %p')}." : ""
+    user_profile.between_iterations(iteration) ? " Next iteration starts at #{user_profile.beginning_of_iteration(iteration).strftime('%b %e, %l %p')}." : ""
   end
 
 end
