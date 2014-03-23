@@ -18,6 +18,7 @@ class TablesController < ApplicationController
     respond_to do |format|
       format.html { render }
       format.csv { render text: factory.to_csv(@collated_results) }
+      format.json { render json: @collated_results.to_json }
     end
     
   end
@@ -29,6 +30,7 @@ class TablesController < ApplicationController
     respond_to do |format|
       format.html { render }
       format.csv { render text: factory.to_csv(@collated_results) }
+      format.json { render json: @collated_results.to_json }
     end
     
   end
