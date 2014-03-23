@@ -24,7 +24,7 @@ module Constants
     secret: TWITTER_CONFIG['application']['secret'],
   }
 
-  Rails.application.config.adapter_class = "::Adapters::TrelloAdapter"
+  Rails.application.config.adapter_class = "::TrelloAdapter"
 
   Rails.application.config.email_default_from = "progress-visualizer@judykat.com"
 

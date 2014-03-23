@@ -3,7 +3,7 @@ require 'json'
 
 describe TablesController do
   let(:user_profile) { FactoryGirl.create(:user_profile) }
-  let(:adapter) { Adapters::TrelloAdapter.new(user_profile) }
+  let(:adapter) { TrelloAdapter.new(user_profile) }
 
 
   context "not authenticated" do

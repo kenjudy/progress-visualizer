@@ -54,7 +54,7 @@ class Factories::BurnUpFactory
   end
 
   def request_data
-     @board = Adapters::BaseAdapter.build_adapter(@user_profile).request_board(@user_profile.current_sprint_board_id_short)
+     @board = BaseAdapter.build_adapter(@user_profile).request_board(@user_profile.current_sprint_board_id_short)
    end
 
   def stats(list_ids)

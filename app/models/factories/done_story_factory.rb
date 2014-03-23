@@ -4,7 +4,7 @@ module Factories
     include TablesModelConcern
 
     def refresh
-      board = Adapters::BaseAdapter.build_adapter(user_profile).request_board(user_profile.current_sprint_board_id)
+      board = BaseAdapter.build_adapter(user_profile).request_board(user_profile.current_sprint_board_id)
       collated_data = collate(board,
                               user_profile.labels_types_of_work.split(","),
                               JSON.parse(user_profile.done_lists).keys)

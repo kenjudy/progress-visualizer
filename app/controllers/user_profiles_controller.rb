@@ -91,14 +91,14 @@ class UserProfilesController < ApplicationController
 
   def add_webhook(user_profile, callback_url)
     begin
-      Adapters::BaseAdapter.build_adapter(user_profile).add_webhook(callback_url, user_profile.current_sprint_board_id) unless Webhook.find_by(user_profile: user_profile, callback_url: callback_url)
+      BaseAdapter.build_adapter(user_profile).add_webhook(callback_url, user_profile.current_sprint_board_id) unless Webhook.find_by(user_profile: user_profile, callback_url: callback_url)
     rescue JSON::ParserError => e
      logger.error(e.message)
    end
   end
 
   def destroy_webhook(user_profile, callback_url)
-    adapter = Adapters::BaseAdapter.build_adapter(user_profile)
+    adapter = BaseAdapter.build_adapter(user_profile)
     Webhook.where("user_profile_id = ?", user_profile.id).each do |webhook|
       adapter.destroy_webhook(webhook)
     end
@@ -121,7 +121,7 @@ class UserProfilesController < ApplicationController
 
   def lists
     @lists = Rails.cache.fetch("#{Rails.env}::UserProfilesController.lists.#{@profile.current_sprint_board_id_short}", :expires_in => 10.minutes) do
-       Adapters::BaseAdapter.build_adapter(@profile).request_lists(@profile.current_sprint_board_id_short)
+       BaseAdapter.build_adapter(@profile).request_lists(@profile.current_sprint_board_id_short)
     end
   end
   
@@ -132,7 +132,7 @@ class UserProfilesController < ApplicationController
 
   def labels
     @labels = Rails.cache.fetch("#{Rails.env}::UserProfilesController.labels.#{@profile.current_sprint_board_id_short}", :expires_in => 10.minutes) do
-       meta = Adapters::BaseAdapter.build_adapter(@profile).request_board_metadata(@profile.current_sprint_board_id_short)
+       meta = BaseAdapter.build_adapter(@profile).request_board_metadata(@profile.current_sprint_board_id_short)
        meta["labelNames"].map { |k,v| v.empty? ? [k,k] : [k,v] }
     end
   end

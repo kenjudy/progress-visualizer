@@ -2,8 +2,11 @@ require 'spec_helper'
 
 include Warden::Test::Helpers
 
+def user_profile
+  @user_profile ||= FactoryGirl.create(:user_profile)
+end
+
 def authenticate
-  user_profile = FactoryGirl.create(:user_profile)
   login_as(user_profile.user, :scope => :user)
 end
 

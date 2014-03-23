@@ -4,7 +4,7 @@ require 'spec_helper'
 describe Factories::BurnUpFactory do
 
   let(:profile) { FactoryGirl.build(:user_profile) }
-  let(:adapter) { ::Adapters::TrelloAdapter.new(profile) }
+  let(:adapter) { ::TrelloAdapter.new(profile) }
   let(:done_lists) { JSON.parse(profile.done_lists) }
   let(:backlog_lists) { JSON.parse(profile.backlog_lists) }
 
