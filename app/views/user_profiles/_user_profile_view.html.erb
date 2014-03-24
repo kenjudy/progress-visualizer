@@ -29,7 +29,7 @@
             <th>end</th>
           </tr>
           <% profiles.each do |profile| %>
-            <tr class="<%= profile.id %> <%= user_profile.id %>">
+            <tr class="profile_<%= profile.id %>">
               <td>
                 <%= link_to "edit", edit_user_profile_path(profile), class: "btn btn-xs btn-default" %>
                 <%= link_to "delete", user_profile_path(profile), class: "btn btn-xs btn-danger", method: :delete %>
@@ -40,8 +40,7 @@
               </td>
               <td>
                 <%= profile.name %>
-                <%= "(current)" if profile.id == user_profile.id %>
-                <%= "(new)" if current_profile && current_profile.id == profile.id %>
+                <%= "(selected)" if profile.id == user_profile.id %>
               </td>
               <td><%= profile.default == "1" ? "true" : "false" %></td>
               <td><%= profile.current_sprint_board_id_short %></td>

@@ -85,7 +85,9 @@ class UserProfilesController < ApplicationController
     month = params["user_profile"].delete("start_date(2i)")
     day   = params["user_profile"].delete("start_date(3i)")
     year  = params["user_profile"].delete("start_date(1i)")
-    params["user_profile"]["start_date"] = params["user_profile"]["duration"] > "7" && month && day && year ? Time.local(year, month, day) : nil
+    if params["user_profile"]["duration"].to_i > 7 && month && day && year
+      params["user_profile"]["start_date"] =  Time.local(year, month, day)
+    end
   end
 
   def add_webhook(user_profile, callback_url)

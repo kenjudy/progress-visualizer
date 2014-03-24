@@ -3,7 +3,7 @@
 <% tooltip ||= nil %>
 <% value = display_keys(form.object.send(field)) %>
 
-<div class="form-group">
+<div class="form-group" id="<%= field %>_cloud_selector">
   <%= form.label field, class: "col-sm-3 control-label" do %>
     <%= label_text %>
     <% tooltip(tooltip)%>
