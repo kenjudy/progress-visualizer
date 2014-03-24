@@ -1,8 +1,8 @@
 <% if cards.any? %>
   <h3><%= title %></h3>
   <ul>
-    <% cards.first(10).each do |item| %>
-      <li><%= link_to item["name"], item["shortUrl"], target: "trello_progress_visualizer" %></li>
+    <% cards.sort{|x,y| y["dateLastActivity"] <=> x["dateLastActivity"] }.first(10).each do |item| %>
+      <li><%= link_to item["name"], item["shortUrl"], target: "trello_progress_visualizer" %>  <span class="small text-muted"><%= Date.parse(item["dateLastActivity"]).strftime("%Y-%m-%d")%></span></li>
     <% end %>
     <li><%= link_to "See all...", "https://trello.com/b/WWtHBRod/progress-visualizer", target: "trello_progress_visualizer" %></li>
   </ul>

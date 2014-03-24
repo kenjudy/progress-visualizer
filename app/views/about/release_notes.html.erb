@@ -6,7 +6,7 @@
         <h1>Release Notes</h1>
         <p>The backlog for <span class="brand">Progress<span>Visualizer</span></span> is in <%= link_to "Trello", "https://trello.com/b/WWtHBRod/progress-visualizer", target: "trello_progress_visualizer" %>.</p>
         <%= render "card_lists", title: "In progress", cards: @lists[:doing] %>
-        <%= render "card_lists", title: "Recently completed", cards: @lists[:done] %>
+        <%= render "card_lists", title: "Recently completed", cards: @lists[:done].reverse %>
         <%= render "card_lists", title: "Possible todo's", cards: @lists[:todo] %>
        </div>
     </div>
