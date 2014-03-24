@@ -16,6 +16,7 @@ class User < ActiveRecord::Base
 
   def self.find_for_trello_oauth(auth)
     where(auth.slice(:provider, :uid)).first_or_create do |user|
+      binding.pry
         user.provider = auth.provider
         user.uid = auth.uid
         user.email = auth.info.email
@@ -42,14 +43,6 @@ class User < ActiveRecord::Base
                           )
       end
 
-    end
-  end
-
-  def self.new_with_session(params, session)
-    super.tap do |user|
-      if data = session["devise.trello_data"] && session["devise.trello_data"]["extra"]["raw_info"]
-        user.email = data["email"] if user.email.blank?
-      end
     end
   end
 end
