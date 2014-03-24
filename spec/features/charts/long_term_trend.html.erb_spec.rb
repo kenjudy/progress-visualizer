@@ -18,7 +18,7 @@ describe "long term trend chart chart", type:  :feature, js: true do
     page
   end
   
-  context "stories" do
+  context "chart" do
     let(:chart_id) { "#long_term_trend_chart"}
     it_behaves_like "a graph"
   end
