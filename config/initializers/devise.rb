@@ -1,5 +1,6 @@
 require "omniauth-trello"
 require "omniauth-twitter"
+require "omniauth-google-oauth2"
 
 # Use this hook to configure devise mailer, warden hooks and so forth.
 # Many of these configuration options can be set straight in your model.
@@ -237,6 +238,9 @@ Devise.setup do |config|
 
   config.omniauth :twitter, Rails.application.config.twitter[:app_key], Rails.application.config.twitter[:secret],
       {:scope => 'email, offline_access'}.merge(Rails.env == "production" ? {:client_options => {:ssl => {:ca_file => '/usr/lib/ssl/certs/ca-certificates.crt'}}} : {})
+
+  config.omniauth :google_oauth2, Rails.application.config.google[:client_id], Rails.application.config.google[:secret],
+    {}.merge(Rails.env == "production" ? {:client_options => {:ssl => {:ca_file => '/usr/lib/ssl/certs/ca-certificates.crt'}}} : {})
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or

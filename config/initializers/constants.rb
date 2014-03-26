@@ -23,6 +23,13 @@ module Constants
     app_key: TWITTER_CONFIG['application']['key'],
     secret: TWITTER_CONFIG['application']['secret'],
   }
+  
+  GOOGLE_CONFIG = YAML::load(File.open("#{Rails.root}/config/google.yml"))
+  
+  Rails.application.config.google = {
+    client_id: GOOGLE_CONFIG['application'][Rails.env]['client_id'],
+    secret: GOOGLE_CONFIG['application'][Rails.env]['secret'],
+  }
 
   Rails.application.config.adapter_class = "::TrelloAdapter"
 

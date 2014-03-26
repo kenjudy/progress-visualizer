@@ -36,6 +36,7 @@ gem 'devise'
 
 gem 'omniauth-trello'
 gem 'omniauth-twitter'
+gem 'omniauth-google-oauth2'
 
 gem 'attr_encryptor'
 

@@ -40,9 +40,11 @@
               </div>
               <div class="col-sm-8">
                 <div class="oauth-buttons">
-                   <%= link_to "Sign in with Trello", user_omniauth_authorize_path(:trello), class: "btn btn-default" %>
+                  <label>Sign in with:</label>
+                   <%= link_to "Trello", user_omniauth_authorize_path(:trello), class: "btn btn-default" %>
+                   <%= link_to "Google", user_omniauth_authorize_path(:google_oauth2), class: "btn btn-default" %>
                    <%= link_to user_omniauth_authorize_path(:twitter), class: "btn btn-default"  do %>
-                      <%= image_tag "sign-in-with-twitter-gray.png", alt: "Sign in with Twitter" %> Sign in with Twitter
+                      <%= image_tag "sign-in-with-twitter-gray.png", alt: "Sign in with Twitter" %> Twitter
                    <% end %>
                 </div>
              </div>

@@ -15,7 +15,7 @@ ProgressVisualizer::Application.routes.draw do
   post "contact_form/create", as: "contact_form_create"
 
   resources :user_profiles
-
+  
   get "user_profiles/set/:profile_id" => "user_profiles#set", as: 'set_user_profile'
 
   get  'ian4atzhmmh9ul/burn-up/:profile_id' => "webhooks#burn_up", format: true, constraints: { format: /json/ }
