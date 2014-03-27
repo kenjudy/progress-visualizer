@@ -8,7 +8,7 @@ shared_context "authentication" do
   end
 
   def authenticate
-    login_as(user_profile.user, :scope => :user)
+    login_as(user_profile.user, scope: :user)
   end
 
   before { Warden.test_mode! }
