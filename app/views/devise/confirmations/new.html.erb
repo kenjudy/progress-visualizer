@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row">
       <div class="col-md-8 col-md-offset-2">
-        <%= form_for(resource, :as => resource_name, :url => confirmation_path(resource_name), role: "form", html: {class: "form-horizontal panel panel-default", :method => :post }) do |f| %>
+        <%= form_for(resource, as: resource_name, url: confirmation_path(resource_name), role: "form", html: {class: "form-horizontal panel panel-default", method: :post }) do |f| %>
           <div class="panel-heading">
             <h2>Resend confirmation instructions</h2>
           </div>
@@ -13,7 +13,7 @@
             <div class="form-group">
               <%= f.label :email, class: "col-sm-3 control-label" %>
               <div class="col-sm-9">
-                <%= f.email_field :email, :autofocus => true, class: "form-control", placeholder: "Enter email" %>
+                <%= f.email_field :email, autofocus: true, class: "form-control", placeholder: "Enter email" %>
               </div>
             </div>
 

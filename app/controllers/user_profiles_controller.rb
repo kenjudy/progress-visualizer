@@ -121,7 +121,7 @@ class UserProfilesController < ApplicationController
   end
 
   def lists
-    @lists = Rails.cache.fetch("#{Rails.env}::UserProfilesController.lists.#{@profile.current_sprint_board_id_short}", :expires_in => 10.minutes) do
+    @lists = Rails.cache.fetch("#{Rails.env}::UserProfilesController.lists.#{@profile.current_sprint_board_id_short}", expires_in: 10.minutes) do
        BaseAdapter.build_adapter(@profile).request_lists(@profile.current_sprint_board_id_short)
     end
   end
@@ -132,7 +132,7 @@ class UserProfilesController < ApplicationController
   end
 
   def labels
-    @labels = Rails.cache.fetch("#{Rails.env}::UserProfilesController.labels.#{@profile.current_sprint_board_id_short}", :expires_in => 10.minutes) do
+    @labels = Rails.cache.fetch("#{Rails.env}::UserProfilesController.labels.#{@profile.current_sprint_board_id_short}", expires_in: 10.minutes) do
        meta = BaseAdapter.build_adapter(@profile).request_board_metadata(@profile.current_sprint_board_id_short)
        meta["labelNames"].map { |k,v| v.empty? ? [k,k] : [k,v] }
     end

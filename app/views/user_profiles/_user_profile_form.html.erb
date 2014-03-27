@@ -5,7 +5,7 @@
     <div class="row">
       <div class="col-md-10 col-md-offset-1">
         <%= render "form_errors", form: profile %>
-        <%= form_for(profile, url: url, role: "form", html: {class: "form-horizontal panel panel-default", :method => method }) do |f| %>
+        <%= form_for(profile, url: url, role: "form", html: {class: "form-horizontal panel panel-default", method: method }) do |f| %>
         <div class="panel-heading">
           <h2>User Profile (Trello Properties)</h2>
         </div>

@@ -2,7 +2,7 @@
 
 namespace :tables do
   desc "Update overview"
-  task :overview => :environment do
+  task overview: :environment do
     UserProfile.all.each do |profile|
       begin
         Factories::DoneStoryFactory.new(profile).refresh

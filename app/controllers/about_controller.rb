@@ -13,7 +13,7 @@ class AboutController < ApplicationController
   end
   
   def release_notes
-    @lists = Rails.cache.fetch("ProgressVisualizerReleaseNotes", :expires_in => 5.minutes) do
+    @lists = Rails.cache.fetch("ProgressVisualizerReleaseNotes", expires_in: 5.minutes) do
       TrelloAdapter.release_notes
     end
   end

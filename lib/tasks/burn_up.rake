@@ -2,7 +2,7 @@
 
 namespace :charts do
   desc "Update burn_up"
-  task :burn_up => :environment do
+  task burn_up: :environment do
     UserProfile.all.each do |profile|
       begin
         Factories::BurnUpFactory.new(profile).update

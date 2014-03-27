@@ -12,7 +12,7 @@ module TablesModelConcern
   end
 
   def current
-    @results = Rails.cache.fetch(cache_key, :expires_in => 5.minutes) do
+    @results = Rails.cache.fetch(cache_key, expires_in: 5.minutes) do
       refresh
     end
   end

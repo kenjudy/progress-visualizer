@@ -1,11 +1,11 @@
 class User < ActiveRecord::Base
-  has_many :user_profiles, :dependent => :delete_all
+  has_many :user_profiles, dependent: :delete_all
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
-         :omniauthable, :omniauth_providers => [:trello, :twitter, :google_oauth2]
+         :omniauthable, omniauth_providers: [:trello, :twitter, :google_oauth2]
 
   validates :name, :email, presence: true
   validates :name, :email, uniqueness: true
