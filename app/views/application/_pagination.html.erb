@@ -1,0 +1,10 @@
+<% if current_user %>
+  <ul class="pager">
+    <li class="previous <%= 'disabled' unless  prior_iteration %>">
+      <%= link_to raw("&larr; Older"), prior_path %>
+    </li>
+    <li class="next <%= 'disabled' unless  next_iteration %>">
+      <%= link_to raw("Newer &rarr;"), next_path %>
+    </li>
+  </ul>
+<% end %>

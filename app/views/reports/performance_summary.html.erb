@@ -1,14 +1,15 @@
 <section>
   <div class="container">
     <div class="row">
-      <ul class="pager">
-        <li class="previous <%= 'disabled' unless  @prior_iteration %>">
-          <%= link_to raw("&larr; Older"), reports_performance_summary_path(iteration: @prior_iteration) %>
-        </li>
-        <li class="next <%= 'disabled' unless  @next_iteration %>">
-          <%= link_to raw("Newer &rarr;"), reports_performance_summary_path(iteration: @next_iteration) %>
-        </li>
-      </ul>
+      <%= render 'application/pagination', 
+        prior_iteration: @prior_iteration,
+        prior_path: reports_performance_summary_path(iteration: @prior_iteration), 
+        next_iteration: @next_iteration,
+        next_path: reports_performance_summary_path(iteration: @next_iteration)
+      %>
+    </div>
+    <div class="row">
+      <h1>Performance Summary <%= share_button %></h1>
     </div>
     <div class="row">
       <%= render "tables/stories_table", label: "Completed work", results: @collated_results %>
@@ -27,3 +28,4 @@
     </div>
   </div>
 </section>
+<%= render "application/sharing_modal", share_url: reports_sharing_new_path(iteration: @iteration, report: "performance-summary") %>

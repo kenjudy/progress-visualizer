@@ -59,4 +59,10 @@ module ApplicationHelper
     link_to raw("CSV <span class=\"glyphicon glyphicon-file\"></span>"), path, 
       alt: "Export to CSV file", title: "Export to CSV file", class: "btn btn-default hide-print" if path
   end
+  
+  def share_button
+    link_to raw("Share <span class=\"glyphicon glyphicon-share\"></span>"), "#", 
+      alt: "Share report", title: "Share report", class: "btn btn-default hide-print sharing",
+      "data-toggle" => "modal",  "data-target" => "#sharing-modal" if current_user
+  end
 end

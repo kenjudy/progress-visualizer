@@ -2,9 +2,7 @@ require 'net/http'
 require 'open-uri'
 require 'json'
 
-class TrelloAdapter < BaseAdapter
-  unloadable
-  
+class TrelloAdapter < BaseAdapter  
   def initialize(user_profile)
     super
     @credentials = {key: Rails.application.config.trello[:app_key], token: user_profile.readonly_token }

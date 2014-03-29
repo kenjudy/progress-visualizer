@@ -2,13 +2,11 @@
 <html>
 <%= render 'application/head' %>
 <body class="<%= params["controller"] %> <%= params["action"] %>">
-  <%= render 'application/header' %>
   <%= render 'application/alert', message: notice || flash[:notice], dismissable: true %>
   <%= render 'application/alert', message: alert || flash[:error], type: "danger" %>
   <article>
     <%= yield %>
   </article>
   <%= render "application/footer" %>
-  <%= render "application/spinner" %>
 </body>
 </html>

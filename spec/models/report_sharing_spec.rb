@@ -5,6 +5,7 @@ describe ReportSharing do
   subject { FactoryGirl.build(:report_sharing) }
   
   it { should be_valid }
+  its(:guid) { should_not be_nil }
   
   context "validations" do
     context "expiration" do

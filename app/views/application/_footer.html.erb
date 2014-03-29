@@ -1,0 +1,24 @@
+<footer class="muted">
+  <div class="content">
+    <p>
+      <%= link_to homepage_url do %>www.<span class="brand">progress<span>-visualizer</span></span>.com<% end %>
+      is a trello dashboard in ruby on rails by
+      <a href="http://judykat.com/ken-judy" target="_blank">Ken Judy</a>
+      |
+      github: <a href="https://github.com/kenjudy" target="_blank">kenjudy</a>
+      |
+      <a href="https://plus.google.com/110468891128828832324" rel="publisher" target="_blank">Google+</a>
+      |
+      <a href="https://twitter.com/progvisualizer" target="_blank">@progvisualizer</a>
+    </p>
+    <p class="hide-print">
+      <%= link_to "Help", help_index_path, onClick: track_event("footer", ["link_to_help", "Help"]) %>
+      |
+      <%= link_to "About", about_path, onClick: track_event("footer", ["link_to_about", "About"]) %>
+      |
+      <%= link_to "Terms and Conditions", terms_and_conditions_path, onClick: track_event("footer", ["link_to_terms_and_conditions", "Terms and Conditions"]) %>
+      |
+      <%= link_to "Privacy Policy", privacy_policy_path, onClick: track_event("footer", ["link_to_privacy_policy", "Privacy Policy"]) %>
+    </p>
+  </div>
+</footer>

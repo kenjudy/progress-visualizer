@@ -35,4 +35,9 @@ module Constants
 
   Rails.application.config.email_default_from = "progress-visualizer@judykat.com"
 
+  BITLY_CONFIG = YAML::load(File.open("#{Rails.root}/config/bitly.yml"))
+  Rails.application.config.bitly = { 
+    token: BITLY_CONFIG['application']['token'],
+    save_link_url: "https://api-ssl.bitly.com/v3/user/link_save?private=true&title=Saved%20Progress%20Visualizer%20Report&access_token=<TOKEN>&longUrl="
+  }
 end

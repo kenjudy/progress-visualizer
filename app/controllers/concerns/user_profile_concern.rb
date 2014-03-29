@@ -18,8 +18,7 @@ module UserProfileConcern
   private
   
   def flash_notice
-    notice = flash.notice
-    "#{notice} Please create a profile associating your account to a trello board. <a href='#{new_user_profile_path}' class='btn btn-default'>Add</a>" unless (notice && notice.include?("Please create a profile associating"))
+    "#{flash.notice} Please create a profile associating your account to a trello board. <a href='#{new_user_profile_path}' class='btn btn-default'>Add</a>" unless (notice && notice.include?("Please create a profile associating"))
   end
   
   def set_profile

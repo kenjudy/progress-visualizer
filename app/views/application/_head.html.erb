@@ -1,0 +1,25 @@
+<head>
+  <title>Progress Visualizer <%= params["action"].titleize %> <%= params["controller"].titleize %></title>
+  <meta name="description" content="Quickly setup visual reporting for your Trello board" />
+  <meta name="keywords" content="trello reporting visualization graphs charts" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+  <%= stylesheet_link_tag    "print/application", media: "print" %>
+  <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+  <%= javascript_include_tag "//www.google.com/jsapi" %>
+  <link href="//fonts.googleapis.com/css?family=Questrial" rel="stylesheet" type="text/css">
+  <%= csrf_meta_tags %>
+  <%= yield :head %>
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-48660757-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+</head>

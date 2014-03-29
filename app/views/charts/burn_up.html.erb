@@ -5,14 +5,12 @@
 <section>
   <div class="container">
     <div class="row">
-      <ul class="pager">
-        <li class="previous <%= 'disabled' unless  @prior_iteration %>">
-          <%= link_to raw("&larr; Older"), charts_burn_up_path(iteration: @prior_iteration) %>
-        </li>
-        <li class="next <%= 'disabled' unless  @next_iteration %>">
-          <%= link_to raw("Newer &rarr;"), charts_burn_up_path(iteration: @next_iteration) %>
-        </li>
-      </ul>
+      <%= render 'application/pagination', 
+        prior_iteration: @prior_iteration,
+        prior_path: charts_burn_up_path(iteration: @prior_iteration), 
+        next_iteration: @next_iteration,
+        next_path: charts_burn_up_path(iteration: @next_iteration)
+      %>
     </div>
     <% if @uses_estimates %>
     <div class="row">

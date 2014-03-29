@@ -1,5 +1,4 @@
 class BaseAdapter
-  unloadable
   attr_accessor :user_profile
 
   def initialize(user_profile)

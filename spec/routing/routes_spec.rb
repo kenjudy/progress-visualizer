@@ -145,8 +145,19 @@ describe "routes" do
     end
     
     context "report sharing" do
-      subject { { get: "report/sharing/GUID"}}
-      it { should route_to(controller: "reports", action: "sharing", guid: "GUID")}
+      context "view" do
+        subject { { get: "report/sharing/GUID"}}
+        it { should route_to(controller: "reports", action: "sharing", guid: "GUID")}
+      end
+      context "new" do
+        let(:report) { 'performance-summary'}
+        subject { { get: "report/sharing/#{report}/new"}}
+        it { should route_to(controller: "reports", action: "sharing_new", report: 'performance-summary')}
+        context "report constraint" do
+          let(:report) { 'non-existant-report' }
+          it { should_not route_to(controller: "reports", action: "sharing_new", report: 'performance-summary')}
+        end
+      end
     end
   end
 
