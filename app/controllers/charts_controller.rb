@@ -30,11 +30,11 @@ class ChartsController < ApplicationController
   end
 
   def yesterdays_weather
-    yesterdays_weather_action(params[:weeks] ? params[:weeks].to_i : 3)
+    yesterdays_weather_action(user_profile, params[:weeks] ? params[:weeks].to_i : 3)
   end
 
   def long_term_trend
-    long_term_trend_action(params[:weeks] ? params[:weeks].to_i : 10)
+    long_term_trend_action(user_profile, params[:weeks] ? params[:weeks].to_i : 10)
   end
   
   private

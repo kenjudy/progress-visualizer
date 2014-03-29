@@ -27,7 +27,7 @@ module Charts
 
     context "done_stories_data" do
       let(:iteration) { one_week_ago }
-      subject { done_stories_data(3, iteration) }
+      subject { done_stories_data(user_profile, 3, iteration) }
 
       its(:length) { should == 24 }
       its(:first) { should be_instance_of(DoneStory) }
@@ -62,7 +62,7 @@ module Charts
     end
 
     context "long_term_trend_visualization_rows" do
-      subject { long_term_trend_visualization_rows(10, iteration) }
+      subject { long_term_trend_visualization_rows(user_profile, 10, iteration) }
 
       let(:iteration) { nil }
 
@@ -78,7 +78,7 @@ module Charts
       let(:chart) { YesterdaysWeatherChart.new(user_profile, {weeks: 3, label: :estimate}) }
       let(:iteration) { nil }
 
-      subject { yesterdays_weather_data_rows(chart, iteration) }
+      subject { yesterdays_weather_data_rows(user_profile, chart, iteration) }
       it { should == [[(three_weeks_ago).strftime("%F"), 8.0, 12.0, 16.0], [(two_weeks_ago).strftime("%F"), 8.0, 12.0, 16.0], [(one_week_ago).strftime("%F"), 8.0, 12.0, 16.0]] }
 
 
@@ -93,7 +93,7 @@ module Charts
       end
 
       context "has_non_zero_values" do
-        subject { has_non_zero_values(yesterdays_weather_visualization(chart)) }
+        subject { has_non_zero_values(yesterdays_weather_visualization(user_profile, chart)) }
         it { should be_true }
 
         context "no estimates" do

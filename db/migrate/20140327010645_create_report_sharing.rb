@@ -5,6 +5,7 @@ class CreateReportSharing < ActiveRecord::Migration
 
       t.datetime :expiration, null: false
       t.string :url, null: false
+      t.string :guid, unique: true
 
       t.timestamps
     end

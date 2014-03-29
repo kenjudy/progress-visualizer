@@ -143,6 +143,11 @@ describe "routes" do
         it { should route_to(controller: "reports", action: "performance_summary", iteration: "2014-02-24")}
       end
     end
+    
+    context "report sharing" do
+      subject { { get: "report/sharing/GUID"}}
+      it { should route_to(controller: "reports", action: "sharing", guid: "GUID")}
+    end
   end
 
 end

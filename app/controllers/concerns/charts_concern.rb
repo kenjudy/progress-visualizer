@@ -17,17 +17,17 @@ module ChartsConcern
     }
   end
   
-  def yesterdays_weather_action(range, iteration = nil)
+  def yesterdays_weather_action(user_profile, range, iteration = nil)
     estimate_chart = YesterdaysWeatherChart.new(user_profile, {weeks: range, label: :estimate})
-    @yesterdays_weather_estimate_chart = yesterdays_weather_visualization(estimate_chart, iteration)
+    @yesterdays_weather_estimate_chart = yesterdays_weather_visualization(user_profile, estimate_chart, iteration)
     @uses_estimates = has_non_zero_values(@yesterdays_weather_estimate_chart)
 
     stories_chart = YesterdaysWeatherChart.new(user_profile, {weeks: range, label: :stories})
-    @yesterdays_weather_stories_chart = yesterdays_weather_visualization(stories_chart, iteration)
+    @yesterdays_weather_stories_chart = yesterdays_weather_visualization(user_profile, stories_chart, iteration)
   end
 
-  def long_term_trend_action(range, iteration = nil)
-    @long_term_trend_chart = long_term_trend_visualization(range, iteration)
+  def long_term_trend_action(user_profile, range, iteration = nil)
+    @long_term_trend_chart = long_term_trend_visualization(user_profile, range, iteration)
   end
 
   private
@@ -49,7 +49,7 @@ module ChartsConcern
     "#{data_table.rows.first[0].v.strftime("%B %e, %Y")} - #{data_table.rows.last[0].v.strftime("%B %e, %Y")}" if data_table.rows.any?
   end
 
-  def yesterdays_weather_visualization(chart, iteration = nil)
+  def yesterdays_weather_visualization(user_profile, chart, iteration = nil)
     data_table = GoogleVisualr::DataTable.new
     data_table.new_column('string', 'timestamp' )
     if chart.types_of_work && chart.types_of_work.any?
@@ -57,20 +57,20 @@ module ChartsConcern
     else
       data_table.new_column('number', "Cards" )
     end
-    data_table.add_rows(yesterdays_weather_data_rows(chart, iteration))
+    data_table.add_rows(yesterdays_weather_data_rows(user_profile, chart, iteration))
     GoogleVisualr::Interactive::ColumnChart.new(data_table, default_properties.merge({ title: "Yesterday's Weather for #{chart.label.to_s.titleize.pluralize}",
                                                                                        isStacked: true }))
 
   end
 
-  def long_term_trend_visualization(weeks, iteration = nil)
+  def long_term_trend_visualization(user_profile, weeks, iteration = nil)
     data_table = GoogleVisualr::DataTable.new
     data_table.new_column('date', 'timestamp' )
     data_table.new_column('number', "estimates")
     data_table.new_column('number', "stories")
 
     # Add Rows and Values
-    data_table.add_rows(long_term_trend_visualization_rows(weeks, iteration))
+    data_table.add_rows(long_term_trend_visualization_rows(user_profile, weeks, iteration))
     GoogleVisualr::Interactive::AreaChart.new(data_table, default_properties.merge({ title: "Long Term Trend",
                                                                                      hAxis: { textStyle: { color: '#999999'}, gridLines: { color: "#eee"}, format:'M/d' },
                                                                                      lineWidth: 2,
@@ -87,9 +87,9 @@ module ChartsConcern
     return s > 0
   end
 
-  def long_term_trend_visualization_rows(weeks, iteration = nil)
+  def long_term_trend_visualization_rows(user_profile, weeks, iteration = nil)
     data = {}
-    done_stories_data(weeks, iteration).each do |done_story|
+    done_stories_data(user_profile, weeks, iteration).each do |done_story|
       timestamp = done_story.timestamp
       data[timestamp] ||= [timestamp, 0, 0]
       data[timestamp][1] += done_story.estimate
@@ -98,15 +98,15 @@ module ChartsConcern
     data.values.sort { |a,b| a[0] <=> b[0] }
   end
 
-  def yesterdays_weather_data_rows(chart, iteration = nil)
+  def yesterdays_weather_data_rows(user_profile, chart, iteration = nil)
     data = {}
-    done_stories_data(chart.weeks, iteration).each do |done_story|
+    done_stories_data(user_profile, chart.weeks, iteration).each do |done_story|
       stack_by_types_of_work(chart, data, done_story)
     end
     data.values.sort { |a,b| a[0] <=> b[0] }
   end
 
-  def done_stories_data(range, iteration = nil)
+  def done_stories_data(user_profile, range, iteration = nil)
     date =
     if iteration.instance_of?(String)
       query = 'timestamp > ? and timestamp <= ?'
