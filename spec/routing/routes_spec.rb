@@ -161,8 +161,14 @@ describe "routes" do
     end
     
     context "admin" do
-      subject { { get: "admin/users"}}
-      it { should route_to(controller: "admin", action: "users")}
+      context "users" do
+        subject { { get: "admin/users"}}
+        it { should route_to(controller: "admin", action: "users")}
+      end
+      context "cards" do
+        subject { { get: "admin/cards"}}
+        it { should route_to(controller: "admin", action: "cards")}
+      end
     end
   end
 

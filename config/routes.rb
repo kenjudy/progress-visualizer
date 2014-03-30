@@ -34,4 +34,5 @@ ProgressVisualizer::Application.routes.draw do
   get 'report/sharing/:guid' => "reports#sharing", as: 'reports_sharing'
 
   get 'admin/users' => 'admin#users', as: 'admin_users'
+  get 'admin/cards' => 'admin#cards', as: 'admin_cards'
 end

@@ -1,0 +1,41 @@
+<section>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-3">
+        <table class="table table-bordered table-responsive">
+          <tr>
+            <td colspan="5"><h3>Overview</h3></td>
+          </tr>
+          <tr>
+            <th>Type</th>
+            <th>Count</th>
+            <th>Using Estimates</th>
+          </tr>
+          <tr>
+            <td>Webhooks</td><td><%= @webhooks_stats%></td><td></td>
+          </tr>
+          <tr>
+            <td>BurnUp</td>
+            <td><%= @burn_up_stats[:total]%></td>
+            <td><%= @burn_up_stats[:with_estimates]%></td>
+          </tr>
+          <tr>
+            <td>DoneStory</td>
+            <td><%= @done_story_stats[:total]%></td>
+            <td><%= @done_story_stats[:with_estimates]%></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div class="row">
+      <div id='burn_up_stat_chart' class='chart'></div>
+        <%= render_chart(@burn_up_stat_chart, 'burn_up_stat_chart') %>
+      </div>
+    </div>
+    <div class="row">
+      <div id='done_story_stat_chart' class='chart'></div>
+        <%= render_chart(@done_story_stat_chart, 'done_story_stat_chart') %>
+      </div>
+    </div>
+  </div>
+</section>

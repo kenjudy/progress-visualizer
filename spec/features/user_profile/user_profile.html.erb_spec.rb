@@ -63,7 +63,7 @@ describe "user_profile", type:  :feature, js: true do
   context "get" do
     subject do
       visit "/user_profiles"
-      click_link("add")
+      click_link("Add")
       page
     end  
   
