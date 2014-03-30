@@ -5,7 +5,7 @@ class AdminController < ApplicationController
   before_filter :authenticate_user!, :assign_user_profile, :admin_role
   
   def users
-    @user_stats = UserProfile.find_by_sql("select users.id, users.created_at, last_sign_in_at, provider, count(user_profiles.id) as user_profiles from users left outer join user_profiles on (users.id = user_profiles.user_id) group by users.id, users.created_at, last_sign_in_at, provider order by last_sign_in_at")
+    @user_stats = UserProfile.find_by_sql("select users.id, users.created_at, last_sign_in_at, provider, count(user_profiles.id) as user_profiles from users left outer join user_profiles on (users.id = user_profiles.user_id) group by users.id, users.created_at, last_sign_in_at, provider order by last_sign_in_at desc")
     @user_chart = user_chart_visualization(@user_stats)
   end
   
