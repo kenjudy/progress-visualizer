@@ -14,12 +14,12 @@
     </div>
     <% if @uses_estimates %>
     <div class="row">
-      <div id='estimates_chart' class='chart'></div>
+      <div id='estimates_chart' class='chart col-sm-12'></div>
       <%= render_chart(@estimates_chart, 'estimates_chart') %>
     </div>
     <% end %>
     <div class="row">
-      <div id='stories_chart' class='chart'></div>
+      <div id='stories_chart' class='chart col-sm-12'></div>
       <%= render_chart(@stories_chart, 'stories_chart') %>
     </div>
   </div>
