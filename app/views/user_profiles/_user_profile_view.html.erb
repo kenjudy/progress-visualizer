@@ -11,7 +11,7 @@
     <div class="row">
       <h3>
         You've created <%= pluralize(profiles.count,"profile") %>
-        <%= link_to "add", new_user_profile_path, class: "btn btn-default" %>
+        <%= link_to "Add", new_user_profile_path, class: "btn btn-default" %>
       </h3>
       <% if profiles.any? %>
         <table class="table">
@@ -53,6 +53,11 @@
             </tr>
           <% end %>
         </table>
+      <% else %>
+        <div class="well">
+          <h4>Please add a profile.</h4>
+          <p>ProgressVisualizer requires you setup at least one profile. A profile configures the display of charts and reports for a specific Trello board.</p>
+        </div>
       <% end %>
     </div>
   </div>

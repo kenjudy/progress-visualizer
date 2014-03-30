@@ -18,10 +18,10 @@ module UserProfileConcern
   private
   
   def flash_notice
-    if notice && notice.include?("Please create a profile associating")
+    if notice && notice.include?("Now add a profile")
       flash.notice
     else
-      "#{flash.notice} Please create a profile associating your account to a trello board. <a href='#{new_user_profile_path}' class='btn btn-default'>Add</a>"
+      "#{flash.notice} Now add a profile. <a href='#{new_user_profile_path}' class='btn btn-default'>Add</a>"
     end
   end
   
