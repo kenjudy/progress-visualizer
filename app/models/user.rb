@@ -9,6 +9,11 @@ class User < ActiveRecord::Base
 
   validates :name, :email, presence: true
   validates :name, :email, uniqueness: true
+  
+  ROLES = {
+     admin: 'admin',
+     user: 'user'
+   }
 
   def default_profile
     user_profiles.where("user_profiles.default = ?", "1").first

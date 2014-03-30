@@ -159,6 +159,11 @@ describe "routes" do
         end
       end
     end
+    
+    context "admin" do
+      subject { { get: "admin/users"}}
+      it { should route_to(controller: "admin", action: "users")}
+    end
   end
 
 end

@@ -1,0 +1,32 @@
+<section>
+  <div class="container">
+    <div class="row">
+      <table class="table table-bordered table-responsive">
+        <tr>
+          <td colspan="5"><h3>User Stats</h3></td>
+        </tr>
+        <tr>
+          <th>ID</th>
+          <th>created at</th>
+          <th>last sign in at</th>
+          <th>provider</th>
+          <th>profiles</th>
+        </tr>
+        <% @user_stats.each do |stat| %>
+          <tr>
+            <td><%= stat.id %></td>
+            <td><%= stat.created_at.strftime("%Y-%m-%d") %></td>
+            <td><%= stat.last_sign_in_at.strftime("%Y-%m-%d") %></td>
+            <td><%= stat.provider %></td>
+            <td><%= stat.user_profiles %></td>
+          </tr>
+        <% end %>
+      </table>
+    </div>
+    <div class="row">
+      <div id='user_chart' class='chart'></div>
+        <%= render_chart(@user_chart, 'user_chart') %>
+      </div>
+    </div>
+  </div>
+</section>

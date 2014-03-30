@@ -6,7 +6,7 @@ module ChartsConcern
     blue = "#091D58"
     red = "#991238"
 
-    { colors: [blue,green, red],
+    { colors: [blue, green, red],
       pointSize: 8,
       areaOpacity: 0.05,
       titleTextStyle: {color: green, fontSize: 24, fontName: 'Questrial', bold: false },
