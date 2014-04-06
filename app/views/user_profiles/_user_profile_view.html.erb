@@ -54,10 +54,11 @@
           <% end %>
         </table>
       <% else %>
-        <div class="well">
-          <p><strong>You have no profiles.</strong> <span class="brand">Progress<span>Visualizer</span></span> requires you setup at least one profile in order to display charts and tables.</p>
+        <div id="no-profiles" class="well">
+          <p><strong>You have no profiles.</strong> <span class="brand">Progress<span>Visualizer</span></span> needs you to assocate your account with at least one Trello board in order to display charts and tables.</p>
         </div>
       <% end %>
     </div>
   </div>
 </section>
+<%= render "application/modal", id: "profile-modal", title: "Next step", body: "<p><span class=\"brand\">Progress<span>Visualizer</span></span> needs you to assocate your account with at least one Trello board in order to display charts and tables.</p>", url: new_user_profile_path %>

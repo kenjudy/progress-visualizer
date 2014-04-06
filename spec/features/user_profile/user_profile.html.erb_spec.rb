@@ -4,9 +4,12 @@ shared_examples "the userprofile detail form" do
   include ActionView::Helpers::TextHelper
   
   before do
-    find("#backlog_lists_cloud_selector").click_button("To Do")
-    find("#backlog_lists_cloud_selector").click_button("Doing")
-    find("#done_lists_cloud_selector").click_button("Done")
+    find("#backlog_lists_cloud_selector").click_button("To Do") #deselect default
+    find("#backlog_lists_cloud_selector").click_button("To Do") #reselect
+    find("#backlog_lists_cloud_selector").click_button("Doing") #deselect default
+    find("#backlog_lists_cloud_selector").click_button("Doing") #reselect
+    find("#done_lists_cloud_selector").click_button("Done") #deselect default
+    find("#done_lists_cloud_selector").click_button("Done") #reselec
 
     #confirm cloud selector is working
     find("#labels_types_of_work_cloud_selector").click_button("red") #select
@@ -28,10 +31,10 @@ shared_examples "the userprofile detail form" do
     select("March", from: "user_profile_start_date_2i")
     select("11", from: "user_profile_start_date_3i")
     select("2014", from: "user_profile_start_date_1i")
-    #save_screenshot("tmp/screenshots/#{action}_detail_form.png", full: true)
     VCR.use_cassette("features/#{action}_detail_form_add_webhook") do
       click_button("Submit")
     end
+    save_screenshot("tmp/screenshots/#{action}_detail_form.png", full: true)
   end
   
   subject { page }
@@ -73,11 +76,13 @@ describe "user_profile", type:  :feature, js: true do
   context "new" do
     let(:action) { "create_user_profile" }
     before do 
-      visit "/user_profiles/new"
-      fill_in "user_profile_name", with: "Test Name"
-      check "user_profile_default"
-      fill_in "user_profile_current_sprint_board_id_short", with: "WWtHBRod"
       VCR.use_cassette("features/#{action}") do
+        visit "/user_profiles/new"
+        click_button("Cancel")
+        fill_in "user_profile_readonly_token", with: "1cbfcbf7876628e1367483189818f3eb8d2c92525b6fc314e0008fb1f8634foo"
+        fill_in "user_profile_name", with: "Test Name"
+        check "user_profile_default"
+        fill_in "user_profile_current_sprint_board_id_short", with: "WWtHBRod"
         click_button("Submit")
       end
     end
@@ -89,7 +94,7 @@ describe "user_profile", type:  :feature, js: true do
     
       expect(profile.name).to eql("Test Name")
       expect(profile.default).to eql("1")
-      expect(profile.readonly_token).to be_empty
+      expect(profile.readonly_token).to eql("1cbfcbf7876628e1367483189818f3eb8d2c92525b6fc314e0008fb1f8634foo")
       expect(profile.current_sprint_board_id_short).to eql("WWtHBRod")
     end
     

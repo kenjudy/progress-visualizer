@@ -6,8 +6,8 @@ describe UserProfile do
     [:readonly_token, :current_sprint_board_id,
      :current_sprint_board_id_short, :backlog_lists,
      :done_lists].each do |attribute|
-       let(:up) { UserProfile.new }
-       let(:user) { FactoryGirl.create(:user) }
+       let(:up) { FactoryGirl.create(:user_profile) }
+       let(:user) { up.user }
 
        context attribute.to_s do
          subject do
@@ -27,7 +27,7 @@ describe UserProfile do
   end
 
   context "default values" do
-    before { UserProfile.new(user: FactoryGirl.create(:user)).save }
+    before { FactoryGirl.create(:user_profile, backlog_lists: nil, done_lists: nil, duration: nil) }
 
     subject { UserProfile.first }
 

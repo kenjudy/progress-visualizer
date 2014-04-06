@@ -1,1 +1,5 @@
+<% content_for :head do %>
+  <script src="https://api.trello.com/1/client.js?key=<%= Rails.application.config.trello[:app_key] %>"></script>
+<% end %>
+
 <%= render 'user_profile_form', method: :put, profile: @profile, lists: @lists, labels: @labels %>

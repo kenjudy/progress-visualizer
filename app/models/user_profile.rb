@@ -16,6 +16,8 @@ class UserProfile < ActiveRecord::Base
   alias_attribute :done_stories, :done_story
   alias_attribute :webhooks, :webhook
 
+  validates :readonly_token, :current_sprint_board_id_short, :name, presence: true
+
   validate :validate_start_date
 
   before_save :default_values

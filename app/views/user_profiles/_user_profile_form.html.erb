@@ -11,7 +11,21 @@
         </div>
         <div class="panel-body">
 
-          <%= render('form_group_text_field', form: f, field: :name, label_text: "Nickname", field_width: 3, tooltip: "e.g. 'Current Sprint'" ) %>
+            <%= render('form_group_text_field', form: f, field: :readonly_token, label_text: "* User Token", field_width: 6, tooltip: "Allow READ ONLY access to your trello data", aside: link_to(raw("Request new token <span class=\"glyphicon glyphicon-new-window\"></span>"), request_token_url, target: "_blank"), readonly: !lists.nil?) %>
+
+            <div id="board_id_short_input">
+              <%= render('form_group_text_field', form: f, field: :current_sprint_board_id_short, label_text: "* Board ID", field_width: 3, tooltip: "In the URL of your trello board. https://trello.com/b/[Board ID]/name", aside: link_to(raw("Trello.com <span class=\"glyphicon glyphicon-new-window\"></span>"), profile.current_sprint_board_id_short ? "http://trello.com/b/#{profile.current_sprint_board_id_short}" : "http://trello.com", target: "_blank"), readonly: !lists.nil?) %>
+            </div>
+
+          <div class="form-group" id="board_id_short_select">
+            <%= f.label :current_sprint_board_id_short, "Trello Board", class: "col-sm-3 control-label" %>
+            <div class="col-sm-6">
+              <%= f.select(:current_sprint_board_id_short, {}, {}, class: "form-control") %>
+            </div>
+          </div>
+
+
+          <%= render('form_group_text_field', form: f, field: :name, label_text: "* Name", field_width: 3, tooltip: "Title for graphs and table, e.g. 'Current Sprint'", readonly: !lists.nil?) %>
 
             <div class="form-group">
               <%= f.label :default, "Default?", class: "col-sm-3 control-label" %>
@@ -20,25 +34,20 @@
               </div>
             </div>
 
-            <%= render('form_group_text_field', form: f, field: :readonly_token, label_text: "User Token", field_width: 6, tooltip: "Allow READ ONLY access to your trello data", aside: link_to(raw("Request new token <span class=\"glyphicon glyphicon-new-window\"></span>"), request_token_url, target: "_blank")) %>
-
-            <%= render('form_group_text_field', form: f, field: :current_sprint_board_id_short, label_text: "Board ID", field_width: 3, tooltip: "In the URL of your trello board. https://trello.com/b/[Board ID]/name", aside: link_to(raw("Trello.com <span class=\"glyphicon glyphicon-new-window\"></span>"), profile.current_sprint_board_id_short ? "http://trello.com/b/#{profile.current_sprint_board_id_short}" : "http://trello.com", target: "_blank")) %>
-
             <% if lists %>
-               <hr />
+              <%= f.hidden_field(:current_sprint_board_id, value: profile.current_sprint_board_id) %>
+                <hr />
 
-               <%= render('form_group_text_field', form: f, field: :current_sprint_board_id, label_text: "Board Unique ID", default_val: lists.first.id_board, readonly: true) %>
+               <%= render('cloud_selector', form: f, field: :backlog_lists, lists: lists, label_text: "* Todo Lists", heading: "Which lists on your board represent todo items (the backlog)?", defaults: ["To Do", "Doing"])%>
 
-               <%= render('cloud_selector', form: f, field: :backlog_lists, lists: lists, label_text: "Todo Lists", heading: "Which lists on your board represent todo items (the backlog)?")%>
-
-               <%= render('cloud_selector', form: f, field: :done_lists, lists: lists, label_text: "Done Lists", heading: "Which lists on your board represent complete items?")%>
+               <%= render('cloud_selector', form: f, field: :done_lists, lists: lists, label_text: "* Done Lists", heading: "Which lists on your board represent complete items?", defaults: ["Done"])%>
 
               <%= render('cloud_selector', form: f, field: :labels_types_of_work, lists: labels, label_text: "Labels", heading: "Which (if any) labels do you use to group work?")%>
 
               <hr />
               <div class="form-group">
 
-                <%= f.label :start_day_of_week, "Iteration Start", class: "col-sm-3 control-label" %>
+                <%= f.label :start_day_of_week, "* Iteration Start", class: "col-sm-3 control-label" %>
 
                 <div class="col-sm-2">
                   <%= f.select(:start_day_of_week, options_for_day_of_week(profile.start_day_of_week), {}, class: "form-control") %>
@@ -52,7 +61,7 @@
 
               <div class="form-group">
 
-                <%= f.label :end_day_of_week, "End", class: "col-sm-3 control-label" %>
+                <%= f.label :end_day_of_week, "* End", class: "col-sm-3 control-label" %>
 
                 <div class="col-sm-2">
                   <%= f.select(:end_day_of_week, options_for_day_of_week(profile.end_day_of_week), {}, class: "form-control") %>
@@ -67,7 +76,7 @@
 
               <div class="form-group">
 
-                <%= f.label :duration, "Duration", class: "col-sm-3 control-label" %>
+                <%= f.label :duration, "* Duration", class: "col-sm-3 control-label" %>
 
                 <div class="col-sm-3">
                   <%= f.select(:duration, options_for_duration(profile.duration), {}, class: "form-control") %>
@@ -76,7 +85,7 @@
 
               <div class="form-group date-select" style="<%= "visibility:hidden" if profile.duration.nil? || profile.duration <= 7 %>">
 
-                <%= f.label :start_date, "Start Date", class: "col-sm-3 control-label" %>
+                <%= f.label :start_date, "* Start Date", class: "col-sm-3 control-label" %>
 
                 <div class="col-sm-6">
                   <%= f.date_select(:start_date, {end_year: Date.today.year, order: [:month, :day, :year], prompt: true}, {class: "form-control pull-left"}) %>
@@ -90,6 +99,7 @@
             <div class="form-group">
               <div class="col-sm-6">
                 <%= f.submit "Submit", {class: "btn btn-default"} %>
+                <span class="label label-danger" style="display:none">Sorry. Please review this form and try again.</span>
               </div>
               <div class="col-sm-6">
                 <div class="pull-right">
@@ -108,3 +118,4 @@
     </div>
   </div>
 </section>
+<%= render "application/modal", id: "token-modal", title: "Trello User Token", body: "You are about to be taken to Trello to authorize read-only access to one of your Boards.", url: request_token_url %>

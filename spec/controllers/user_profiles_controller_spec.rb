@@ -70,7 +70,7 @@ describe UserProfilesController do
     end
 
     context "replaces old default" do
-      let(:older_profile) { UserProfile.create(user: user, name: "old", default: "1") }
+      let(:older_profile) { FactoryGirl.create(:user_profile, user: user, name: "old", default: "1") }
 
       before do
         older_profile

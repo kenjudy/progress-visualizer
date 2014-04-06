@@ -21,7 +21,7 @@
     <ul class="dropdown-menu">
       <% menu_list_item("Your Profiles", user_profiles_path) %>
       <li class="divider"></li>
-      <%= content_tag(:li, link_to("Logout", destroy_user_session_path, method: :delete, onClick: track_event("header_menu", ["logout"]))) %>
+      <%= content_tag(:li, link_to("Logout", destroy_user_session_path, method: :delete, class: "logout", onClick: track_event("header_menu", ["logout"]))) %>
     </ul>
   </li>
 <% else %>

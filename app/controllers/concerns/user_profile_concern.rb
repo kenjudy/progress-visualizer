@@ -8,7 +8,6 @@ module UserProfileConcern
     if set_profile
       self.session[:profile_id] = user_profile.id
     else
-      flash.notice = flash_notice
       redirect_to user_profiles_path unless request.fullpath.include?(user_profiles_path)
     end
     
@@ -16,15 +15,7 @@ module UserProfileConcern
   end
   
   private
-  
-  def flash_notice
-    if notice && notice.include?("Now add a profile")
-      flash.notice
-    else
-      "#{flash.notice} Now add a profile. <a href='#{new_user_profile_path}' class='btn btn-default'>Add</a>"
-    end
-  end
-  
+    
   def set_profile
     begin
       @user_profile = profile_from_params || profile_from_session

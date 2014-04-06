@@ -1,6 +1,7 @@
 <%# heading, lists, form, field %>
 <% label_text ||= field.to_s.titleize %>
 <% tooltip ||= nil %>
+<% defaults ||= [] %>
 <% value = display_keys(form.object.send(field)) %>
 
 <div class="form-group" id="<%= field %>_cloud_selector">
@@ -14,11 +15,11 @@
       <div class="panel-body">
         <% lists.each do |list| %>
           <% name = list.respond_to?("name") ? list.name : list.respond_to?("[]") ? list[1] : list %>
-          <button type="button" class="btn btn-xs done cloud-selector <%= value.include?(name) ? "btn-info" : "btn-default" %>" data-id="<%= list.respond_to?("id") ? list.id : list.respond_to?("[]") ? list[1] : list %>"><%= name %></button>
+          <button type="button" class="btn btn-xs done cloud-selector <%= value.include?(name) || (value.empty? && defaults.include?(name)) ? "btn-info" : "btn-default" %>" data-id="<%= list.respond_to?("id") ? list.id : list.respond_to?("[]") ? list[1] : list %>"><%= name %></button>
         <% end %>
       </div>
       <div class="panel-footer">
-        <%= form.text_area field, value: value, class: "form-control input-sm", readonly: true %>
+        <%= form.text_area field, value: value.empty? ? defaults.join(",") : value, class: "form-control input-sm", readonly: true %>
       </div>
     </div>
   </div>
