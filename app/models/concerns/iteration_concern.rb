@@ -24,7 +24,7 @@ module IterationConcern
 
   def prior_iteration(iteration)
     done_story = done_story_this_iteration(iteration)
-    (done_story.prior_iteration if done_story) || (done_stories.last.iteration if iteration.nil? && done_stories.any?)
+    (done_story.prior_iteration if done_story) || (done_stories.last.iteration if done_stories.any?)
   end
 
   def next_iteration(iteration)
