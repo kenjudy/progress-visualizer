@@ -11,7 +11,7 @@ module ChartsConcern
       areaOpacity: 0.05,
       titleTextStyle: {color: green, fontSize: 24, fontName: 'Questrial', bold: false },
       chartArea: {width: '90%', height: '80%'},
-      hAxis: { textStyle: { color: '#999999'}, gridLines: { color: "#eee"}, format:'MMM d, y hh:mma' },
+      hAxis: { textStyle: { color: '#999999'}, gridLines: { color: "#eee"}, format:'MMM d, y' },
       vAxis: { textStyle: { color: '#999999'}, gridLines: { color: "#eee"} },
       legend: {position: 'bottom', alignment: 'center'}
     }
