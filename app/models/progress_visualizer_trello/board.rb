@@ -24,8 +24,10 @@ module ProgressVisualizerTrello
       end
     end
     
-    def self.find_current_sprint_board(user_profile)
-      BaseAdapter.build_adapter(user_profile).request_board(user_profile.current_sprint_board_id)
+    def self.find_by(args)
+      args[:board_id] ||= args[:user_profile].current_sprint_board_id
+      args[:include_archived] ||= false
+      ProgressVisualizerTrello::Board.new(BaseAdapter.build_adapter(args[:user_profile]).request_board_data(args[:board_id], args[:include_archived]))
     end
 
     private

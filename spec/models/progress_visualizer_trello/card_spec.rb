@@ -77,6 +77,28 @@ module ProgressVisualizerTrello
 
       it { should == card_array_attributes }
     end
+    
+    context "finders" do
+      let(:user_profile) { FactoryGirl.create(:user_profile)}
+      let(:include_archived) { false }
+      subject do
+        VCR.use_cassette('adapters/models/cards') do
+          Card.find_by(user_profile: user_profile, all: include_archived)
+        end
+      end
+      
+      its(:first) { should be_instance_of(Card)}
+      
+      context "include archive" do
+        let(:include_archived) { true }
+        subject do
+          VCR.use_cassette('adapters/models/cards_all') do
+            Card.find_by(user_profile: user_profile, all: include_archived)
+          end
+        end
+        its(:first) { should be_instance_of(Card)}
+      end
+    end
   end
 
 end

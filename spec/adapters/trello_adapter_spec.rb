@@ -55,27 +55,6 @@ describe TrelloAdapter do
     end
   end
 
-  context "request_board" do
-
-    subject do
-      VCR.use_cassette('adapters/trello_adapter/request_board') do
-        adapter.request_board(user_profile.current_sprint_board_id)
-      end
-    end
-
-    its(:lists) { should have(4).items}
-    its(:cards) { should have(34).items}
-
-    context "request_board with archived cards" do
-      subject do
-        VCR.use_cassette('adapters/trello_adapter/request_board_archived_cards') do
-          adapter.request_board(user_profile.current_sprint_board_id, true)
-        end
-      end
-      its(:cards) { should have(35).items}
-    end
-  end
-
   context "Cards" do
     context "request_all_cards_data" do
       subject do

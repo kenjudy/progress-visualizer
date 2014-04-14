@@ -11,9 +11,10 @@ module ProgressVisualizerTrello
       @id_board = @data["idBoard"]
     end
 
-    def self.lists_for_profile(profile, board_id = nil)
-      board_id ||= profile.current_sprint_board_id_short
-      BaseAdapter.build_adapter(profile).request_lists(board_id)
+    def self.find_by(args)
+      args[:board_id] ||= args[:user_profile].current_sprint_board_id_short
+      list_data = BaseAdapter.build_adapter(args[:user_profile]).request_lists_data(args[:board_id])
+      list_data.map{ |data| ProgressVisualizerTrello::List.new(data) }
     end
 
   end

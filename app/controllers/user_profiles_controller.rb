@@ -130,7 +130,7 @@ class UserProfilesController < ApplicationController
 
   def get_lists
     Rails.cache.fetch("#{Rails.env}::UserProfilesController.lists.#{@profile.current_sprint_board_id_short}", expires_in: 10.minutes) do
-       ProgressVisualizerTrello::List.lists_for_profile(@profile)
+       ProgressVisualizerTrello::List.find_by(user_profile: @profile)
     end
   end
   

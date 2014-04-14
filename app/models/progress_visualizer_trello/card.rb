@@ -52,6 +52,18 @@ module ProgressVisualizerTrello
     def self.array_attributes
       %w(number estimate name last_known_state closed? date_last_activity due labels id id_short id_board short_link short_url url id_list list_name)
     end
+    
+
+    def self.find_by(args)
+      args[:board_id] ||= args[:user_profile].current_sprint_board_id
+      cards_data =
+      if args[:all]
+        BaseAdapter.build_adapter(args[:user_profile]).request_all_cards_data(args[:board_id])
+      else
+        BaseAdapter.build_adapter(args[:user_profile]).request_cards_data(args[:board_id])
+      end
+      cards_data.map{ |d| ProgressVisualizerTrello::Card.new(d) }
+    end
 
     private
 

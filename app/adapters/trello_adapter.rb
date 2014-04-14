@@ -15,22 +15,6 @@ class TrelloAdapter < BaseAdapter
       todo:  cards_for_list(board, "52e6778d5922b7e16a641e59") }
   end
 
-  def request_board(board_id, include_archived = false)
-    ProgressVisualizerTrello::Board.new(request_board_data(board_id, include_archived))
-  end
-
-  def request_archived_cards(board_id)
-    request_all_cards_data(board_id).map{ |d| ProgressVisualizerTrello::Card.new(d) }
-  end
-
-  def request_cards(board_id)
-    request_cards_data(board_id).map{ |d| ProgressVisualizerTrello::Card.new(d) }
-  end
-
-  def request_lists(board_id)
-    request_lists_data(board_id).map{ |d| ProgressVisualizerTrello::List.new(d) }
-  end
-
   def request_board_data(board_id, include_archived = false)
     lists_data = request_lists_data(board_id)
     cards_data = include_archived ? request_all_cards_data(board_id) : request_cards_data(board_id)

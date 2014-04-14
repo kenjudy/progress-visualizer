@@ -3,7 +3,7 @@ module Factories
     include TablesModelConcern
 
     def refresh
-      board = ProgressVisualizerTrello::Board.find_current_sprint_board(user_profile)
+      board = ProgressVisualizerTrello::Board.find_by(user_profile: user_profile)
       collated_data = collate(board,
                               user_profile.labels_types_of_work.split(","),
                               JSON.parse(user_profile.done_lists).keys)
