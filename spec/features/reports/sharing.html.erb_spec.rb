@@ -2,16 +2,15 @@ require 'spec_helper'
   
 describe "report sharing", type: :feature, js: true do
   
-  let(:report_sharing) { FactoryGirl.create(:report_sharing) }
+  let(:report_sharing) { FactoryGirl.create(:report_sharing, url: "/report/performance-summary/2014-04-07") }
   let(:user_profile) { report_sharing.user_profile }
-  let(:iteration) { user_profile.beginning_of_current_iteration }
+  let(:iteration) { Date.new(2014,04,07) }
   let(:table_title) { "Completed work" }
 
   before { (1..2).each { |e| FactoryGirl.create(:done_story, user_profile: user_profile, iteration: iteration.strftime("%Y-%m-%d"), timestamp: iteration.strftime("%Y-%m-%d"), estimate: e, status: JSON.parse(user_profile.done_lists).keys.first, type_of_work: user_profile.labels_types_of_work.split(",").first) }
  }
   subject do
     visit "/report/sharing/#{report_sharing.guid}"
-    #save_screenshot("tmp/screenshots/report_sharing.png", full: true)
     page
   end
 
@@ -35,5 +34,7 @@ describe "report sharing", type: :feature, js: true do
     let(:chart_id) { "#long_term_trend_chart"}
     it_behaves_like "a graph"
   end
+  
+ # it { subject; save_screenshot("tmp/screenshots/report_sharing.png", full: true) }
 
 end

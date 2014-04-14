@@ -34,7 +34,7 @@ shared_examples "the userprofile detail form" do
     VCR.use_cassette("features/#{action}_detail_form_add_webhook") do
       click_button("Submit")
     end
-    save_screenshot("tmp/screenshots/#{action}_detail_form.png", full: true)
+    #save_screenshot("tmp/screenshots/#{action}_detail_form.png", full: true)
   end
   
   subject { page }

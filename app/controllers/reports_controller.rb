@@ -7,15 +7,7 @@ class ReportsController < ApplicationController
   before_filter :authenticate_user!, :assign_user_profile, except: :sharing
 
   def performance_summary
-    if params["iteration"]
-      @iteration = params["iteration"]
-      summary_for_iteration(user_profile, @iteration)
-    else
-      @iteration = user_profile.beginning_of_current_iteration.strftime("%Y-%m-%d")
-      @collated_results = Factories::DoneStoryFactory.new(user_profile).current
-      yesterdays_weather_action(user_profile, 3)
-      long_term_trend_action(user_profile, 10)
-    end
+    summary_for_iteration(user_profile, params["iteration"])
     @prior_iteration = user_profile.prior_iteration(@iteration)
     @next_iteration = user_profile.next_iteration(@iteration)
   end
@@ -47,9 +39,18 @@ class ReportsController < ApplicationController
   private
   
   def summary_for_iteration(user_profile, iteration)
-    @collated_results = Factories::DoneStoryFactory.new(user_profile).for_iteration(iteration)
-    yesterdays_weather_action(user_profile, 3, iteration)
-    long_term_trend_action(user_profile, 10, iteration)
+    current_iteration = user_profile.beginning_of_current_iteration.strftime("%Y-%m-%d")
+    if iteration.nil? || iteration == current_iteration
+      @iteration = current_iteration
+      @collated_results = Factories::DoneStoryFactory.new(user_profile).current
+      yesterdays_weather_action(user_profile, 3)
+      long_term_trend_action(user_profile, 10)
+    else
+      @iteration = params["iteration"]
+      @collated_results = Factories::DoneStoryFactory.new(user_profile).for_iteration(iteration)
+      yesterdays_weather_action(user_profile, 3, iteration)
+      long_term_trend_action(user_profile, 10, iteration)
+    end
   end
   
   def shorten_url(url)
