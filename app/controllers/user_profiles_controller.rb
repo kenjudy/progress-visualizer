@@ -58,7 +58,7 @@ class UserProfilesController < ApplicationController
 
   def destroy
     profile = current_user.user_profiles.find(params[:id])
-    destroy_webhook(profile, webhooks_burn_up_url(profile_id: profile.id, format: :json))
+    destroy_webhook(profile)
     profile.destroy
   end
 
@@ -93,7 +93,7 @@ class UserProfilesController < ApplicationController
 
   def add_webhook(user_profile, callback_url)
     begin
-      BaseAdapter.build_adapter(user_profile).add_webhook(callback_url, user_profile.current_sprint_board_id) unless Webhook.find_by(user_profile: user_profile, callback_url: callback_url)
+      Webhook.create(user_profile: user_profile, callback_url: callback_url, id_model: user_profile.current_sprint_board_id )
     rescue JSON::ParserError => e
       logger.error(e.message)
     rescue Net::ReadTimeout => e
@@ -101,10 +101,15 @@ class UserProfilesController < ApplicationController
    end
   end
 
-  def destroy_webhook(user_profile, callback_url)
-    adapter = BaseAdapter.build_adapter(user_profile)
+  def destroy_webhook(user_profile)
     Webhook.where("user_profile_id = ?", user_profile.id).each do |webhook|
-      adapter.destroy_webhook(webhook)
+      begin
+        webhook.destroy
+      rescue JSON::ParserError => e
+        logger.error(e.message)
+      rescue Net::ReadTimeout => e
+        logger.error(e.message)
+      end
     end
   end
 
@@ -125,7 +130,7 @@ class UserProfilesController < ApplicationController
 
   def get_lists
     Rails.cache.fetch("#{Rails.env}::UserProfilesController.lists.#{@profile.current_sprint_board_id_short}", expires_in: 10.minutes) do
-       BaseAdapter.build_adapter(@profile).request_lists(@profile.current_sprint_board_id_short)
+       ProgressVisualizerTrello::List.lists_for_profile(@profile)
     end
   end
   
@@ -135,16 +140,16 @@ class UserProfilesController < ApplicationController
   end
 
   def get_current_sprint_board_id
-    meta = Rails.cache.fetch("#{Rails.env}::UserProfilesController.board_meta.#{@profile.current_sprint_board_id_short}", expires_in: 10.minutes) do
-      BaseAdapter.build_adapter(@profile).request_board_metadata(@profile.current_sprint_board_id_short)
-    end
-    meta["id"]
+    cached_board_metadata["id"]
   end
   
   def get_labels
-    meta = Rails.cache.fetch("#{Rails.env}::UserProfilesController.board_meta.#{@profile.current_sprint_board_id_short}", expires_in: 10.minutes) do
-      BaseAdapter.build_adapter(@profile).request_board_metadata(@profile.current_sprint_board_id_short)
+    cached_board_metadata["labelNames"].map { |k,v| v.empty? ? [k,k] : [k,v] }
+  end
+  
+  def cached_board_metadata
+    Rails.cache.fetch("#{Rails.env}::UserProfilesController.board_meta.#{@profile.current_sprint_board_id_short}", expires_in: 10.minutes) do
+      @profile.board_metadata
     end
-    meta["labelNames"].map { |k,v| v.empty? ? [k,k] : [k,v] }
   end
 end

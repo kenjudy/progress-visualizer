@@ -22,7 +22,7 @@ module TablesModelConcern
   end
 
   def request_and_collate_stories(lists)
-    board = BaseAdapter.build_adapter(user_profile).request_board(user_profile.current_sprint_board_id)
+    board = ProgressVisualizerTrello::Board.find_current_sprint_board(user_profile)
     collate(board,
             user_profile.labels_types_of_work.split(","),
             JSON.parse(lists).keys)

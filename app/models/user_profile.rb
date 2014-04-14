@@ -45,6 +45,10 @@ class UserProfile < ActiveRecord::Base
     end
   end
   
+  def board_metadata
+    BaseAdapter.build_adapter(self).request_board_metadata(current_sprint_board_id_short)
+  end
+  
   private
   
   def child_data_to_csv(enumerable, csv)

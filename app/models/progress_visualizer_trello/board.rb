@@ -23,6 +23,10 @@ module ProgressVisualizerTrello
         self.to_array.each { |card| csv << card }
       end
     end
+    
+    def self.find_current_sprint_board(user_profile)
+      BaseAdapter.build_adapter(user_profile).request_board(user_profile.current_sprint_board_id)
+    end
 
     private
 

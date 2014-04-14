@@ -52,7 +52,7 @@ class Factories::BurnUpFactory
   end
 
   def request_data
-     @board = BaseAdapter.build_adapter(@user_profile).request_board(@user_profile.current_sprint_board_id_short)
+     @board = ProgressVisualizerTrello::Board.find_current_sprint_board(@user_profile)
    end
 
   def stats(list_ids)

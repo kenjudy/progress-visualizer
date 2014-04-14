@@ -49,6 +49,14 @@ class TrelloAdapter < BaseAdapter
     get_json(Rails.application.config.trello[:export_cards_path], {board_id: board_id})
   end
 
+  def request_card_data(card_id)
+    get_json(Rails.application.config.trello[:card_path], {card_id: card_id})
+  end
+  
+  def request_card_activity_data(card_id)
+    get_json(Rails.application.config.trello[:card_activities_path], {card_id: card_id})
+  end
+
   def request_lists_data(board_id)
     get_json(Rails.application.config.trello[:board_lists_path], {board_id: board_id})
   end
@@ -60,12 +68,11 @@ class TrelloAdapter < BaseAdapter
   def add_webhook(callback_url, id_model)
     params = {"description" => "#{user_profile.user.name} #{user_profile.name} burnup", "callbackURL" => callback_url, "idModel" => id_model, }
     response = post_json(Rails.application.config.trello[:add_webhooks_path], params)
-    webhook_attr = JSON.parse(response.body)
-    Webhook.create(user_profile: user_profile, external_id: webhook_attr["id"], description: webhook_attr["description"], id_model: webhook_attr["idModel"], callback_url: webhook_attr["callbackURL"] )
+    JSON.parse(response.body)
   end
 
-  def destroy_webhook(webhook)
-    delete(Rails.application.config.trello[:manage_webhooks_path], {webhook_id: webhook.external_id})
+  def destroy_webhook(external_id)
+    delete(Rails.application.config.trello[:manage_webhooks_path], {webhook_id: external_id})
   end
 
   private

@@ -10,6 +10,8 @@ module Constants
     trello_root_url: "https://trello.com/1",
     export_all_cards_path: "/boards/<BOARD_ID>/cards/all?key=<KEY>&token=<TOKEN>",
     export_cards_path: "/boards/<BOARD_ID>/cards?key=<KEY>&token=<TOKEN>",
+    card_path: "/cards/<CARD_ID>?key=<KEY>&token=<TOKEN>",
+    card_activities_path: "/cards/<CARD_ID>/actions?key=<KEY>&token=<TOKEN>",
     board_lists_path: "/boards/<BOARD_ID>/lists?key=<KEY>&token=<TOKEN>",
     board_meta_path: "/boards/<BOARD_ID>?key=<KEY>&token=<TOKEN>",
     add_webhooks_path: "/tokens/<TOKEN>/webhooks/?key=<KEY>",
