@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140413162229) do
+ActiveRecord::Schema.define(version: 20140414125910) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -61,8 +61,8 @@ ActiveRecord::Schema.define(version: 20140413162229) do
     t.string   "encrypted_readonly_token"
     t.string   "encrypted_current_sprint_board_id"
     t.string   "encrypted_current_sprint_board_id_short"
-    t.string   "encrypted_backlog_lists"
-    t.string   "encrypted_done_lists"
+    t.text     "encrypted_backlog_lists"
+    t.text     "encrypted_done_lists"
     t.string   "encrypted_readonly_token_iv"
     t.string   "encrypted_current_sprint_board_id_iv"
     t.string   "encrypted_current_sprint_board_id_short_iv"
@@ -73,7 +73,7 @@ ActiveRecord::Schema.define(version: 20140413162229) do
     t.string   "encrypted_current_sprint_board_id_short_salt"
     t.string   "encrypted_backlog_lists_salt"
     t.string   "encrypted_done_lists_salt"
-    t.string   "labels_types_of_work"
+    t.text     "labels_types_of_work"
     t.integer  "duration"
     t.integer  "start_day_of_week",                            default: 1
     t.integer  "end_day_of_week",                              default: 6
