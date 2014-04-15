@@ -65,4 +65,5 @@ module ApplicationHelper
       alt: "Share report", title: "Share report", class: "btn btn-default hide-print sharing",
       "data-toggle" => "modal",  "data-target" => "#sharing-modal" if current_user
   end
+  
 end

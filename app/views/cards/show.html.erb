@@ -1,0 +1,108 @@
+<section>
+  <div class="container">
+    <div class="row">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <div class="row">
+            <div class="col-md-1 col-sm-2 col-xs-2">
+              <strong><%= @card.estimate %></strong>
+            </div>
+            <div class="col-md-10 col-sm-8 col-xs-7" style="text-align:center">
+              <h2><%= @card.name %></h2>
+            </div>
+            <div class="col-md-1 col-sm-2 col-xs-3">
+              <div class="pull-right">
+                <%= link_to_if(@card.short_url, raw("#{@card.id_short} <span class=\"glyphicon glyphicon-new-window\"></span>"), @card.short_url, target: "_blank") %>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="panel-body">
+          <%= @description %>
+        </div>
+        <div class="panel-footer">
+          <div class="row">
+            <div class="col-md-4"><strong>id:</strong> <%= @card.id %> </div>
+            <div class="col-md-4">
+              <div style="text-align:center" class="hidden-sm hidden-xs">
+                <strong>link:</strong>
+                <%= link_to(raw("#{@card.short_url} <span class=\"glyphicon glyphicon-new-window\"></span>"), @card.short_url) %>
+              </div>
+              <div class="hidden-md hidden-lg">
+                <strong>link:</strong>
+                <%= link_to(raw("#{@card.short_url} <span class=\"glyphicon glyphicon-new-window\"></span>"), @card.short_url) %>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="pull-right hidden-sm hidden-xs">
+                <strong>last updated:</strong> <%= @card.date_last_activity.strftime("%B %e, %Y %l:%M%P") %> 
+              </div>
+              <div class="hidden-md hidden-lg">
+                <strong>last updated:</strong> <%= @card.date_last_activity.strftime("%B %e, %Y %l:%M%P") %> 
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr>
+      <script type='text/javascript'>
+        google.load('visualization', '1.1', {'packages':['annotationchart']});
+        google.setOnLoadCallback(draw_activity_chart);
+ 
+        function draw_activity_chart() {
+          $("#activity_chart").empty();
+          var data = new google.visualization.DataTable();
+          data.addColumn('datetime', 'Date');
+          data.addColumn('number', 'Trello Activity');
+          data.addColumn('string', 'Type');
+          data.addColumn('string', 'Detail');
+          data.addRows([
+            <% 
+              @activity.sort_by { |timestamp, activities| timestamp}.each do |timestamp, activities|
+                datetime = DateTime.strptime(timestamp, '%s')
+                count = 1
+                activities.reverse.each do | activity |
+            %>
+                [new Date(<%= datetime.year %>, <%= datetime.month - 1 %>, <%= datetime.day %>, <%= datetime.hour %>, <%= datetime.minute %>, <%= datetime.second %>), <%= count %>, "<%= activity[:type] %>", "<%= truncate(strip_tags(activity[:description]), length: 50).gsub(/\n/,"") %>"],
+              <% 
+                count += 1
+              end 
+            end %>
+          ]);
+
+          var chart = new google.visualization.AnnotationChart(document.getElementById('activity_chart'));
+
+          var options = eval(<%= @default_options.merge({ displayAnnotations: true, displayAnnotationsFilter: true }).to_json.html_safe %>);
+
+          chart.draw(data, options);
+        }
+      </script>
+      <div id='activity_chart' class='chart col-sm-12' style='width: 100%; height: 500px;'>
+        <div id="floatingCirclesG">
+          <div class="f_circleG" id="frotateG_01"></div>
+          <div class="f_circleG" id="frotateG_02"></div>
+          <div class="f_circleG" id="frotateG_03"></div>
+          <div class="f_circleG" id="frotateG_04"></div>
+          <div class="f_circleG" id="frotateG_05"></div>
+          <div class="f_circleG" id="frotateG_06"></div>
+          <div class="f_circleG" id="frotateG_07"></div>
+          <div class="f_circleG" id="frotateG_08"></div>
+        </div>
+      </div>
+      <hr>
+      <table class="table table-default">
+        <tr><th>date</th><th>activity</th></tr>
+        <% @activity.each do |timestamp, activities| %>
+          <tr>
+            <td class="col-md-2 col-sm-4 col-xs-4"><%= DateTime.strptime(timestamp, '%s').strftime("%B %e, %Y %l:%M%P") %></td>
+            <td class="col-md-10 col-sm-8 col-xs-8">
+              <% activities.reverse.each do | activity| %>
+                <div><%= activity[:description] %></div>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </table>
+    </div>
+  </div>
+</section>

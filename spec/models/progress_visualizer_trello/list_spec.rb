@@ -13,7 +13,7 @@ module ProgressVisualizerTrello
     context "find_by" do
       let(:user_profile) { FactoryGirl.create(:user_profile)}
       subject do
-        VCR.use_cassette('adapters/models/lists_find_by') do
+        VCR.use_cassette('models/lists_find_by') do
           List.find_by(user_profile: user_profile)
         end
       end

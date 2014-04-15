@@ -54,7 +54,7 @@ module ProgressVisualizerTrello
     context "find" do
 
       subject do
-        VCR.use_cassette('adapters/models/board') do
+        VCR.use_cassette('models/board') do
           Board.find_by(user_profile: user_profile)
         end
       end
@@ -64,7 +64,7 @@ module ProgressVisualizerTrello
 
       context "request_board with archived cards" do
         subject do
-          VCR.use_cassette('adapters/models/board_archived_cards') do
+          VCR.use_cassette('models/board_archived_cards') do
             Board.find_by(user_profile: user_profile, include_archived: true)
           end
         end

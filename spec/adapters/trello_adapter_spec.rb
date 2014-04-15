@@ -109,7 +109,7 @@ describe TrelloAdapter do
         it { should have_at_least(1).items }
 
         context "url" do
-          let(:url) { "#{trello_api_uri}/cards/#{card_id}?key=#{Rails.application.config.trello[:app_key]}&token=#{user_profile.readonly_token}" }
+          let(:url) { "#{trello_api_uri}/cards/#{card_id}?board_fields=all&key=#{Rails.application.config.trello[:app_key]}&token=#{user_profile.readonly_token}" }
           let(:uri) { URI.parse(url) }
           after { subject }
       
@@ -127,7 +127,7 @@ describe TrelloAdapter do
         it { should have_at_least(1).items }
 
         context "url" do
-          let(:url) { "#{trello_api_uri}/cards/#{card_id}/actions?key=#{Rails.application.config.trello[:app_key]}&token=#{user_profile.readonly_token}" }
+          let(:url) { "#{trello_api_uri}/cards/#{card_id}/actions?filter=all&key=#{Rails.application.config.trello[:app_key]}&token=#{user_profile.readonly_token}" }
           let(:uri) { URI.parse(url) }
           after { subject }
       

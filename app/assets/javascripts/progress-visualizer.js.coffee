@@ -53,7 +53,7 @@ ready = ->
     
   if $(".user_profiles.index #no-profiles").length > 0
     $('#profile-modal').modal('show')
-
+    
 authorize = ->
   Trello.authorize(interactive: false)
   if(Trello.authorized())
@@ -126,7 +126,7 @@ window.redraw_chart = (chart_id, chart_data, chart_options) ->
   chart = new google.visualization.AreaChart(document.getElementById(chart_id))
   chart.draw data_table, chart_options
   return
-
+    
 $(window).resize ->
   $(".chart").each (index) ->
     eval("draw_" + @id + "()")
@@ -137,3 +137,4 @@ $(document).ready(ready)
 $(document).on('page:load', ready)
 $(document).on('page:fetch', spinnerOn)
 $(document).on('page:receive', spinnerOff)
+

@@ -80,6 +80,11 @@ describe "routes" do
     end
   end
 
+  context "cards" do
+    subject {{get: "cards/12344"}}
+    it { should route_to(controller: "cards", action: "show", card_id: "12344")}
+  end
+
   context "charts" do
     context "burn_up" do
       subject { { get: "chart/burn-up" } }

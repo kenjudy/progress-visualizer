@@ -6,15 +6,26 @@ module ProgressVisualizerTrello
     include JsonData
 
 
-    let(:card_data) { example_card_data }
-    let(:card) { Card.new(card_data) }
-    let(:card_arr) { card.to_array }
     let(:card_array_attributes) { %w(number estimate name last_known_state closed? date_last_activity due labels id id_short id_board short_link short_url url id_list list_name) }
+    let(:user_profile) { FactoryGirl.create(:user_profile)}
+
+    let(:card_id) do
+      VCR.use_cassette('models/cards') do
+        Card.find_by(user_profile: user_profile).last.id
+      end
+    end
+    
+    let(:card) do
+      VCR.use_cassette('models/card') do
+        Card.find(user_profile: user_profile, card_id: card_id)
+      end
+    end
+    let(:card_arr) { card.to_array }
 
     subject { card }
 
     context "accepts json" do
-      its(:data) { should eql(card_data) }
+      its(:data) { should be_instance_of(Hash) }
     end
 
     context "has list" do
@@ -24,40 +35,21 @@ module ProgressVisualizerTrello
     end
 
     context "parses json" do
-      its(:id) { should == "524478cbd6c2a2ec3a0001d0" }
-      its(:last_known_state) { should == "complete" }
-      its(:closed?) { should be_true }
-      its(:date_last_activity) { should == Date.parse('2014-01-08T20:18:10.292Z')}
-      its(:description) { should =~ /ADULT LIBRARIANS WILL BE FIRST/ }
+      its(:id) { should be_instance_of(String)}
+      its(:closed?) { should be_false }
+      its(:date_last_activity) { should be_instance_of(DateTime) }
+      its(:description) { should be_instance_of(String) }
 
-      its(:id_board) { should == "5170058469d58225070003cb" }
-      its(:id_list) { should == "52653272e6fa31217b001705" }
-      its(:number) { should == 605 }
-      its(:name) { should == ".NET Layout Setup (Adult Librarians)" }
-      its(:estimate) { should == 2.5 }
-      its(:short_link) { should == "j56OGdXO" }
-      its(:badges) { should have(10).items }
-      its(:due) { should == Date.parse('2014-01-08T20:18:10.292Z') }
-      its(:labels) { should == [{"color"=>"yellow", "name"=>"Tech Stories"},{"color"=>"blue", "name"=>"Pimsleur"}] }
-      its(:short_url) { should == "https://trello.com/c/j56OGdXO" }
-      its(:url) { should == "https://trello.com/c/j56OGdXO/605-net-layout-setup-adult-librarians" }
-
-      context "accepts null values" do
-
-        context "due" do
-          before { card_data["due"] = nil }
-          it { expect{subject}.to_not raise_error }
-        end
-
-        context "checkItemStates" do
-          before { card_data["checkItemStates"] = nil }
-          it { expect{subject}.to_not raise_error }
-        end
-        context "checkItemStates last" do
-          before { card_data["checkItemStates"] = [] }
-          it { expect{subject}.to_not raise_error }
-        end
-      end
+      its(:id_board) { should be_instance_of(String) }
+      its(:id_list) { should be_instance_of(String) }
+      its(:number) { should be_instance_of(Fixnum) }
+      its(:name) { should be_instance_of(String) }
+      its(:estimate) { should be_instance_of(Float) }
+      its(:badges) { should have_at_least(1).item }
+      its(:labels) { should be_instance_of(Array) }
+      its(:short_url) { should =~ /https:\/\/trello.com\/c\/\w+/ }
+      its(:url) { should =~ /https:\/\/trello.com\/c\/\w+\/\d+[\w-]/ }
+      its(:user_profile) { should == user_profile }
     end
 
     context "outputs to array" do
@@ -65,7 +57,7 @@ module ProgressVisualizerTrello
       Card.array_attributes.each_with_index do |attribute, index|
         context attribute do
           let(:attr) { attribute }
-          it { expect(card_arr[index]).to eql(attribute == "labels" ? "Tech Stories,Pimsleur" : card.send(attribute.to_sym)) }
+          it { expect(card_arr[index]).to eql(attribute == "labels" ? card.labels.join(",") : card.send(attribute.to_sym)) }
         end
 
       end
@@ -78,22 +70,39 @@ module ProgressVisualizerTrello
       it { should == card_array_attributes }
     end
     
-    context "finders" do
-      let(:user_profile) { FactoryGirl.create(:user_profile)}
-      let(:include_archived) { false }
+    context "activity" do
       subject do
-        VCR.use_cassette('adapters/models/cards') do
-          Card.find_by(user_profile: user_profile, all: include_archived)
+        VCR.use_cassette('models/card_activity') do
+          card.activity
         end
       end
       
-      its(:first) { should be_instance_of(Card)}
-      
-      context "include archive" do
-        let(:include_archived) { true }
+      it { should have_at_least(1).item }
+    end
+    
+    context "finders" do
+
+      context "find card" do
+        subject { card }
+        
+        it { should be_instance_of(Card) }
+        its(:id) { should == card_id }
+        
+      end
+
+      context "find cards for current board" do
         subject do
-          VCR.use_cassette('adapters/models/cards_all') do
-            Card.find_by(user_profile: user_profile, all: include_archived)
+          VCR.use_cassette('models/cards') do
+            Card.find_by(user_profile: user_profile)
+          end
+        end
+        its(:first) { should be_instance_of(Card)}
+      end
+      
+      context "find all cards for current board (include archived)" do
+        subject do
+          VCR.use_cassette('models/cards_all') do
+            Card.find_by(user_profile: user_profile, all: true)
           end
         end
         its(:first) { should be_instance_of(Card)}

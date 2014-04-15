@@ -46,6 +46,8 @@ gem 'jquery-turbolinks'
 
 gem 'sitemap_generator'
 
+gem 'redcarpet'
+
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false
@@ -73,7 +75,7 @@ group :development, :test do
   gem 'database_cleaner'
 end
 
-gem "google_visualr", ">= 2.1"
+gem "google_visualr"
 
 group :production do
   gem 'rails_12factor'

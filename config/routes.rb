@@ -21,6 +21,8 @@ ProgressVisualizer::Application.routes.draw do
   get  'ian4atzhmmh9ul/burn-up/:profile_id' => "webhooks#burn_up", format: true, constraints: { format: /json/ }
   post 'ian4atzhmmh9ul/burn-up/:profile_id' => "webhooks#burn_up", as: 'webhooks_burn_up', format: true, constraints: { format: /json/ }
 
+  get 'cards/:card_id' => "cards#show", as: 'cards_show'
+
   get 'chart/burn-up/(:iteration)' => "charts#burn_up", as: 'charts_burn_up'
   get 'chart/burn-up-reload' => "charts#burn_up_reload", as: 'charts_burn_up_reload'
   get 'chart/yesterdays-weather/(:weeks)' => "charts#yesterdays_weather", as: 'charts_yesterdays_weather', constraints: {weeks: /[0-9]*/}

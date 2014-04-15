@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Webhook do
   let(:user_profile) { FactoryGirl.create(:user_profile)}
   let(:webhook) do
-    VCR.use_cassette('adapters/models/add_webhook') do
+    VCR.use_cassette('models/add_webhook') do
       FactoryGirl.create(:webhook, user_profile: user_profile)
     end
   end
@@ -22,7 +22,7 @@ describe Webhook do
   
   context "destroy" do
     subject do
-      VCR.use_cassette('adapters/models/destroy_webhook') do
+      VCR.use_cassette('models/destroy_webhook') do
         webhook.destroy
       end
     end
