@@ -9,6 +9,10 @@
     <%= yield %>
   </article>
   <%= render "application/footer" %>
-  <%= render "application/spinner" %>
+  <div id="spinner" class="modal fade" tabindex="-1" role="dialog" aria-hidden="false">
+    <div class="modal-dialog">
+      <%= render "application/spinner" %>
+  </div>
+</div>
 </body>
 </html>

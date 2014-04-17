@@ -142,7 +142,7 @@ describe UserProfilesController do
   end
 
   context "keys_from_values" do
-    let(:lists) { [::ProgressVisualizerTrello::List.new({"id" => "ADSFSDF", "name" => "Done"}), ::ProgressVisualizerTrello::List.new({"id" => "FHGSDFG", "name" => "ToDo"})] }
+    let(:lists) { [::List.new({"id" => "ADSFSDF", "name" => "Done"}), ::List.new({"id" => "FHGSDFG", "name" => "ToDo"})] }
     subject { controller.keys_from_values(lists, "Done,ToDo") }
 
     it { should == {"ADSFSDF" => "Done","FHGSDFG" => "ToDo"}.to_json }

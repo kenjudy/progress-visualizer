@@ -1,9 +1,8 @@
 require 'spec_helper'
 
 describe "Factories::DoneStoryFactory" do
-  include ProgressVisualizerTrello::JsonData
-
-  let(:board) { ProgressVisualizerTrello::Board.new({lists: [example_list_data], cards: cards}) }
+  
+  let(:board) { FactoryGirl.build(:board, cards: cards) }
   let(:types_of_work) { ["Committed"] }
   let(:done_list_ids) { ["5170058469d58225070003ce"] }
   let(:user_profile) { FactoryGirl.create(:user_profile, labels_types_of_work: types_of_work.join(",")) }
@@ -11,7 +10,7 @@ describe "Factories::DoneStoryFactory" do
 
   let(:cards) do
     (0..1).map do |i|
-      example_card_data({ "idShort" => "#{i}", "idList" => "5170058469d58225070003ce", "labels" => [{color: "blue", name: "Committed"}], "name" => "(3) Foo #{i}" })
+      FactoryGirl.build(:card, id_short: "#{i}", id_list: "5170058469d58225070003ce", labels: [{color: "blue", name: "Committed"}], name: "(3) Foo #{i}")
     end
   end
 
@@ -26,7 +25,7 @@ describe "Factories::DoneStoryFactory" do
       subject { done_story_factory.to_csv(collated_data) }
       it do
         should == <<-EOF
-list,id_short,name,estimate,url_short
+list,id_short,name,estimate,short_url
 Committed,0,Foo 0,3.0,https://trello.com/c/j56OGdXO
 Committed,1,Foo 1,3.0,https://trello.com/c/j56OGdXO
 EOF

@@ -22,7 +22,7 @@ module TablesModelConcern
   end
 
   def request_and_collate_stories(lists)
-    board = ProgressVisualizerTrello::Board.find_by(user_profile: user_profile)
+    board = Board.find_by(user_profile: user_profile)
     collate(board,
             user_profile.labels_types_of_work.split(","),
             JSON.parse(lists).keys)
@@ -43,7 +43,7 @@ module TablesModelConcern
   
   def to_csv(collated_data)
     CSV.generate do |csv|
-      csv << %w(list id_short name estimate url_short)
+      csv << %w(list id_short name estimate short_url)
       collated_data[:lists].each do |list, data|
         data[:cards].each do |card|
           csv << [list, card.id_short, card.name, card.estimate, card.short_url]

@@ -8,24 +8,24 @@ class CardsController < ApplicationController
   
   def show
     @card = Rails.cache.fetch("Card/#{user_profile.id}/#{params["card_id"]}", expires_in: 10.minutes) do
-      card = ProgressVisualizerTrello::Card.find(user_profile: user_profile, card_id: params["card_id"])
+      card = Card.find(user_profile: user_profile, card_id: params["card_id"])
       card.activity
       card
     end
-    @markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, extensions = {})
-    @description = @markdown.render(@card.description).html_safe
-    @activity = collate_activities(@card)
+    markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, extensions = {})
+    @description = markdown.render(@card.description).html_safe
+    @activity = collate_activities(@card, markdown)
     @default_options = default_properties
   end
   
-  def collate_activities(card)
+  def collate_activities(card, markdown)
     activities = {}
     previous_type = nil
     card.activity.each do |activity|
       datetime = DateTime.parse(activity["date"]).strftime('%s').to_i
       timestamp = (datetime - datetime % 300).to_s
       activities[timestamp] ||= []
-      activity_description = activity_description(activity, previous_type)
+      activity_description = activity_description(activity, previous_type, markdown)
       if activity_description
         activities[timestamp] << activity_description
         previous_type = activity_description[:type]
@@ -36,7 +36,7 @@ class CardsController < ApplicationController
     activities
   end
   
-  def activity_description(activity, previous_type)
+  def activity_description(activity, previous_type, markdown)
     message =
     case activity["type"]
     when "addAttachmentToCard"
@@ -46,7 +46,7 @@ class CardsController < ApplicationController
     when "addChecklistToCard"
       "added checklist <span class=\"text-muted\">#{activity["data"]["checklist"]["name"]}</span>"
     when "commentCard"
-      "&mdash; #{@markdown.render(activity["data"]["text"])}"
+      "&mdash; #{markdown.render(activity["data"]["text"])}"
     when "createCard"
       "created this card"
     when "copyCard"
@@ -67,7 +67,7 @@ class CardsController < ApplicationController
       if activity["data"]["listBefore"]
         "moved this card from <strong>#{activity["data"]["listBefore"]["name"]}</strong> to <strong>#{activity["data"]["listAfter"]["name"]}</strong>"
       else
-        update_card_description(activity["data"], previous_type)
+        update_card_description(activity["data"], markdown, previous_type)
       end
     when "updateCheckItemStateOnCard"
       "updated checklist <span class=\"text-muted\">#{activity["data"]["checklist"]["name"]}</span>"
@@ -79,7 +79,7 @@ class CardsController < ApplicationController
     
   end
   
-  def update_card_description(data, previous_type = nil)
+  def update_card_description(data, markdown, previous_type = nil)
     return nil unless data["old"]
 
     if data["old"]["pos"] && previous_type != "updateCard"
@@ -88,7 +88,7 @@ class CardsController < ApplicationController
     elsif data["old"]["name"]
       "renamed this card <strong>#{data["card"]["name"]}</strong>"
     elsif data["old"]["desc"]
-      "change the description to <span class=\"text-muted\">#{@markdown.render(data["card"]["desc"]).html_safe}</span>"
+      "change the description to <span class=\"text-muted\">#{markdown.render(data["card"]["desc"]).html_safe}</span>"
     elsif !data["old"]["closed"].nil?
       "#{data["old"]["closed"] ? "unarchived": "archived" } this card"
     end

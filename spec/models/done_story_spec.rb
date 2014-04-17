@@ -1,12 +1,11 @@
 require 'spec_helper'
 
 describe DoneStory do
-  include ProgressVisualizerTrello::JsonData
 
   let(:user_profile) { FactoryGirl.create(:user_profile) }
 
   context "create_or_update_from" do
-    let(:card) { ProgressVisualizerTrello::Card.new(example_card_data({ "idList" => "5170058469d58225070003ce", "labels" => [{color: "blue", name: "Committed"}], "name" => "(3) Test Story Name" })) }
+    let(:card) { FactoryGirl.build(:card, id_list: "5170058469d58225070003ce", labels: [{color: "blue", name: "Committed"}], name: "(3) Test Story Name" ) }
     let(:type_of_work) { "Committed" }
 
     context "creates story from card" do
@@ -22,7 +21,7 @@ describe DoneStory do
     end
 
     context "does not create dups by idShort" do
-      let(:cards) { (0..3).map { ProgressVisualizerTrello::Card.new(example_card_data({ "idShort" => "3" })) } }
+      let(:cards) { (0..3).map { FactoryGirl.build(:card, id_short: "3") } }
       before { cards.each { |card| DoneStory.create_or_update_from(user_profile, card, type_of_work, Time.now) } }
 
       subject { DoneStory.all }
