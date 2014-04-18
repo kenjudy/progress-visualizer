@@ -1,0 +1,26 @@
+<script type="text/javascript" src="https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization',
+       'version':'1','packages':['timeline']}]}"></script>
+<script type="text/javascript">
+google.setOnLoadCallback(draw_timeline_chart);
+
+function draw_timeline_chart() {
+  var container = document.getElementById('timeline_chart');
+
+  var chart = new google.visualization.Timeline(container);
+
+  var dataTable = new google.visualization.DataTable();
+
+  dataTable.addColumn({ type: 'string', id: 'List' });
+  dataTable.addColumn({ type: 'datetime', id: 'Start' });
+  dataTable.addColumn({ type: 'datetime', id: 'End' });
+
+  dataTable.addRows([
+    [ 'Ready for Development', new Date(2014, 4, 9, 21, 5, 0), new Date(2014, 4, 11, 14, 40, 0) ],
+    [ 'In Progress',      new Date(2014, 4, 11, 14, 40, 0),  new Date(2014, 4, 17, 19, 45, 0) ],
+    [ 'Ready for QA',  new Date(2014, 4, 17, 19, 45, 0),  new Date(2014, 4, 17, 21, 50, 0) ],
+    [ 'Ready for Sign-off',  new Date(2014, 4, 17, 21, 50, 0),  new Date(2014, 4, 17, 23, 0, 0) ]]),
+
+  chart.draw(dataTable);
+}
+</script>
+<div id="timeline_chart" class='chart col-sm-12'  style="width: 100%; height: <%= 4 * 50 + 12 %>px;"></div>

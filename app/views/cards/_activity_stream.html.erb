@@ -1,0 +1,13 @@
+<table class="table table-default">
+  <tr><th>date</th><th>activity</th></tr>
+  <% activity.each do |timestamp, activities| %>
+    <tr>
+      <td class="col-md-2 col-sm-4 col-xs-4"><%= DateTime.strptime(timestamp, '%s').strftime("%B %e, %Y %l:%M%P") %></td>
+      <td class="col-md-10 col-sm-8 col-xs-8">
+        <% activities.reverse.each do | activity| %>
+          <div><%= activity.to_html %></div>
+        <% end %>
+      </td>
+    </tr>
+  <% end %>
+</table>

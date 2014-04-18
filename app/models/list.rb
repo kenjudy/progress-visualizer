@@ -2,7 +2,7 @@ require 'json'
 
 class List < TrelloObject
 
-  attr_reader :id, :name, :id_board
+  attr_accessor :id, :name, :id_board
 
   def assign_attributes(data)
     @id = @data["id"]

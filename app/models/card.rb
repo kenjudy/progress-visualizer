@@ -1,8 +1,12 @@
+require 'redcarpet'
+
 class Card < TrelloObject
 
   attr_accessor :id, :last_known_state, :date_last_activity, :description, :id_board, :id_list, :id_short, :name, :short_link, :badges, :due, :labels, :short_url, :url, :user_profile, :list
   
   attr_reader :estimate
+  
+  alias_method :parse_name, :name=
   
   def assign_attributes(data)
     @id = @data["id"]
@@ -21,13 +25,16 @@ class Card < TrelloObject
     @url = @data["url"]
     @user_profile = @data[:user_profile]
   end
-  
-  def name=(name)
-    parse_name(name)
-  end
     
   def last_known_state
     @last_known_state ||= @data["checkItemStates"].last["state"] if @data["checkItemStates"] && @data["checkItemStates"].last
+  end
+  
+  def description_html
+    return @description_html if @description_html
+    markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, extensions = {})
+    @description_html = markdown.render(@description).html_safe
+    @description_html
   end
 
   def closed?
@@ -43,7 +50,7 @@ class Card < TrelloObject
   end
   
   def activity
-    @activity ||= BaseAdapter.build_adapter(user_profile).request_card_activity_data(id)
+    @activity ||= CardActivity.find_by({user_profile: user_profile, card_id: id })
   end
 
   def to_array
