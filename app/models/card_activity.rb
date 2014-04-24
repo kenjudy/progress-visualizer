@@ -92,12 +92,27 @@ class CardActivity < TrelloObject
   end
   
   def timestamp(precision)
-    datetime = DateTime.parse(activity["date"]).in_time_zone.strftime('%s').to_i
-    timestamp = (datetime - (precision > 0 ? datetime % precision : 0)).to_s
+    secs_since_epoch = CardActivity.date_time(activity).strftime('%s').to_i
+    timestamp = (secs_since_epoch - (precision > 0 ? secs_since_epoch % precision : 0)).to_s
+  end
+  
+  
+  def self.date_time(activity)
+    DateTime.parse(activity["date"]).in_time_zone
   end
   
   def self.activity_stream(activities)
     group_by_timestamp(activities, 300)
+  end
+  
+  def self.timeline(activities)
+    # or archive
+    end_ca = activities.find{ |a| a["type"] == "moveCardFromBoard" } || activities.select{ |a| a["type"] == "updateCard" && a["data"]["card"]["closed"] }
+    end_time = end_ca.any? ? date_time(end_ca.first) : DateTime.now
+    events = activities.delete_if{ |a| a["type"] != "updateCard" || a["data"]["listAfter"].nil? }.reverse
+    events.each_with_index.map do |activity, i|
+      { list: list_before(activity), start: date_time(activity), end: events[i+1] ? date_time(events[i+1]) : end_time }
+    end
   end
   
   def self.group_by_timestamp(activities, precision)
@@ -107,8 +122,10 @@ class CardActivity < TrelloObject
       card_activity = CardActivity.new(activity)
       card_activity.previous_type = previous_type
       timestamp = card_activity.timestamp(precision)
-      groups[timestamp] ||= []
-      groups[timestamp] << card_activity unless card_activity.redundant?
+      unless card_activity.redundant?
+        groups[timestamp] ||= []
+        groups[timestamp] << card_activity 
+      end
       previous_type = card_activity.type
     end
     groups
@@ -119,6 +136,10 @@ class CardActivity < TrelloObject
   end
   
   private
+  
+  def self.list_before(activity)
+    activity["data"]["listBefore"]["name"] if activity["data"]["listBefore"]
+  end
   
   def verb_for_card_update
     if activity["data"]["listBefore"]

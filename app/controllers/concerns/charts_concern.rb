@@ -2,11 +2,12 @@ module ChartsConcern
   extend ActiveSupport::Concern
 
   def default_properties
-    green = "#3D7477"
     blue = "#091D58"
-    red = "#991238"
+    green = "#095857"
+    red = "#af0303"
+    orange = "#fd5b1c"
 
-    { colors: [blue, green, red],
+    { colors: [green, blue, red, orange, green, blue, red, orange],
       pointSize: 8,
       areaOpacity: 0.05,
       titleTextStyle: {color: green, fontSize: 24, fontName: 'Questrial', bold: false },

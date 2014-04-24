@@ -25,7 +25,11 @@ class Card < TrelloObject
     @url = @data["url"]
     @user_profile = @data[:user_profile]
   end
-    
+  
+  def name=(name)
+    parse_name(name)
+  end
+  
   def last_known_state
     @last_known_state ||= @data["checkItemStates"].last["state"] if @data["checkItemStates"] && @data["checkItemStates"].last
   end

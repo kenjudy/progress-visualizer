@@ -66,4 +66,8 @@ module ApplicationHelper
       "data-toggle" => "modal",  "data-target" => "#sharing-modal" if current_user
   end
   
+  def javascript_date_string(datetime)
+     "new Date(#{ datetime.year }, #{ datetime.month - 1 }, #{ datetime.day }, #{ datetime.hour }, #{ datetime.minute }, #{ datetime.second })"
+  end
+  
 end

@@ -11,7 +11,7 @@ describe CardActivity do
   
   context "timestamp" do
     let(:precision) { 0 }
-    let(:timestamp) { DateTime.parse("2014-04-16T20:29:03.332Z").strftime('%s').to_i } 
+    let(:timestamp) { DateTime.parse("2014-04-16T20:29:03.332Z").in_time_zone.strftime('%s').to_i } 
     subject { FactoryGirl.build(:card_activity).timestamp(precision) }
     
     it { should == timestamp.to_s }
@@ -161,5 +161,22 @@ describe CardActivity do
     before { activities.first["date"] = (DateTime.parse(activities.first["date"]) - 6.minutes).to_s}
     subject { CardActivity.activity_stream(activities) }
     it { should have(2).items }
+    
+    context "redundancy doesn't create empty values" do
+      let(:activities) { (0..3).map { |i| FactoryGirl.build(:card_activity, :update_check_item_state_on_card).data }}
+      it { should have(1).item }
+    end
+  end
+  
+  context "timeline" do
+    let(:lists) { ["Ready for Development", "In Development", "Ready for QA", "Ready for Signoff", "Done"]}
+    let(:activities) { (0..4).map { |i| FactoryGirl.build(:card_activity, :update_card_move_to_list).data } }
+    before do
+      (0..4).map do |i| 
+        activites[i]["date"] = (DateTime.parse(activities.first["date"]) - (6 - i).days).to_s
+        activites[i]["data"]["listBefore"]["name"] = lists[i-1] if i > 0
+        activites[i]["listAfter"]["name"] = lists[i] if i < 4
+      end
+    end
   end
 end

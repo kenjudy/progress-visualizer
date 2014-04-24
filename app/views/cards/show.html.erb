@@ -1,13 +1,24 @@
 <section>
   <div class="container">
     <div class="row">
-      <%= render "card_detail", card: @card %>
-      <hr>
-      <%= render "timeline_chart", activity: @activity, default_options: @default_options %>
-      <hr>
-      <%= render "annotated_activity_chart", activity: @activity, default_options: @default_options %>
-      <hr>
-      <%= render "activity_stream", activity: @activity %>
+      <div class="col-md-12">
+        <%= render "card_detail", card: @card %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <%= render "timeline_chart", activity: @activity, default_options: @default_options %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <%= render "annotated_activity_chart", activity: @activity, default_options: @default_options %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <%= render "activity_stream", activity: @activity %>
+      </div>
     </div>
   </div>
 </section>

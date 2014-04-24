@@ -1,9 +1,16 @@
+<h3>Annotated Activity Chart</h3>
+<div id='activity_chart' class='chart' style='width: 100%; height: 600px;'>
+  <%= render "application/spinner" %>
+</div>
 <script type='text/javascript'>
-  google.load('visualization', '1.1', {'packages':['annotationchart']});
-  google.setOnLoadCallback(draw_activity_chart);
 
   function draw_activity_chart() {
+    google.load('visualization', '1.1', {'packages':['annotationchart']});
+    google.setOnLoadCallback(draw_activity_chart);
+
     $("#activity_chart").empty();
+    $("#activity_chart").attr("class", "chart")
+    
     var data = new google.visualization.DataTable();
     data.addColumn('datetime', 'Date');
     data.addColumn('number', 'Trello Activity');
@@ -23,13 +30,20 @@
       end %>
     ]);
 
-    var chart = new google.visualization.AnnotationChart(document.getElementById('activity_chart'));
-
-    var options = eval(<%= default_options.merge({ displayAnnotations: true, displayAnnotationsFilter: true }).to_json.html_safe %>);
-
-    chart.draw(data, options);
+    if (google.visualization.AnnotationChart != undefined) {
+      var chart = new google.visualization.AnnotationChart(document.getElementById('activity_chart'));
+      var options = eval(<%= default_options.merge({ displayAnnotations: true, displayAnnotationsFilter: true }).to_json.html_safe %>);
+      chart.draw(data, options);
+    }
   }
+  
+  
+// function loadAnnotationChart() {
+// }
+// $(document).ready(loadAnnotationChart())
+// $(document).on('page:load', loadAnnotationChart())
+$(document).ready(draw_activity_chart())
+$(document).on('page:load', draw_activity_chart())
+$(document).on('page:change', draw_activity_chart())
+
 </script>
-<div id='activity_chart' class='chart col-sm-12' style='width: 100%; height: 500px;'>
-  <%= render "application/spinner" %>
-</div>

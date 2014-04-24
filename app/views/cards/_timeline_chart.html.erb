@@ -1,3 +1,5 @@
+<h3>Timeline</h3>
+<div id="timeline_chart" class='chart'  style="width: 100%; height: <%= @timeline.map{ |event| event[:list] }.uniq.length * 46 + 40 %>px;"></div>
 <script type="text/javascript" src="https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization',
        'version':'1','packages':['timeline']}]}"></script>
 <script type="text/javascript">
@@ -15,12 +17,15 @@ function draw_timeline_chart() {
   dataTable.addColumn({ type: 'datetime', id: 'End' });
 
   dataTable.addRows([
-    [ 'Ready for Development', new Date(2014, 4, 9, 21, 5, 0), new Date(2014, 4, 11, 14, 40, 0) ],
-    [ 'In Progress',      new Date(2014, 4, 11, 14, 40, 0),  new Date(2014, 4, 17, 19, 45, 0) ],
-    [ 'Ready for QA',  new Date(2014, 4, 17, 19, 45, 0),  new Date(2014, 4, 17, 21, 50, 0) ],
-    [ 'Ready for Sign-off',  new Date(2014, 4, 17, 21, 50, 0),  new Date(2014, 4, 17, 23, 0, 0) ]]),
+    <% @timeline.each do |event|  %>
+      ['<%= event[:list] %>', <%= javascript_date_string(event[:start]) %>, <%= javascript_date_string(event[:end]) %>],
+    <% end %>
+    ]),
 
-  chart.draw(dataTable);
+  chart.draw(dataTable, <%= (default_options.merge({colorByRowLabel: true, hAxis: {}})).to_json.html_safe %>);
 }
+
+$(document).ready(draw_timeline_chart())
+$(document).on('page:load', draw_timeline_chart())
+
 </script>
-<div id="timeline_chart" class='chart col-sm-12'  style="width: 100%; height: <%= 4 * 50 + 12 %>px;"></div>
