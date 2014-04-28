@@ -1,5 +1,9 @@
 module ApplicationHelper
 
+  def card_link(card)
+    card.card_id.present? ? link_to(card.id_short, cards_show_url(card_id: card.card_id)) : card.id_short
+  end
+  
   def duration_in_weeks(days)
     duration = days ? days / 7 : 1
     label = duration > 9 ? duration : %w(Zero One Two Three Four Five Six Seven Eight Nine)[duration]

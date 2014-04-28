@@ -7,6 +7,7 @@ class Card < TrelloObject
   attr_reader :estimate
   
   alias_method :parse_name, :name=
+  alias_method :card_id, :id
   
   def assign_attributes(data)
     @id = @data["id"]

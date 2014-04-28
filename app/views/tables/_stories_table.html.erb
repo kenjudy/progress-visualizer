@@ -10,7 +10,7 @@
     </tr>
     <% data[:cards].each do |card| %>
       <tr class="story">
-        <td class="id"><%= link_to(card.id_short, cards_show_url(card_id: card.id)) %></td>
+        <td class="id"><%= card_link(card) %></td>
         <td class="name"><%= card.name %></td>
         <td></td>
         <td class="estimate"><%= card.estimate %></td>

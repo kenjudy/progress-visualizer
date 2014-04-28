@@ -12,7 +12,8 @@ class DoneStory < ActiveRecord::Base
     attribs = { type_of_work: type_of_work,
                status: card.id_list,
                story: card.name,
-               estimate: card.estimate }
+               estimate: card.estimate,
+               card_id: card.id }
     attribs.merge!({timestamp: beginning_of_current_iteration, iteration: beginning_of_current_iteration.strftime("%F")}) if story.timestamp.nil?
     story.update_attributes(attribs)
   end
