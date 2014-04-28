@@ -55,7 +55,6 @@ end
 
 group :development, :test do
   gem 'spring-commands-rspec'
-  gem 'rb-fsevent' if `uname` =~ /Darwin/
   gem 'rspec-rails'
   gem 'better_errors'
   gem 'binding_of_caller'
@@ -75,6 +74,10 @@ group :development, :test do
   gem 'rails_best_practices'
   gem 'metric_fu'
   gem 'database_cleaner'
+end
+
+group :test, :darwin do
+  gem 'rb-fsevent'
 end
 
 gem "google_visualr"
