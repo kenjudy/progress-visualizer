@@ -75,6 +75,7 @@ describe Card do
     end
     
     it { should have_at_least(1).item }
+    its(:first) { should be_instance_of(CardActivity)}
   end
   
   context "finders" do

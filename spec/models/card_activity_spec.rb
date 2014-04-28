@@ -157,13 +157,13 @@ describe CardActivity do
   end
   
   context "activity stream groups in 5min increments" do
-    let(:activities) { (0..3).map { |i| FactoryGirl.build(:card_activity, :update_card_change_description).data }}
-    before { activities.first["date"] = (DateTime.parse(activities.first["date"]) - 6.minutes).to_s}
+    let(:activities) { (0..3).map { |i| FactoryGirl.build(:card_activity, :update_card_change_description) }}
+    before { activities.first.data["date"] = (DateTime.parse(activities.first.data["date"]) - 6.minutes).to_s}
     subject { CardActivity.activity_stream(activities) }
     it { should have(2).items }
     
     context "redundancy doesn't create empty values" do
-      let(:activities) { (0..3).map { |i| FactoryGirl.build(:card_activity, :update_check_item_state_on_card).data }}
+      let(:activities) { (0..3).map { |i| FactoryGirl.build(:card_activity, :update_check_item_state_on_card) }}
       it { should have(1).item }
     end
   end
