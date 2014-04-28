@@ -15,6 +15,7 @@ class CardActivity < TrelloObject
     "commentCard" => { verb: "commented", direct_object: "card"},
     "createCard" => { verb: "created", direct_object: "card"},
     "copyCard" => { verb: "copied", direct_object: "card"},
+    "copyCommentCard" => { verb: "copied", direct_object: "comment"},
     "convertToCardFromCheckItem" => { verb: "converted", direct_object: "checkitem"},
     "deleteAttachmentFromCard" => { verb: "deleted attachment", direct_object: "attachment" },
     "moveCardFromBoard" => { verb: "moved card from board", direct_object: "board" },
@@ -70,6 +71,8 @@ class CardActivity < TrelloObject
       "this card"
     when "copyCard"
       "this card"
+    when "copyCommentCard"
+      markdown.render(activity["data"]["text"])
     when "convertToCardFromCheckItem"
       "checklist item to card"
     when "deleteAttachmentFromCard"
@@ -114,12 +117,13 @@ class CardActivity < TrelloObject
   end
   
   def self.timeline(activities)
-    # or archive
-    end_ca = activities.find{ |a| a.type == "moveCardFromBoard" } || activities.select{ |a| a.type == "updateCard" && a.archived? }
-    end_time = end_ca.any? ? date_time(end_ca.first) : DateTime.now
+    start_ca = activities.find{ |a| a.type == "moveCardToBoard" || a.type == "copyCard" }
+    start_time = start_ca.present? ? start_ca.date_time : nil
+    end_ca = activities.find{ |a| a.type == "moveCardFromBoard" } || activities.find{ |a| a.type == "updateCard" && a.archived? }
+    end_time = end_ca.present? ? end_ca.date_time : DateTime.now
     events = activities.delete_if{ |a| a.moved_from_list.nil? }.reverse
     events.each_with_index.map do |activity, i|
-      { list: activity.moved_from_list, start: activity.date_time, end: events[i+1] ? events[i+1].date_time : end_time } if activity.verb
+      { list: activity.moved_from_list, start: (i == 0 && start_time.present?) ? start_time : activity.date_time, end: events[i+1] ? events[i+1].date_time : end_time } if activity.verb
     end.compact
   end
   
