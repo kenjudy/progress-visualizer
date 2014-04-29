@@ -27,6 +27,27 @@ $font-family-sans-serif: 'Questrial', 'Helvetica Neue', Helvetica, Arial, sans-s
 @import "bootstrap"
 @import "bootstrap/theme"
 
+.carousel-indicators li
+  border: solid 1px $pvGreen
+  &.active
+    background-color: $pvGreen
+
+.carousel-inner
+  @media (min-width: 650px) and (max-width: 992px)
+    height: 455px
+  @media (max-width: 649px)
+    height: 384px
+
+.carousel-caption    
+  @media (min-width: 650px) and (max-width: 992px)
+    bottom: -30px
+  @media (min-width: 650px) and (max-width: 992px)
+    bottom: -50px
+  @media (min-width: 520px) and (max-width: 649px)
+    bottom: -34px
+  @media (max-width: 519px)
+    bottom: -80px
+    
 .navbar-default a.navbar-brand, .brand
   color: $pvGreen
   span
@@ -125,3 +146,4 @@ footer
 .direct-object.board, .direct-object.card, .direct-object.checklist
   font-weight: bold
   color: #999
+  
