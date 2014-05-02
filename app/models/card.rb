@@ -57,6 +57,14 @@ class Card < TrelloObject
   def activity
     @activity ||= CardActivity.find_by({user_profile: user_profile, card_id: id })
   end
+  
+  def timeline
+    CardActivity.timeline(activity)
+  end
+  
+  def activity_stream
+    CardActivity.activity_stream(activity)
+  end
 
   def to_array
     arr = self.class.array_attributes.map{ |attr| attr == "labels" ? labels.map{|lbl| lbl["name"] }.join(",") : self.send(attr.to_sym)}

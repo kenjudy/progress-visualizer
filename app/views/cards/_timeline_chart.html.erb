@@ -22,7 +22,7 @@ function draw_timeline_chart() {
     <% end %>
     ]),
 
-  chart.draw(dataTable, <%= (default_options.merge({colorByRowLabel: true, hAxis: {}})).to_json.html_safe %>);
+  chart.draw(dataTable, <%= (default_options.merge({colorByRowLabel: true, hAxis: {format:'M/d K a' }})).to_json.html_safe %>);
 }
 
 $(document).ready(draw_timeline_chart())

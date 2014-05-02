@@ -10,8 +10,8 @@ class CardsController < ApplicationController
       card.activity
       card
     end
-    @activity = CardActivity.activity_stream(@card.activity)
-    @timeline = CardActivity.timeline(@card.activity)
+    @activity = @card.activity_stream
+    @timeline = @card.timeline
     @default_options = default_properties
   end
 

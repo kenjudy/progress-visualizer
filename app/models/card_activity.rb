@@ -1,5 +1,5 @@
 require 'redcarpet'
-
+#TODO: Rename CardActivityEvent
 class CardActivity < TrelloObject
 
   attr_accessor :previous_type
@@ -46,6 +46,10 @@ class CardActivity < TrelloObject
   
   def moved_from_list
     activity["data"]["listBefore"]["name"] if activity["data"]["listBefore"]
+  end
+  
+  def moved_to_list
+    activity["data"]["listAfter"]["name"] if activity["data"]["listAfter"]
   end
   
   def to_html
@@ -111,20 +115,17 @@ class CardActivity < TrelloObject
     timestamp = (secs_since_epoch - (precision > 0 ? secs_since_epoch % precision : 0)).to_s
   end
   
-  
   def self.activity_stream(activities)
     group_by_timestamp(activities, 300)
   end
   
   def self.timeline(activities)
-    start_ca = activities.find{ |a| a.type == "moveCardToBoard" || a.type == "copyCard" }
-    start_time = start_ca.present? ? start_ca.date_time : nil
-    end_ca = activities.find{ |a| a.type == "moveCardFromBoard" } || activities.find{ |a| a.type == "updateCard" && a.archived? }
-    end_time = end_ca.present? ? end_ca.date_time : DateTime.now
-    events = activities.delete_if{ |a| a.moved_from_list.nil? }.reverse
-    events.each_with_index.map do |activity, i|
-      { list: activity.moved_from_list, start: (i == 0 && start_time.present?) ? start_time : activity.date_time, end: events[i+1] ? events[i+1].date_time : end_time } if activity.verb
-    end.compact
+    timeline_activities = timeline_activity(activities)
+    timeline = [{ list: timeline_activities.first.moved_from_list, start: timeline_start(activities,timeline_activities), end: timeline_activities.first.date_time }]
+
+    timeline + (timeline_activities.each_with_index.map do |activity, i|
+      { list: activity.moved_to_list, start: activity.date_time, end: timeline_activities[i+1] ? timeline_activities[i+1].date_time : timeline_end(activities) }
+    end).compact
   end
   
   def self.group_by_timestamp(activities, precision)
@@ -147,6 +148,20 @@ class CardActivity < TrelloObject
   end
   
   private
+  
+  def self.timeline_activity(activity)
+    activity.delete_if{ |a| a.moved_from_list.nil? || a.verb.nil? }.reverse
+  end
+  
+  def self.timeline_start(activity,timeline_activity)
+    start_ca = activity.find{ |a| a.type == "moveCardToBoard" || a.type == "copyCard" }
+    start_ca.present? ? start_ca.date_time : timeline_activity.first.date_time
+  end
+  
+  def self.timeline_end(activity)
+    end_ca = activity.find{ |a| a.type == "moveCardFromBoard" } || activity.find{ |a| a.type == "updateCard" && a.archived? }
+    end_ca.present? ? end_ca.date_time : DateTime.now
+  end
   
   def verb_for_card_update
     if activity["data"]["listBefore"]
