@@ -170,13 +170,37 @@ describe CardActivity do
   
   context "timeline" do
     let(:lists) { ["Ready for Development", "In Development", "Ready for QA", "Ready for Signoff", "Done"]}
-    let(:activities) { (0..4).map { |i| FactoryGirl.build(:card_activity, :update_card_move_to_list).data } }
+    let(:activities) { (0..4).map { |i| FactoryGirl.build(:card_activity, :update_card_move_to_list) } }
+    let(:first_move_date) { DateTime.now }
     before do
-      (0..4).map do |i| 
-        activites[i]["date"] = (DateTime.parse(activities.first["date"]) - (6 - i).days).to_s
-        activites[i]["data"]["listBefore"]["name"] = lists[i-1] if i > 0
-        activites[i]["listAfter"]["name"] = lists[i] if i < 4
+      activities.reverse.each_with_index do |a, i| 
+        a.data["date"] = (first_move_date - (6 - i).days).to_s
+        a.data["data"]["listBefore"]["name"] = i > 0 ? lists[i-1] : "In Design"
+        a.data["data"]["listAfter"]["name"] = lists[i] if i <= 4
       end
+    end
+    
+    subject { CardActivity.timeline(activities) }
+    it { should have(6).items}
+    its(:first) { should == {:list=>"In Design", :start=> activities.last.date_time, :end=> activities.last.date_time}}
+    context "last" do
+      subject { CardActivity.timeline(activities).last }
+      its([:list]) { should == "Done" }
+    end
+    
+    context "starts with create_card" do
+      let(:first) { FactoryGirl.build(:card_activity, :create_card) }
+      before do 
+        first.data["date"] = (first_move_date - 11.days).to_s
+        activities[0] = first 
+      end
+      subject { CardActivity.timeline(activities.unshift(first) ).first }
+      its([:start]) { should == first.date_time }
+    end
+    
+    context "doesn't blow up with no acitivities" do
+      let(:activities) { [] }
+      it { should == [] }
     end
   end
 end

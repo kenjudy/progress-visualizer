@@ -1,5 +1,5 @@
 class AddCardIdToDoneStories < ActiveRecord::Migration
   def change
-    add_reference :done_stories, :card, index: true
+    add_column :done_stories, :card_id, :string, index: true
   end
 end

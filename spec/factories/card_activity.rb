@@ -17,21 +17,39 @@ FactoryGirl.define do
     }
     
     type_data {
-      { "data"=>{}, 
+      { 
         "type"=>"copyCard", 
       }
     }
+    
+    data {
+      {
+        "data" => { 
+          "card" => {
+            "closed" => false
+          }
+        } 
+      }
+    }
 
-    initialize_with { CardActivity.new(base.merge(type_data)) }
+    initialize_with { CardActivity.new(base.merge(type_data).merge(data)) }
     
     trait :add_attachment_to_card do
       type_data {
-        { "data"=>{
-          "attachment" =>{
-            "name" => "attachment_file_name.jpg"
-          }
-        }, 
+        {  
           "type"=>"addAttachmentToCard", 
+        }
+      }
+      data {
+        {
+          "data"=>{
+            "attachment" =>{
+              "name" => "attachment_file_name.jpg"
+            },
+            "card" => {
+              "closed" => false
+            }
+          },
         }
       }
     end
@@ -48,22 +66,38 @@ FactoryGirl.define do
     
     trait :add_checklist_to_card do
       type_data {
-        { "data"=>{
-          "checklist" =>{
-            "name" => "Things to do"
-          }
-        }, 
+        {  
           "type"=>"addChecklistToCard", 
+        }
+      }
+      data {
+        {
+          "data"=>{
+            "checklist" =>{
+              "name" => "Things to do"
+            },
+            "card" => {
+              "closed" => false
+            }
+          },
         }
       }
     end
 
     trait :comment_card do
       type_data {
-        { "data" =>{
-            "text" => "Make a change"
-          },
+        { 
           "type"=>"commentCard", 
+        }
+      }
+      data {
+        {
+          "data" =>{
+            "text" => "Make a change",
+            "card" => {
+              "closed" => false
+            }
+          },
         }
       }
     end
@@ -82,48 +116,80 @@ FactoryGirl.define do
 
     trait :delete_attachment_from_card do
       type_data {
-        { "data"=>{
-          "attachment" =>{
-            "name" => "attachment_file_name.jpg"
-          }
-        }, 
+        { 
           "type"=>"deleteAttachmentFromCard", 
+        }
+      }
+      data {
+        {
+          "data"=>{
+            "attachment" =>{
+              "name" => "attachment_file_name.jpg"
+            },
+            "card" => {
+              "closed" => false
+            }
+          }, 
         }
       }
     end
     
     trait :move_card_from_board do
       type_data {
-        { "data"=>{
-          "board" =>{
-            "name" => "Current Sprint"
-          }
-        }, 
+        { 
           "type"=>"moveCardFromBoard", 
+        }
+      }
+      data {
+        {
+          "data"=>{
+            "board" =>{
+              "name" => "Current Sprint"
+            },
+            "card" => {
+              "closed" => false
+            }
+          }, 
         }
       }
     end
 
     trait :move_card_to_board do
       type_data {
-        { "data"=>{
-          "board" =>{
-            "name" => "Current Sprint"
-          }
-        }, 
+        {  
           "type"=>"moveCardToBoard", 
+        }
+      }
+      data {
+        {
+          "data"=>{
+            "board" =>{
+              "name" => "Current Sprint"
+            },
+            "card" => {
+              "closed" => false
+            }
+          },
         }
       }
     end
 
     trait :remove_checklist_from_card do
       type_data {
-        { "data"=>{
-          "checklist" =>{
-            "name" => "Things to do"
-          }
-        }, 
+        {  
           "type"=>"removeChecklistFromCard", 
+        }
+      }
+      data {
+        {
+          "data"=>{
+            "checklist" =>{
+              "name" => "Things to do"
+            },
+            "card" => {
+              "closed" => false
+            }
+          },
         }
       }
     end
@@ -140,57 +206,85 @@ FactoryGirl.define do
     
     trait :update_check_item_state_on_card do
       type_data {
-        { "data"=>{
-          "checklist" =>{
-            "name" => "Things to do"
-          }
-        }, 
+        {  
           "type"=>"updateCheckItemStateOnCard", 
+        }
+      }
+      data {
+        {
+          "data"=>{
+            "checklist" =>{
+              "name" => "Things to do"
+            },
+            "card" => {
+              "closed" => false
+            }
+          },
         }
       }
     end
     
     trait :update_card_move_to_list do
       type_data {
-        { "data"=>{
-          "listBefore" =>{
-            "name" => "Old List"
-          },
-          "listAfter" =>{
-            "name" => "New List"
-          }
-        }, 
+        {  
           "type"=>"updateCard", 
+        }
+      }
+      data {
+        {
+          "data"=>{
+            "listBefore" =>{
+              "name" => "Old List"
+            },
+            "listAfter" =>{
+              "name" => "New List"
+            },
+            "card" => {
+              "closed" => false
+            }
+          },
         }
       }
     end
 
     trait :update_card_raise_priority do
       type_data {
-        { "data"=>{
-          "old" =>{
-            "pos" => 3
-          },
-          "card" =>{
-            "pos" => 1
-          },
-        }, 
+        { 
           "type"=>"updateCard", 
         }
-      }      
+      } 
+      data {
+        {
+          "data"=>{
+            "old" =>{
+              "pos" => 3
+            },
+            "card" =>{
+              "pos" => 1,
+              "closed" => false
+            },
+          }, 
+        }
+      }     
     end
 
     trait :update_card_lower_priority do
       type_data {
-        { "data"=>{
-          "old" =>{
-            "pos" => 3
-          },
-          "card" =>{
-            "pos" => 5
-          },
-        }, 
+        { 
           "type"=>"updateCard", 
+        }
+      }
+      data {
+        {
+          "data"=>{
+            "old" =>{
+              "pos" => 3
+            },
+            "card" =>{
+              "pos" => 5,
+              "closed" => false
+            },
+          }, 
         }
       }      
     end
@@ -198,69 +292,99 @@ FactoryGirl.define do
     trait :update_card_priority_as_part_of_list_move do
       previous_type "updateCard"
       type_data {
-        { "data"=>{
-          "old" =>{
-            "pos" => 3
-          },
-          "card" =>{
-            "pos" => 5
-          },
-        }, 
+        {  
           "type"=>"updateCard", 
         }
-      }      
+      } 
+      data {
+        {
+          "data"=>{
+                    "old" =>{
+                      "pos" => 3
+                    },
+                    "card" =>{
+                      "pos" => 5,
+                      "closed" => false
+                    },
+                  },
+        }
+      }     
     end
     
     trait :update_card_rename do
       type_data {
-        { "data"=>{
-          "card" =>{
-            "name" => "New name"
-          },
-          "old" =>{
-            "name" => "Old nist"
-          }
-        }, 
+        { 
           "type"=>"updateCard", 
+        }
+      }
+      data {
+        {
+          "data"=>{
+                    "card" =>{
+                      "name" => "New name",
+                      "closed" => false
+                    },
+                    "old" =>{
+                      "name" => "Old nist"
+                    }
+                  }, 
         }
       }
     end
     
     trait :update_card_change_description do
       type_data {
-        { "data"=>{
-          "card" =>{
-            "desc" => "This card is really about <strong>stuff</strong>"
-          },
-          "old" =>{
-            "desc" => "Old desc"
-          }
-        }, 
+        {  
           "type"=>"updateCard", 
+        }
+      }
+      data {
+        {
+          "data"=>{
+                    "card" =>{
+                      "desc" => "This card is really about <strong>stuff</strong>",
+                      "closed" => false
+                    },
+                    "old" =>{
+                      "desc" => "Old desc"
+                    }
+                  },
         }
       }
     end
 
     trait :update_card_archive do
       type_data {
-        { "data"=>{
-          "old" =>{
-            "closed" => false
-          }
-        }, 
+        {  
           "type"=>"updateCard", 
+        }
+      }
+      data {
+        {
+          "data"=>{
+                    "old" =>{
+                      "closed" => false
+                    },
+                    "closed" => true
+                  },
         }
       }
     end
 
     trait :update_card_unarchive do
       type_data {
-        { "data"=>{
-          "old" =>{
-            "closed" => true
-          }
-        }, 
+        {  
           "type"=>"updateCard", 
+        }
+      }
+      data {
+        {
+          "data"=>{
+                    "old" =>{
+                      "closed" => true
+                    },
+                    "closed" => false
+                  },
         }
       }
     end

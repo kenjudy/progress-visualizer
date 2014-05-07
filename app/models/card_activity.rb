@@ -121,6 +121,9 @@ class CardActivity < TrelloObject
   
   def self.timeline(activities)
     timeline_activities = timeline_activity(activities)
+    
+    return [] if timeline_activities.empty?
+    
     timeline = [{ list: timeline_activities.first.moved_from_list, start: timeline_start(activities,timeline_activities), end: timeline_activities.first.date_time }]
 
     timeline + (timeline_activities.each_with_index.map do |activity, i|
@@ -154,7 +157,7 @@ class CardActivity < TrelloObject
   end
   
   def self.timeline_start(activity,timeline_activity)
-    start_ca = activity.find{ |a| a.type == "moveCardToBoard" || a.type == "copyCard" }
+    start_ca = activity.find{ |a| a.type == "moveCardToBoard" || a.type == "copyCard" || a.type == "createCard" || a.type == "convertToCardFromCheckItem" }
     start_ca.present? ? start_ca.date_time : timeline_activity.first.date_time
   end
   
