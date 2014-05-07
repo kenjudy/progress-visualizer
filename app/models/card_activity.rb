@@ -153,7 +153,7 @@ class CardActivity < TrelloObject
   private
   
   def self.timeline_activity(activity)
-    activity.delete_if{ |a| a.moved_from_list.nil? || a.verb.nil? }.reverse
+    activity.map{ |a| a unless a.moved_from_list.nil? || a.verb.nil? }.compact.reverse
   end
   
   def self.timeline_start(activity,timeline_activity)
