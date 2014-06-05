@@ -35,6 +35,6 @@ describe "report sharing", type: :feature, js: true do
     it_behaves_like "a graph"
   end
   
- # it { subject; save_screenshot("tmp/screenshots/report_sharing.png", full: true) }
+ #it { subject; save_screenshot("tmp/screenshots/report_sharing.png", full: true) }
 
 end
