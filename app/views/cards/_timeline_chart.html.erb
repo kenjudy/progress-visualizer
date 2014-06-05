@@ -1,11 +1,11 @@
 <h3>Timeline</h3>
-<div id="timeline_chart" class='chart'  style="width: 100%; height: <%= @timeline.map{ |event| event[:list] }.uniq.length * 46 + 40 %>px;"></div>
+<div id="timeline_chart" class="" style="width: 100%; height: <%= @timeline.map{ |event| event[:list] }.uniq.length * 46 + 40 %>px;"></div>
 <script type="text/javascript" src="https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization',
        'version':'1','packages':['timeline']}]}"></script>
 <script type="text/javascript">
-google.setOnLoadCallback(draw_timeline_chart);
 
 function draw_timeline_chart() {
+  /* errors on redraw! */
   var container = document.getElementById('timeline_chart');
 
   var chart = new google.visualization.Timeline(container);
@@ -20,12 +20,12 @@ function draw_timeline_chart() {
     <% @timeline.each do |event|  %>
       ['<%= event[:list] %>', <%= javascript_date_string(event[:start]) %>, <%= javascript_date_string(event[:end]) %>],
     <% end %>
-    ]),
+    ]);
 
-  chart.draw(dataTable, <%= (default_options.merge({colorByRowLabel: true, hAxis: {format:'M/d a', showTextEvery: 3}})).to_json.html_safe %>);
+  chart.draw(dataTable, <%= (default_options.merge({colorByRowLabel: true, hAxis: {format:'M/d h a', showTextEvery: 3}})).to_json.html_safe %>);
 }
 
-$(document).ready(draw_timeline_chart())
+/*$(document).ready(draw_timeline_chart())*/
 $(document).on('page:load', draw_timeline_chart())
 
 </script>
