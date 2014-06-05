@@ -34,6 +34,7 @@ class ChartsController < ApplicationController
   end
 
   def long_term_trend
+    @first_iteration = user_profile.first_iteration
     long_term_trend_action(user_profile, params[:weeks] ? params[:weeks].to_i : 10)
   end
   

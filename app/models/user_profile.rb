@@ -36,6 +36,10 @@ class UserProfile < ActiveRecord::Base
     self.backlog_lists ||= "{}"
   end
   
+  def first_iteration
+    Date.parse(done_stories.order("iteration asc").first.iteration)
+  end
+
   def to_csv
     CSV.generate do |csv|
       csv << UserProfile.array_attributes

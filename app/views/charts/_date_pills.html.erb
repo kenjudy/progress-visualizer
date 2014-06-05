@@ -1,0 +1,12 @@
+<ul class="nav nav-pills">
+<%
+  date = Date.today
+  interval = (date - first_iteration).to_i / (4*7)
+  while date > first_iteration do  
+%>
+    <% date -= interval.weeks 
+    week = (Date.today - date).to_i / 7
+    %>
+    <li class="<%= 'active' if params[:weeks] == week.to_s || (params[:weeks].nil? && week == 10)%>"><%= link_to "#{week} weeks", charts_long_term_trend_path(weeks: week) %></li>
+<% end %>
+</ul>
