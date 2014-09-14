@@ -20,7 +20,7 @@ describe "long term trend chart chart", type:  :feature, js: true do
   
   context "chart" do
     let(:chart_id) { "#long_term_trend_chart"}
-    it "should behave like a graph but capybara times out"
+    it "should behave like a graph but capybara times out due to partials in long_term_trend view"
     #it_behaves_like "a graph"
   end
   
