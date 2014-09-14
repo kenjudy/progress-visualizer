@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe "burn_up", type:  :feature, js: true do
-  let(:iteration) { double(DateTime).as_null_object }
+  let(:iteration) { DateTime.new }
   
   subject do
     visit "/chart/burn-up/#{iteration.strftime("%Y-%m-%d")}"

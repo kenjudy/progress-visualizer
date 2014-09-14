@@ -1,5 +1,11 @@
 module ApplicationHelper
 
+  def date_pills(first_iteration, number_pills = 5)
+    weeks_in_between_now_and_first_iteration = (Date.today - first_iteration) / 7
+    interval_in_weeks = (weeks_in_between_now_and_first_iteration / number_pills).ceil
+    (1..number_pills).map { |index| index * interval_in_weeks }
+  end
+
   def card_link(card)
     card.card_id.present? ? link_to(card.id_short, cards_show_url(card_id: card.card_id)) : card.id_short
   end

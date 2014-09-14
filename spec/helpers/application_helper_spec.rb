@@ -2,6 +2,11 @@ require 'spec_helper'
 
 describe ApplicationHelper, type: :helper do
   let(:request) { double("Request", fullpath: homepage_path).as_null_object }
+  
+  context "date_pills" do
+    subject { date_pills(1.year.ago.to_date)}
+    it { is_expected.to eq([11, 22, 33, 44, 55]) }
+  end
 
   context "duration_in_weeks" do
     {"One week" => 7,"Two weeks" => 14, "Three weeks" => 21, "Four weeks" => 28}.each do |label, days|

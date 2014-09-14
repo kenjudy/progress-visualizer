@@ -4,6 +4,7 @@ require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'rspec/its'
 require 'rspec/collection_matchers'
+require 'rspec/retry'
 require 'factory_girl_rails'
 require 'vcr'
 require 'capybara/rspec'
@@ -11,6 +12,18 @@ require 'capybara/poltergeist'
 require 'coffee-rails'
 
 Capybara.javascript_driver = :poltergeist
+Capybara.register_driver(:poltergeist) do |app|
+  Capybara::Poltergeist::Driver.new app,
+    #inspector: true,
+    js_errors: true,
+    #timeout: 180,
+    logger: nil,
+    phantomjs_options:
+    [
+      '--load-images=no',
+      '--ignore-ssl-errors=yes'
+    ]
+end
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
@@ -55,4 +68,6 @@ RSpec.configure do |config|
   config.before(:each) do
     Rails.cache.clear
   end
+ 
+  config.verbose_retry = true # show retry status in spec process
 end
