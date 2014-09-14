@@ -31,7 +31,18 @@ $font-family-sans-serif: 'Questrial', 'Helvetica Neue', Helvetica, Arial, sans-s
   border: solid 1px $pvGreen
   &.active
     background-color: $pvGreen
-
+.carousel-control
+  color: $pvGreen
+  &:hover
+    color: darken($pvGreen, 10%)
+  &.left
+    background: none
+  &.right
+    background: none
+  .glyphicon-chevron-left
+    font-size: 60px
+  .glyphicon-chevron-right
+    font-size: 60px
 .carousel-inner
   @media (min-width: 650px) and (max-width: 992px)
     height: 455px
