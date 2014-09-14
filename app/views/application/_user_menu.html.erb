@@ -25,5 +25,5 @@
     </ul>
   </li>
 <% else %>
-  <li class="<%= classname %> bg-success"><%= link_to(raw("Sign in<span class=\"hidden-sm\">to <span class=\"brand\">Progress<span>Visualizer</span></span></span>"), new_user_session_path, onClick: track_event("header_menu", ["sign_in"])) %></li>
+  <li class="<%= classname %> bg-success"><%= link_to(raw("Sign in"), new_user_session_path, onClick: track_event("header_menu", ["sign_in"])) %></li>
 <% end %>

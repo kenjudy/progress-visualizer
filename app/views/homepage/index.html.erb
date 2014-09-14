@@ -5,11 +5,13 @@
 
         <div class="panel panel-default">
           <div class="panel-body">
-            <h1 class="brand">Progress<span>Visualizer</span></h1>
-            <p>
-              <strong>Quickly setup visual reporting for your <a href="http://www.trello.com" target="_blank">Trello</a> board</strong>
+            <h1 class="brand" style="display: inline-block">Progress<span>Visualizer</span></h1>
+            <br class="hidden-md hidden-lg">
+            <strong>Quickly setup visual reporting for your <a href="http://www.trello.com" target="_blank">Trello</a> board</strong>
+            <span style="white-space: nowrap">
+              <%= link_to "Sign up - it's free", new_registration_path(:user), class: 'btn btn-info', onClick: track_event("new_user_btn", ["homepage", "Sign up - it's free"]) %>
               <%= link_to "Demo", "demo/burn-up.html", onClick: track_event("demo_btn", ["homepage", "Demo"]), class: "btn btn-default" %>
-              <%= link_to "Get started", new_user_session_path, onClick: track_event("new_user_btn", ["homepage", "Get started"]), class: "btn btn-default" %></p>
+            </span>
           </div>
         </div>
 

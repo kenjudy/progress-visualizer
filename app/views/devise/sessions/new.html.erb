@@ -4,7 +4,12 @@
       <div class="col-md-8 col-md-offset-2">
         <%= form_for(resource, as: resource_name, url: session_path(resource_name), role: "form", html: {class: "form-horizontal panel panel-default"}) do |f| %>
           <div class="panel-heading">
-            <h2>Sign in</h2>
+            <h2 class="hidden-xs">Sign in
+              <%= link_to "Sign up - it's free", new_registration_path(resource_name), class: 'btn btn-info', style: 'font-size: 14px; float: right' %>
+            </h2>
+            <h3 class="visible-xs">Sign in
+            <%= link_to "Sign up - it's free", new_registration_path(resource_name), class: 'btn btn-info', style: 'font-size: 14px; float: right;margin-top: -6px' %>
+            </h3>
           </div>
           <div class="panel-body">
 
@@ -40,12 +45,14 @@
               </div>
               <div class="col-sm-8">
                 <div class="oauth-buttons">
-                  <label>Or use:</label>
-                   <%= link_to "Trello", user_omniauth_authorize_path(:trello), class: "btn btn-default" %>
-                   <%= link_to "Google", user_omniauth_authorize_path(:google_oauth2), class: "btn btn-default" %>
-                   <%= link_to user_omniauth_authorize_path(:twitter), class: "btn btn-default"  do %>
-                      <%= image_tag "sign-in-with-twitter-gray.png", alt: "Sign in with Twitter" %> Twitter
-                   <% end %>
+                  <label>Or<span  class="hidden-xs"> use</span>:</label>
+                    <span style="white-space: nowrap">
+                     <%= link_to "Trello", user_omniauth_authorize_path(:trello), class: "btn btn-default" %>
+                     <%= link_to "Google", user_omniauth_authorize_path(:google_oauth2), class: "btn btn-default" %>
+                     <%= link_to user_omniauth_authorize_path(:twitter), class: "btn btn-default"  do %>
+                        <%= image_tag "sign-in-with-twitter-gray.png", alt: "Sign in with Twitter" %> Twitter
+                     <% end %>
+                   </span>
                 </div>
              </div>
             </div>
