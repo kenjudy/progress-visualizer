@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe IterationConcern do
+describe IterationConcern, :type => :model do
 
   [ { duration: 7, start_day_of_week: 1, end_day_of_week: 5, start_hour: 10, end_hour: 23, start_date: nil,
       it_p: DateTime.parse("Mon, 24 Feb 2014 10:00:00 EST -05:00"),
@@ -61,12 +61,12 @@ describe IterationConcern do
 
       context "beginning_of_iteration #{scenario[:it_s].strftime("%a, %m/%d/%Y %I:%M%p")}" do
         subject { user_profile.beginning_of_iteration(date_mid) }
-        it { should == it_start }
+        it { is_expected.to eq(it_start) }
       end
 
       context "end_of_iteration #{scenario[:dt_m].strftime("%a, %m/%d/%Y %I:%M%p")}" do
         subject { user_profile.end_of_iteration(date_mid) }
-        it { should == it_end }
+        it { is_expected.to eq(it_end) }
       end
 
       context "between_iterations" do
@@ -74,23 +74,23 @@ describe IterationConcern do
         subject { user_profile.between_iterations(date) }
         
         context "#{scenario[:dt_b].strftime("%a, %m/%d/%Y %I:%M%p")}" do
-          it { should be_truthy }
+          it { is_expected.to be_truthy }
         end
 
         context "#{scenario[:dt_m].strftime("%a, %m/%d/%Y %I:%M%p")}" do
           let(:date) { date_mid }
-          it { should be_falsey }
+          it { is_expected.to be_falsey }
         end
       end
 
       context "beginning_of_current_iteration #{Date.today.strftime("%a, %m/%d/%Y %I:%M%p")}" do
         subject { user_profile.beginning_of_current_iteration }
-        it { should == user_profile.beginning_of_iteration(Date.today) }
+        it { is_expected.to eq(user_profile.beginning_of_iteration(Date.today)) }
       end
 
       context "end_of_current_iteration #{Date.today.strftime("%a, %m/%d/%Y %I:%M%p")}" do
         subject { user_profile.end_of_current_iteration }
-        it { should == user_profile.end_of_iteration(Date.today) }
+        it { is_expected.to eq(user_profile.end_of_iteration(Date.today)) }
       end
       
       context "prior_iteration" do
@@ -100,7 +100,7 @@ describe IterationConcern do
         end
         
         subject { user_profile.prior_iteration(it_start.to_date) }
-        it { should == it_prev.strftime("%Y-%m-%d") }
+        it { is_expected.to eq(it_prev.strftime("%Y-%m-%d")) }
         
         context "nil defaults to current" do
           before do
@@ -108,14 +108,14 @@ describe IterationConcern do
             FactoryGirl.create(:done_story, user_profile: user_profile, iteration: (user_profile.beginning_of_current_iteration - user_profile.duration.days).to_date)
           end
           subject { user_profile.prior_iteration(nil) }
-          it { should == (user_profile.beginning_of_current_iteration - user_profile.duration.days).strftime("%Y-%m-%d") }
+          it { is_expected.to eq((user_profile.beginning_of_current_iteration - user_profile.duration.days).strftime("%Y-%m-%d")) }
         end
         
         context "between iteration returns DoneStory.last" do
           let(:date) { (user_profile.beginning_of_current_iteration - user_profile.duration.days).to_date }
           before { FactoryGirl.create(:done_story, user_profile: user_profile, iteration: date) }
           subject { user_profile.prior_iteration(nil) }
-          it { should == date.strftime("%Y-%m-%d") }
+          it { is_expected.to eq(date.strftime("%Y-%m-%d")) }
         end
       end
       
@@ -126,7 +126,7 @@ describe IterationConcern do
         end
         
         subject { user_profile.next_iteration(it_start.to_date) }
-        it { should == it_next.strftime("%Y-%m-%d") }
+        it { is_expected.to eq(it_next.strftime("%Y-%m-%d")) }
         
         context "nil defaults to current" do
           before do
@@ -134,7 +134,7 @@ describe IterationConcern do
             FactoryGirl.create(:done_story, user_profile: user_profile, iteration: (user_profile.beginning_of_current_iteration + user_profile.duration.days).to_date)
           end
           subject { user_profile.next_iteration(nil) }
-          it { should == (user_profile.beginning_of_current_iteration + user_profile.duration.days).strftime("%Y-%m-%d") }
+          it { is_expected.to eq((user_profile.beginning_of_current_iteration + user_profile.duration.days).strftime("%Y-%m-%d")) }
         end
       end
 

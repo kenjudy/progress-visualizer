@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe CardActivity do
+describe CardActivity, :type => :model do
   
   subject { FactoryGirl.build(:card_activity) }
   
@@ -14,11 +14,11 @@ describe CardActivity do
     let(:timestamp) { DateTime.parse("2014-04-16T20:29:03.332Z").in_time_zone.strftime('%s').to_i } 
     subject { FactoryGirl.build(:card_activity).timestamp(precision) }
     
-    it { should == timestamp.to_s }
+    it { is_expected.to eq(timestamp.to_s) }
     
     context "with rounding" do
       let(:precision) { 300 }
-      it { should == (timestamp - timestamp % 300).to_s }
+      it { is_expected.to eq((timestamp - timestamp % 300).to_s) }
     end
   end
   
@@ -160,11 +160,11 @@ describe CardActivity do
     let(:activities) { (0..3).map { |i| FactoryGirl.build(:card_activity, :update_card_change_description) }}
     before { activities.first.data["date"] = (DateTime.parse(activities.first.data["date"]) - 6.minutes).to_s}
     subject { CardActivity.activity_stream(activities) }
-    it { should have(2).items }
+    it { is_expected.to have(2).items }
     
     context "redundancy doesn't create empty values" do
       let(:activities) { (0..3).map { |i| FactoryGirl.build(:card_activity, :update_check_item_state_on_card) }}
-      it { should have(1).item }
+      it { is_expected.to have(1).item }
     end
   end
   
@@ -181,7 +181,7 @@ describe CardActivity do
     end
     
     subject { CardActivity.timeline(activities) }
-    it { should have(6).items}
+    it { is_expected.to have(6).items}
     its(:first) { should == {:list=>"In Design", :start=> activities.last.date_time, :end=> activities.last.date_time}}
     context "last" do
       subject { CardActivity.timeline(activities).last }
@@ -200,7 +200,7 @@ describe CardActivity do
     
     context "doesn't blow up with no acitivities" do
       let(:activities) { [] }
-      it { should == [] }
+      it { is_expected.to eq([]) }
     end
   end
 end

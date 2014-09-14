@@ -48,7 +48,7 @@ describe ReportsController, type: :controller do
   
   context "sharing_new" do
     before do
-      SecureRandom.stub(uuid: "20327ab0-8260-4759-abfa-1d3ce2513d1e")
+      allow(SecureRandom).to receive_messages(uuid: "20327ab0-8260-4759-abfa-1d3ce2513d1e")
       sign_in user_profile.user
     end
     

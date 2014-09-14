@@ -40,7 +40,7 @@ describe UserProfileConcern, type: :controller do
 
     context "nil current user" do
       let(:current_user) { nil }
-      it { should be_nil }
+      it { is_expected.to be_nil }
     end
   end
 
@@ -54,12 +54,12 @@ describe UserProfileConcern, type: :controller do
       before { profile2 }
       before { session[:profile_id] = 6 }
       it { expect{subject}.to_not raise_error }
-      it { should == profile2 }
+      it { is_expected.to eq(profile2) }
     end
 
     context "bad session no default" do
       before { profile }
-      it { should == profile }
+      it { is_expected.to eq(profile) }
     end
 
     context "bad user_profile_id param" do

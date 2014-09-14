@@ -8,7 +8,7 @@ describe ExportBoardToCsv do
   let(:csv) { [] }
 
   context "export_current_sprint_board" do
-    before { CSV.stub(:open).and_yield(csv) }
+    before { allow(CSV).to receive(:open).and_yield(csv) }
 
     after do
       VCR.use_cassette('lib/exportboardtocsv_writes_csv') do

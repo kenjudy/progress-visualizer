@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe DoneStory do
+describe DoneStory, :type => :model do
 
   let(:user_profile) { FactoryGirl.create(:user_profile) }
 
@@ -37,19 +37,19 @@ describe DoneStory do
     context "prior" do
       let(:done_story) { DoneStory.find_by(iteration: iterations[2])}
       subject { done_story.prior_iteration }
-      it { should == iterations[3] }
+      it { is_expected.to eq(iterations[3]) }
       context "earliest iteration" do
         let(:done_story) { DoneStory.find_by(iteration: iterations[3])}
-        it { should be_nil }
+        it { is_expected.to be_nil }
       end
     end
     context "next" do
       let(:done_story) { DoneStory.find_by(iteration: iterations[2])}
       subject { done_story.next_iteration }
-      it { should == iterations[1] }
+      it { is_expected.to eq(iterations[1]) }
       context "most recent iteration" do
         let(:done_story) { DoneStory.find_by(iteration: iterations[0])}
-        it { should be_nil }
+        it { is_expected.to be_nil }
       end
     end
   end

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe ModelToArrayConcern do
+describe ModelToArrayConcern, :type => :model do
 
   class TestModel
     include ModelToArrayConcern
@@ -19,13 +19,13 @@ describe ModelToArrayConcern do
 
   context "array_attributes" do
     subject { TestModel.array_attributes }
-    it { should == TestModel.attribute_names }
+    it { is_expected.to eq(TestModel.attribute_names) }
   end
 
   context "to_array" do
     let(:model) { TestModel.new("Value1", "Value2") }
     subject { model.to_array }
-    it { should == ["Value1", "Value2"] }
+    it { is_expected.to eq(["Value1", "Value2"]) }
   end
   
 end

@@ -12,7 +12,7 @@ describe TrelloAdapter do
   let(:adapter) { TrelloAdapter.new(user_profile) }
 
   before do
-    CSV.stub(open: [])
+    allow(CSV).to receive_messages(open: [])
   end
 
   context "webhooks" do
@@ -63,7 +63,7 @@ describe TrelloAdapter do
         end
       end
 
-      it { should have(35).items }
+      it { is_expected.to have(35).items }
 
       context "url" do
         let(:url) { "#{trello_api_uri}/boards/#{user_profile.current_sprint_board_id}/cards/all?key=#{Rails.application.config.trello[:app_key]}&token=#{user_profile.readonly_token}" }
@@ -81,7 +81,7 @@ describe TrelloAdapter do
         end
       end
 
-      it { should have(34).items }
+      it { is_expected.to have(34).items }
 
       context "url" do
         let(:url) { "#{trello_api_uri}/boards/#{user_profile.current_sprint_board_id}/cards?key=#{Rails.application.config.trello[:app_key]}&token=#{user_profile.readonly_token}" }
@@ -106,7 +106,7 @@ describe TrelloAdapter do
           end
         end
 
-        it { should have_at_least(1).items }
+        it { is_expected.to have_at_least(1).items }
 
         context "url" do
           let(:url) { "#{trello_api_uri}/cards/#{card_id}?board_fields=all&key=#{Rails.application.config.trello[:app_key]}&token=#{user_profile.readonly_token}" }
@@ -124,7 +124,7 @@ describe TrelloAdapter do
           end
         end
 
-        it { should have_at_least(1).items }
+        it { is_expected.to have_at_least(1).items }
 
         context "url" do
           let(:url) { "#{trello_api_uri}/cards/#{card_id}/actions?filter=all&key=#{Rails.application.config.trello[:app_key]}&token=#{user_profile.readonly_token}" }
@@ -144,7 +144,7 @@ describe TrelloAdapter do
       end
     end
 
-    it { should have(4).items }
+    it { is_expected.to have(4).items }
 
     context "url" do
       let(:url) { "#{trello_api_uri}/boards/#{user_profile.current_sprint_board_id}/lists?key=#{Rails.application.config.trello[:app_key]}&token=#{user_profile.readonly_token}" }
@@ -158,6 +158,6 @@ describe TrelloAdapter do
   context "user_token_url" do
     subject { adapter.user_token_url }
 
-    it { should == "#{trello_uri}/authorize?key=#{Rails.application.config.trello[:app_key]}&name=ProgressVisualizer&expiration=never&response_type=token"}
+    it { is_expected.to eq("#{trello_uri}/authorize?key=#{Rails.application.config.trello[:app_key]}&name=ProgressVisualizer&expiration=never&response_type=token")}
   end
 end

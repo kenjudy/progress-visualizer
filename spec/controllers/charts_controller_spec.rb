@@ -27,20 +27,20 @@ describe ChartsController, type: :controller do
         
         context "assigns" do
           before { subject }
-          it { assigns(:estimates_chart).should_not be_nil }
-          it { assigns(:stories_chart).should_not be_nil }
+          it { expect(assigns(:estimates_chart)).not_to be_nil }
+          it { expect(assigns(:stories_chart)).not_to be_nil }
         end
       
         context "json" do
           let(:format) { :json }
           its(:code) { should == "200" }
           context "has estimates" do
-            before { controller.stub(has_non_zero_values: true) }
+            before { allow(controller).to receive_messages(has_non_zero_values: true) }
             it("contains estimate and story charts") { expect(JSON.parse(subject.body).keys).to eql ["estimates_chart", "stories_chart"] }
           end
         
           context "no estimates" do
-            before { controller.stub(has_non_zero_values: false) }
+            before { allow(controller).to receive_messages(has_non_zero_values: false) }
             it("contains story charts") { expect(JSON.parse(subject.body).keys).to eql ["stories_chart"] }
           end
         end
@@ -51,7 +51,7 @@ describe ChartsController, type: :controller do
               get :burn_up, iteration: "2014-02-24"
             end
           end
-          it { assigns(:iteration).should == Date.new(2014,2,24) }
+          it { expect(assigns(:iteration)).to eq(Date.new(2014,2,24)) }
         end
       end
       
@@ -91,8 +91,8 @@ describe ChartsController, type: :controller do
 
       context "assigns" do
         before { subject }
-        it { assigns(:yesterdays_weather_estimate_chart).should_not be_nil }
-        it { assigns(:yesterdays_weather_stories_chart).should_not be_nil }
+        it { expect(assigns(:yesterdays_weather_estimate_chart)).not_to be_nil }
+        it { expect(assigns(:yesterdays_weather_stories_chart)).not_to be_nil }
       end
     end
 
@@ -103,7 +103,7 @@ describe ChartsController, type: :controller do
 
       context "assigns" do
         before { subject }
-        it { assigns(:long_term_trend_chart).should_not be_nil }
+        it { expect(assigns(:long_term_trend_chart)).not_to be_nil }
       end
       context "optional week param" do
         let(:long_term_trend_rows) { [] }

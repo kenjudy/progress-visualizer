@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "Factories::DoneStoryFactory" do
+describe "Factories::DoneStoryFactory", :type => :model do
   
   let(:board) { FactoryGirl.build(:board, cards: cards) }
   let(:types_of_work) { ["Committed"] }
@@ -24,7 +24,7 @@ describe "Factories::DoneStoryFactory" do
     context "to_csv" do
       subject { done_story_factory.to_csv(collated_data) }
       it do
-        should == <<-EOF
+        is_expected.to eq <<-EOF
 list,id_short,name,estimate,short_url
 Committed,0,Foo 0,3.0,https://trello.com/c/j56OGdXO
 Committed,1,Foo 1,3.0,https://trello.com/c/j56OGdXO

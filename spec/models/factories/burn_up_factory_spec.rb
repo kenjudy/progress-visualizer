@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 
-describe Factories::BurnUpFactory do
+describe Factories::BurnUpFactory, :type => :model do
 
   let(:profile) { FactoryGirl.build(:user_profile) }
   let(:adapter) { ::TrelloAdapter.new(profile) }
@@ -16,7 +16,7 @@ describe Factories::BurnUpFactory do
 
   its(:done_lists) { should == done_lists }
   its(:backlog_lists) { should ==  backlog_lists }
-  its(:timestamp) { should be_instance_of(Time) }
+  its(:timestamp) { is_expected.to be_instance_of(Time) }
 
   context "assigned" do
     its(:done_lists) { should == done_lists }
@@ -49,15 +49,15 @@ describe Factories::BurnUpFactory do
 
     subject { burn_up_factory.redundant?(done_stats, backlog_stats) }
 
-    it { should be_truthy }
+    it { is_expected.to be_truthy }
 
     context "different stats" do
       let(:backlog) { 3 }
-      it { should be_falsey }
+      it { is_expected.to be_falsey }
     end
     context "old timestamp" do
       let(:timestamp) { Time.now - 7.hours }
-      it { should be_falsey }
+      it { is_expected.to be_falsey }
     end
   end
 

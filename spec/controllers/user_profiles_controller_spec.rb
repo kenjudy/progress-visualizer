@@ -47,7 +47,7 @@ describe UserProfilesController, type: :controller do
     before do
       sign_in user
       full_profile.delete("user_id")
-      controller.stub(user_profile: current_profile)
+      allow(controller).to receive_messages(user_profile: current_profile)
       VCR.use_cassette('controllers/user_profiles_controller/update') do
         put :update, id: profile.id, user_profile: full_profile
       end
@@ -144,6 +144,6 @@ describe UserProfilesController, type: :controller do
     let(:lists) { [::List.new({"id" => "ADSFSDF", "name" => "Done"}), ::List.new({"id" => "FHGSDFG", "name" => "ToDo"})] }
     subject { controller.keys_from_values(lists, "Done,ToDo") }
 
-    it { should == {"ADSFSDF" => "Done","FHGSDFG" => "ToDo"}.to_json }
+    it { is_expected.to eq({"ADSFSDF" => "Done","FHGSDFG" => "ToDo"}.to_json) }
   end
 end

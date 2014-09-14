@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'json'
 
-describe List do
+describe List, :type => :model do
 
   subject { FactoryGirl.build(:list) }
 
@@ -16,7 +16,7 @@ describe List do
       end
     end
     
-    it { should have_at_least(1).item }
+    it { is_expected.to have_at_least(1).item }
     its(:first) { should be_instance_of(List)}
   end
 

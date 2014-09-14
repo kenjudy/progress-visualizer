@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Webhook do
+describe Webhook, :type => :model do
   let(:user_profile) { FactoryGirl.create(:user_profile)}
   let(:webhook) do
     VCR.use_cassette('models/add_webhook') do
@@ -26,6 +26,6 @@ describe Webhook do
         webhook.destroy
       end
     end
-    it { should be_truthy }
+    it { is_expected.to be_truthy }
   end
 end

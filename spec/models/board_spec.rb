@@ -2,7 +2,7 @@ require 'csv'
 require 'spec_helper'
 require 'json'
 
-describe Board do
+describe Board, :type => :model do
 
   let(:user_profile) { FactoryGirl.create(:user_profile)}
   let(:list) { FactoryGirl.build(:list) }
@@ -28,13 +28,13 @@ describe Board do
     before { card.list = list}
     subject { board.to_array }
   
-    it { should == [card.to_array] }
+    it { is_expected.to eq([card.to_array]) }
   end
 
   context "exports csv" do
     subject { board.to_csv.split("\n") }
 
-    it { should have(2).items }
+    it { is_expected.to have(2).items }
 
     context "with header" do
       its(:first) { should == Card.array_attributes.join(',')  }

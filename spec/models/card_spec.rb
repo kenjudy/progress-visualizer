@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'json'
 
-describe Card do
+describe Card, :type => :model do
 
   let(:card_array_attributes) { %w(number estimate name last_known_state closed? date_last_activity due labels id id_short id_board short_link short_url url id_list list_name) }
   let(:user_profile) { FactoryGirl.create(:user_profile)}
@@ -64,7 +64,7 @@ describe Card do
   context "has array attributes" do
     subject { Card.array_attributes }
 
-    it { should == card_array_attributes }
+    it { is_expected.to eq(card_array_attributes) }
   end
   
   context "activity" do
@@ -74,7 +74,7 @@ describe Card do
       end
     end
     
-    it { should have_at_least(1).item }
+    it { is_expected.to have_at_least(1).item }
     its(:first) { should be_instance_of(CardActivity)}
   end
   
@@ -83,7 +83,7 @@ describe Card do
     context "find card" do
       subject { card }
       
-      it { should be_instance_of(Card) }
+      it { is_expected.to be_instance_of(Card) }
       its(:id) { should == card_id }
       
     end
