@@ -7,7 +7,7 @@ describe CardActivity do
   its(:type) { should == "copyCard" }
   its(:agent) { should == "Ken Judy" }
   its(:to_html) { should == "<span class=\"agent\">Ken Judy</span> <span class=\"verb\">copied</span> <span class=\"direct-object card\">this card</span>" }
-  its(:redundant?) { should be_false }
+  its(:redundant?) { should be_falsey }
   
   context "timestamp" do
     let(:precision) { 0 }
@@ -101,7 +101,7 @@ describe CardActivity do
     
     context "flags redundancy" do
       before { subject.previous_type = "updateCheckItemStateOnCard"} 
-      its(:redundant?) { should be_true }
+      its(:redundant?) { should be_truthy }
     end
   end
   
@@ -127,7 +127,7 @@ describe CardActivity do
     
     context "priority change as part of move list" do
       subject { FactoryGirl.build(:card_activity, :update_card_priority_as_part_of_list_move) }
-      its(:redundant?) { should be_true }
+      its(:redundant?) { should be_truthy }
     end
 
     context "rename card" do

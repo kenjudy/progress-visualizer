@@ -49,15 +49,15 @@ describe Factories::BurnUpFactory do
 
     subject { burn_up_factory.redundant?(done_stats, backlog_stats) }
 
-    it { should be_true }
+    it { should be_truthy }
 
     context "different stats" do
       let(:backlog) { 3 }
-      it { should be_false }
+      it { should be_falsey }
     end
     context "old timestamp" do
       let(:timestamp) { Time.now - 7.hours }
-      it { should be_false }
+      it { should be_falsey }
     end
   end
 

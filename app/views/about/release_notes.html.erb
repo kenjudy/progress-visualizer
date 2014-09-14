@@ -2,7 +2,21 @@
   <div class="container">
     <div class="row">
       <div class="content">
-
+        <div class="well">
+          <h4>Now <span class="brand">Progress<span>Visualizer</span> shows card details and timelines</h4>
+          <ul>
+          <li>Click on any card number in a list to see card details
+            <p><%= link_to(image_tag('card-in-done-stories-table.png', alt: 'done stories table', width: 300), 'assets/card-in-done-stories-table.png') %></p>
+          </li>
+          <li>See a timeline of a cards progress through swimlanes on your board
+            <p><%= link_to(image_tag('card-timeline.png', alt: 'card timeline', width: 300), 'assets/card-timeline.png') %></p></li>
+          <li>See all card activity in an anotated timeline
+          <p><%= link_to(image_tag('card-detailed-activity-timeline.png', alt: 'card timeline', width: 300), 'assets/card-detailed-activity-timeline.png') %></p>
+          </li>
+          <li>See all card activity listed in a table
+          <p><%= link_to(image_tag('card-activity-table.png', alt: 'card timeline', width: 300), 'assets/card-activity-table.png') %></p>
+          </li>
+        </div>
         <h1>Release Notes</h1>
         <p>The backlog for <span class="brand">Progress<span>Visualizer</span></span> is in <%= link_to "Trello", "https://trello.com/b/WWtHBRod/progress-visualizer", target: "trello_progress_visualizer" %>.</p>
         <%= render "card_lists", title: "In progress", cards: @lists[:doing] %>

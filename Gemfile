@@ -56,6 +56,8 @@ end
 group :development, :test do
   gem 'spring-commands-rspec'
   gem 'rspec-rails'
+  gem 'rspec-its'
+  gem 'rspec-collection_matchers'
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'pry-remote'

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe CardsController do
+describe CardsController, type: :controller do
   
   context "show" do
     

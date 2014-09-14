@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "routes" do
+describe "routes", type: :routing do
 
   context "homepage" do
     subject { { get: "/" } }

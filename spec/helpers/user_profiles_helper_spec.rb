@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe UserProfilesHelper do
+describe UserProfilesHelper, type: :helper do
   let(:field) { "{\"5170058469d58225070003cc\":\"Ready for Development\",\"5170058469d58225070003cd\":\"In Progress\",\"51e44c8a29ef12da5d00028c\":\"Ready for QA\",\"520a5526d0aa033e6f00244e\":\"In QA\"}" }
   let(:user_profile) { FactoryGirl.build(:user_profile) }
   context "display_values" do

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe AdminController do
+describe AdminController, type: :controller do
   let(:role) { 'admin' }
   let(:user) { FactoryGirl.create(:user, role: role)}
   let(:user_profile) { FactoryGirl.create(:user_profile, user: user) }

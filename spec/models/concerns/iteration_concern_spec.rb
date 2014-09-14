@@ -74,12 +74,12 @@ describe IterationConcern do
         subject { user_profile.between_iterations(date) }
         
         context "#{scenario[:dt_b].strftime("%a, %m/%d/%Y %I:%M%p")}" do
-          it { should be_true }
+          it { should be_truthy }
         end
 
         context "#{scenario[:dt_m].strftime("%a, %m/%d/%Y %I:%M%p")}" do
           let(:date) { date_mid }
-          it { should be_false }
+          it { should be_falsey }
         end
       end
 

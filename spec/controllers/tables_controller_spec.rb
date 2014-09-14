@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'json'
 
-describe TablesController do
+describe TablesController, type: :controller do
   let(:user_profile) { FactoryGirl.create(:user_profile) }
   let(:adapter) { TrelloAdapter.new(user_profile) }
 

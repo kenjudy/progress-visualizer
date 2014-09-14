@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe ApplicationHelper do
+describe ApplicationHelper, type: :helper do
   let(:request) { double("Request", fullpath: homepage_path).as_null_object }
 
   context "duration_in_weeks" do

@@ -33,7 +33,7 @@ describe Card do
 
   context "parses json" do
     its(:id) { should be_instance_of(String)}
-    its(:closed?) { should be_false }
+    its(:closed?) { should be_falsey }
     its(:date_last_activity) { should be_instance_of(DateTime) }
     its(:description) { should be_instance_of(String) }
 

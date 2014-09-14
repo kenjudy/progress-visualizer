@@ -26,6 +26,6 @@ describe Webhook do
         webhook.destroy
       end
     end
-    it { should be_true }
+    it { should be_truthy }
   end
 end

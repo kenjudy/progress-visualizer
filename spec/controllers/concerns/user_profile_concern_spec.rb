@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe UserProfileConcern do
+describe UserProfileConcern, type: :controller do
   include UserProfileConcern
   include Rails.application.routes.url_helpers
 

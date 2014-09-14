@@ -37,7 +37,8 @@ class UserProfile < ActiveRecord::Base
   end
   
   def first_iteration
-    Date.parse(done_stories.order("iteration asc").first.iteration)
+    first_done_story = done_stories.order("iteration asc").first
+    first_done_story ? Date.parse(first_done_story.iteration) : Date.new
   end
 
   def to_csv

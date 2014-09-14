@@ -28,7 +28,9 @@ module ChartsConcern
   end
 
   def long_term_trend_action(user_profile, range, iteration = nil)
-    @long_term_trend_chart = long_term_trend_visualization(user_profile, range, iteration)
+    rows = long_term_trend_visualization_rows(done_stories_data(user_profile, range, iteration))
+    @long_term_trend_chart = long_term_trend_visualization(rows)
+    @stats = long_term_trend_stats(rows)
   end
 
   private
@@ -64,20 +66,26 @@ module ChartsConcern
 
   end
 
-  def long_term_trend_visualization(user_profile, weeks, iteration = nil)
+  def long_term_trend_visualization(rows)
     data_table = GoogleVisualr::DataTable.new
     data_table.new_column('date', 'timestamp' )
     data_table.new_column('number', "estimates")
     data_table.new_column('number', "stories")
 
     # Add Rows and Values
-    data_table.add_rows(long_term_trend_visualization_rows(user_profile, weeks, iteration))
+    data_table.add_rows(rows)
     GoogleVisualr::Interactive::AreaChart.new(data_table, default_properties.merge({ title: "Long Term Trend",
                                                                                      hAxis: { textStyle: { color: '#999999'}, gridLines: { color: "#eee"}, format:'M/d' },
                                                                                      lineWidth: 2,
                                                                                      trendlines: { 1 => {pointSize: 0}, 0 => {pointSize: 0} }}))
   end
-
+  
+  def long_term_trend_stats(rows)
+    points = rows.map { |row| row[1] }
+    stories = rows.map { |row| row[2] }
+    { stories: { average: average(stories), median: median(stories) }, points: { average: average(points), median: median(points) } }
+  end
+  
   def burn_up_rows(data)
     data.map{ |burn_up| [burn_up[:timestamp].getlocal, burn_up[:backlog], burn_up[:done]] }
   end
@@ -88,15 +96,15 @@ module ChartsConcern
     return s > 0
   end
 
-  def long_term_trend_visualization_rows(user_profile, weeks, iteration = nil)
-    data = {}
-    done_stories_data(user_profile, weeks, iteration).each do |done_story|
+  def long_term_trend_visualization_rows(data)
+    rows = {}
+    data.each do |done_story|
       timestamp = done_story.timestamp
-      data[timestamp] ||= [timestamp, 0, 0]
-      data[timestamp][1] += done_story.estimate
-      data[timestamp][2] += 1
+      rows[timestamp] ||= [timestamp, 0, 0]
+      rows[timestamp][1] += done_story.estimate
+      rows[timestamp][2] += 1
     end
-    data.values.sort { |a,b| a[0] <=> b[0] }
+    rows.values.sort { |a,b| a[0] <=> b[0] }
   end
 
   def yesterdays_weather_data_rows(user_profile, chart, iteration = nil)
@@ -124,6 +132,18 @@ module ChartsConcern
   
   private
   
+  def median(arr)
+    return 0 unless arr.any?
+    sorted = arr.sort
+    len = sorted.length
+    return (sorted[(len - 1) / 2] + sorted[len / 2]) / 2.0
+  end
+  
+  def average(arr)
+    return 0 unless arr.any?
+    arr.inject(0.0) { |sum, el| sum + el } / arr.size
+  end
+
   def stack_by_types_of_work(chart, data, done_story)
     timestamp = done_story.timestamp.to_s
     value = chart.label == :estimate ? done_story.estimate : 1

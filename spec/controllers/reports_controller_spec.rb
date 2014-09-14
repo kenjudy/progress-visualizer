@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe ReportsController do
+describe ReportsController, type: :controller do
 
   let(:user_profile) { FactoryGirl.create(:user_profile)}
 

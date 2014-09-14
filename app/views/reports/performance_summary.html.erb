@@ -24,6 +24,9 @@
 <section>
   <div class="container">
     <div class="row">
+      <%= render "charts/long_term_trend_stats", colspan: 3, offset: 3 %>
+    </div>
+    <div class="row">
       <%= render "charts/long_term_trend_chart", chart: @long_term_trend_chart %>
     </div>
   </div>

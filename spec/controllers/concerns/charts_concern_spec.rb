@@ -52,28 +52,39 @@ module Charts
         let(:chart) { burn_up_chart_visualization({label: "Estimates", data:  data.map{ |burn_up| { timestamp: burn_up.timestamp, backlog: burn_up.backlog_estimates, done: burn_up.done_estimates} }}) }
         subject { has_non_zero_values(chart)}
 
-        it { should be_true }
+        it { should be_truthy }
 
         context "no estimates" do
           let(:chart) { burn_up_chart_visualization({label: "Estimates", data:  data.map{ |burn_up| { timestamp: burn_up.timestamp, backlog: 0.0, done: 0.0} }}) }
-          it { should be_false }
+          it { should be_falsey }
         end
       end
     end
-
-    context "long_term_trend_visualization_rows" do
-      subject { long_term_trend_visualization_rows(user_profile, 10, iteration) }
-
+    
+    context "long_term_trend" do
       let(:iteration) { nil }
+      let(:data) { done_stories_data(user_profile, 10, iteration) }
+      let(:rows) { long_term_trend_visualization_rows(data) }
 
-      it { should == [[three_weeks_ago, 36.0, 12], [two_weeks_ago, 36.0, 12], [one_week_ago, 36.0, 12]] }
+      context "long_term_trend_visualization_rows" do
+        subject { rows }
 
-      context "explicit iteration" do
-        let(:iteration) { one_week_ago }
-        it { should == [[three_weeks_ago, 36.0, 12], [two_weeks_ago, 36.0, 12]] }
+        let(:iteration) { nil }
+
+        it { should == [[three_weeks_ago, 36.0, 12], [two_weeks_ago, 36.0, 12], [one_week_ago, 36.0, 12]] }
+
+        context "explicit iteration" do
+          let(:iteration) { one_week_ago }
+          it { should == [[three_weeks_ago, 36.0, 12], [two_weeks_ago, 36.0, 12]] }
+        end
+      end
+    
+      context "long_term_trend_stats" do
+        subject { long_term_trend_stats(rows) }
+        it { should == {:stories=>{:average=>12.0, :median=>12.0}, :points=>{:average=>36.0, :median=>36.0}} }
       end
     end
-
+    
     context "yesterdays_weather_data_rows" do
       let(:chart) { YesterdaysWeatherChart.new(user_profile, {weeks: 3, label: :estimate}) }
       let(:iteration) { nil }
@@ -94,7 +105,7 @@ module Charts
 
       context "has_non_zero_values" do
         subject { has_non_zero_values(yesterdays_weather_visualization(user_profile, chart)) }
-        it { should be_true }
+        it { should be_truthy }
 
         context "no estimates" do
           before do
@@ -105,7 +116,7 @@ module Charts
               (0..3).each { FactoryGirl.create(:done_story, user_profile: user_profile, type_of_work: "Inserted", estimate: 0, timestamp: weeks) }
             end
           end
-          it { should be_false }
+          it { should be_falsey }
         end
       end
     end

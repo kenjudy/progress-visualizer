@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe ContactFormController do
+describe ContactFormController, type: :controller do
   context "new" do
     subject { get :new }
     its(:code) { should == "200" }

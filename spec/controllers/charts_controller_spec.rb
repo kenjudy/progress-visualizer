@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'json'
 
-describe ChartsController do
+describe ChartsController, type: :controller do
 
   context "not authenticated" do
     subject { get :burn_up }
@@ -106,9 +106,10 @@ describe ChartsController do
         it { assigns(:long_term_trend_chart).should_not be_nil }
       end
       context "optional week param" do
+        let(:long_term_trend_rows) { [] }
         subject { get :long_term_trend, weeks: "3" }
         after { subject }
-        it { expect(controller).to receive(:long_term_trend_visualization).with(user_profile, 3, anything()) }
+        it { expect(controller).to receive(:long_term_trend_visualization).with(long_term_trend_rows) }
       end
 
     end

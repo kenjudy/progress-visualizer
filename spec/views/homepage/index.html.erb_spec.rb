@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "homepage/index" do
+describe "homepage/index", type: :view do
     
   subject { render }
   

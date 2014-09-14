@@ -2,7 +2,8 @@
 ENV["RAILS_ENV"] ||= 'test'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
-require 'rspec/autorun'
+require 'rspec/its'
+require 'rspec/collection_matchers'
 require 'factory_girl_rails'
 require 'vcr'
 require 'capybara/rspec'
@@ -50,8 +51,6 @@ RSpec.configure do |config|
   # the seed, which is printed after each run.
   #     --seed 1234
   config.order = "random"
-
-  config.treat_symbols_as_metadata_keys_with_true_values = true
 
   config.before(:each) do
     Rails.cache.clear

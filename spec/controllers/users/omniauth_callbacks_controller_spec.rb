@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Users::OmniauthCallbacksController do
+describe Users::OmniauthCallbacksController, type: :controller do
   let(:uid) { "uid" }
   let(:name) { "Ken" }
   let(:email) { "foo@bar.com"}

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe UserProfilesController do
+describe UserProfilesController, type: :controller do
 
   let(:profile) { FactoryGirl.create(:user_profile) }
   let(:user) { profile.user }
@@ -111,15 +111,13 @@ describe UserProfilesController do
       it("sets default"){ expect(assigns(:profile).default).to eq("1") }
     end
 
-    [:show, :edit].each do |action|
-      context action do
-        before do
-          VCR.use_cassette("controllers/user_profiles_controller/#{action.to_s}") do
-            get action, id: profile.id
-          end
+    context "show" do
+      before do
+        VCR.use_cassette("controllers/user_profiles_controller/show") do
+          get :show, id: profile.id
         end
-        it("assigns profile") { expect(assigns(:profile)).to eq profile }
       end
+      it("assigns profile") { expect(assigns(:profile)).to eq profile }
     end
 
     context "edit" do
@@ -130,6 +128,7 @@ describe UserProfilesController do
       end
 
       it("assings lists") { expect(assigns(:lists)).to have(4).items }
+      it("assigns profile") { expect(assigns(:profile)).to eq profile }
     end
 
 
@@ -147,4 +146,4 @@ describe UserProfilesController do
 
     it { should == {"ADSFSDF" => "Done","FHGSDFG" => "ToDo"}.to_json }
   end
- end
+end

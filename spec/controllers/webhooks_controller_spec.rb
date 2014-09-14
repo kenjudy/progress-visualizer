@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe WebhooksController do
+describe WebhooksController, type: :controller do
 
   context "burn_up" do
     let(:user_profile) { FactoryGirl.create(:user_profile) }
