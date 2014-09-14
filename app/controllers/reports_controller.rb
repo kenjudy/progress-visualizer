@@ -10,6 +10,7 @@ class ReportsController < ApplicationController
     summary_for_iteration(user_profile, params["iteration"])
     @prior_iteration = user_profile.prior_iteration(@iteration)
     @next_iteration = user_profile.next_iteration(@iteration)
+    @report_sharing = ReportSharing.new
   end
   
   def sharing
@@ -22,16 +23,16 @@ class ReportsController < ApplicationController
     matches = /\/report\/([\w-]+)\/?(\d{4}-\d{2}-\d{2})?/.match(share.url)
     action = matches[1].gsub("-", "_")
     @iteration = matches[2] || share.user_profile.beginning_of_iteration(share.created_at).strftime("%Y-%m-%d")
+    @comment = share.comment
     summary_for_iteration(share.user_profile, @iteration)
     render "reports/performance_summary", layout: 'report_sharing'
   end
   
   def sharing_new
     action = params["report"].gsub("-", "_")
-
     iteration = params["iteration"] || user_profile.beginning_of_current_iteration.strftime("%Y-%m-%d")
     url = send("reports_#{action}_url", iteration)
-    share = ReportSharing.create(user_profile: user_profile, expiration: Date.today + 1.month, url: url)
+    share = ReportSharing.create(user_profile: user_profile, expiration: Date.today + 1.month, url: url, comment: params["report_sharing"]["comment"])
     flash[:notice] = sharing_notice(share)
     redirect_to send("reports_#{action}_path", iteration)
   end

@@ -4,7 +4,7 @@
       <div class="col-md-6">
         <%= render "date_pills", first_iteration: @first_iteration %>
       </div>
-      <%= render "long_term_trend_stats", colspan: 3 %>
+      <%= render "long_term_trend_stats", stats: @stats, colspan: 3 %>
     </div>
     <%= render "long_term_trend_chart", chart: @long_term_trend_chart %>
   </div>

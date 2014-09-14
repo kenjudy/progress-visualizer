@@ -1,4 +1,11 @@
+require 'redcarpet'
+
 module ApplicationHelper
+
+  def render_markdown(content)
+    markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, extensions = {})
+    markdown.render(content).html_safe
+  end
 
   def date_pills(first_iteration, number_pills = 5)
     weeks_in_between_now_and_first_iteration = (Date.today - first_iteration) / 7
@@ -71,9 +78,17 @@ module ApplicationHelper
   end
   
   def share_button
-    link_to raw("Share <span class=\"glyphicon glyphicon-share\"></span>"), "#", 
-      alt: "Share report", title: "Share report", class: "btn btn-default hide-print sharing",
-      "data-toggle" => "modal",  "data-target" => "#sharing-modal" if current_user
+    unless request.path.include?('/sharing/')
+      link_to raw("Share <span class=\"glyphicon glyphicon-share\"></span>"), "#", 
+        alt: "Share report", title: "Share report", class: "btn btn-default hide-print sharing",
+        "data-toggle" => "modal",  "data-target" => "#sharing-modal" if current_user
+    end
+  end
+  
+  def share_modal
+    unless request.path.include?('/sharing/')
+      render "application/sharing_modal", share_url: reports_sharing_new_path(iteration: @iteration, report: "performance-summary")
+    end
   end
   
   def javascript_date_string(datetime)

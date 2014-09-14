@@ -1,1 +1,45 @@
-<%= render "application/modal", id: "sharing-modal", title: "Sharing Reports", body: "Sharing a report makes it available on the public internet at the URL provided. The link will expire in one month.", url: share_url %>
+<div class="modal fade" id="sharing-modal" tabindex="-1" role="dialog" aria-labelledby="sharing-modal-label" aria-hidden="true">
+  <%= form_for(@report_sharing, url: share_url, method: 'post', role: 'form') do |r| %>
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title" id="sharing-modal-label">Sharing Reports</h4>
+        </div>
+        <div class="modal-body">
+          <p>Sharing a report makes it available on the public internet at the URL provided. The link will expire in one month.</p>
+          <div class="form-group">
+            <label for="comment">Add a description, summary, or comment (markdown allowed):</label>
+            <%= r.text_area :comment, class: 'form-control', rows: '5' %>
+          </div>
+        </div>
+        <div class="panel panel-default hidden-xs">
+          <div class="panel-heading">
+            Example summary:
+          </div>
+          <div class="panel-body">
+          <p>We completed 
+            <%= @collated_results[:totals][:total_stories] %> stories for
+            <%= @collated_results[:totals][:total_estimates] %> points 
+            which is 
+            <%= @collated_results[:totals][:total_stories].to_f > @stats[:stories][:median] ? 'above' : 'below' %> 
+            our median number of stories (<%= @stats[:stories][:median] %>) and 
+            <%= @collated_results[:totals][:total_estimates].to_f > @stats[:points][:median] ? 'above' : 'below' %> 
+            estimated effort (<%= @stats[:points][:median] %>).</p>
+            <p>We made our commitment and completed __ additional stories.
+              <ul>
+            <% @collated_results[:lists].each do |list, data| %>
+              <li><%= data[:stories] %> <%= list.downcase %> stories for <%= data[:estimates] %> points</li>
+            <% end %>
+            </ul>
+            </p>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-default">Share</button>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

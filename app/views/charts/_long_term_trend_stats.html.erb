@@ -1,10 +1,10 @@
 <% offset ||= 0 %>
-<% @stats.each do |group, stats| %>
-<div class="col-md-<%= colspan %> <%= "col-md-offset-#{offset}" if offset && group == @stats.first.first %>">
+<% stats.each do |group, stat_hash| %>
+<div class="col-md-<%= colspan %> <%= "col-md-offset-#{offset}" if offset && group == stats.first.first %>">
   <ul style="list-style-type: none;padding: 0 0 0 15px">
       <li style="padding: 10px 0;display: inline-block;"><%= group.to_s.titleize %></li>
         <ul style="padding: 0 30px 0 4px;list-style-type: none;display: inline-block">
-          <% stats.each do |type, stat| %>
+          <% stat_hash.each do |type, stat| %>
             <li style="padding: 10px 0 10px 4px;display: inline-block"><span class="text-muted"><%= type.to_s[0..2].titleize %>:</span> 
               <span class="text-primary"><%= "%.1f" % stat %></span></li>
           <% end %>

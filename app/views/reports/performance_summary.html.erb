@@ -11,6 +11,15 @@
     <div class="row">
       <h1>Performance Summary <%= share_button %></h1>
     </div>
+    <% if @comment %>
+      <div class="row">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <%= render_markdown @comment %>
+          </div>
+        </div>      
+      </div>
+    <% end %>
     <div class="row">
       <%= render "tables/stories_table", label: "Completed work", results: @collated_results %>
     </div>
@@ -24,11 +33,12 @@
 <section>
   <div class="container">
     <div class="row">
-      <%= render "charts/long_term_trend_stats", colspan: 3, offset: 3 %>
+      <%= render "charts/long_term_trend_stats", stats: @stats, colspan: 3, offset: 3 %>
     </div>
     <div class="row">
       <%= render "charts/long_term_trend_chart", chart: @long_term_trend_chart %>
     </div>
   </div>
 </section>
-<%= render "application/sharing_modal", share_url: reports_sharing_new_path(iteration: @iteration, report: "performance-summary") %>
+<%= share_modal %>
+<div style="clear:both"></div>
