@@ -5,11 +5,11 @@ describe "help", type:  :feature, js: false do
 
   subject { page }
 
-  it { should have_content 'Step 1'   }
+  it { is_expected.to have_content 'Step 1'   }
 
   context "more about the visualizations" do
     before { click_link 'Sign up now' }
-    it { should have_content 'Sign up'}
+    it { is_expected.to have_content 'Sign up'}
   end
     
 end

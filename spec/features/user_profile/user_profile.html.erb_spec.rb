@@ -70,7 +70,7 @@ describe "user_profile", type:  :feature, js: true do
       page
     end  
   
-    it { should have_content 'User Profile (Trello Properties)'}
+    it { is_expected.to have_content 'User Profile (Trello Properties)'}
   end
   
   context "new" do
@@ -131,8 +131,8 @@ describe "user_profile", type:  :feature, js: true do
     end
     
     it("destroys") do
-      should have_content "Destroyed"
-      UserProfile.all.count.should == 0
+      is_expected.to have_content "Destroyed"
+      expect(UserProfile.all.count).to eq(0)
     end
     
   end

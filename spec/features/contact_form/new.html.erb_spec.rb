@@ -5,13 +5,13 @@ describe "contact_form", type:  :feature, js: false do
 
   subject { page }
 
-  it { should have_content 'Questions / Feedback'   }
+  it { is_expected.to have_content 'Questions / Feedback'   }
   
   context "validations" do
     before { click_button 'Send Email' }
-    it { should have_content 'Sorry, there are errors'}
-    it { should have_content 'Name can\'t be blank'}
-    it { should have_content 'Email can\'t be blank'}
+    it { is_expected.to have_content 'Sorry, there are errors'}
+    it { is_expected.to have_content 'Name can\'t be blank'}
+    it { is_expected.to have_content 'Email can\'t be blank'}
   end
   
   context "form submit" do
@@ -23,6 +23,6 @@ describe "contact_form", type:  :feature, js: false do
       click_button 'Send Email'
     end
     
-    it { should have_content "Thank you for your message" }
+    it { is_expected.to have_content "Thank you for your message" }
   end
 end

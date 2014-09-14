@@ -5,10 +5,10 @@ describe "index", type:  :feature, js: true do
 
   subject { page }
 
-  it { should have_content 'ProgressVisualizer'   }
+  it { is_expected.to have_content 'ProgressVisualizer'   }
 
   context "get started", js: false do
     before { click_link 'Get started' }
-    it { should have_content 'Sign in'}
+    it { is_expected.to have_content 'Sign in'}
   end
 end

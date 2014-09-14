@@ -5,17 +5,17 @@ describe "about", type:  :feature, js: false do
 
   subject { page }
 
-  it { should have_content 'ProgressVisualizer'   }
+  it { is_expected.to have_content 'ProgressVisualizer'   }
 
   context "more about the visualizations" do
     before { click_link 'More about the visualizations' }
-    it { should have_content 'Start visualizing'}
+    it { is_expected.to have_content 'Start visualizing'}
   end
   
 
   context "get started" do
     before { click_link 'Get started' }
-    it { should have_content 'Sign in'}
+    it { is_expected.to have_content 'Sign in'}
   end
   
 end
