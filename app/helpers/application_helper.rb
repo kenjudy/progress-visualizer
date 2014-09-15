@@ -77,6 +77,16 @@ module ApplicationHelper
       alt: "Export to CSV file", title: "Export to CSV file", class: "btn btn-default hide-print" if path
   end
   
+  def pagination(args)
+    unless request.path.include?('/sharing/')
+      render 'application/pagination', 
+              prior_iteration: args[:prior_iteration],
+              prior_path: reports_performance_summary_path(iteration: args[:prior_iteration]), 
+              next_iteration: args[:next_iteration],
+              next_path: reports_performance_summary_path(iteration: args[:next_iteration])
+    end
+  end
+  
   def share_button
     unless request.path.include?('/sharing/')
       link_to raw("Share <span class=\"glyphicon glyphicon-share\"></span>"), "#", 

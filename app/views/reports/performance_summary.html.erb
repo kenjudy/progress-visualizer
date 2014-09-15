@@ -1,8 +1,7 @@
 <section>
   <div class="container">
     <div class="row">
-      <%= render 'application/pagination', 
-        prior_iteration: @prior_iteration,
+      <%= pagination prior_iteration: @prior_iteration,
         prior_path: reports_performance_summary_path(iteration: @prior_iteration), 
         next_iteration: @next_iteration,
         next_path: reports_performance_summary_path(iteration: @next_iteration)
