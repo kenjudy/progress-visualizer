@@ -10,11 +10,12 @@
     <div class="row">
       <h1>Performance Summary <%= share_button %></h1>
     </div>
-    <% if @comment %>
+    <% if @share %>
       <div class="row">
         <div class="panel panel-default">
           <div class="panel-body">
-            <%= render_markdown @comment %>
+            <%= render_markdown @share.comment if @share.comment%>
+            <p>Full report at <%= link_to(@share.short_url, @share.short_url) %> until <%= @share.expiration.strftime('%D') %></p>
           </div>
         </div>      
       </div>
