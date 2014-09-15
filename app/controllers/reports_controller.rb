@@ -33,7 +33,7 @@ class ReportsController < ApplicationController
     iteration = params["iteration"] || user_profile.beginning_of_current_iteration.strftime("%Y-%m-%d")
     url = send("reports_#{action}_url", iteration)
     share = ReportSharing.create(user_profile: user_profile, expiration: Date.today + 1.month, url: url, comment: params["report_sharing"]["comment"])
-    share.update(short_url: reports_sharing_url(share.guid))
+    share.update(short_url: shorten_url(reports_sharing_url(share.guid)))
     flash[:notice] = sharing_notice(share)
     redirect_to send("reports_#{action}_path", iteration)
   end
