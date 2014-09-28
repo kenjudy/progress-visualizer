@@ -40,9 +40,10 @@ ActiveRecord::Schema.define(version: 20140915140516) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "user_profile_id"
-    t.string   "card_id"
+    t.integer  "card_id"
   end
 
+  add_index "done_stories", ["card_id"], name: "index_done_stories_on_card_id", using: :btree
   add_index "done_stories", ["user_profile_id", "story_id"], name: "index_done_stories_on_user_profile_id_and_story_id", unique: true, using: :btree
   add_index "done_stories", ["user_profile_id"], name: "index_done_stories_on_user_profile_id", using: :btree
 
@@ -53,7 +54,7 @@ ActiveRecord::Schema.define(version: 20140915140516) do
     t.string   "guid"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.text     "comment"
+    t.string   "comment"
     t.string   "short_url"
   end
 

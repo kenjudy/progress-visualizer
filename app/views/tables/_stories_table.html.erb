@@ -1,6 +1,6 @@
 <% export_path ||= nil %>
 <table class="table table-bordered table-responsive" data-no-turbolink>
-  <tr><td colspan="4"><h3><%= label %> <%= results[:iteration_range] %></h3></td></tr>
+  <tr><td colspan="4"><h3><%= label %> <%= results[:iteration_range] %><%= board_label('in') %></h3></td></tr>
   <% results[:lists].each do |list, data| %>
     <tr class="list">
       <th>ID</th>

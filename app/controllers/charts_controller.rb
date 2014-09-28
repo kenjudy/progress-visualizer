@@ -1,6 +1,7 @@
 class ChartsController < ApplicationController
   include ChartsConcern
   include UserProfileConcern
+  include ConcernsHelper
 
   before_filter :authenticate_user!, :assign_user_profile
   before_filter :set_iteration, only: :burn_up

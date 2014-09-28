@@ -4,6 +4,7 @@ require 'spec_helper'
 module Charts
   describe ChartsConcern, :type => :controller do
     include ChartsConcern
+    include ConcernsHelper
 
     let(:types_of_work) { "Committed,Contingent,Inserted" }
     let(:user_profile) { FactoryGirl.create(:user_profile, labels_types_of_work: types_of_work) }

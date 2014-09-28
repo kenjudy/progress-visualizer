@@ -61,7 +61,7 @@ module ChartsConcern
       data_table.new_column('number', "Cards" )
     end
     data_table.add_rows(yesterdays_weather_data_rows(user_profile, chart, iteration))
-    GoogleVisualr::Interactive::ColumnChart.new(data_table, default_properties.merge({ title: "Yesterday's Weather for #{chart.label.to_s.titleize.pluralize}",
+    GoogleVisualr::Interactive::ColumnChart.new(data_table, default_properties.merge({ title: "Yesterday's Weather for #{chart.label.to_s.titleize.pluralize}#{board_label('in')}",
                                                                                        isStacked: true }))
 
   end
@@ -74,7 +74,7 @@ module ChartsConcern
 
     # Add Rows and Values
     data_table.add_rows(rows)
-    GoogleVisualr::Interactive::AreaChart.new(data_table, default_properties.merge({ title: "Long Term Trend",
+    GoogleVisualr::Interactive::AreaChart.new(data_table, default_properties.merge({ title: "Long Term Trend#{board_label()}",
                                                                                      hAxis: { textStyle: { color: '#999999'}, gridLines: { color: "#eee"}, format:'M/d' },
                                                                                      lineWidth: 2,
                                                                                      trendlines: { 1 => {pointSize: 0}, 0 => {pointSize: 0} }}))

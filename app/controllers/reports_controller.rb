@@ -3,6 +3,7 @@ require 'open-uri'
 class ReportsController < ApplicationController
   include UserProfileConcern
   include ChartsConcern
+  include ConcernsHelper
 
   before_filter :authenticate_user!, :assign_user_profile, except: :sharing
 
