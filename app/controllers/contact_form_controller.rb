@@ -1,6 +1,11 @@
 class ContactFormController < ApplicationController
+  include UserProfileConcern
+ 
+  before_filter :assign_user_profile, only: :new
+ 
   def new
     @contact_form = ContactForm.new
+    @contact_form.type_of_inquiry = params['type_of_inquiry']
   end
 
   def create
