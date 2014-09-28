@@ -8,7 +8,7 @@ describe "index", type:  :feature, js: true do
   it { is_expected.to have_content 'ProgressVisualizer'   }
 
   context "get started", js: false do
-    before { click_link 'Get started' }
+    before { click_link 'Sign up - it\'s free' }
     it { is_expected.to have_content 'Sign in'}
   end
 end

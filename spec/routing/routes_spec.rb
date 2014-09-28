@@ -156,7 +156,7 @@ describe "routes", type: :routing do
       end
       context "new" do
         let(:report) { 'performance-summary'}
-        subject { { get: "report/sharing/#{report}/new"}}
+        subject { { post: "report/sharing/#{report}/new"}}
         it { is_expected.to route_to(controller: "reports", action: "sharing_new", report: 'performance-summary')}
         context "report constraint" do
           let(:report) { 'non-existant-report' }

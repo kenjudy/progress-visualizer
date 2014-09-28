@@ -6,7 +6,7 @@
         <li><%= link_to(raw("View this board in Trello <span class=\"glyphicon glyphicon-new-window\"></span>"), "http://www.trello.com/b/#{user_profile.current_sprint_board_id_short}", target: "_blank", onClick: track_event("header_menu", ["view_trello"])) %></li>
         <% if current_user.user_profiles.length > 1 && user_profile.name %>
           <li class="divider"></li>
-          <% current_user.user_profiles.keep_if{ |profile| profile.id != user_profile.id }.each do |profile| %>
+          <% current_user.user_profiles.where('id <> ?', user_profile.id).each do |profile| %>
             <% menu_list_item(profile.name, set_user_profile_path(profile))%>
           <% end %>
         <% end %>

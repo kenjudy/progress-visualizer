@@ -54,7 +54,7 @@ describe ReportsController, type: :controller do
     
     subject do
       VCR.use_cassette('controllers/reports_controller/bitly_save_link') do
-        get :sharing_new, report: 'performance-summary'
+        post :sharing_new, report: 'performance-summary', 'report_sharing' => { 'comment' => 'Report comment'}
       end
     end
     
@@ -65,7 +65,7 @@ describe ReportsController, type: :controller do
     context "creates report_share" do
       before do
         VCR.use_cassette('controllers/reports_controller/bitly_save_link') do
-          get :sharing_new, report: 'performance-summary'
+          post :sharing_new, report: 'performance-summary', 'report_sharing' => { 'comment' => 'Report comment'}
         end
       end
       subject { ReportSharing.last }
