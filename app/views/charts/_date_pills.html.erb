@@ -1,5 +1,5 @@
 <ul class="nav nav-pills">
-<% date_pills(first_iteration).each do |week| %>
-    <li class="<%= 'active' if params[:weeks] == week.to_s || (params[:weeks].nil? && week == 10)%>"><%= link_to "#{week} weeks", charts_long_term_trend_path(weeks: week) %></li>
+<% date_pills(first_iteration, default_weeks).each do |week| %>
+    <li class="<%= 'active' if params[:weeks] == week.to_s || (params[:weeks].nil? && week == default_weeks)%>"><%= link_to "#{week} weeks", send(path, weeks: week) %></li>
 <% end %>
 </ul>

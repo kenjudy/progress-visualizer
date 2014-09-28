@@ -7,10 +7,10 @@ module ApplicationHelper
     markdown.render(content).html_safe
   end
 
-  def date_pills(first_iteration, number_pills = 5)
+  def date_pills(first_iteration, default_weeks, number_pills = 5)
     weeks_in_between_now_and_first_iteration = (Date.today - first_iteration) / 7
     interval_in_weeks = (weeks_in_between_now_and_first_iteration / number_pills).ceil
-    (1..number_pills).map { |index| index * interval_in_weeks }
+    ((1..number_pills).map { |index| index * interval_in_weeks } << default_weeks).sort
   end
 
   def card_link(card)

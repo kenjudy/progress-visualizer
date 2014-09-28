@@ -1,12 +1,9 @@
 <% profiles = user_profile.user.user_profiles %>
 <section>
   <div class="container">
-    <% if profiles.length > 1 %>
-      <div class="well">
-        <p><a type="button" class="btn btn-default">Combine all boards</a> Create a <em>yesterday's weather</em> stacked bar chart for: <%= profiles.map(&:name).to_sentence %> <span class="label label-warning">Experimental feature!</span><p>
-        <p>This experimental feature was requested by Katie. <%= link_to 'Please, request a new feature.', contact_form_new_path(type_of_inquiry: 'Suggestion') %></p> 
-      </div>
-      <%= render "yesterdays_weather_charts", estimate_chart: @yesterdays_weather_estimate_chart, stories_chart: @yesterdays_weather_stories_chart, uses_estimates: @uses_estimates %>
-    <% end %>
+    <div class="col-md-6">
+      <%= render "date_pills", first_iteration: @first_iteration, default_weeks: 3, path: :charts_yesterdays_weather_path %>
     </div>
+    <%= render "yesterdays_weather_charts", estimate_chart: @yesterdays_weather_estimate_chart, stories_chart: @yesterdays_weather_stories_chart, uses_estimates: @uses_estimates %>
+  </div>
 </section>

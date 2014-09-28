@@ -4,8 +4,8 @@ describe ApplicationHelper, type: :helper do
   let(:request) { double("Request", fullpath: homepage_path).as_null_object }
     
   context "date_pills" do
-    subject { date_pills(1.year.ago.to_date)}
-    it { is_expected.to eq([11, 22, 33, 44, 55]) }
+    subject { date_pills(1.year.ago.to_date, 10)}
+    it { is_expected.to eq([10, 11, 22, 33, 44, 55]) }
   end
 
   context "duration_in_weeks" do

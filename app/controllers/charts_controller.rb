@@ -31,6 +31,7 @@ class ChartsController < ApplicationController
   end
 
   def yesterdays_weather
+    @first_iteration = user_profile.first_iteration
     yesterdays_weather_action(user_profile, params[:weeks] ? params[:weeks].to_i : 3)
   end
 
