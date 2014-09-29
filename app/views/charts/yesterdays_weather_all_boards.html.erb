@@ -1,0 +1,18 @@
+<section>
+  <div class="container">
+    <div class="col-md-12">
+      <%= render "date_pills", first_iteration: @first_iteration, default_weeks: 3, path: :charts_yesterdays_weather_all_boards_path %>
+    </div>
+    <div class="col-md-12">
+      <div class="panel panel-info">
+        <div class="panel-heading">
+            <h3 class="panel-title">You are displaying results for all boards in your profile.</h3>
+          </div>
+        <div class="panel-body">
+          This chart rolls up the following boards: <%= user_profile.user.user_profiles.map(&:name).to_sentence %>.
+        </div>
+      </div>
+    </div>
+    <%= render "yesterdays_weather_charts", estimate_chart: @yesterdays_weather_estimate_chart, stories_chart: @yesterdays_weather_stories_chart, uses_estimates: @uses_estimates %>
+  </div>
+</section>

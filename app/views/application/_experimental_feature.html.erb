@@ -1,0 +1,10 @@
+<div class="well">
+  <p>
+    <%= link_to raw("#{button} (Experimental)"), url, {  class: "btn btn-warning", type: "button" }%></a> 
+    <%= raw(description) %>
+  </p>
+  <p>
+    This experimental feature was requested by <%= suggested_by %>. 
+    Make <span class="brand">Progress<span>Visualizer</span></span> better. <%= link_to 'Please, request a new feature.', contact_form_new_path(type_of_inquiry: 'Suggestion') %>
+  </p> 
+</div>

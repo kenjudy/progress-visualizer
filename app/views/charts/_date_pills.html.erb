@@ -1,4 +1,4 @@
-<ul class="nav nav-pills">
+<ul class="nav nav-pills" style="margin-bottom: 1em;">
 <% date_pills(first_iteration, default_weeks).each do |week| %>
     <li class="<%= 'active' if params[:weeks] == week.to_s || (params[:weeks].nil? && week == default_weeks)%>"><%= link_to "#{week} weeks", send(path, weeks: week) %></li>
 <% end %>

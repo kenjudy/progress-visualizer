@@ -18,17 +18,25 @@ module ChartsConcern
     }
   end
   
-  def yesterdays_weather_action(user_profile, range, iteration = nil)
-    estimate_chart = YesterdaysWeatherChart.new(user_profile, {weeks: range, label: :estimate})
-    @yesterdays_weather_estimate_chart = yesterdays_weather_visualization(user_profile, estimate_chart, iteration)
+  def yesterdays_weather_action(user_or_profile, range, iteration = nil)
+    case user_or_profile.class.name
+    when 'UserProfile'
+      user_profiles = [user_or_profile]
+    when 'User'
+      user_profiles = user_or_profile.user_profiles
+    else
+      user_profiles = []
+    end
+    estimate_chart = YesterdaysWeatherChart.new(user_profiles, {weeks: range, label: :estimate})
+    @yesterdays_weather_estimate_chart = yesterdays_weather_visualization(user_profiles, estimate_chart, iteration)
     @uses_estimates = has_non_zero_values(@yesterdays_weather_estimate_chart)
 
-    stories_chart = YesterdaysWeatherChart.new(user_profile, {weeks: range, label: :stories})
-    @yesterdays_weather_stories_chart = yesterdays_weather_visualization(user_profile, stories_chart, iteration)
+    stories_chart = YesterdaysWeatherChart.new(user_profiles, {weeks: range, label: :stories})
+    @yesterdays_weather_stories_chart = yesterdays_weather_visualization(user_profiles, stories_chart, iteration)
   end
 
   def long_term_trend_action(user_profile, range, iteration = nil)
-    rows = long_term_trend_visualization_rows(done_stories_data(user_profile, range, iteration))
+    rows = long_term_trend_visualization_rows(done_stories_data([user_profile], range, iteration))
     @long_term_trend_chart = long_term_trend_visualization(rows)
     @stats = long_term_trend_stats(rows)
   end
@@ -52,16 +60,16 @@ module ChartsConcern
     "#{data_table.rows.first[0].v.strftime("%B %e, %Y")} - #{data_table.rows.last[0].v.strftime("%B %e, %Y")}" if data_table.rows.any?
   end
 
-  def yesterdays_weather_visualization(user_profile, chart, iteration = nil)
+  def yesterdays_weather_visualization(user_profiles, chart, iteration = nil)
     data_table = GoogleVisualr::DataTable.new
     data_table.new_column('string', 'timestamp' )
     if chart.types_of_work && chart.types_of_work.any?
-      chart.types_of_work.each { |type_of_work| data_table.new_column('number', type_of_work.downcase ) }
+      chart.types_of_work.each { |type_of_work| data_table.new_column('number', type_of_work ? type_of_work.downcase : 'unlabeled' ) }
     else
       data_table.new_column('number', "Cards" )
     end
-    data_table.add_rows(yesterdays_weather_data_rows(user_profile, chart, iteration))
-    GoogleVisualr::Interactive::ColumnChart.new(data_table, default_properties.merge({ title: "Yesterday's Weather for #{chart.label.to_s.titleize.pluralize}#{board_label('in')}",
+    data_table.add_rows(yesterdays_weather_data_rows(user_profiles, chart, iteration))
+    GoogleVisualr::Interactive::ColumnChart.new(data_table, default_properties.merge({ title: "Yesterday's Weather for #{chart.label.to_s.titleize.pluralize}#{board_label('in', user_profiles)}",
                                                                                        isStacked: true }))
 
   end
@@ -74,7 +82,7 @@ module ChartsConcern
 
     # Add Rows and Values
     data_table.add_rows(rows)
-    GoogleVisualr::Interactive::AreaChart.new(data_table, default_properties.merge({ title: "Long Term Trend#{board_label()}",
+    GoogleVisualr::Interactive::AreaChart.new(data_table, default_properties.merge({ title: "Long Term Trend#{board_label('for')}",
                                                                                      hAxis: { textStyle: { color: '#999999'}, gridLines: { color: "#eee"}, format:'M/d' },
                                                                                      lineWidth: 2,
                                                                                      trendlines: { 1 => {pointSize: 0}, 0 => {pointSize: 0} }}))
@@ -107,27 +115,27 @@ module ChartsConcern
     rows.values.sort { |a,b| a[0] <=> b[0] }
   end
 
-  def yesterdays_weather_data_rows(user_profile, chart, iteration = nil)
+  def yesterdays_weather_data_rows(user_profiles, chart, iteration = nil)
     data = {}
-    done_stories_data(user_profile, chart.weeks, iteration).each do |done_story|
+    done_stories_data(user_profiles, chart.weeks, iteration).each do |done_story|
       stack_by_types_of_work(chart, data, done_story)
     end
     data.values.sort { |a,b| a[0] <=> b[0] }
   end
 
-  def done_stories_data(user_profile, range, iteration = nil)
-    date =
+  def done_stories_data(user_profiles, range, iteration = nil)
     if iteration.instance_of?(String)
-      query = 'timestamp > ? and timestamp <= ?'
-      user_profile.beginning_of_iteration(Date.parse(iteration))
+      query = 'timestamp > ? and timestamp <= ? and user_profile_id in (?)'
+      boi_arg = Date.parse(iteration)
     elsif iteration.nil?
-      query = 'timestamp >= ? and timestamp < ?'
-      user_profile.beginning_of_current_iteration
+      query = 'timestamp >= ? and timestamp < ? and user_profile_id in (?)'
+      boi_arg = nil
     else
-      query = 'timestamp > ? and timestamp <= ?'
-      user_profile.beginning_of_iteration(iteration)
+      query = 'timestamp > ? and timestamp <= ? and user_profile_id in (?)'
+      boi_arg = iteration
     end
-    user_profile.done_stories.order("timestamp").where(query, date - (range * user_profile.duration).days, date).to_a
+    date = user_profiles.map{ |p| boi_arg ? p.beginning_of_iteration(boi_arg) : p.beginning_of_current_iteration }.sort.first
+    DoneStory.where(query, date - (range * user_profiles.first.duration).days, date, user_profiles.map(&:id)).order("timestamp").to_a
   end
   
   private
@@ -149,10 +157,15 @@ module ChartsConcern
     value = chart.label == :estimate ? done_story.estimate : 1
     if chart.types_of_work && chart.types_of_work.any?
       data[timestamp] = data[timestamp] ||= [timestamp] + chart.types_of_work.length.times.map { 0 }
-      chart.types_of_work.each_with_index { |type_of_work, index| data[timestamp][index+1] += done_story.type_of_work.downcase == type_of_work.downcase ? value : 0 }
+      chart.types_of_work.each_with_index { |type_of_work, index| data[timestamp][index+1] += increment?(done_story, type_of_work) ? value : 0 }
     else
       data[timestamp] = data[timestamp] ||= [timestamp, 0]
       data[timestamp][1] += value
     end
+  end
+  
+  def increment?(done_story, type_of_work)
+    (done_story.type_of_work.nil? && type_of_work.nil?) || 
+    (done_story.type_of_work  && type_of_work && done_story.type_of_work.downcase == type_of_work.downcase)
   end
 end

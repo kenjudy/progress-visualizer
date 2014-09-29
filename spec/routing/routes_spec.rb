@@ -101,13 +101,21 @@ describe "routes", type: :routing do
     context "yesterdays_weather" do
       subject { { get: "chart/yesterdays-weather" } }
       it { is_expected.to route_to(controller: "charts", action: "yesterdays_weather")}
-      context "optional param" do
+      context "optional weeks param" do
         subject { { get: "chart/yesterdays-weather/10" } }
         it { is_expected.to route_to(controller: "charts", action: "yesterdays_weather", weeks: "10")}
       end
       context "optional param constraints" do
         subject { { get: "chart/yesterdays-weather/bad" } }
         it { is_expected.not_to route_to(controller: "charts", action: "yesterdays_weather", weeks: "bad")}
+      end
+      context "all boards" do
+        subject { { get: "chart/yesterdays-weather/all" } }
+        it { is_expected.to route_to(controller: "charts", action: "yesterdays_weather_all_boards")}
+        context "optional weeks param" do
+          subject { { get: "chart/yesterdays-weather/all/10" } }
+          it { is_expected.to route_to(controller: "charts", action: "yesterdays_weather_all_boards", weeks: "10")}
+        end
       end
     end
     context "long_term_trend" do

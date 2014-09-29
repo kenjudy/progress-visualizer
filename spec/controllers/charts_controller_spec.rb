@@ -93,6 +93,20 @@ describe ChartsController, type: :controller do
         before { subject }
         it { expect(assigns(:yesterdays_weather_estimate_chart)).not_to be_nil }
         it { expect(assigns(:yesterdays_weather_stories_chart)).not_to be_nil }
+        it { expect(assigns(:first_iteration)).not_to be_nil }
+      end
+    end
+
+    context "yesterdays_weather_all_boards" do
+      subject { get :yesterdays_weather_all_boards }
+
+      its(:code) { "200" }
+
+      context "assigns" do
+        before { subject }
+        it { expect(assigns(:yesterdays_weather_estimate_chart)).not_to be_nil }
+        it { expect(assigns(:yesterdays_weather_stories_chart)).not_to be_nil }
+        it { expect(assigns(:first_iteration)).not_to be_nil }
       end
     end
 
@@ -104,6 +118,7 @@ describe ChartsController, type: :controller do
       context "assigns" do
         before { subject }
         it { expect(assigns(:long_term_trend_chart)).not_to be_nil }
+        it { expect(assigns(:first_iteration)).not_to be_nil }
       end
       context "optional week param" do
         let(:long_term_trend_rows) { [] }

@@ -1,9 +1,16 @@
 <% profiles = user_profile.user.user_profiles %>
 <section>
   <div class="container">
-    <div class="col-md-6">
+    <div class="col-md-12">
       <%= render "date_pills", first_iteration: @first_iteration, default_weeks: 3, path: :charts_yesterdays_weather_path %>
     </div>
+    <% if profiles.length > 1 %>
+      <div class="col-md-12">
+        <%= render 'experimental_feature', 
+                   button: 'Combine all boards', url: charts_yesterdays_weather_all_boards_path(params['weeks']),
+                   description: "Create a <em>yesterday's weather</em> stacked bar chart for:  #{profiles.map(&:name).to_sentence}", suggested_by: 'Katie' %>
+      </div>
+    <% end %>
     <%= render "yesterdays_weather_charts", estimate_chart: @yesterdays_weather_estimate_chart, stories_chart: @yesterdays_weather_stories_chart, uses_estimates: @uses_estimates %>
   </div>
 </section>

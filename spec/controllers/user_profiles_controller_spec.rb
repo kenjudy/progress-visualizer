@@ -22,7 +22,7 @@ describe UserProfilesController, type: :controller do
   end
 
   context 'update' do
-    let(:full_profile) { profile_partial.merge("done_lists" => "Done", "backlog_lists" => "To Do", "labels_types_of_work" => "Committed,Contingent", "duration" => "7", "start_day_of_week" => "0", "end_day_of_week" => "6", "start_hour" => "6", "end_hour" => "23") }
+    let(:full_profile) { profile_partial.merge("done_lists" => "Done", "backlog_lists" => "To Do", "labels_types_of_work" => "Committed,Contingent", "duration" => 7, "start_day_of_week" => 0, "end_day_of_week" => 6, "start_hour" => 6, "end_hour" => 23) }
 
     before do
       sign_in user
@@ -42,7 +42,7 @@ describe UserProfilesController, type: :controller do
     end
   end
   context "update model different than current" do
-    let(:full_profile) { profile_partial.merge("done_lists" => "Done", "backlog_lists" => "To Do", "labels_types_of_work" => "Committed,Contingent", "duration" => "7", "start_day_of_week" => "0", "end_day_of_week" => "6", "start_hour" => "6", "end_hour" => "23") }
+    let(:full_profile) { profile_partial.merge("done_lists" => "Done", "backlog_lists" => "To Do", "labels_types_of_work" => "Committed,Contingent", "duration" => 7, "start_day_of_week" => 0, "end_day_of_week" => 6, "start_hour" => 6, "end_hour" => 23) }
     let(:current_profile) { FactoryGirl.create(:user_profile, user: user, labels_types_of_work: "Sample,Types") }
     before do
       sign_in user

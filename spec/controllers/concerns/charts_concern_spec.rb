@@ -8,6 +8,7 @@ module Charts
 
     let(:types_of_work) { "Committed,Contingent,Inserted" }
     let(:user_profile) { FactoryGirl.create(:user_profile, labels_types_of_work: types_of_work) }
+    let(:user_profiles) { [user_profile] }
     let(:date) { Date.today.end_of_week }
 
     let(:iteration_start) { user_profile.beginning_of_current_iteration }
@@ -22,21 +23,22 @@ module Charts
         (0..3).each { FactoryGirl.create(:done_story, user_profile: user_profile, type_of_work: "Committed", estimate: 2, timestamp: weeks) }
         (0..3).each { FactoryGirl.create(:done_story, user_profile: user_profile, type_of_work: "Contingent", estimate: 3, timestamp: weeks) }
         (0..3).each { FactoryGirl.create(:done_story, user_profile: user_profile, type_of_work: "Inserted", estimate: 4, timestamp: weeks) }
+        (0..3).each { FactoryGirl.create(:done_story, user_profile: user_profile, type_of_work: nil, estimate: 4, timestamp: weeks) }
       end
     end
 
 
     context "done_stories_data" do
       let(:iteration) { one_week_ago }
-      subject { done_stories_data(user_profile, 3, iteration) }
+      subject { done_stories_data(user_profiles, 3, iteration) }
 
-      its(:length) { should == 24 }
+      its(:length) { should == 32 }
       its(:first) { should be_instance_of(DoneStory) }
       it("includes this iteration") { expect(subject.last.timestamp < iteration_start) }
 
       context "explicit iteration" do
         let(:iteration) { nil}
-        its(:length) { should == 36 }
+        its(:length) { should == 48 }
         it("doesn't contain this iteration") { expect(subject.last.timestamp >= iteration_start) }
       end
 
@@ -64,7 +66,7 @@ module Charts
     
     context "long_term_trend" do
       let(:iteration) { nil }
-      let(:data) { done_stories_data(user_profile, 10, iteration) }
+      let(:data) { done_stories_data(user_profiles, 10, iteration) }
       let(:rows) { long_term_trend_visualization_rows(data) }
 
       context "long_term_trend_visualization_rows" do
@@ -72,40 +74,40 @@ module Charts
 
         let(:iteration) { nil }
 
-        it { is_expected.to eq([[three_weeks_ago, 36.0, 12], [two_weeks_ago, 36.0, 12], [one_week_ago, 36.0, 12]]) }
+        it { is_expected.to eq([[three_weeks_ago, 52.0, 16], [two_weeks_ago, 52.0, 16], [one_week_ago, 52.0, 16]]) }
 
         context "explicit iteration" do
           let(:iteration) { one_week_ago }
-          it { is_expected.to eq([[three_weeks_ago, 36.0, 12], [two_weeks_ago, 36.0, 12]]) }
+          it { is_expected.to eq([[three_weeks_ago, 52.0, 16], [two_weeks_ago, 52.0, 16]]) }
         end
       end
     
       context "long_term_trend_stats" do
         subject { long_term_trend_stats(rows) }
-        it { is_expected.to eq({:stories=>{:average=>12.0, :median=>12.0}, :points=>{:average=>36.0, :median=>36.0}}) }
+        it { is_expected.to eq({:stories=>{:average=>16.0, :median=>16.0}, :points=>{:average=>52.0, :median=>52.0}}) }
       end
     end
     
     context "yesterdays_weather_data_rows" do
-      let(:chart) { YesterdaysWeatherChart.new(user_profile, {weeks: 3, label: :estimate}) }
+      let(:chart) { YesterdaysWeatherChart.new([user_profile], {weeks: 3, label: :estimate}) }
       let(:iteration) { nil }
 
-      subject { yesterdays_weather_data_rows(user_profile, chart, iteration) }
-      it { is_expected.to eq([[(three_weeks_ago).strftime("%F"), 8.0, 12.0, 16.0], [(two_weeks_ago).strftime("%F"), 8.0, 12.0, 16.0], [(one_week_ago).strftime("%F"), 8.0, 12.0, 16.0]]) }
+      subject { yesterdays_weather_data_rows([user_profile], chart, iteration) }
+      it { is_expected.to eq([[(three_weeks_ago).strftime("%F"), 8.0, 12.0, 16.0, 16.0], [(two_weeks_ago).strftime("%F"), 8.0, 12.0, 16.0, 16.0], [(one_week_ago).strftime("%F"), 8.0, 12.0, 16.0, 16.0]]) }
 
 
       context "explicit iteration" do
         let(:iteration) { one_week_ago }
-        it { is_expected.to eq([[(three_weeks_ago).strftime("%F"), 8.0, 12.0, 16.0], [(two_weeks_ago).strftime("%F"), 8.0, 12.0, 16.0]]) }
+        it { is_expected.to eq([[(three_weeks_ago).strftime("%F"), 8.0, 12.0, 16.0, 16.0], [(two_weeks_ago).strftime("%F"), 8.0, 12.0, 16.0, 16.0]]) }
       end
 
       context "no types_of_work" do
         let(:types_of_work) { nil }
-        it { is_expected.to eq([[(three_weeks_ago).strftime("%F"), 36.0  ], [(two_weeks_ago).strftime("%F"), 36.0], [(one_week_ago).strftime("%F"), 36.0  ]]) }
+        it { is_expected.to eq([[(three_weeks_ago).strftime("%F"), 52.0  ], [(two_weeks_ago).strftime("%F"), 52.0], [(one_week_ago).strftime("%F"), 52.0]]) }
       end
 
       context "has_non_zero_values" do
-        subject { has_non_zero_values(yesterdays_weather_visualization(user_profile, chart)) }
+        subject { has_non_zero_values(yesterdays_weather_visualization(user_profiles, chart)) }
         it { is_expected.to be_truthy }
 
         context "no estimates" do

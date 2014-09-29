@@ -27,7 +27,7 @@ class CreateUserProfile < ActiveRecord::Migration
 
       t.string :labels_types_of_work
 
-      t.string  :duration
+      t.integer  :duration
       t.integer :start_day_of_week
       t.integer :end_day_of_week
       t.integer :start_hour

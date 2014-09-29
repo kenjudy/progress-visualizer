@@ -25,7 +25,9 @@ ProgressVisualizer::Application.routes.draw do
 
   get 'chart/burn-up/(:iteration)' => "charts#burn_up", as: 'charts_burn_up'
   get 'chart/burn-up-reload' => "charts#burn_up_reload", as: 'charts_burn_up_reload'
+  get 'chart/yesterdays-weather/all/(:weeks)' => "charts#yesterdays_weather_all_boards", as: 'charts_yesterdays_weather_all_boards', constraints: {weeks: /[0-9]*/}
   get 'chart/yesterdays-weather/(:weeks)' => "charts#yesterdays_weather", as: 'charts_yesterdays_weather', constraints: {weeks: /[0-9]*/}
+
   get 'chart/long-term-trend/(:weeks)' => "charts#long_term_trend", as: 'charts_long_term_trend', constraints: {weeks: /[0-9]*/}
 
   get 'table/done-stories/(:iteration)' => "tables#done_stories", as: 'tables_done_stories'

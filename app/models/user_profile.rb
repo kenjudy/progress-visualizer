@@ -17,11 +17,12 @@ class UserProfile < ActiveRecord::Base
   alias_attribute :webhooks, :webhook
 
   validates :readonly_token, :current_sprint_board_id_short, :name, presence: true
-
+  validates :duration, :start_day_of_week, :end_day_of_week, :start_hour, :end_hour, :numericality => { only_integer: true }, :allow_nil => true
   validate :validate_start_date
+  
 
   before_save :default_values
-
+  
   def validate_start_date
     errors.add("Start date", "must not be in the future.") unless start_date.nil? || start_date <= Time.now
   end
