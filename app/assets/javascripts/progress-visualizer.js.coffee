@@ -53,6 +53,12 @@ ready = ->
     
   if $(".user_profiles.index #no-profiles").length > 0
     $('#profile-modal').modal('show')
+  
+  if $('body.charts.burn_up').length > 0
+    setInterval (->
+      window.tickUpdate();
+      ), 6000
+  
     
 authorize = ->
   Trello.authorize(interactive: false)
@@ -112,9 +118,6 @@ window.tickUpdate = ->
     else
       window.last_timestamp = timestamp
       console.log('tick ' + window.last_timestamp)
-  setTimeout (->
-    window.tickUpdate();
-    ), 6000
 
 window.redraw_chart = (chart_id, chart_data, chart_options) ->
   data_table = new google.visualization.DataTable()
