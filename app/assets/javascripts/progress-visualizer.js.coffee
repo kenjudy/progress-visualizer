@@ -105,19 +105,14 @@ spinnerOff = ->
   $("#spinner").modal('hide')
 
 window.tickUpdate = ->
-  console.log('wake ' + window.last_timestamp)
   $.get "/chart/burn-up-reload", (data) ->
     timestamp =  Date.parse(data["last_update"])
     if (timestamp > window.last_timestamp)
-      console.log('get ' + window.last_timestamp)
       $.get "/chart/burn-up.json", (data) ->
         $.each data, (key, value) ->
-          console.log('call redraw ' + window.last_timestamp)
           window.redraw_chart(key, value["data_table"], value["options"])
-          console.log('complete redraw ' + window.last_timestamp)
     else
       window.last_timestamp = timestamp
-      console.log('tick ' + window.last_timestamp)
 
 window.redraw_chart = (chart_id, chart_data, chart_options) ->
   data_table = new google.visualization.DataTable()
