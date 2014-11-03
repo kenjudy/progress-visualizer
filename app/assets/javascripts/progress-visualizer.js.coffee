@@ -110,7 +110,10 @@ window.tickUpdate = ->
     if (timestamp > window.last_timestamp)
       $.get "/chart/burn-up.json", (data) ->
         $.each data, (key, value) ->
-          window.redraw_chart(key, value["data_table"], value["options"])
+          try
+           window.redraw_chart(key, value["data_table"], value["options"])
+          catch e
+            console.log(e.message)
     else
       window.last_timestamp = timestamp
 
