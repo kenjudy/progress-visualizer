@@ -5,7 +5,7 @@ RSpec.configure do |config|
   #config.use_transactional_fixtures = false
   
   config.before(:suite) do
-    DatabaseCleaner.strategy = :truncation
+    DatabaseCleaner.strategy = :truncation, { except: 'schema_migrations' }
   end
 
   config.before :each do

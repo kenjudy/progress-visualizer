@@ -40,7 +40,7 @@ describe ApplicationHelper, type: :helper do
   context "menu_list_item" do
     subject { menu_list_item("Burn Up<span></span>", charts_burn_up_path) }
 
-    it { is_expected.to eq("<li class=\" \"><a href=\"/chart/burn-up\" onClick=\"_gaq.push([&#39;_trackEvent&#39;, &#39;header_menu&#39;, &#39;burn_up&lt;span&gt;&lt;/span&gt;&#39;]);\">Burn Up<span></span></a></li>") }
+    it { is_expected.to include("href=\"/chart/burn-up\"") }
   end
 
   context "active class if" do

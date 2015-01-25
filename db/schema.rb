@@ -16,7 +16,7 @@ ActiveRecord::Schema.define(version: 20140915140516) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "burn_ups", force: true do |t|
+  create_table "burn_ups", force: :cascade do |t|
     t.datetime "timestamp"
     t.integer  "backlog"
     t.integer  "done"
@@ -29,7 +29,7 @@ ActiveRecord::Schema.define(version: 20140915140516) do
 
   add_index "burn_ups", ["user_profile_id"], name: "index_burn_ups_on_user_profile_id", using: :btree
 
-  create_table "done_stories", force: true do |t|
+  create_table "done_stories", force: :cascade do |t|
     t.date     "timestamp"
     t.string   "iteration"
     t.string   "type_of_work"
@@ -46,7 +46,7 @@ ActiveRecord::Schema.define(version: 20140915140516) do
   add_index "done_stories", ["user_profile_id", "story_id"], name: "index_done_stories_on_user_profile_id_and_story_id", unique: true, using: :btree
   add_index "done_stories", ["user_profile_id"], name: "index_done_stories_on_user_profile_id", using: :btree
 
-  create_table "report_sharings", force: true do |t|
+  create_table "report_sharings", force: :cascade do |t|
     t.integer  "user_profile_id", null: false
     t.datetime "expiration",      null: false
     t.string   "url",             null: false
@@ -57,7 +57,7 @@ ActiveRecord::Schema.define(version: 20140915140516) do
     t.string   "short_url"
   end
 
-  create_table "user_profiles", force: true do |t|
+  create_table "user_profiles", force: :cascade do |t|
     t.integer  "user_id",                                                  null: false
     t.string   "name"
     t.binary   "default"
@@ -89,7 +89,7 @@ ActiveRecord::Schema.define(version: 20140915140516) do
 
   add_index "user_profiles", ["user_id"], name: "index_user_profiles_on_user_id", using: :btree
 
-  create_table "users", force: true do |t|
+  create_table "users", force: :cascade do |t|
     t.string   "name"
     t.string   "email"
     t.datetime "created_at"
@@ -120,7 +120,7 @@ ActiveRecord::Schema.define(version: 20140915140516) do
   add_index "users", ["name"], name: "index_users_on_name", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
-  create_table "webhooks", force: true do |t|
+  create_table "webhooks", force: :cascade do |t|
     t.integer  "user_profile_id"
     t.string   "external_id"
     t.string   "callback_url"
