@@ -1,7 +1,7 @@
 #!/bin/bash
 
-heroku pgbackups:capture --expire
-curl -o latest.dump `heroku pgbackups:url`
+heroku pg:backups capture
+curl -o latest.dump `heroku pg:backups public-url`
 pg_restore --verbose --clean --no-acl --no-owner -h localhost -d progress_visualizer_development latest.dump
 
 psql -h localhost -d progress_visualizer_development -c "delete from users where id<>2;"

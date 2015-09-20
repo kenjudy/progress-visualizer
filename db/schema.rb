@@ -133,4 +133,6 @@ ActiveRecord::Schema.define(version: 20140915140516) do
 
   add_index "webhooks", ["user_profile_id"], name: "index_webhooks_on_user_profile_id", using: :btree
 
+  add_foreign_key "report_sharings", "user_profiles"
+  add_foreign_key "user_profiles", "users"
 end
