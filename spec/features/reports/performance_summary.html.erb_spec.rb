@@ -17,7 +17,7 @@ describe "performance summary", type:  :feature, js: true do
     page
   end
   
-  it { subject.find("tr.list th", text: "red")}
+  it { subject.first("tr.story td.labels", text: "red")}
 
   it_behaves_like "a table"
   

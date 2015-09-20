@@ -7,7 +7,7 @@ describe "done stories table", type:  :feature, js: true do
   let(:table_title) { "Completed work" }
 
   before do
-    (1..2).each { |e| FactoryGirl.create(:done_story, user_profile: user_profile, iteration: iteration.strftime("%Y-%m-%d"), timestamp: iteration.strftime("%Y-%m-%d"), estimate: e, status: JSON.parse(user_profile.done_lists).keys.first, type_of_work: user_profile.labels_types_of_work.split(",").first) }
+    (1..2).each { |e| FactoryGirl.create(:done_story, user_profile: user_profile, iteration: iteration.strftime("%Y-%m-%d"), timestamp: iteration.strftime("%Y-%m-%d"), estimate: e, status: JSON.parse(user_profile.done_lists).keys.first, label_names: 'red', type_of_work: user_profile.labels_types_of_work.split(",").first) }
     authenticate 
   end
   
@@ -16,7 +16,7 @@ describe "done stories table", type:  :feature, js: true do
     page
   end
   
-  it { subject.find("tr.list th", text: "red")}
+  it { subject.first("tr.story td.labels", text: "red")}
 
   it_behaves_like "a table"
   it_behaves_like "a paginatable visualization"

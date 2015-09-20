@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140915140516) do
+ActiveRecord::Schema.define(version: 20150920170712) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,57 +31,59 @@ ActiveRecord::Schema.define(version: 20140915140516) do
 
   create_table "done_stories", force: :cascade do |t|
     t.date     "timestamp"
-    t.string   "iteration"
-    t.string   "type_of_work"
-    t.string   "status"
-    t.string   "story_id"
-    t.string   "story"
+    t.string   "iteration",       limit: 255
+    t.string   "type_of_work",    limit: 255
+    t.string   "status",          limit: 255
+    t.string   "story_id",        limit: 255
+    t.string   "story",           limit: 255
     t.float    "estimate"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "user_profile_id"
-    t.string   "card_id"
+    t.string   "card_id",         limit: 255
+    t.string   "list_name"
+    t.string   "label_names"
   end
 
   add_index "done_stories", ["user_profile_id", "story_id"], name: "index_done_stories_on_user_profile_id_and_story_id", unique: true, using: :btree
   add_index "done_stories", ["user_profile_id"], name: "index_done_stories_on_user_profile_id", using: :btree
 
   create_table "report_sharings", force: :cascade do |t|
-    t.integer  "user_profile_id", null: false
-    t.datetime "expiration",      null: false
-    t.string   "url",             null: false
-    t.string   "guid"
+    t.integer  "user_profile_id",             null: false
+    t.datetime "expiration",                  null: false
+    t.string   "url",             limit: 255, null: false
+    t.string   "guid",            limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "comment"
-    t.string   "short_url"
+    t.string   "short_url",       limit: 255
   end
 
   create_table "user_profiles", force: :cascade do |t|
-    t.integer  "user_id",                                                  null: false
-    t.string   "name"
+    t.integer  "user_id",                                                              null: false
+    t.string   "name",                                         limit: 255
     t.binary   "default"
-    t.string   "encrypted_readonly_token"
-    t.string   "encrypted_current_sprint_board_id"
-    t.string   "encrypted_current_sprint_board_id_short"
+    t.string   "encrypted_readonly_token",                     limit: 255
+    t.string   "encrypted_current_sprint_board_id",            limit: 255
+    t.string   "encrypted_current_sprint_board_id_short",      limit: 255
     t.text     "encrypted_backlog_lists"
     t.text     "encrypted_done_lists"
-    t.string   "encrypted_readonly_token_iv"
-    t.string   "encrypted_current_sprint_board_id_iv"
-    t.string   "encrypted_current_sprint_board_id_short_iv"
-    t.string   "encrypted_backlog_lists_iv"
-    t.string   "encrypted_done_lists_iv"
-    t.string   "encrypted_readonly_token_salt"
-    t.string   "encrypted_current_sprint_board_id_salt"
-    t.string   "encrypted_current_sprint_board_id_short_salt"
-    t.string   "encrypted_backlog_lists_salt"
-    t.string   "encrypted_done_lists_salt"
+    t.string   "encrypted_readonly_token_iv",                  limit: 255
+    t.string   "encrypted_current_sprint_board_id_iv",         limit: 255
+    t.string   "encrypted_current_sprint_board_id_short_iv",   limit: 255
+    t.string   "encrypted_backlog_lists_iv",                   limit: 255
+    t.string   "encrypted_done_lists_iv",                      limit: 255
+    t.string   "encrypted_readonly_token_salt",                limit: 255
+    t.string   "encrypted_current_sprint_board_id_salt",       limit: 255
+    t.string   "encrypted_current_sprint_board_id_short_salt", limit: 255
+    t.string   "encrypted_backlog_lists_salt",                 limit: 255
+    t.string   "encrypted_done_lists_salt",                    limit: 255
     t.text     "labels_types_of_work"
     t.integer  "duration"
-    t.integer  "start_day_of_week",                            default: 1
-    t.integer  "end_day_of_week",                              default: 6
-    t.integer  "start_hour",                                   default: 0
-    t.integer  "end_hour",                                     default: 0
+    t.integer  "start_day_of_week",                                        default: 1
+    t.integer  "end_day_of_week",                                          default: 6
+    t.integer  "start_hour",                                               default: 0
+    t.integer  "end_hour",                                                 default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
     t.date     "start_date"
@@ -122,17 +124,15 @@ ActiveRecord::Schema.define(version: 20140915140516) do
 
   create_table "webhooks", force: :cascade do |t|
     t.integer  "user_profile_id"
-    t.string   "external_id"
-    t.string   "callback_url"
-    t.string   "id_model"
-    t.string   "description"
-    t.string   "last_run"
+    t.string   "external_id",     limit: 255
+    t.string   "callback_url",    limit: 255
+    t.string   "id_model",        limit: 255
+    t.string   "description",     limit: 255
+    t.string   "last_run",        limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "webhooks", ["user_profile_id"], name: "index_webhooks_on_user_profile_id", using: :btree
 
-  add_foreign_key "report_sharings", "user_profiles"
-  add_foreign_key "user_profiles", "users"
 end

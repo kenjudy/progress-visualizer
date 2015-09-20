@@ -65,9 +65,13 @@ class Card < TrelloObject
   def activity_stream
     CardActivity.activity_stream(activity)
   end
+  
+  def label_names
+    labels.collect { |l| l['name'].length > 0 ? l['name'] : l['color'] }.join(',')
+  end
 
   def to_array
-    arr = self.class.array_attributes.map{ |attr| attr == "labels" ? labels.map{|lbl| lbl["name"] }.join(",") : self.send(attr.to_sym)}
+    arr = self.class.array_attributes.map{ |attr| attr == "labels" ? label_names : self.send(attr.to_sym)}
   end
 
   def self.array_attributes

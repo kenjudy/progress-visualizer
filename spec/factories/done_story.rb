@@ -7,6 +7,8 @@ FactoryGirl.define do
     sequence(:story_id)
     story "Story name"
     estimate 1
+    list_name 'Done'
+    label_names 'Committed'
 
     association :user_profile
   end

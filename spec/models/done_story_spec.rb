@@ -5,7 +5,7 @@ describe DoneStory, :type => :model do
   let(:user_profile) { FactoryGirl.create(:user_profile) }
 
   context "create_or_update_from" do
-    let(:card) { FactoryGirl.build(:card, id_list: "5170058469d58225070003ce", labels: [{color: "blue", name: "Committed"}], name: "(3) Test Story Name" ) }
+    let(:card) { FactoryGirl.build(:card, id_list: "5170058469d58225070003ce", labels: [{"color" => "blue", "name" => "Committed"}], name: "(3) Test Story Name" ) }
     let(:type_of_work) { "Committed" }
 
     context "creates story from card" do

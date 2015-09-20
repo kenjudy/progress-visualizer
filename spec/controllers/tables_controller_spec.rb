@@ -38,7 +38,7 @@ describe TablesController, type: :controller do
       
       context "csv" do
         let(:format) { :csv }
-        it { expect(subject.body).to eq "list,id_short,name,estimate,short_url\n" }
+        it { expect(subject.body).to eq "list,id_short,name,estimate,labels,short_url\n" }
       end
     end
 

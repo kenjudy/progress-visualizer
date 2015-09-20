@@ -5,12 +5,13 @@ describe "Factories::DoneStoryFactory", :type => :model do
   let(:board) { FactoryGirl.build(:board, cards: cards) }
   let(:types_of_work) { ["Committed"] }
   let(:done_list_ids) { ["5170058469d58225070003ce"] }
+  let(:list) { FactoryGirl.create(:list, id: "5170058469d58225070003ce", name: "Done")}
   let(:user_profile) { FactoryGirl.create(:user_profile, labels_types_of_work: types_of_work.join(",")) }
   let(:done_story_factory) { Factories::DoneStoryFactory.new(user_profile) }
 
   let(:cards) do
     (0..1).map do |i|
-      FactoryGirl.build(:card, id_short: "#{i}", id_list: "5170058469d58225070003ce", labels: [{color: "blue", name: "Committed"}], name: "(3) Foo #{i}")
+      FactoryGirl.build(:card, id_short: "#{i}", id_list: "5170058469d58225070003ce", list: list, labels: [{"color" => "blue", "name" => "Committed"}], name: "(3) Foo #{i}")
     end
   end
 
@@ -25,9 +26,9 @@ describe "Factories::DoneStoryFactory", :type => :model do
       subject { done_story_factory.to_csv(collated_data) }
       it do
         is_expected.to eq <<-EOF
-list,id_short,name,estimate,short_url
-Committed,0,Foo 0,3.0,https://trello.com/c/j56OGdXO
-Committed,1,Foo 1,3.0,https://trello.com/c/j56OGdXO
+list,id_short,name,estimate,labels,short_url
+Done,0,Foo 0,3.0,Committed,https://trello.com/c/j56OGdXO
+Done,1,Foo 1,3.0,Committed,https://trello.com/c/j56OGdXO
 EOF
       end
     end

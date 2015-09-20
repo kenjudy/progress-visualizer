@@ -1,25 +1,27 @@
 <% export_path ||= nil %>
 <table class="table table-bordered table-responsive" data-no-turbolink>
-  <tr><td colspan="4"><h3><%= label %> <%= results[:iteration_range] %><%= board_label('in') %></h3></td></tr>
+  <tr><td colspan="6"><h3><%= label %> <%= results[:iteration_range] %><%= board_label('in') %></h3></td></tr>
   <% results[:lists].each do |list, data| %>
     <tr class="list">
       <th>ID</th>
-      <th class="name"><%= list %></th>
-      <th class="count"><%= data[:stories] %></th>
-      <th class="estimate"><%= data[:estimates] %></th>
+      <th class="name">Title</th>
+      <th class="list">List</th>
+      <th class="labels">Label(s)</th>
+      <th class="count" colspan="2">Estimate</th>
     </tr>
     <% data[:cards].each do |card| %>
       <tr class="story">
         <td class="id"><%= card_link(card) %></td>
         <td class="name"><%= card.name %></td>
-        <td></td>
-        <td class="estimate"><%= card.estimate %></td>
+        <td class="list"><%= card.list_name %></td>
+        <td class="labels"><%= card.label_names %></td>
+        <td class="estimate" colspan=2><%= card.estimate %></td>
       </tr>
     <% end %>
   <% end %>
   <tr class="totals">
-    <th colspan="2"><div class="pull-right">TOTALS</div></th>
-    <th class="count"><%= results[:totals][:total_stories] %></th>
+    <th colspan="4"><div class="pull-right">TOTALS</div></th>
+    <th class="count"><%= results[:totals][:total_stories] %>&nbsp;Cards</th>
     <th class="estimate"><%= results[:totals][:total_estimates] %></th>
   </tr>
 </table>
