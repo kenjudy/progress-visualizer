@@ -1,6 +1,10 @@
 ProgressVisualizer::Application.routes.draw do
 
-  devise_for :users, controllers: { omniauth_callbacks: "users/omniauth_callbacks" }
+  devise_for :users, :skip => [:registrations], controllers: { omniauth_callbacks: "users/omniauth_callbacks" }
+  as :user do
+    get 'users/edit' => 'devise/registrations#edit', :as => 'edit_user_registration'
+    put 'users' => 'devise/registrations#update', :as => 'user_registration'
+  end
 
   root 'homepage#index', as: 'homepage'
 
@@ -15,7 +19,7 @@ ProgressVisualizer::Application.routes.draw do
   post "contact_form/create", as: "contact_form_create"
 
   resources :user_profiles
-  
+
   get "user_profiles/set/:profile_id" => "user_profiles#set", as: 'set_user_profile'
 
   get  'ian4atzhmmh9ul/burn-up/:profile_id' => "webhooks#burn_up", format: true, constraints: { format: /json/ }

@@ -6,7 +6,7 @@ SitemapGenerator::Sitemap.create do
   add about_path, changefreq: 'weekly'
   add help_index_path, changefreq: 'weekly'
   add contact_form_new_path, changefreq: 'weekly'
-  add new_user_registration_path, changefreq: 'weekly'
+  #add new_user_registration_path, changefreq: 'weekly'
   add new_user_session_path, changefreq: 'weekly'
 
   add 'public/demo/burn-up.html', changefreq: 'weekly'
