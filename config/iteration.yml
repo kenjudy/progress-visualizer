@@ -1,0 +1,6 @@
+user:
+  duration: 7
+  start_day_of_week: 1
+  end_day_of_week: 0
+  start_hour: 11
+  end_hour: 0

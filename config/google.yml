@@ -1,0 +1,10 @@
+application:
+  development:
+    client_id:
+    secret:
+  test:
+    client_id:
+    secret:
+  production:
+    client_id:
+    secret: 
