@@ -1,11 +1,10 @@
 application:
   development:
-    client_id: 843481984043-ragrp6mo4mh1ihsocvjrpe6mnnkflvmo.apps.googleusercontent.com
-    secret: Lo41lRh4jZ8bj-Q2yty4WN5I
+    client_id:
+    secret:
   test:
-    client_id: 843481984043-ragrp6mo4mh1ihsocvjrpe6mnnkflvmo.apps.googleusercontent.com
-    secret: Lo41lRh4jZ8bj-Q2yty4WN5I
+    client_id:
+    secret:
   production:
-    client_id: 843481984043.apps.googleusercontent.com
-    secret: QES32dW0QrHWZ_4c3QdWyPB1
-  
+    client_id:
+    secret: 
