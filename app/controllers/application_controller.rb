@@ -10,12 +10,10 @@ class ApplicationController < ActionController::Base
 
   def retire_notice
     flash.notice = <<END_MESSAGE
-<p>Progress Visualizer will be <b>shut down on or around 2/1/2017</b>.
+<p>Progress Visualizer was <b>shut down on 1/28/2017</b>.
 <p>I have not been maintaining the app for several years and there are now powerful paid alternatives like Corrello.</p>
 <ul>
-<li>I will make the code public via github.</li>
-<li>You can export your data via the board setup in your profile.</li>
-<li>Use the <a href="contact_form/new">comment form</a> for any feedback.</li>
+<li>The source is available on github at <a href="https://github.com/kenjudy/progress-visualizer">https://github.com/kenjudy/progress-visualizer</a>.</li>
 </ul>
 <p>Thank you - Ken J.</p>
 END_MESSAGE
